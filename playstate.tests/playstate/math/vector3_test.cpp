@@ -27,6 +27,15 @@ TestCase(Vector3_Sub, "val1 - val2 = expected")
 	AssertTrue(val1 - val2 == expected);
 }
 
+TestCase(Vector3_Div, "val1 / val2 = expected")
+{
+	const Vector3 val1(2.0f, 12.0f, 1.0f);
+	const float32 val2 = 4.0f;
+	const Vector3 expected(0.5f, 3.0f, 0.25f);
+
+	AssertTrue(val1 / val2 == expected);
+}
+
 TestCase(Vector3_Length, "|val1| == expected")
 {
 	const Vector3 val1(3.0f, 4.0f, 5.0f);
@@ -41,4 +50,21 @@ TestCase(Vector3_SquaredLength, "|val1|^2 == expected")
 	const float32 expected = 3*3 + 4*4 + 5*5;
 
 	AssertEquals(val1.SquaredLength(), expected);
+}
+
+TestCase(Vector3_Normalize, "û == expected")
+{
+	Vector3 û(3.0f, 4.0f, 5.0f);
+	û.Normalize();
+	const Vector3 expected = û / û.Length();
+
+	AssertEquals(û, expected);
+}
+
+TestCase(Vector3_Zero, "val1.Zero() == Vector3::ZERO")
+{
+	Vector3 val1(3.0f, 4.0f, 5.0f);
+	val1.Zero();
+
+	AssertEquals(val1, Vector3::ZERO);
 }

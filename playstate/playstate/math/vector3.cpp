@@ -91,7 +91,7 @@ void Vector3::Normalize(float32 distance)
 
 void Vector3::Zero()
 {
-	X = Z = Z = 0.0f;
+	X = Y = Z = 0.0f;
 }
 
 void Vector3::Negate()
