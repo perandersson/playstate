@@ -33,6 +33,9 @@
     <ClCompile Include="..\..\playstate.tests\playstate\test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\playstate.tests\playstate\math\vector3_test.cpp">
+      <Filter>Source Files\math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\playstate.tests\playstate\test.h">

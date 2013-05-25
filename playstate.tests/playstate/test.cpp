@@ -59,7 +59,7 @@ void TestApplication::AddFailure(TestCaseRunner* runner, const char* file, const
 
 int TestApplication::RunTests()
 {
-	std::cout << "STARTS RUNNING TESTS" << std::endl;
+	std::cout << std::endl << "STARTS RUNNING TESTS" << std::endl;
 	std::cout << std::endl;
 
 	TestApplication& app = Get();

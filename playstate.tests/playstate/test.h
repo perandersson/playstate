@@ -68,4 +68,6 @@ namespace playstate
 #define AssertTrue(Condition) \
 	if(Condition == false) TestApplication::AddFailure(TestCaseRunner::GetActiveTestCase(), __FILE__, __LINE__);
 
+#define AssertFalse(Condition) \
+	if(Condition == true) TestApplication::AddFailure(TestCaseRunner::GetActiveTestCase(), __FILE__, __LINE__);
 }
