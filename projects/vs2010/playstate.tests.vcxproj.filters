@@ -22,6 +22,9 @@
     <Filter Include="Source Files\math">
       <UniqueIdentifier>{5e312124-ad44-49a6-9ad3-6237b9c93335}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\camera">
+      <UniqueIdentifier>{8fe88c5d-9ee9-4727-b738-cf96ee1f58fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\playstate.tests\playstate\main.cpp">
@@ -38,6 +41,12 @@
     </ClCompile>
     <ClCompile Include="..\..\playstate.tests\playstate\collision\aabb_test.cpp">
       <Filter>Source Files\collision</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate.tests\playstate\camera\camera_test.cpp">
+      <Filter>Source Files\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate.tests\playstate\math\matrix4x4_test.cpp">
+      <Filter>Source Files\math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

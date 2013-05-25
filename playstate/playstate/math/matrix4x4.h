@@ -31,8 +31,7 @@ namespace playstate
 				  float32 m41, float32 m42, float32 m43, float32 m44);
 		Matrix4x4(const Matrix4x4 &matrix4);
 
-		void Zero();
-		void SetIdentity();
+		//void Zero();
 		void Translate(const Vector3& vec);
 		float32 Determinant();
 		void Transpose();
@@ -61,10 +60,12 @@ namespace playstate
 		const void operator /= (const float32 scalar);
 
 		void operator = (const Matrix4x4& matrix);
-		bool operator == (const Matrix4x4& matrix);
-		bool operator != (const Matrix4x4& matrix);
 
-		static const Matrix4x4 IDENTITY;
+		bool operator == (const Matrix4x4& matrix) const;
+		bool operator != (const Matrix4x4& matrix) const;
+
+		static const Matrix4x4 Identity;
+		static const Matrix4x4 Zero;
 
 		static Matrix4x4 Translation(const Vector3& vec);
 		static Matrix4x4 Rotation(const Vector3& rot);

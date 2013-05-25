@@ -30,7 +30,7 @@ void Camera::SetPerspective(float32 nearPlane, float32 farPlane, float32 fov, fl
 	float32 temp3 = top - bottom;
 	float32 temp4 = farPlane - nearPlane;
 
-	mProjection.Zero();
+	mProjection = Matrix4x4::Zero;
 	mProjection._11 = temp / temp2;
 	mProjection._22 = temp / temp3;
 	mProjection._31 = (right + left) / temp2;
@@ -51,7 +51,7 @@ void Camera::SetOrtho2D(float32 left, float32 right, float32 bottom, float32 top
 	float32 ty = -((top + bottom) / (top - bottom));
 	float32 tz = -((far + near) / (far - near));
 
-	mProjection.Zero();
+	mProjection = Matrix4x4::Zero;
 
 	mProjection._11 = 2.0f / (right - left);
 	mProjection._14 = tx;

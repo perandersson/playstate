@@ -96,8 +96,10 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\playstate.tests\playstate\camera\camera_test.cpp" />
     <ClCompile Include="..\..\playstate.tests\playstate\collision\aabb_test.cpp" />
     <ClCompile Include="..\..\playstate.tests\playstate\main.cpp" />
+    <ClCompile Include="..\..\playstate.tests\playstate\math\matrix4x4_test.cpp" />
     <ClCompile Include="..\..\playstate.tests\playstate\math\vector2_test.cpp" />
     <ClCompile Include="..\..\playstate.tests\playstate\math\vector3_test.cpp" />
     <ClCompile Include="..\..\playstate.tests\playstate\test.cpp" />

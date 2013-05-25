@@ -7,10 +7,15 @@
 
 using namespace playstate;
 
-const Matrix4x4 Matrix4x4::IDENTITY(1, 0, 0, 0,
+const Matrix4x4 Matrix4x4::Identity(1, 0, 0, 0,
 									0, 1, 0, 0,
 									0, 0, 1, 0,
 									0, 0, 0, 1);
+
+const Matrix4x4 Matrix4x4::Zero(0, 0, 0, 0,
+								0, 0, 0, 0,
+								0, 0, 0, 0,
+								0, 0, 0, 0);
 
 Matrix4x4 Matrix4x4::Translation(const Vector3& vec)
 {
@@ -165,16 +170,6 @@ void Matrix4x4::Set(float32 m11, float32 m12, float32 m13, float32 m14,
 	Values[15] = m44;
 }
 
-void Matrix4x4::Zero()
-{
-	memset(Values, 0, 64);
-}
-
-void Matrix4x4::SetIdentity()
-{
-	memcpy(Values, IDENTITY.Values, sizeof(float) * 16);
-}
-
 void Matrix4x4::Translate(const Vector3& vec)
 {
     Values[3*4+0] += Values[0*4+0] * vec.X + Values[1*4+0] * vec.Y + Values[2*4+0] * vec.Z;
@@ -257,12 +252,10 @@ void Matrix4x4::Transpose()
 
 void Matrix4x4::Invert()
 {
-	Matrix4x4 identity;
-	identity.SetIdentity();
-
 	unsigned int row, column, rowMax;
 	float32 tmp;
 	float32 *matrixA = Values;
+	Matrix4x4 identity;
 	float32 *matrixB = identity.Values;
 
 	for(column = 0; column < 4; column++)
@@ -277,7 +270,7 @@ void Matrix4x4::Invert()
 		}
 		if(matrixA[4 * column + rowMax] == 0.0f)
 		{
-			SetIdentity();
+			*this = Matrix4x4::Identity;
 			return;
 		}
 		for(int c = 0; c < 4; c++)
@@ -563,7 +556,7 @@ void Matrix4x4::operator = (const Matrix4x4& matrix)
 	memcpy(Values, matrix.Values, sizeof(float32[16]));
 }
 
-bool Matrix4x4::operator == (const Matrix4x4& matrix)
+bool Matrix4x4::operator == (const Matrix4x4& matrix) const
 {
 	if (Values[0] == matrix.Values[0] && Values[1] == matrix.Values[1] &&
 		Values[2] == matrix.Values[2] && Values[3] == matrix.Values[3] &&
@@ -577,7 +570,7 @@ bool Matrix4x4::operator == (const Matrix4x4& matrix)
 	return false;
 }
 
-bool Matrix4x4::operator != (const Matrix4x4& matrix)
+bool Matrix4x4::operator != (const Matrix4x4& matrix) const
 {
 	if (Values[0] == matrix.Values[0] && Values[1] == matrix.Values[1] &&
 		Values[2] == matrix.Values[2] && Values[3] == matrix.Values[3] &&
