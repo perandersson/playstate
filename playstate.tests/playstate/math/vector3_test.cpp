@@ -21,6 +21,16 @@ TestCase(Vector3_ConstructorElements, "Vector3(x, y, z)")
 	AssertEquals(val.Z, z);
 }
 
+TestCase(Vector3_CopyConstructor, "Vector2(x, y)")
+{
+	const Vector3 expected(3.0f, 5.0f, -201.043f);
+	const Vector3 val = expected;
+	
+	AssertEquals(val.X, expected.X);
+	AssertEquals(val.Y, expected.Y);
+	AssertEquals(val.Z, expected.Z);
+}
+
 TestCase(Vector3_Add, "val1 + val2 = expected")
 {
 	const Vector3 val1(1.0f, 2.0f, 3.0f);
@@ -113,4 +123,16 @@ TestCase(Vector3_NotEquals, "(val1 == val2) == true")
 	const Vector3 val2(3.51f, 12.21f, -32.01f);
 	
 	AssertTrue(val1 != val2);
+}
+
+TestCase(Vector3_CrossProduct, "val1 X val2 == expected")
+{
+	const Vector3 val1(3.5f, 12.21f, -32.012f);
+	const Vector3 val2(3.51f, 12.21f, -32.01f);
+
+	const Vector3 expected(val1.Y * val2.Z - val1.Z * val2.Y,
+		val1.Z * val2.X - val1.X * val2.Z,
+		val1.X * val2.Y - val1.Y * val2.X);
+
+	AssertEquals(val1.CrossProduct(val2), expected);
 }

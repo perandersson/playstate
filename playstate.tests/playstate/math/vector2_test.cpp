@@ -19,6 +19,15 @@ TestCase(Vector2_ConstructorElements, "Vector2(x, y)")
 	AssertEquals(val.Y, y);
 }
 
+TestCase(Vector2_CopyConstructor, "Vector2(x, y)")
+{
+	const Vector2 expected(3.0f, 5.0f);
+	const Vector2 val = expected;
+	
+	AssertEquals(val.X, expected.X);
+	AssertEquals(val.Y, expected.Y);
+}
+
 TestCase(Vector2_Add, "val1 + val2 = expected")
 {
 	const Vector2 val1(1.0f, 2.0f);
