@@ -32,8 +32,8 @@ namespace playstate
 
 		Vector3 GetNormalized() const;
 		Vector3 CrossProduct(const Vector3& vector3) const;
-		float32 GetLength() const;
-		float32 GetSquaredLength() const;
+		float32 CalcLength() const;
+		float32 CalcSquaredLength() const;
 		bool IsZero() const;
 		float32 DotProduct(const Vector3& vector3) const;
 		float32 GetAngleDegree(const Vector3& vector3) const;
@@ -58,8 +58,9 @@ namespace playstate
 		void operator /= (const float32 scalar);
 
 		void operator = (const Vector3 &vector3);
-		bool operator == (const Vector3 &vector3);
-		bool operator != (const Vector3 &vector3);
+
+		bool operator == (const Vector3 &vector3) const;
+		bool operator != (const Vector3 &vector3) const;
 
 		Vector3 operator - ();
 

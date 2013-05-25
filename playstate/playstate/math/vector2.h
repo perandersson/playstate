@@ -21,8 +21,8 @@ namespace playstate
 		Vector2(float32 x, float32 y);
 		Vector2(const Vector2 &vector2);
 		Vector2 GetNormalized() const;
-		float32 Length() const;
-		float32 SquaredLength() const;
+		float32 CalcLength() const;
+		float32 CalcSquaredLength() const;
 		float32 DotProduct(const Vector2& vector2) const;
 		float32 GetAngleDegree(const Vector2& vector2) const;
 		float32 GetAngleRadians(const Vector2& vector2) const;
@@ -43,11 +43,13 @@ namespace playstate
 		void operator /= (const float32 scalar);
 
 		void operator = (const Vector2 &vector2);
-		bool operator == (const Vector2 &vector2);
-		bool operator != (const Vector2 &vector2);
+
+		bool operator == (const Vector2 &vector2) const;
+		bool operator != (const Vector2 &vector2) const;
 
 		Vector2 operator-();
 
+		static const Vector2 ZERO;
 		static const Vector2 UNIT_X; 
 		static const Vector2 UNIT_Y;
 		static const Vector2 NEGATIVE_UNIT_X;

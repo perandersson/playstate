@@ -5,6 +5,7 @@
 
 using namespace playstate;
 
+const Vector2 Vector2::ZERO = Vector2(0.0f, 0.0f);
 const Vector2 Vector2::UNIT_X = Vector2(1.0f, 0.0f);
 const Vector2 Vector2::UNIT_Y = Vector2(0.0f, 1.0f);
 const Vector2 Vector2::NEGATIVE_UNIT_X = Vector2(-1.0f, 0.0f);
@@ -26,7 +27,7 @@ Vector2 Vector2::GetNormalized() const
 {
 	Vector2 normalizedVector;
 
-	float32 len = Length();
+	float32 len = CalcLength();
 	len = (len != 0 ? len : 1.0f);
 
 	float32 lengthMul = 1.0f / len;
@@ -36,12 +37,12 @@ Vector2 Vector2::GetNormalized() const
 	return normalizedVector;
 }
 
-float32 Vector2::Length() const
+float32 Vector2::CalcLength() const
 {
 	return sqrt((X*X) + (Y*Y));
 }
 
-float32 Vector2::SquaredLength() const
+float32 Vector2::CalcSquaredLength() const
 {
 	return ((X * X) + (Y * Y));
 }
@@ -53,17 +54,17 @@ float32 Vector2::DotProduct(const Vector2& vector2) const
 
 float32 Vector2::GetAngleDegree(const Vector2& vector2) const
 {
-	return acosf(((vector2.X * X) + (vector2.Y * Y)) / (vector2.Length() * Length())) * 57.29577951f;
+	return acosf(((vector2.X * X) + (vector2.Y * Y)) / (vector2.CalcLength() * CalcLength())) * 57.29577951f;
 }
 
 float32 Vector2::GetAngleRadians(const Vector2& vector2) const
 {
-	return acosf(((vector2.X * X) + (vector2.Y * Y)) / (vector2.Length() * Length()));
+	return acosf(((vector2.X * X) + (vector2.Y * Y)) / (vector2.CalcLength() * CalcLength()));
 }
 
 void Vector2::Normalize()
 {
-	float32 len = Length();
+	float32 len = CalcLength();
 	len = (len != 0 ? len : 1.0f);
 
 	float32 lengthMul = 1.0f / len;
@@ -165,13 +166,13 @@ void Vector2::operator = (const Vector2 &vector2)
 	Y = vector2.Y;
 }
 
-bool Vector2::operator == (const Vector2 &vector2)
+bool Vector2::operator == (const Vector2 &vector2) const
 {
 	return abs(X - vector2.X) <= FLT_EPSILON &&
 		abs(Y - vector2.Y) <= FLT_EPSILON;
 }
 
-bool Vector2::operator != (const Vector2 &vector2)
+bool Vector2::operator != (const Vector2 &vector2) const
 {
 	return abs(X - vector2.X) > FLT_EPSILON ||
 		abs(Y - vector2.Y) > FLT_EPSILON;
