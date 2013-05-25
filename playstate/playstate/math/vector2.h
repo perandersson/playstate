@@ -27,7 +27,6 @@ namespace playstate
 		float32 GetAngleDegree(const Vector2& vector2) const;
 		float32 GetAngleRadians(const Vector2& vector2) const;
 		void Normalize();
-		void Zero();
 		void Negate();
 		void Set(float32 xValue, float32 yValue);
 		void Set(const Vector2& vector2);
@@ -50,10 +49,10 @@ namespace playstate
 
 		Vector2 operator-();
 
-		static const Vector2 ZERO;
-		static const Vector2 UNIT_X; 
-		static const Vector2 UNIT_Y;
-		static const Vector2 NEGATIVE_UNIT_X;
-		static const Vector2 NEGATIVE_UNIT_Y;
+		static const Vector2 Zero;
+		static const Vector2 UnitX; 
+		static const Vector2 UnitY;
+		static const Vector2 NegativeUnitX;
+		static const Vector2 NegativeUnitY;
 	};
 }

@@ -5,13 +5,13 @@
 
 using namespace playstate;
 
-const Vector3 Vector3::UNIT_X = Vector3(1.0f, 0.0f, 0.0f);
-const Vector3 Vector3::UNIT_Y = Vector3(0.0f, 1.0f, 0.0f);
-const Vector3 Vector3::UNIT_Z = Vector3(0.0f, 0.0f, 1.0f);
-const Vector3 Vector3::NEGATIVE_UNIT_X = Vector3(-1.0f, 0.0f, 0.0f);
-const Vector3 Vector3::NEGATIVE_UNIT_Y = Vector3(0.0f, -1.0f, 0.0f);
-const Vector3 Vector3::NEGATIVE_UNIT_Z = Vector3(0.0f, 0.0f, -1.0f);
-const Vector3 Vector3::ZERO = Vector3(0.0f, 0.0f, 0.0f);
+const Vector3 Vector3::UnitX = Vector3(1.0f, 0.0f, 0.0f);
+const Vector3 Vector3::UnitY = Vector3(0.0f, 1.0f, 0.0f);
+const Vector3 Vector3::UnitZ = Vector3(0.0f, 0.0f, 1.0f);
+const Vector3 Vector3::NegativeUnitX = Vector3(-1.0f, 0.0f, 0.0f);
+const Vector3 Vector3::NegativeUnitY = Vector3(0.0f, -1.0f, 0.0f);
+const Vector3 Vector3::NegativeUnitZ = Vector3(0.0f, 0.0f, -1.0f);
+const Vector3 Vector3::Zero = Vector3(0.0f, 0.0f, 0.0f);
 
 Vector3::Vector3() : X(0.0f), Y(0.0f), Z(0.0f)
 {
@@ -87,11 +87,6 @@ void Vector3::Normalize(float32 distance)
 	X *= factor;
 	Y *= factor;
 	Z *= factor;
-}
-
-void Vector3::Zero()
-{
-	X = Y = Z = 0.0f;
 }
 
 void Vector3::Negate()

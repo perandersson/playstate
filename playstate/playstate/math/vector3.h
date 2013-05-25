@@ -40,7 +40,6 @@ namespace playstate
 		float32 GetAngleRadians(const Vector3& vector3) const;
 		void Normalize();
 		void Normalize(float32 distance);
-		void Zero();
 		void Negate();
 		void Set(float32 xValue, float32 yValue, float32 zValue);
 		void Set(const Vector3& vector3);
@@ -64,13 +63,13 @@ namespace playstate
 
 		Vector3 operator - ();
 
-		static const Vector3 ZERO; 
-		static const Vector3 UNIT_X; 
-		static const Vector3 UNIT_Y;
-		static const Vector3 UNIT_Z;
-		static const Vector3 NEGATIVE_UNIT_X;
-		static const Vector3 NEGATIVE_UNIT_Y;
-		static const Vector3 NEGATIVE_UNIT_Z;
+		static const Vector3 Zero; 
+		static const Vector3 UnitX; 
+		static const Vector3 UnitY;
+		static const Vector3 UnitZ;
+		static const Vector3 NegativeUnitX;
+		static const Vector3 NegativeUnitY;
+		static const Vector3 NegativeUnitZ;
 	};
 	
 	//

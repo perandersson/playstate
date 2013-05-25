@@ -5,11 +5,11 @@
 
 using namespace playstate;
 
-const Vector2 Vector2::ZERO = Vector2(0.0f, 0.0f);
-const Vector2 Vector2::UNIT_X = Vector2(1.0f, 0.0f);
-const Vector2 Vector2::UNIT_Y = Vector2(0.0f, 1.0f);
-const Vector2 Vector2::NEGATIVE_UNIT_X = Vector2(-1.0f, 0.0f);
-const Vector2 Vector2::NEGATIVE_UNIT_Y = Vector2(0.0f, -1.0f);
+const Vector2 Vector2::Zero = Vector2(0.0f, 0.0f);
+const Vector2 Vector2::UnitX = Vector2(1.0f, 0.0f);
+const Vector2 Vector2::UnitY = Vector2(0.0f, 1.0f);
+const Vector2 Vector2::NegativeUnitX = Vector2(-1.0f, 0.0f);
+const Vector2 Vector2::NegativeUnitY = Vector2(0.0f, -1.0f);
 
 Vector2::Vector2() : X(0.0f), Y(0.0f)
 {
@@ -70,12 +70,6 @@ void Vector2::Normalize()
 	float32 lengthMul = 1.0f / len;
 	X *= lengthMul;
 	Y *= lengthMul;
-}
-
-void Vector2::Zero()
-{
-	X = 0.0;
-	Y = 0.0;
 }
 
 void Vector2::Negate()

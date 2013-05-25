@@ -2,11 +2,23 @@
 #include "../test.h"
 using namespace playstate;
 
-TestCase(Vector3_DefaultConstructor, "Vector3() == Vector3::ZERO")
+TestCase(Vector3_DefaultConstructor, "Vector3() == Vector3::Zero")
 {
 	const Vector3 val;
 
-	AssertEquals(val, Vector3::ZERO);
+	AssertEquals(val, Vector3::Zero);
+}
+
+TestCase(Vector3_ConstructorElements, "Vector3(x, y, z)")
+{
+	const float32 x = 3.0f;
+	const float32 y = 5.0f;
+	const float32 z = -201.043f;
+	const Vector3 val(x, y, z);
+
+	AssertEquals(val.X, x);
+	AssertEquals(val.Y, y);
+	AssertEquals(val.Z, z);
 }
 
 TestCase(Vector3_Add, "val1 + val2 = expected")
@@ -70,12 +82,12 @@ TestCase(Vector3_Normalize, "û == expected")
 	AssertEquals(û, expected);
 }
 
-TestCase(Vector3_Zero, "val1.Zero() == Vector3::ZERO")
+TestCase(Vector3_ZeroAssignment, "val1 == Vector3::Zero")
 {
 	Vector3 val1(3.0f, 4.0f, 5.0f);
-	val1.Zero();
+	val1 = Vector3::Zero;
 
-	AssertEquals(val1, Vector3::ZERO);
+	AssertEquals(val1, Vector3::Zero);
 }
 
 TestCase(Vector3_Negate, "val1.Negate() == expected")
