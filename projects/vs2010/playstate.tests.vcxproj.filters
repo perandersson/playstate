@@ -5,10 +5,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -24,6 +20,9 @@
     </Filter>
     <Filter Include="Source Files\camera">
       <UniqueIdentifier>{8fe88c5d-9ee9-4727-b738-cf96ee1f58fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\types">
+      <UniqueIdentifier>{dad52bc5-1584-4abd-9117-10176fe5219f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -47,6 +46,12 @@
     </ClCompile>
     <ClCompile Include="..\..\playstate.tests\playstate\math\matrix4x4_test.cpp">
       <Filter>Source Files\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate.tests\playstate\types\typedef_test.cpp">
+      <Filter>Source Files\types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate.tests\playstate\types\linked_list_test.cpp">
+      <Filter>Source Files\types</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

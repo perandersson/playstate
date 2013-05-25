@@ -103,6 +103,8 @@
     <ClCompile Include="..\..\playstate.tests\playstate\math\vector2_test.cpp" />
     <ClCompile Include="..\..\playstate.tests\playstate\math\vector3_test.cpp" />
     <ClCompile Include="..\..\playstate.tests\playstate\test.cpp" />
+    <ClCompile Include="..\..\playstate.tests\playstate\types\linked_list_test.cpp" />
+    <ClCompile Include="..\..\playstate.tests\playstate\types\typedef_test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\playstate.tests\playstate\test.h" />
