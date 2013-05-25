@@ -21,8 +21,8 @@ namespace playstate
 		Vector2(float32 x, float32 y);
 		Vector2(const Vector2 &vector2);
 		Vector2 GetNormalized() const;
-		float32 CalcLength() const;
-		float32 CalcSquaredLength() const;
+		float32 Length() const;
+		float32 SquaredLength() const;
 		float32 DotProduct(const Vector2& vector2) const;
 		float32 GetAngleDegree(const Vector2& vector2) const;
 		float32 GetAngleRadians(const Vector2& vector2) const;

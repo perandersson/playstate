@@ -31,17 +31,11 @@ Vector3::Vector3(const float32* vector3) : X(vector3[0]), Y(vector3[1]), Z(vecto
 
 Vector3 Vector3::GetNormalized() const
 {
-	Vector3 normalizedVector;
-	float32 len = CalcLength();
-
+	float32 len = Length();
 	len = (len != 0 ? len : 1.0f);
 	float32 lengthMul = 1.0f / len;
 
-	normalizedVector.X = X * lengthMul;
-	normalizedVector.Y = Y * lengthMul;
-	normalizedVector.Z = Z * lengthMul;
-
-	return normalizedVector;
+	return Vector3(X * lengthMul, Y * lengthMul, Z * lengthMul);
 }
 
 Vector3 Vector3::CrossProduct(const Vector3& vector3) const
@@ -51,12 +45,12 @@ Vector3 Vector3::CrossProduct(const Vector3& vector3) const
 					(X * vector3.Y - Y * vector3.X));
 }
 
-float32 Vector3::CalcLength() const
+float32 Vector3::Length() const
 {
 	return sqrt(X * X + Y * Y + Z * Z);
 }
 
-float32 Vector3::CalcSquaredLength() const
+float32 Vector3::SquaredLength() const
 {
 	return (X * X + Y * Y + Z * Z);
 }
@@ -68,17 +62,17 @@ float32 Vector3::DotProduct(const Vector3& vector3) const
 
 float32 Vector3::GetAngleDegree(const Vector3& vector3) const
 {
-	return acosf(((vector3.X * X) + (vector3.Y * Y) + (vector3.Z * Z)) / (vector3.CalcLength() * CalcLength())) * 57.29577951f;
+	return acosf(((vector3.X * X) + (vector3.Y * Y) + (vector3.Z * Z)) / (vector3.Length() * Length())) * 57.29577951f;
 }
 
 float32 Vector3::GetAngleRadians(const Vector3& vector3) const
 {
-	return acosf(((vector3.X * X) + (vector3.Y * Y) + (vector3.Z * Z)) / (vector3.CalcLength() * CalcLength()));
+	return acosf(((vector3.X * X) + (vector3.Y * Y) + (vector3.Z * Z)) / (vector3.Length() * Length()));
 }
 
 void Vector3::Normalize()
 {
-	float32 len = CalcLength();
+	float32 len = Length();
 	len = (len != 0.0f ? len : 1.0f);
 
 	float32 lengthMul = 1.0f / len;

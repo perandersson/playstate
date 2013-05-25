@@ -32,5 +32,5 @@ TestCase(Vector2_Length, "|val1| == expected")
 	const Vector2 val1(3.0f, 4.0f);
 	const float32 expected = sqrtf(3*3 + 4*4);
 
-	AssertEquals(val1.CalcLength(), expected);
+	AssertEquals(val1.Length(), expected);
 }
