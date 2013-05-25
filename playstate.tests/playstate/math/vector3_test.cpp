@@ -86,3 +86,19 @@ TestCase(Vector3_Negate, "val1.Negate() == expected")
 
 	AssertEquals(val1, expected);
 }
+
+TestCase(Vector3_Equals, "(val1 == val2) == true")
+{
+	const Vector3 val1(3.542f, 12.219f, -32.012f);
+	const Vector3 val2(3.542f, 12.219f, -32.012f);
+	
+	AssertTrue(val1 == val2);
+}
+
+TestCase(Vector3_NotEquals, "(val1 == val2) == true")
+{
+	const Vector3 val1(3.5f, 12.21f, -32.012f);
+	const Vector3 val2(3.51f, 12.21f, -32.01f);
+	
+	AssertTrue(val1 != val2);
+}

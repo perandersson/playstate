@@ -73,4 +73,7 @@ namespace playstate
 
 #define AssertEquals(Val1, Val2) \
 	if(Val1 != Val2) TestApplication::AddFailure(TestCaseRunner::GetActiveTestCase(), __FILE__, __LINE__);
+
+#define AssertNotEquals(Val1, Val2) \
+	if(Val1 == Val2) TestApplication::AddFailure(TestCaseRunner::GetActiveTestCase(), __FILE__, __LINE__);
 }
