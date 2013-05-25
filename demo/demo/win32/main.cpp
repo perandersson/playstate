@@ -30,6 +30,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 
 	try
 	{
+		new int();
+
 		// Filesystem
 		std::vector<std::string> paths;
 		paths.push_back(std::string("data/demo"));
