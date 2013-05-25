@@ -34,3 +34,11 @@ TestCase(Vector2_Length, "|val1| == expected")
 
 	AssertEquals(val1.Length(), expected);
 }
+
+TestCase(Vector2_SquaredLength, "|val1|^2 == expected")
+{
+	const Vector2 val1(3.0f, 4.0f);
+	const float32 expected = 3*3 + 4*4;
+
+	AssertEquals(val1.SquaredLength(), expected);
+}
