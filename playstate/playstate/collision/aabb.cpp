@@ -4,7 +4,7 @@
 
 using namespace playstate;
 
-playstate::AABB playstate::AABB::OUTSIDE_WORLD(playstate::Vector3(-10000.0f, -10000.0f, -10000.0f), 0.01f, 0.01f, 0.01f);
+playstate::AABB playstate::AABB::OutsideWorld(playstate::Vector3(-10000.0f, -10000.0f, -10000.0f), 0.01f, 0.01f, 0.01f);
 
 AABB::AABB() : MaxPoint(mMaxPoint), MinPoint(mMinPoint)
 {
@@ -95,8 +95,8 @@ AABB::CollisionResult AABB::IsColliding(const AABB& otherBox) const
 		return OUTSIDE;
 	
 	if(otherMin.X >= mMinPoint.X && otherMax.X <= mMaxPoint.X &&
-		otherMin.Y >= mMinPoint.X && otherMax.Y <= mMaxPoint.Y &&
-		otherMin.Z >= mMinPoint.X && otherMax.Z <= mMaxPoint.Z) {
+		otherMin.Y >= mMinPoint.Y && otherMax.Y <= mMaxPoint.Y &&
+		otherMin.Z >= mMinPoint.Z && otherMax.Z <= mMaxPoint.Z) {
 			return CONTAINED;
 	}
 

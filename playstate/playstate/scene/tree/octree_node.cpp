@@ -3,7 +3,7 @@
 #include "octree.h"
 using namespace playstate;
 
-OctreeNode::OctreeNode() : mBoundingBox(AABB::OUTSIDE_WORLD), mOwner(NULL),
+OctreeNode::OctreeNode() : mBoundingBox(AABB::OutsideWorld), mOwner(NULL),
 	BoundingBox(mBoundingBox)
 {
 }
