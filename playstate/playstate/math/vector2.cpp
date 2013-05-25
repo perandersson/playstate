@@ -149,6 +149,14 @@ Vector2 Vector2::operator * (const float32 scalar) const
 	return vector2Temp;
 }
 
+Vector2	Vector2::operator * (const Vector2& scalar) const
+{
+	Vector2 tmp;
+	tmp.X = X * scalar.X;
+	tmp.Y = Y * scalar.Y;
+	return tmp;
+}
+
 Vector2 Vector2::operator / (const float32 scalar) const
 {
 	Vector2 vector2Temp;

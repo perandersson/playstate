@@ -35,6 +35,7 @@ namespace playstate
 		Vector2 operator + (const Vector2 &vector2) const;
 		Vector2 operator - (const Vector2 &vector2) const;
 		Vector2 operator * (const float32 scalar) const;
+		Vector2 operator * (const Vector2 &vector2) const;
 		Vector2 operator / (const float32 scalar) const;
 
 		void operator += (const Vector2 &vector2);

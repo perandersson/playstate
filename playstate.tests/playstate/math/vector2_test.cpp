@@ -27,6 +27,15 @@ TestCase(Vector2_Sub, "val1 - val2 = expected")
 	AssertTrue(val1 - val2 == expected);
 }
 
+TestCase(Vector2_Mul, "val1 * val2 = expected")
+{
+	const Vector2 val1(2.0f, 12.0f);
+	const Vector2 val2(2.0f, 2.0f);
+	const Vector2 expected(4.0f, 24.0f);
+
+	AssertTrue(val1 * val2 == expected);
+}
+
 TestCase(Vector2_Div, "val1 / val2 = expected")
 {
 	const Vector2 val1(2.0f, 12.0f);

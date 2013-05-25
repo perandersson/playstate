@@ -36,6 +36,15 @@ TestCase(Vector3_Div, "val1 / val2 = expected")
 	AssertTrue(val1 / val2 == expected);
 }
 
+TestCase(Vector3_Mul, "val1 * val2 = expected")
+{
+	const Vector3 val1(2.0f, 12.0f, 1.0f);
+	const Vector3 val2(2.0f, 2.0f, 2.0f);
+	const Vector3 expected(4.0f, 24.0f, 2.0f);
+
+	AssertTrue(val1 * val2 == expected);
+}
+
 TestCase(Vector3_Length, "|val1| == expected")
 {
 	const Vector3 val1(3.0f, 4.0f, 5.0f);

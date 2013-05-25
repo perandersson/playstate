@@ -182,8 +182,8 @@ Vector3	Vector3::operator * (const Vector3& scalar) const
 {
 	Vector3 tmp;
 	tmp.X = X * scalar.X;
-	tmp.X = Y * scalar.Y;
-	tmp.X = Z * scalar.Z;
+	tmp.Y = Y * scalar.Y;
+	tmp.Z = Z * scalar.Z;
 	return tmp;
 }
 
