@@ -1,0 +1,63 @@
+# Blender MTL File: 'China_lampEX.blend'
+# Material Count: 5
+newmtl Lamp
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.200000 0.200000 0.200000
+Ni 1.000000
+d 0.543689
+illum 2
+map_Kd diffuse.png
+
+
+newmtl Lamp_NONE
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.200000 0.200000 0.200000
+Ni 1.000000
+d 0.543689
+illum 2
+map_Kd diffuse.png
+
+
+newmtl board3_brown
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.350547 0.289071 0.298032
+Ks 0.100000 0.100000 0.100000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd diffuse.png
+map_Ks specular.png
+map_Bump bump.png
+
+
+newmtl board3_darkbrown
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.082849 0.080006 0.083528
+Ks 0.058252 0.058252 0.058252
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd diffuse.png
+map_Ks specular.png
+map_Bump bump.png
+
+
+newmtl board3_darkbrown_Map_setting
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.082849 0.080006 0.083528
+Ks 0.058252 0.058252 0.058252
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd diffuse.png
+map_Ks specular.png
+map_Bump bump.png
+
+

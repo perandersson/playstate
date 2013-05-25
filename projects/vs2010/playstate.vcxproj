@@ -1,0 +1,288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\playstate\playstate\camera\camera.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\camera\frustum.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\collision\aabb.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\component\component.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\component\renderable\render_static_model.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\component\scriptable_component.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\exception.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\filesystem\win32\win32_directory.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\filesystem\win32\win32_file.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\filesystem\win32\win32_filesystem.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\functions.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\game\game.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\game\game_runner.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\game\scripted_configuration.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\input\input_system.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\input\win32\win32_input_state.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\input\win32\win32_input_system.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\math\color.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\math\matrix4x4.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\math\plane.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\math\quaternion.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\math\vector2.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\math\vector3.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\model\model.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\model\model_mesh.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\model\wavefront\wavefront_resource_loader.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\processor\processors\linked_list_update_processor.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\processor\processors\octree_render_processor.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\processor\renderable.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\processor\render_processor_factory.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\processor\updatable.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\processor\update_processor_factory.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\rendering\components\default_gfx_program_component.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\rendering\components\float_gfx_program_component.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\rendering\components\gfx_program_component_not_found.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\rendering\components\int_gfx_program_component.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\rendering\components\matrix_gfx_program_component.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\rendering\components\sampler2d_gfx_program_component.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\rendering\exception\gfx_program_exception.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\rendering\exception\rendering_exception.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\rendering\factories\gfx_program_factory.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\rendering\factories\vertex_array_object_factories.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\rendering\gfx_program.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\rendering\index_buffer.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\rendering\render_block_builder.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\rendering\render_system.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\rendering\render_target_2d.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\rendering\state\state_policy.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\rendering\texture2d.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\rendering\vertex_buffer.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\rendering\win32\win32_render_context.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\rendering\win32\win32_render_system.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\resources\exception\load_resource_exception.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\resources\exception\resource_exception.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\resources\resource_data.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\resources\resource_manager.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\scene\scene.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\scene\scene_group.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\scene\scene_node.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\scene\tree\octree.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\scene\tree\octree_node.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\script\exception\script_exception.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\script\exception\script_not_found_exception.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\script\luam.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\script\script.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\script\scriptable.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\script\script_collection.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\script\script_system.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\thread\win32\win32_lock.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\thread\win32\win32_thread.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\thread\win32\win32_thread_event.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\thread\win32\win32_thread_factory.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\thread\wrapper\lock_wrapper.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\thread\wrapper\thread_wrapper.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\uuid.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\version.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\window\win32\win32_window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\playstate\playstate\camera\camera.h" />
+    <ClInclude Include="..\..\playstate\playstate\camera\frustum.h" />
+    <ClInclude Include="..\..\playstate\playstate\collision\aabb.h" />
+    <ClInclude Include="..\..\playstate\playstate\collision\bounding_sphere.h" />
+    <ClInclude Include="..\..\playstate\playstate\component\component.h" />
+    <ClInclude Include="..\..\playstate\playstate\component\renderable\render_static_model.h" />
+    <ClInclude Include="..\..\playstate\playstate\component\scriptable_component.h" />
+    <ClInclude Include="..\..\playstate\playstate\config.h" />
+    <ClInclude Include="..\..\playstate\playstate\exception.h" />
+    <ClInclude Include="..\..\playstate\playstate\filesystem\directory.h" />
+    <ClInclude Include="..\..\playstate\playstate\filesystem\file.h" />
+    <ClInclude Include="..\..\playstate\playstate\filesystem\file_system.h" />
+    <ClInclude Include="..\..\playstate\playstate\filesystem\win32\win32_directory.h" />
+    <ClInclude Include="..\..\playstate\playstate\filesystem\win32\win32_file.h" />
+    <ClInclude Include="..\..\playstate\playstate\filesystem\win32\win32_filesystem.h" />
+    <ClInclude Include="..\..\playstate\playstate\functions.h" />
+    <ClInclude Include="..\..\playstate\playstate\game\configuration.h" />
+    <ClInclude Include="..\..\playstate\playstate\game\game.h" />
+    <ClInclude Include="..\..\playstate\playstate\game\game_runner.h" />
+    <ClInclude Include="..\..\playstate\playstate\game\scripted_configuration.h" />
+    <ClInclude Include="..\..\playstate\playstate\input\input_state.h" />
+    <ClInclude Include="..\..\playstate\playstate\input\input_system.h" />
+    <ClInclude Include="..\..\playstate\playstate\input\win32\win32_input_state.h" />
+    <ClInclude Include="..\..\playstate\playstate\input\win32\win32_input_system.h" />
+    <ClInclude Include="..\..\playstate\playstate\linked_list.h" />
+    <ClInclude Include="..\..\playstate\playstate\math\color.h" />
+    <ClInclude Include="..\..\playstate\playstate\math\matrix4x4.h" />
+    <ClInclude Include="..\..\playstate\playstate\math\plane.h" />
+    <ClInclude Include="..\..\playstate\playstate\math\quaternion.h" />
+    <ClInclude Include="..\..\playstate\playstate\math\vector2.h" />
+    <ClInclude Include="..\..\playstate\playstate\math\vector3.h" />
+    <ClInclude Include="..\..\playstate\playstate\memory\memory.h" />
+    <ClInclude Include="..\..\playstate\playstate\model\model.h" />
+    <ClInclude Include="..\..\playstate\playstate\model\model_mesh.h" />
+    <ClInclude Include="..\..\playstate\playstate\model\wavefront\wavefront_resource_loader.h" />
+    <ClInclude Include="..\..\playstate\playstate\playstate.h" />
+    <ClInclude Include="..\..\playstate\playstate\processor\processors\linked_list_update_processor.h" />
+    <ClInclude Include="..\..\playstate\playstate\processor\processors\octree_render_processor.h" />
+    <ClInclude Include="..\..\playstate\playstate\processor\renderable.h" />
+    <ClInclude Include="..\..\playstate\playstate\processor\render_processor_factory.h" />
+    <ClInclude Include="..\..\playstate\playstate\processor\updatable.h" />
+    <ClInclude Include="..\..\playstate\playstate\processor\update_processor_factory.h" />
+    <ClInclude Include="..\..\playstate\playstate\rendering\components\default_gfx_program_component.h" />
+    <ClInclude Include="..\..\playstate\playstate\rendering\components\float_gfx_program_component.h" />
+    <ClInclude Include="..\..\playstate\playstate\rendering\components\gfx_program_component_not_found.h" />
+    <ClInclude Include="..\..\playstate\playstate\rendering\components\int_gfx_program_component.h" />
+    <ClInclude Include="..\..\playstate\playstate\rendering\components\matrix_gfx_program_component.h" />
+    <ClInclude Include="..\..\playstate\playstate\rendering\components\sampler2d_gfx_program_component.h" />
+    <ClInclude Include="..\..\playstate\playstate\rendering\exception\gfx_program_exception.h" />
+    <ClInclude Include="..\..\playstate\playstate\rendering\exception\rendering_exception.h" />
+    <ClInclude Include="..\..\playstate\playstate\rendering\factories\gfx_program_factory.h" />
+    <ClInclude Include="..\..\playstate\playstate\rendering\factories\vertex_array_object_factories.h" />
+    <ClInclude Include="..\..\playstate\playstate\rendering\gfx_program.h" />
+    <ClInclude Include="..\..\playstate\playstate\rendering\gfx_program_component.h" />
+    <ClInclude Include="..\..\playstate\playstate\rendering\index_buffer.h" />
+    <ClInclude Include="..\..\playstate\playstate\rendering\render_block_builder.h" />
+    <ClInclude Include="..\..\playstate\playstate\rendering\render_context.h" />
+    <ClInclude Include="..\..\playstate\playstate\rendering\render_pipeline.h" />
+    <ClInclude Include="..\..\playstate\playstate\rendering\render_state.h" />
+    <ClInclude Include="..\..\playstate\playstate\rendering\render_system.h" />
+    <ClInclude Include="..\..\playstate\playstate\rendering\render_target_2d.h" />
+    <ClInclude Include="..\..\playstate\playstate\rendering\state\state_policy.h" />
+    <ClInclude Include="..\..\playstate\playstate\rendering\texture2d.h" />
+    <ClInclude Include="..\..\playstate\playstate\rendering\vertex_array_object_factory.h" />
+    <ClInclude Include="..\..\playstate\playstate\rendering\vertex_buffer.h" />
+    <ClInclude Include="..\..\playstate\playstate\rendering\win32\win32_render_context.h" />
+    <ClInclude Include="..\..\playstate\playstate\rendering\win32\win32_render_system.h" />
+    <ClInclude Include="..\..\playstate\playstate\rendering\window_render_context.h" />
+    <ClInclude Include="..\..\playstate\playstate\resources\exception\load_resource_exception.h" />
+    <ClInclude Include="..\..\playstate\playstate\resources\exception\resource_exception.h" />
+    <ClInclude Include="..\..\playstate\playstate\resources\resource.h" />
+    <ClInclude Include="..\..\playstate\playstate\resources\resource_changed_listener.h" />
+    <ClInclude Include="..\..\playstate\playstate\resources\resource_data.h" />
+    <ClInclude Include="..\..\playstate\playstate\resources\resource_loader.h" />
+    <ClInclude Include="..\..\playstate\playstate\resources\resource_manager.h" />
+    <ClInclude Include="..\..\playstate\playstate\resources\resource_object.h" />
+    <ClInclude Include="..\..\playstate\playstate\scene\light.h" />
+    <ClInclude Include="..\..\playstate\playstate\scene\scene.h" />
+    <ClInclude Include="..\..\playstate\playstate\scene\scene_group.h" />
+    <ClInclude Include="..\..\playstate\playstate\scene\scene_node.h" />
+    <ClInclude Include="..\..\playstate\playstate\scene\tree\octree.h" />
+    <ClInclude Include="..\..\playstate\playstate\scene\tree\octree_node.h" />
+    <ClInclude Include="..\..\playstate\playstate\script\exception\script_exception.h" />
+    <ClInclude Include="..\..\playstate\playstate\script\exception\script_not_found_exception.h" />
+    <ClInclude Include="..\..\playstate\playstate\script\luam.h" />
+    <ClInclude Include="..\..\playstate\playstate\script\lua_call.h" />
+    <ClInclude Include="..\..\playstate\playstate\script\script.h" />
+    <ClInclude Include="..\..\playstate\playstate\script\scriptable.h" />
+    <ClInclude Include="..\..\playstate\playstate\script\script_collection.h" />
+    <ClInclude Include="..\..\playstate\playstate\script\script_system.h" />
+    <ClInclude Include="..\..\playstate\playstate\search\find_query.h" />
+    <ClInclude Include="..\..\playstate\playstate\search\find_result_set.h" />
+    <ClInclude Include="..\..\playstate\playstate\singleton.h" />
+    <ClInclude Include="..\..\playstate\playstate\thread\lock.h" />
+    <ClInclude Include="..\..\playstate\playstate\thread\runnable.h" />
+    <ClInclude Include="..\..\playstate\playstate\thread\thread.h" />
+    <ClInclude Include="..\..\playstate\playstate\thread\thread_event.h" />
+    <ClInclude Include="..\..\playstate\playstate\thread\thread_factory.h" />
+    <ClInclude Include="..\..\playstate\playstate\thread\win32\win32_lock.h" />
+    <ClInclude Include="..\..\playstate\playstate\thread\win32\win32_thread.h" />
+    <ClInclude Include="..\..\playstate\playstate\thread\win32\win32_thread_event.h" />
+    <ClInclude Include="..\..\playstate\playstate\thread\win32\win32_thread_factory.h" />
+    <ClInclude Include="..\..\playstate\playstate\thread\wrapper\lock_wrapper.h" />
+    <ClInclude Include="..\..\playstate\playstate\thread\wrapper\thread_wrapper.h" />
+    <ClInclude Include="..\..\playstate\playstate\types.h" />
+    <ClInclude Include="..\..\playstate\playstate\uuid.h" />
+    <ClInclude Include="..\..\playstate\playstate\version.h" />
+    <ClInclude Include="..\..\playstate\playstate\window\win32\win32_window.h" />
+    <ClInclude Include="..\..\playstate\playstate\window\window.h" />
+    <ClInclude Include="..\..\playstate\playstate\window\window_closed_listener.h" />
+    <ClInclude Include="..\..\playstate\playstate\window\window_resized_listener.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{49640F0E-B772-4535-9E7B-4C0C7C5C1CFF}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>playstate</RootNamespace>
+    <ProjectName>playstate</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <TargetName>$(ProjectName)_d</TargetName>
+    <OutDir>$(SolutionDir)../../bin/</OutDir>
+    <IntDir>$(SolutionDir)../../bin/$(Configuration)/$(ProjectName)/intermediate/</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)../../bin/</OutDir>
+    <IntDir>$(SolutionDir)../../bin/$(Configuration)/$(ProjectName)/intermediate/</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../../libraries/lua-5.2.1;../../libraries/glew-1.9.0/include;../../libraries/FreeImage</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4227</DisableSpecificWarnings>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <AdditionalIncludeDirectories>../../libraries/lua-5.2.1;../../libraries/glew-1.9.0/include;../../libraries/FreeImage;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4227</DisableSpecificWarnings>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+    </Lib>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,683 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\camera">
+      <UniqueIdentifier>{f5b4f987-259c-4a43-8695-4a2807111e8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\collision">
+      <UniqueIdentifier>{571dd9f2-6f01-44e3-823e-d05802063dc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\component">
+      <UniqueIdentifier>{62c59112-5239-4a04-9268-9ab1e5b5c1e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\component\renderable">
+      <UniqueIdentifier>{815cdbbe-3097-4f5d-ae55-f3b8428c5b32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\filesystem">
+      <UniqueIdentifier>{05107f29-e498-4c1a-acaf-8dd7cbab59c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\filesystem\win32">
+      <UniqueIdentifier>{28c24f12-018e-4537-90ea-c23c277638be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\game">
+      <UniqueIdentifier>{df6b26da-6979-443d-8a2c-c930954f2e92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\input">
+      <UniqueIdentifier>{e681f6ad-1981-4b05-b3e6-0fb341a2fa65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\input\win32">
+      <UniqueIdentifier>{133353c5-95c5-4f35-b61a-318a2f07b171}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\math">
+      <UniqueIdentifier>{eb4d9767-da5a-4c0f-ad55-a13ca9245fca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\memory">
+      <UniqueIdentifier>{6b0650df-e448-4262-9774-7dc567e0c6f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\model">
+      <UniqueIdentifier>{876d90f0-a52d-4f2f-a2a5-2be4899944f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\model\wavefront">
+      <UniqueIdentifier>{f73c9d8f-106c-4974-ad3c-e3d13d98c3f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\processor">
+      <UniqueIdentifier>{aa1f9274-be4b-459b-8fd3-bbf87b9d1418}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\processor\processors">
+      <UniqueIdentifier>{342b0ed2-9468-40b0-bf2b-a3540b71d647}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\rendering">
+      <UniqueIdentifier>{5ae97ec3-e472-43e4-8964-fdca1a37b917}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\rendering\state">
+      <UniqueIdentifier>{558ba079-8c8d-4699-a1e6-18dc8f3d0253}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\rendering\win32">
+      <UniqueIdentifier>{5a5654b3-713c-49f9-8060-8004e6682858}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\rendering\factories">
+      <UniqueIdentifier>{2052c7f2-46c2-4d26-a63d-9a7b1bf98e23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\rendering\exception">
+      <UniqueIdentifier>{77517685-692f-4f80-b390-94871dd6c1f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\rendering\components">
+      <UniqueIdentifier>{3a5b20c9-136c-4a8f-a127-0e4fef0d688a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\resources">
+      <UniqueIdentifier>{3bc19c8c-e359-4fe6-aaf2-2767e54e1076}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\resources\exception">
+      <UniqueIdentifier>{5280df9c-e4c6-4abd-b8c1-a00d2faab645}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scene">
+      <UniqueIdentifier>{0d0c2336-ec47-44b9-bc0a-65561e51537e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scene\tree">
+      <UniqueIdentifier>{ee915af1-32fb-4005-9529-75fe3564bc41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\script">
+      <UniqueIdentifier>{d1df4647-ff50-4821-9c03-6780d1a1a203}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\script\exception">
+      <UniqueIdentifier>{b206010b-c824-424b-b410-b5d5d2360f45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\search">
+      <UniqueIdentifier>{6d85e2e8-6dac-4fce-af77-2c2ec0408fa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\thread">
+      <UniqueIdentifier>{a91e27f5-0729-4861-8c5a-f3224ec6e79c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\thread\win32">
+      <UniqueIdentifier>{6c561878-7d69-4829-b686-97f1588b542e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\thread\wrapper">
+      <UniqueIdentifier>{89c63275-9b8c-4334-a062-15f3b6455154}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\window">
+      <UniqueIdentifier>{f166e526-5578-4379-a8b4-572cfe6c594c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\window\win32">
+      <UniqueIdentifier>{0b1fd027-38b5-4d08-8a57-d2fb48635930}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\game\win32">
+      <UniqueIdentifier>{e5d726bc-3a45-4191-b191-89b90df29008}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\playstate\playstate\camera\camera.cpp">
+      <Filter>Source Files\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\camera\frustum.cpp">
+      <Filter>Source Files\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\collision\aabb.cpp">
+      <Filter>Source Files\collision</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\component\component.cpp">
+      <Filter>Source Files\component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\component\scriptable_component.cpp">
+      <Filter>Source Files\component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\component\renderable\render_static_model.cpp">
+      <Filter>Source Files\component\renderable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\filesystem\win32\win32_directory.cpp">
+      <Filter>Source Files\filesystem\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\filesystem\win32\win32_file.cpp">
+      <Filter>Source Files\filesystem\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\filesystem\win32\win32_filesystem.cpp">
+      <Filter>Source Files\filesystem\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\game\game.cpp">
+      <Filter>Source Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\game\game_runner.cpp">
+      <Filter>Source Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\game\scripted_configuration.cpp">
+      <Filter>Source Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\input\input_system.cpp">
+      <Filter>Source Files\input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\input\win32\win32_input_state.cpp">
+      <Filter>Source Files\input\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\input\win32\win32_input_system.cpp">
+      <Filter>Source Files\input\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\math\color.cpp">
+      <Filter>Source Files\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\math\matrix4x4.cpp">
+      <Filter>Source Files\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\math\plane.cpp">
+      <Filter>Source Files\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\math\quaternion.cpp">
+      <Filter>Source Files\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\math\vector2.cpp">
+      <Filter>Source Files\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\math\vector3.cpp">
+      <Filter>Source Files\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\model\wavefront\wavefront_resource_loader.cpp">
+      <Filter>Source Files\model\wavefront</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\model\model.cpp">
+      <Filter>Source Files\model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\model\model_mesh.cpp">
+      <Filter>Source Files\model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\processor\processors\linked_list_update_processor.cpp">
+      <Filter>Source Files\processor\processors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\processor\processors\octree_render_processor.cpp">
+      <Filter>Source Files\processor\processors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\processor\render_processor_factory.cpp">
+      <Filter>Source Files\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\processor\renderable.cpp">
+      <Filter>Source Files\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\processor\updatable.cpp">
+      <Filter>Source Files\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\processor\update_processor_factory.cpp">
+      <Filter>Source Files\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\rendering\gfx_program.cpp">
+      <Filter>Source Files\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\rendering\index_buffer.cpp">
+      <Filter>Source Files\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\rendering\render_block_builder.cpp">
+      <Filter>Source Files\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\rendering\render_system.cpp">
+      <Filter>Source Files\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\rendering\render_target_2d.cpp">
+      <Filter>Source Files\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\rendering\texture2d.cpp">
+      <Filter>Source Files\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\rendering\vertex_buffer.cpp">
+      <Filter>Source Files\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\rendering\state\state_policy.cpp">
+      <Filter>Source Files\rendering\state</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\rendering\win32\win32_render_context.cpp">
+      <Filter>Source Files\rendering\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\rendering\win32\win32_render_system.cpp">
+      <Filter>Source Files\rendering\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\rendering\factories\gfx_program_factory.cpp">
+      <Filter>Source Files\rendering\factories</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\rendering\factories\vertex_array_object_factories.cpp">
+      <Filter>Source Files\rendering\factories</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\rendering\exception\gfx_program_exception.cpp">
+      <Filter>Source Files\rendering\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\rendering\exception\rendering_exception.cpp">
+      <Filter>Source Files\rendering\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\rendering\components\default_gfx_program_component.cpp">
+      <Filter>Source Files\rendering\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\rendering\components\float_gfx_program_component.cpp">
+      <Filter>Source Files\rendering\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\rendering\components\gfx_program_component_not_found.cpp">
+      <Filter>Source Files\rendering\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\rendering\components\int_gfx_program_component.cpp">
+      <Filter>Source Files\rendering\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\rendering\components\matrix_gfx_program_component.cpp">
+      <Filter>Source Files\rendering\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\rendering\components\sampler2d_gfx_program_component.cpp">
+      <Filter>Source Files\rendering\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\resources\resource_data.cpp">
+      <Filter>Source Files\resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\resources\resource_manager.cpp">
+      <Filter>Source Files\resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\resources\exception\load_resource_exception.cpp">
+      <Filter>Source Files\resources\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\resources\exception\resource_exception.cpp">
+      <Filter>Source Files\resources\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\scene\scene.cpp">
+      <Filter>Source Files\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\scene\scene_group.cpp">
+      <Filter>Source Files\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\scene\scene_node.cpp">
+      <Filter>Source Files\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\scene\tree\octree.cpp">
+      <Filter>Source Files\scene\tree</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\scene\tree\octree_node.cpp">
+      <Filter>Source Files\scene\tree</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\script\luam.cpp">
+      <Filter>Source Files\script</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\script\script.cpp">
+      <Filter>Source Files\script</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\script\script_collection.cpp">
+      <Filter>Source Files\script</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\script\script_system.cpp">
+      <Filter>Source Files\script</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\script\scriptable.cpp">
+      <Filter>Source Files\script</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\script\exception\script_exception.cpp">
+      <Filter>Source Files\script\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\script\exception\script_not_found_exception.cpp">
+      <Filter>Source Files\script\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\thread\win32\win32_lock.cpp">
+      <Filter>Source Files\thread\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\thread\win32\win32_thread.cpp">
+      <Filter>Source Files\thread\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\thread\win32\win32_thread_event.cpp">
+      <Filter>Source Files\thread\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\thread\win32\win32_thread_factory.cpp">
+      <Filter>Source Files\thread\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\thread\wrapper\lock_wrapper.cpp">
+      <Filter>Source Files\thread\wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\thread\wrapper\thread_wrapper.cpp">
+      <Filter>Source Files\thread\wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\window\win32\win32_window.cpp">
+      <Filter>Source Files\window\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\exception.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\functions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\uuid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\version.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\playstate\playstate\camera\camera.h">
+      <Filter>Source Files\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\camera\frustum.h">
+      <Filter>Source Files\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\collision\aabb.h">
+      <Filter>Source Files\collision</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\collision\bounding_sphere.h">
+      <Filter>Source Files\collision</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\component\component.h">
+      <Filter>Source Files\component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\component\scriptable_component.h">
+      <Filter>Source Files\component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\component\renderable\render_static_model.h">
+      <Filter>Source Files\component\renderable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\filesystem\directory.h">
+      <Filter>Source Files\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\filesystem\file.h">
+      <Filter>Source Files\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\filesystem\file_system.h">
+      <Filter>Source Files\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\filesystem\win32\win32_directory.h">
+      <Filter>Source Files\filesystem\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\filesystem\win32\win32_file.h">
+      <Filter>Source Files\filesystem\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\filesystem\win32\win32_filesystem.h">
+      <Filter>Source Files\filesystem\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\game\configuration.h">
+      <Filter>Source Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\game\game.h">
+      <Filter>Source Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\game\game_runner.h">
+      <Filter>Source Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\game\scripted_configuration.h">
+      <Filter>Source Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\input\input_state.h">
+      <Filter>Source Files\input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\input\input_system.h">
+      <Filter>Source Files\input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\input\win32\win32_input_state.h">
+      <Filter>Source Files\input\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\input\win32\win32_input_system.h">
+      <Filter>Source Files\input\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\math\color.h">
+      <Filter>Source Files\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\math\matrix4x4.h">
+      <Filter>Source Files\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\math\plane.h">
+      <Filter>Source Files\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\math\quaternion.h">
+      <Filter>Source Files\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\math\vector2.h">
+      <Filter>Source Files\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\math\vector3.h">
+      <Filter>Source Files\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\memory\memory.h">
+      <Filter>Source Files\memory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\model\wavefront\wavefront_resource_loader.h">
+      <Filter>Source Files\model\wavefront</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\model\model.h">
+      <Filter>Source Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\model\model_mesh.h">
+      <Filter>Source Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\processor\processors\linked_list_update_processor.h">
+      <Filter>Source Files\processor\processors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\processor\processors\octree_render_processor.h">
+      <Filter>Source Files\processor\processors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\processor\render_processor_factory.h">
+      <Filter>Source Files\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\processor\renderable.h">
+      <Filter>Source Files\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\processor\updatable.h">
+      <Filter>Source Files\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\processor\update_processor_factory.h">
+      <Filter>Source Files\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\gfx_program.h">
+      <Filter>Source Files\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\gfx_program_component.h">
+      <Filter>Source Files\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\index_buffer.h">
+      <Filter>Source Files\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\render_block_builder.h">
+      <Filter>Source Files\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\render_context.h">
+      <Filter>Source Files\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\render_pipeline.h">
+      <Filter>Source Files\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\render_state.h">
+      <Filter>Source Files\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\render_system.h">
+      <Filter>Source Files\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\render_target_2d.h">
+      <Filter>Source Files\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\texture2d.h">
+      <Filter>Source Files\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\vertex_array_object_factory.h">
+      <Filter>Source Files\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\vertex_buffer.h">
+      <Filter>Source Files\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\window_render_context.h">
+      <Filter>Source Files\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\state\state_policy.h">
+      <Filter>Source Files\rendering\state</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\win32\win32_render_context.h">
+      <Filter>Source Files\rendering\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\win32\win32_render_system.h">
+      <Filter>Source Files\rendering\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\factories\gfx_program_factory.h">
+      <Filter>Source Files\rendering\factories</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\factories\vertex_array_object_factories.h">
+      <Filter>Source Files\rendering\factories</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\exception\gfx_program_exception.h">
+      <Filter>Source Files\rendering\exception</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\exception\rendering_exception.h">
+      <Filter>Source Files\rendering\exception</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\components\default_gfx_program_component.h">
+      <Filter>Source Files\rendering\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\components\float_gfx_program_component.h">
+      <Filter>Source Files\rendering\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\components\gfx_program_component_not_found.h">
+      <Filter>Source Files\rendering\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\components\int_gfx_program_component.h">
+      <Filter>Source Files\rendering\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\components\matrix_gfx_program_component.h">
+      <Filter>Source Files\rendering\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\components\sampler2d_gfx_program_component.h">
+      <Filter>Source Files\rendering\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\resources\resource.h">
+      <Filter>Source Files\resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\resources\resource_changed_listener.h">
+      <Filter>Source Files\resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\resources\resource_data.h">
+      <Filter>Source Files\resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\resources\resource_loader.h">
+      <Filter>Source Files\resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\resources\resource_manager.h">
+      <Filter>Source Files\resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\resources\resource_object.h">
+      <Filter>Source Files\resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\resources\exception\load_resource_exception.h">
+      <Filter>Source Files\resources\exception</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\resources\exception\resource_exception.h">
+      <Filter>Source Files\resources\exception</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\scene\light.h">
+      <Filter>Source Files\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\scene\scene.h">
+      <Filter>Source Files\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\scene\scene_group.h">
+      <Filter>Source Files\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\scene\scene_node.h">
+      <Filter>Source Files\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\scene\tree\octree.h">
+      <Filter>Source Files\scene\tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\scene\tree\octree_node.h">
+      <Filter>Source Files\scene\tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\script\lua_call.h">
+      <Filter>Source Files\script</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\script\luam.h">
+      <Filter>Source Files\script</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\script\script.h">
+      <Filter>Source Files\script</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\script\script_collection.h">
+      <Filter>Source Files\script</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\script\script_system.h">
+      <Filter>Source Files\script</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\script\scriptable.h">
+      <Filter>Source Files\script</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\script\exception\script_exception.h">
+      <Filter>Source Files\script\exception</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\script\exception\script_not_found_exception.h">
+      <Filter>Source Files\script\exception</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\search\find_query.h">
+      <Filter>Source Files\search</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\search\find_result_set.h">
+      <Filter>Source Files\search</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\thread\lock.h">
+      <Filter>Source Files\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\thread\runnable.h">
+      <Filter>Source Files\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\thread\thread.h">
+      <Filter>Source Files\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\thread\thread_event.h">
+      <Filter>Source Files\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\thread\thread_factory.h">
+      <Filter>Source Files\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\thread\win32\win32_lock.h">
+      <Filter>Source Files\thread\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\thread\win32\win32_thread.h">
+      <Filter>Source Files\thread\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\thread\win32\win32_thread_event.h">
+      <Filter>Source Files\thread\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\thread\win32\win32_thread_factory.h">
+      <Filter>Source Files\thread\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\thread\wrapper\lock_wrapper.h">
+      <Filter>Source Files\thread\wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\thread\wrapper\thread_wrapper.h">
+      <Filter>Source Files\thread\wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\window\window.h">
+      <Filter>Source Files\window</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\window\window_closed_listener.h">
+      <Filter>Source Files\window</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\window\window_resized_listener.h">
+      <Filter>Source Files\window</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\window\win32\win32_window.h">
+      <Filter>Source Files\window\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\config.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\exception.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\functions.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\linked_list.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\singleton.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\types.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\uuid.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\version.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\playstate.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
