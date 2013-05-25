@@ -68,3 +68,12 @@ TestCase(Vector3_Zero, "val1.Zero() == Vector3::ZERO")
 
 	AssertEquals(val1, Vector3::ZERO);
 }
+
+TestCase(Vector3_Negate, "val1.Negate() == expected")
+{
+	Vector3 val1(3.0f, 4.0f, 5.0f);
+	val1.Negate();
+	const Vector3 expected(-3.0f, -4.0f, -5.0f);
+
+	AssertEquals(val1, expected);
+}

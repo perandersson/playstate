@@ -61,10 +61,19 @@ TestCase(Vector2_Normalize, "û == expected")
 	AssertEquals(û, expected);
 }
 
-TestCase(Vector2_Zero, "val1.Zero() == Vector3::ZERO")
+TestCase(Vector2_Zero, "val1.Zero() == Vector2::ZERO")
 {
 	Vector2 val1(3.0f, 4.0f);
 	val1.Zero();
 
 	AssertEquals(val1, Vector2::ZERO);
+}
+
+TestCase(Vector2_Negate, "val1.Negate() == expected")
+{
+	Vector2 val1(3.0f, 4.0f);
+	val1.Negate();
+	const Vector2 expected(-3.0f, -4.0f);
+
+	AssertEquals(val1, expected);
 }
