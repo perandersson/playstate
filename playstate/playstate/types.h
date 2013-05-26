@@ -30,6 +30,8 @@ namespace playstate
 	typedef double float64;
 
 	typedef char byte;
+
+	typedef uint32 type_mask;
 }
 
 #ifndef ALIGN_DATA

@@ -10,6 +10,14 @@ SceneGroup::SceneGroup()
 	assert(mRenderProcessor != NULL && "IRenderProcessorFactory did not create a valid render processor");
 }
 
+SceneGroup::SceneGroup(IUpdateProcessorFactory& updateProcessFactory, IRenderProcessorFactory& renderProcessFactory)
+	: mUpdateProcessor(updateProcessFactory.Create()),
+	mRenderProcessor(renderProcessFactory.Create())
+{
+	assert(mUpdateProcessor != NULL && "IUpdateProcessorFactory did not create a valid update processor");
+	assert(mRenderProcessor != NULL && "IRenderProcessorFactory did not create a valid render processor");
+}
+
 SceneGroup::~SceneGroup()
 {
 	mSceneNodes.DeleteAll();

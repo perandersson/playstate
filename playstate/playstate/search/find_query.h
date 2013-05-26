@@ -10,6 +10,6 @@ namespace playstate
 	struct FindQuery
 	{
 		const Camera* Camera;
-		uint64 Filter;
+		type_mask Filter;
 	};
 }

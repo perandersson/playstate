@@ -47,12 +47,11 @@ namespace playstate
 		LinkedListBase<T>* List;
 	};
 
-	template<class T, LinkedListLink<T> T::*_LinkAddr>
+	template<class T, typename LinkedListLink<T> T::*_LinkAddr>
 	class LinkedList : public LinkedListBase<T>
 	{
 	public:
 		typename typedef LinkedListLink<T> Link;
-		//typename typedef void(*ActionPtr)(T&);
 
 	public:
 		//
@@ -83,10 +82,6 @@ namespace playstate
 		//
 		// Unlinks all the nodes inside this list
 		void UnlinkAll();
-
-		//
-		// Invoke an action for all nodes in the list
-		//void ForEach(ActionPtr action); 
 
 	protected:
 		//
@@ -156,18 +151,18 @@ namespace playstate
 
 	///////////////////////////////////
 
-	template<class T, LinkedListLink<T> T::*_LinkAddr>
+	template<class T, typename LinkedListLink<T> T::*_LinkAddr>
 	LinkedList<T, _LinkAddr>::LinkedList() : LinkedListBase<T>()
 	{
 	}
 
-	template<class T, LinkedListLink<T> T::*_LinkAddr>
+	template<class T, typename LinkedListLink<T> T::*_LinkAddr>
 	LinkedList<T, _LinkAddr>::~LinkedList()
 	{
 		UnlinkAll();
 	}
 
-	template<class T, LinkedListLink<T> T::*_LinkAddr>
+	template<class T, typename LinkedListLink<T> T::*_LinkAddr>
 	void LinkedList<T, _LinkAddr>::AddLast(T* item)
 	{
 		// Find the link for the supplied item
@@ -190,7 +185,7 @@ namespace playstate
 		link.Link(item, this);
 	}
 
-	template<class T, LinkedListLink<T> T::*_LinkAddr>
+	template<class T, typename LinkedListLink<T> T::*_LinkAddr>
 	void LinkedList<T, _LinkAddr>::Remove(T* item) 
 	{
 		assert(item != NULL && "You cannot remove a non-existing item");
@@ -204,19 +199,19 @@ namespace playstate
 		link.Unlink();
 	}
 
-	template<class T, LinkedListLink<T> T::*_LinkAddr>
+	template<class T, typename LinkedListLink<T> T::*_LinkAddr>
 	typename LinkedList<T, _LinkAddr>::Link& LinkedList<T, _LinkAddr>::GetLink(T* item)
 	{
 		return (*item).*_LinkAddr;
 	}
 
-	template<class T, LinkedListLink<T> T::*_LinkAddr>
+	template<class T, typename LinkedListLink<T> T::*_LinkAddr>
 	T* LinkedList<T, _LinkAddr>::First() const
 	{
 		return Head;
 	}
 
-	template<class T, LinkedListLink<T> T::*_LinkAddr>
+	template<class T, typename LinkedListLink<T> T::*_LinkAddr>
 	void LinkedList<T, _LinkAddr>::UnlinkAll() {
 		T* ptr = Head;
 		while(ptr != NULL) {
@@ -229,7 +224,7 @@ namespace playstate
 		Head = Tail = NULL;
 	}
 
-	template<class T, LinkedListLink<T> T::*_LinkAddr>
+	template<class T, typename LinkedListLink<T> T::*_LinkAddr>
 	void LinkedList<T, _LinkAddr>::DeleteAll()
 	{
 		T* ptr = Head;
@@ -241,16 +236,4 @@ namespace playstate
 		}
 		Head = Tail = NULL;
 	}
-
-	/*template<class T, LinkedListLink<T> T::*_LinkAddr>
-	void LinkedList<T, _LinkAddr>::ForEach(ActionPtr action)
-	{
-		T* ptr = Head;
-		while(ptr != NULL) {
-			Link& link = GetLink(ptr);
-			T* next = link.Tail;
-			(*action)(*ptr);
-			ptr = next;
-		}
-	}*/
 }

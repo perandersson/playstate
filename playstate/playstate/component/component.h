@@ -25,7 +25,7 @@ namespace playstate
 		// @param type The component type. 
 		//		If you want to be able to retireve a component from another component then you have to
 		//		supply a component type ID here. Any value larger then 0 is fine.
-		Component(uint32 typeMask);
+		Component(type_mask typeMask);
 
 		//
 		// Destructor
@@ -41,7 +41,7 @@ namespace playstate
 		SceneNode*& const Owner;
 
 		// 
-		const uint32& Type;
+		const type_mask& TypeMask;
 
 	protected:		
 		//
@@ -54,7 +54,7 @@ namespace playstate
 
 	protected:
 		SceneNode* mOwner;
-		uint32 mType;
+		type_mask mTypeMask;
 	};
 }
 

@@ -24,6 +24,13 @@ namespace playstate
 		SceneNode(SceneGroup* group);
 
 		//
+		// Constructor
+		// @param group The group where this node is to be placed. This will add the current
+		//	instance to the group automatically.
+		// @param typeMask The scene node type mask
+		SceneNode(SceneGroup* group, type_mask typeMask);
+
+		//
 		//
 		virtual ~SceneNode();
 		
@@ -55,7 +62,7 @@ namespace playstate
 		// Retrieves a component based on the supplied type. If no component is found then return NULL.
 		// @param type
 		// @return The component if found; NULL otherwise
-		Component* GetComponent(uint32 type);
+		Component* GetComponent(type_mask type);
 		
 		//
 		// Sets the position of this node.
@@ -98,7 +105,7 @@ namespace playstate
 		SceneGroup*& const Group;
 
 		// Public read-only property for the type mask.
-		const uint32& TypeMask;
+		const type_mask& TypeMask;
 		
 	private:
 		Vector3 mRotation;
@@ -106,7 +113,7 @@ namespace playstate
 		Vector3 mPosition;
 		Vector3 mAbsolutePosition;
 		Matrix4x4 mModelMatrix;
-		uint32 mTypeMask;
+		type_mask mTypeMask;
 
 	private:
 		SceneNode* mParent;

@@ -1,12 +1,11 @@
 #pragma once
-#include "../script/scriptable.h"
 #include "scene_group.h"
 #include "../linked_list.h"
 #include "../camera/camera.h"
 
 namespace playstate
 {
-	class Scene : public Scriptable
+	class Scene
 	{
 	public:
 		Scene();

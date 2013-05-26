@@ -4,7 +4,18 @@
 using namespace playstate;
 
 SceneNode::SceneNode(SceneGroup* group)
-	: mSceneGroup(group), mTypeMask(0), mParent(NULL),
+	: mSceneGroup(group), mTypeMask(0xffffffff), mParent(NULL),
+	Rotation(mRotation), AbsoluteRotation(mAbsoluteRotation),
+	Position(mPosition), AbsolutePosition(mAbsolutePosition),
+	ModelMatrix(mModelMatrix), Group(mSceneGroup), TypeMask(mTypeMask)
+{
+	assert_not_null(group);
+	group->AddSceneNode(this);
+}
+
+
+SceneNode::SceneNode(SceneGroup* group, type_mask typeMask)
+	: mSceneGroup(group), mTypeMask(typeMask), mParent(NULL),
 	Rotation(mRotation), AbsoluteRotation(mAbsoluteRotation),
 	Position(mPosition), AbsolutePosition(mAbsolutePosition),
 	ModelMatrix(mModelMatrix), Group(mSceneGroup), TypeMask(mTypeMask)
@@ -48,11 +59,11 @@ void SceneNode::RemoveComponent(Component* component)
 	delete component;
 }
 
-Component* SceneNode::GetComponent(uint32 type)
+Component* SceneNode::GetComponent(type_mask typeMask)
 {
 	Component* component = mComponents.First();
 	while(component != NULL) {
-		if(component->Type == type)
+		if((component->TypeMask & typeMask) != 0)
 			return component;
 
 		component = component->ComponentLink.Tail;
