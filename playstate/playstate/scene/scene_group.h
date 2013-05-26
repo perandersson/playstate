@@ -37,7 +37,7 @@ namespace playstate
 	public:
 		virtual void AttachRenderable(Renderable* renderable);
 		virtual void DetachRenderable(Renderable* renderable);
-		virtual bool FindRenderableItems(const FindQuery& query, FindResultSet<RenderBlock>* target) const;
+		virtual bool Find(const FindQuery& query, FindResultSet<RenderBlock>* target) const;
 
 	private:
 		LinkedList<SceneNode, &SceneNode::NodeLink> mSceneNodes;

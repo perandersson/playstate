@@ -62,7 +62,7 @@ private:
 	RenderBlockBuilder mBlockBuilder;
 };
 
-bool OctreeRenderProcessor::FindRenderableItems(const FindQuery& query, FindResultSet<RenderBlock>* target) const
+bool OctreeRenderProcessor::Find(const FindQuery& query, FindResultSet<RenderBlock>* target) const
 {
 	RenderState state;
 	state.Camera = query.Camera;

@@ -27,7 +27,7 @@ namespace playstate
 		//
 		// Find renderable items in this scene based on the supplied camera and put the results
 		// inside the target vector
-		virtual bool FindRenderableItems(const FindQuery& query, FindResultSet<RenderBlock>* target) const = 0;
+		virtual bool Find(const FindQuery& query, FindResultSet<RenderBlock>* target) const = 0;
 	};
 
 	//

@@ -7,7 +7,7 @@
 using namespace playstate;
 
 Camera::Camera() : ViewMatrix(mViewMatrix), ProjectionMatrix(mProjection), 
-	Position(mPosition), Center(mCenter), Up(mUp), ViewFrustum(mViewFrustum), mInvalidated(false)
+	Position(mPosition), Center(mCenter), Up(mUp), ViewFrustum(mViewFrustum)
 {}
 
 Camera::~Camera()
@@ -110,6 +110,14 @@ namespace playstate
 		float* eye = (float*)lua_touserdata(L, -1); lua_pop(L, 1);
 
 		GameRunner::Get().ActiveScene.ActiveCamera.LookAt(Vector3(eye), Vector3(center), Vector3(up));
+		return 0;
+	}
+
+	int ActiveCamera_Move(lua_State* L)
+	{
+		float* direction = (float*)lua_touserdata(L, -1); lua_pop(L, 1);
+
+		GameRunner::Get().ActiveScene.ActiveCamera.Move(Vector3(direction));
 		return 0;
 	}
 }

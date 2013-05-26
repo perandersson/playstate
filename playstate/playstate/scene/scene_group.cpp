@@ -66,9 +66,9 @@ void SceneGroup::DetachRenderable(Renderable* renderable)
 	mRenderProcessor->DetachRenderable(renderable);
 }
 
-bool SceneGroup::FindRenderableItems(const FindQuery& query, FindResultSet<RenderBlock>* target) const
+bool SceneGroup::Find(const FindQuery& query, FindResultSet<RenderBlock>* target) const
 {
-	return mRenderProcessor->FindRenderableItems(query, target);
+	return mRenderProcessor->Find(query, target);
 }
 
 namespace playstate

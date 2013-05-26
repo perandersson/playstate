@@ -87,7 +87,7 @@ void DeferredRenderPipeline::DrawGeometry(const Scene* scene, const Camera* came
 	query.Camera = camera;
 
 	FindResultSet<RenderBlock> resultSet;
-	if(scene->QueryRenderables(query, &resultSet)) {
+	if(scene->Find(query, &resultSet)) {
 		mDeferredShader->Apply();
 		mDeferredShader->Clear(ClearTypes::COLOR | ClearTypes::DEPTH);
 

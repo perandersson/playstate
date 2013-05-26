@@ -53,6 +53,9 @@
     <ClCompile Include="..\..\playstate.tests\playstate\types\linked_list_test.cpp">
       <Filter>Source Files\types</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\playstate.tests\playstate\scene\scene_test.cpp">
+      <Filter>Source Files\scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\playstate.tests\playstate\test.h">

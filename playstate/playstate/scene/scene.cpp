@@ -36,13 +36,13 @@ void Scene::Update()
 }
 
 
-bool Scene::QueryRenderables(const FindQuery& query, FindResultSet<RenderBlock>* target) const
+bool Scene::Find(const FindQuery& query, FindResultSet<RenderBlock>* target) const
 {
 	bool found = false;
 	const SceneGroup* group = mSceneGroups.First();
 	while(group != NULL) {
 		const SceneGroup* next = group->GroupLink.Tail;
-		if(group->FindRenderableItems(query, target))
+		if(group->Find(query, target))
 			found = true;
 		group = next;
 	}

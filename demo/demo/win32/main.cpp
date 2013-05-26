@@ -30,8 +30,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 
 	try
 	{
-		new int();
-
 		// Filesystem
 		std::vector<std::string> paths;
 		paths.push_back(std::string("data/demo"));
@@ -45,7 +43,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 		ss.RegisterType("IGame", IGame_Methods);
 		ss.RegisterType("Game", Game_Methods);
 		ss.RegisterType("Input", IInputSystem_Methods);
-
 		ss.RegisterType("Scene", Scene_Methods);
 		ss.RegisterType("SceneGroup", SceneGroup_Methods);
 		ss.RegisterType("SceneNode", SceneNode_Methods);

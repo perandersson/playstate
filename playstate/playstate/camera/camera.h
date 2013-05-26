@@ -48,8 +48,6 @@ namespace playstate
 		Vector3 mPosition;
 		Vector3 mCenter;
 		Vector3 mUp;
-
-		bool mInvalidated;
 	};
 
 	//
@@ -58,9 +56,11 @@ namespace playstate
 
 	extern int ActiveCamera_SetPerspective(lua_State* L);
 	extern int ActiveCamera_LookAt(lua_State* L);
+	extern int ActiveCamera_Move(lua_State* L);
 	static luaL_Reg ActiveCamera_Methods[] = {
 		{ "SetPerspective", ActiveCamera_SetPerspective },
 		{ "LookAt", ActiveCamera_LookAt },
+		{ "Move", ActiveCamera_Move },
 		{ NULL, NULL }
 	};
 }
