@@ -85,9 +85,7 @@ void DeferredRenderPipeline::DrawGeometry(const Scene* scene, const Camera* came
 {
 	FindQuery query;
 	query.Camera = camera;
-
-	FindResultSet<RenderBlock> resultSet;
-	if(scene->Find(query, &resultSet)) {
+	if(scene->Find(query, &mRenderBlockResultSet)) {
 		mDeferredShader->Apply();
 		mDeferredShader->Clear(ClearTypes::COLOR | ClearTypes::DEPTH);
 
@@ -100,14 +98,14 @@ void DeferredRenderPipeline::DrawGeometry(const Scene* scene, const Camera* came
 		IGfxProgramComponent* diffuseColor = mDeferredShader->GetComponent("DiffuseColor");
 		
 		// Draw scene objects
-		RenderBlock* block = resultSet.Next();
 		GfxProgram* deferredShader = mDeferredShader.get();
-		while(block != NULL) {
-			diffuseTexture->SetTexture(block->DiffuseTexture);
-			diffuseColor->SetColorRGB(block->DiffuseColor);
-			modelMatrix->SetMatrix(block->ModelMatrix);
-			deferredShader->Render(block->VertexBuffer, block->IndexBuffer);
-			block = resultSet.Next();
+		for(uint32 index = 0; index < mRenderBlockResultSet.Size; ++index) {
+			const uint32 sortedIndex = mRenderBlockResultSet.SortedIndexes[index];
+			RenderBlock& block = mRenderBlockResultSet.RenderBlocks[sortedIndex];
+			diffuseTexture->SetTexture(block.DiffuseTexture);
+			diffuseColor->SetColorRGB(block.DiffuseColor);
+			modelMatrix->SetMatrix(block.ModelMatrix);
+			deferredShader->Render(block.VertexBuffer, block.IndexBuffer);
 		}
 		
 		// Draw lighting to the lighting render target
@@ -116,7 +114,7 @@ void DeferredRenderPipeline::DrawGeometry(const Scene* scene, const Camera* came
 		// Draw the final result onto the screen
 		DrawFinalResultToScreen(scene, camera);
 	}
-
+	mRenderBlockResultSet.Reset();
 	CHECK_GL_ERROR();
 }
 

@@ -1,8 +1,8 @@
 #pragma once
 #include "../linked_list.h"
 #include "../scene/tree/octree_node.h"
-#include "../rendering/render_block_builder.h"
 #include "../rendering/render_state.h"
+#include "../search/render_block_result_set.h"
 
 namespace playstate
 {
@@ -37,6 +37,6 @@ namespace playstate
 		//
 		// @param builder
 		// @param state
-		virtual void CollectBuildingBlocks(RenderBlockBuilder& builder, RenderState& state) = 0;
+		virtual void CollectBuildingBlocks(RenderBlockResultSet& resultSet, RenderState& state) = 0;
 	};
 }

@@ -5,12 +5,16 @@
 
 namespace playstate
 {
-	enum RenderStateFilter
+	class RenderStateFilter
 	{
-		Geometry = BIT(1),
-		DiffuseTexture = BIT(2),
+	public:
+		enum Enum {
+			GEOMETRY = BIT(0),
+			DIFFUSE_TEXTURE = BIT(1),
+			ALL = GEOMETRY | DIFFUSE_TEXTURE
+		};
 
-		AllRenderStateFilters = Geometry | DiffuseTexture
+		static const Enum Default = ALL;
 	};
 
 	//

@@ -17,7 +17,7 @@ public:
 		items.erase(it);
 	}
 
-	virtual bool Find(const FindQuery& query, FindResultSet<RenderBlock>* target) const
+	virtual bool Find(const FindQuery& query, RenderBlockResultSet* target) const
 	{
 		
 		return true;
@@ -81,7 +81,7 @@ public:
 		Renderable::Detach();
 	}
 
-	virtual void CollectBuildingBlocks(RenderBlockBuilder& builder, RenderState& state)
+	virtual void CollectBuildingBlocks(RenderBlockResultSet& builder, RenderState& state)
 	{
 	}
 };
@@ -91,7 +91,7 @@ TestCase(Scene_FindNonExistingItems, "Scene.Find(...) == false")
 	const Scene scene;
 	const FindQuery query = { NULL, 0 };
 
-	FindResultSet<RenderBlock> resultSet;
+	RenderBlockResultSet resultSet;
 	AssertFalse(scene.Find(query, &resultSet));
 }
 
@@ -109,6 +109,6 @@ TestCase(Scene_FindRenderableItems, "Scene.Find(NULL, TempType) == true")
 	
 	const FindQuery query = { NULL, 0 };
 	
-	FindResultSet<RenderBlock> resultSet;
+	RenderBlockResultSet resultSet;
 	AssertTrue(scene.Find(query, &resultSet));
 }

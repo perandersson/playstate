@@ -31,45 +31,36 @@ void OctreeRenderProcessor::DetachRenderable(Renderable* renderable)
 class RenderableEventHandlerVisitor : public IOctreeVisitor
 {
 public:
-	RenderableEventHandlerVisitor(RenderState state)
-		: mRenderState(state)
+	RenderableEventHandlerVisitor(RenderState state, RenderBlockResultSet* target)
+		: mRenderState(state), mResultSetTarget(target)
 	{
+		assert_not_null(target);
 	}
 	
 	virtual ~RenderableEventHandlerVisitor()
 	{
 	}
 
-	bool SortAndSave(FindResultSet<RenderBlock>* target)
-	{
-		// TODO: Make sure that the block builder doesn't use a global pointer list.
-		// because we want to be able to use this from multiple threads at the same time.
-		// Example = g-buffer rendering and shadow mapping in different threads.
-		bool result = mBlockBuilder.SortAndSave(target);
-		mBlockBuilder.Clean();
-		return result;
-	}
-
 // IOctreeVisitor
 public:
 	virtual void Visit(OctreeNode* item)
 	{
-		static_cast<Renderable*>(item)->CollectBuildingBlocks(mBlockBuilder, mRenderState);
+		static_cast<Renderable*>(item)->CollectBuildingBlocks(*mResultSetTarget, mRenderState);
 	}
 
 private:
 	RenderState mRenderState;
-	RenderBlockBuilder mBlockBuilder;
+	RenderBlockResultSet* mResultSetTarget;
 };
 
-bool OctreeRenderProcessor::Find(const FindQuery& query, FindResultSet<RenderBlock>* target) const
+bool OctreeRenderProcessor::Find(const FindQuery& query, RenderBlockResultSet* target) const
 {
 	RenderState state;
 	state.Camera = query.Camera;
 
-	RenderableEventHandlerVisitor visitor(state);
+	RenderableEventHandlerVisitor visitor(state, target);
 	mOctree.FindItems(state.Camera->ViewFrustum, &visitor);
-	return visitor.SortAndSave(target);
+	return target->Size > 0;
 }
 
 OctreeRenderProcessorFactory::OctreeRenderProcessorFactory()

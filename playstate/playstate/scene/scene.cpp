@@ -36,7 +36,7 @@ void Scene::Update()
 }
 
 
-bool Scene::Find(const FindQuery& query, FindResultSet<RenderBlock>* target) const
+bool Scene::Find(const FindQuery& query, RenderBlockResultSet* target) const
 {
 	bool found = false;
 	const SceneGroup* group = mSceneGroups.First();

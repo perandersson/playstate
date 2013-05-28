@@ -24,6 +24,12 @@
     <Filter Include="Source Files\types">
       <UniqueIdentifier>{dad52bc5-1584-4abd-9117-10176fe5219f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\search">
+      <UniqueIdentifier>{f00e05f6-89e6-4719-afc5-8a9aad743497}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\search\sorter">
+      <UniqueIdentifier>{43669749-45b4-410f-b5fd-cd648db89e87}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\playstate.tests\playstate\main.cpp">
@@ -55,6 +61,9 @@
     </ClCompile>
     <ClCompile Include="..\..\playstate.tests\playstate\scene\scene_test.cpp">
       <Filter>Source Files\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate.tests\playstate\search\sorter\quick_sort_array_sorter_test.cpp">
+      <Filter>Source Files\search\sorter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -35,7 +35,7 @@ namespace playstate
 
 	// IRenderable
 	public:
-		virtual void CollectBuildingBlocks(RenderBlockBuilder& builder, RenderState& state);
+		virtual void CollectBuildingBlocks(RenderBlockResultSet& resultSet, RenderState& state);
 
 	private:
 		Resource<Model> mModel;

@@ -2,7 +2,7 @@
 #include "../singleton.h"
 #include "renderable.h"
 #include "../search/find_query.h"
-#include "../search/find_result_set.h"
+#include "../search/render_block_result_set.h"
 
 namespace playstate
 {
@@ -27,7 +27,7 @@ namespace playstate
 		//
 		// Find renderable items in this scene based on the supplied camera and put the results
 		// inside the target vector
-		virtual bool Find(const FindQuery& query, FindResultSet<RenderBlock>* target) const = 0;
+		virtual bool Find(const FindQuery& query, RenderBlockResultSet* target) const = 0;
 	};
 
 	//

@@ -27,7 +27,7 @@ namespace playstate
 		// Query the Scene for items located in it.
 		// @param query The query we are performing
 		// @param target Container where all the found items are put into
-		bool Find(const FindQuery& query, FindResultSet<RenderBlock>* target) const;
+		bool Find(const FindQuery& query, RenderBlockResultSet* target) const;
 
 		//
 		// Query the scene for lights located in it

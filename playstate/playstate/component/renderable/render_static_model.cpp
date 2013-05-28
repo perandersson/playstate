@@ -36,18 +36,22 @@ void RenderStaticModel::OnUnloading(ResourceObject* object)
 	SetBoundingBox(mModel->BoundingBox, Owner->AbsolutePosition);
 }
 
-void RenderStaticModel::CollectBuildingBlocks(RenderBlockBuilder& builder, RenderState& state)
+void RenderStaticModel::CollectBuildingBlocks(RenderBlockResultSet& resultSet, RenderState& state)
 {
 	const Model* model = mModel.Get();
 	uint32 size = model->Size;
 	for(uint32 i = 0; i < size; ++i) {
 		const ModelMesh& mesh = model->Meshes[i];
-		RenderBlock* block = builder.NewBlock(mesh.Id);
-		block->ModelMatrix = Owner->ModelMatrix;
-		block->VertexBuffer = mesh.Vertices;
-		block->IndexBuffer = mesh.Indices;
-		block->DiffuseTexture = mesh.DiffuseTexture.Get();
-		block->DiffuseColor = mesh.DiffuseColor;
+		RenderBlock& block = resultSet.CreateAndGet(mesh.Id);
+		block.ModelMatrix = Owner->ModelMatrix;
+		if(BIT_ISSET(state.Filter, RenderStateFilter::GEOMETRY)) {
+			block.VertexBuffer = mesh.Vertices;
+			block.IndexBuffer = mesh.Indices;
+		}
+		if(BIT_ISSET(state.Filter, RenderStateFilter::DIFFUSE_TEXTURE)) {
+			block.DiffuseTexture = mesh.DiffuseTexture.Get();
+		}
+		block.DiffuseColor = mesh.DiffuseColor;
 	}
 }
 
