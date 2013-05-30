@@ -252,8 +252,8 @@ RenderTarget2D* RenderSystem::CreateRenderTarget2D(uint32 width, uint32 height, 
 		break;
 	}
 
-	GLint boundTextureId = 0;
-	glGetIntegerv(GL_TEXTURE_2D, &boundTextureId);
+	GLuint boundTextureId = 0;
+	glGetIntegerv(GL_TEXTURE_BINDING_2D, (GLint*)&boundTextureId);
 
 	GLuint textureId = 0;
 	glGenTextures(1, &textureId);

@@ -80,6 +80,7 @@
     <ClCompile Include="..\..\playstate\playstate\script\script_system.cpp" />
     <ClCompile Include="..\..\playstate\playstate\search\render_block_result_set.cpp" />
     <ClCompile Include="..\..\playstate\playstate\search\sorter\quick_sort_array_sorter.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\search\sorter\render_block_array_sorter.cpp" />
     <ClCompile Include="..\..\playstate\playstate\thread\win32\win32_lock.cpp" />
     <ClCompile Include="..\..\playstate\playstate\thread\win32\win32_thread.cpp" />
     <ClCompile Include="..\..\playstate\playstate\thread\win32\win32_thread_event.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="..\..\playstate\playstate\search\find_query.h" />
     <ClInclude Include="..\..\playstate\playstate\search\render_block_result_set.h" />
     <ClInclude Include="..\..\playstate\playstate\search\sorter\quick_sort_array_sorter.h" />
+    <ClInclude Include="..\..\playstate\playstate\search\sorter\render_block_array_sorter.h" />
     <ClInclude Include="..\..\playstate\playstate\singleton.h" />
     <ClInclude Include="..\..\playstate\playstate\thread\lock.h" />
     <ClInclude Include="..\..\playstate\playstate\thread\runnable.h" />

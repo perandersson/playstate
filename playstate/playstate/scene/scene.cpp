@@ -1,6 +1,7 @@
 #include "../memory/memory.h"
 #include "scene.h"
 #include "../game/game_runner.h"
+#include "../search/sorter/render_block_array_sorter.h"
 using namespace playstate;
 
 Scene::Scene()
@@ -46,6 +47,8 @@ bool Scene::Find(const FindQuery& query, RenderBlockResultSet* target) const
 			found = true;
 		group = next;
 	}
+	RenderBlockArraySorter defaultSorter;
+	target->Sort(&defaultSorter);
 	return found;
 }
 

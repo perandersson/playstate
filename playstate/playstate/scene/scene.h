@@ -30,6 +30,10 @@ namespace playstate
 		bool Find(const FindQuery& query, RenderBlockResultSet* target) const;
 
 		//
+		// Queries the scene for items and sorts them using the supplied sorter algorithm
+		//bool Find(const FindQuery& query, RenderBlockResultSet* target, IArraySorter<uint32>* sorter) const;
+
+		//
 		// Query the scene for lights located in it
 		// @param query
 		// @param target

@@ -350,6 +350,9 @@
     <ClCompile Include="..\..\playstate\playstate\search\render_block_result_set.cpp">
       <Filter>Source Files\search</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\search\sorter\render_block_array_sorter.cpp">
+      <Filter>Source Files\search\sorter</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\playstate\playstate\camera\camera.h">
@@ -690,6 +693,9 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\rendering\render_block.h">
       <Filter>Source Files\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\search\sorter\render_block_array_sorter.h">
+      <Filter>Source Files\search\sorter</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
