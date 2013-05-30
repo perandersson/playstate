@@ -85,7 +85,6 @@ void DeferredRenderPipeline::DrawGeometry(const Scene* scene, const Camera* came
 {
 	FindQuery query;
 	query.Camera = camera;
-	query.Filter = RenderStateFilter::ALL;
 	if(scene->Find(query, &mRenderBlockResultSet)) {
 		mDeferredShader->Apply();
 		mDeferredShader->Clear(ClearTypes::COLOR | ClearTypes::DEPTH);
@@ -101,7 +100,7 @@ void DeferredRenderPipeline::DrawGeometry(const Scene* scene, const Camera* came
 		// Draw scene objects
 		GfxProgram* deferredShader = mDeferredShader.get();
 		for(uint32 index = 0; index < mRenderBlockResultSet.Size; ++index) {
-			RenderBlock* block = mRenderBlockResultSet.SortedRenderBlocks[index];
+			RenderBlock* block = mRenderBlockResultSet.RenderBlocks[index];
 			diffuseTexture->SetTexture(block->DiffuseTexture);
 			diffuseColor->SetColorRGB(block->DiffuseColor);
 			modelMatrix->SetMatrix(block->ModelMatrix);

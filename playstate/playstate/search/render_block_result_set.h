@@ -33,11 +33,8 @@ namespace playstate
 		void Sort(IArraySorter<RenderBlock*>* sorter);
 
 	public:
-		// Read-only property for the blocks
-		RenderBlock*& const RenderBlocks;
-
 		// Read-only property for the sorted render blocks
-		RenderBlock**& const SortedRenderBlocks;
+		RenderBlock**& const RenderBlocks;
 
 		// Read-only property for the number of blocks
 		const uint32& Size;

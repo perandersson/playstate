@@ -4,7 +4,7 @@ using namespace playstate;
 
 RenderBlockResultSet::RenderBlockResultSet() 
 	: mRenderBlocks(NULL), mSortedRenderBlocks(NULL), mSize(0), mNumElements(0),
-	RenderBlocks(mRenderBlocks), SortedRenderBlocks(mSortedRenderBlocks), Size(mSize)
+	RenderBlocks(mSortedRenderBlocks), Size(mSize)
 {
 	mRenderBlocks = (RenderBlock*)malloc(InitialRenderBlocksCount * sizeof(RenderBlock));
 	mSortedRenderBlocks = (RenderBlock**)malloc(InitialRenderBlocksCount * sizeof(RenderBlock*));
@@ -18,6 +18,9 @@ RenderBlockResultSet::~RenderBlockResultSet()
 	free(mRenderBlocks);
 	mRenderBlocks = NULL;
 	
+	free(mSortedRenderBlocks);
+	mSortedRenderBlocks = NULL;
+
 	mSize = 0;
 	mNumElements = 0;
 }

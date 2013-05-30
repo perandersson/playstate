@@ -44,13 +44,13 @@ void RenderStaticModel::CollectBuildingBlocks(RenderBlockResultSet& resultSet, R
 		const ModelMesh& mesh = model->Meshes[i];
 		RenderBlock& block = resultSet.CreateAndGet(mesh.Id);
 		block.ModelMatrix = Owner->ModelMatrix;
-		if(BIT_ISSET(state.Filter, RenderStateFilter::GEOMETRY)) {
+		//if(BIT_ISSET(state.Filter, RenderStateFilter::GEOMETRY)) {
 			block.VertexBuffer = mesh.Vertices;
 			block.IndexBuffer = mesh.Indices;
-		}
-		if(BIT_ISSET(state.Filter, RenderStateFilter::DIFFUSE_TEXTURE)) {
+		//}
+		//if(BIT_ISSET(state.Filter, RenderStateFilter::DIFFUSE_TEXTURE)) {
 			block.DiffuseTexture = mesh.DiffuseTexture.Get();
-		}
+		//}
 		block.DiffuseColor = mesh.DiffuseColor;
 	}
 }
