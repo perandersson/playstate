@@ -65,6 +65,9 @@
     <ClCompile Include="..\..\playstate.tests\playstate\search\sorter\quick_sort_array_sorter_test.cpp">
       <Filter>Source Files\search\sorter</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\playstate.tests\playstate\search\sorter\render_block_array_sorter_test.cpp">
+      <Filter>Source Files\search\sorter</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\playstate.tests\playstate\test.h">

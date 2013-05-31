@@ -147,6 +147,7 @@
     <ClCompile Include="..\..\playstate.tests\playstate\math\vector3_test.cpp" />
     <ClCompile Include="..\..\playstate.tests\playstate\scene\scene_test.cpp" />
     <ClCompile Include="..\..\playstate.tests\playstate\search\sorter\quick_sort_array_sorter_test.cpp" />
+    <ClCompile Include="..\..\playstate.tests\playstate\search\sorter\render_block_array_sorter_test.cpp" />
     <ClCompile Include="..\..\playstate.tests\playstate\test.cpp" />
     <ClCompile Include="..\..\playstate.tests\playstate\types\linked_list_test.cpp" />
     <ClCompile Include="..\..\playstate.tests\playstate\types\typedef_test.cpp" />
