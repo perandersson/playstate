@@ -59,25 +59,11 @@ namespace playstate
 	// 
 	class RenderSystem : public Singleton<RenderSystem>, public IWindowResizedListener
 	{
-
 		friend class GfxProgram;
 
 	public:
 		RenderSystem(IWindow& window, ScriptSystem& scriptSystem);
 		~RenderSystem();
-
-		//
-		// Initializes the render system
-		// @return TRUE if the initialization was successfull; FALSE otherwise
-		virtual void Initialize();
-
-		//
-		// Swap the windows render context buffer
-		virtual void SwapBuffers() = 0;
-
-		//
-		// Create a render context
-		virtual IRenderContext* CreateRenderContext() = 0;
 
 		//
 		// Loads a gfx program and returns the result. 

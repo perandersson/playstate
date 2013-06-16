@@ -21,31 +21,7 @@ RenderSystem::RenderSystem(IWindow& window, ScriptSystem& scriptSystem) : mWindo
 	memset(mRenderTargets, 0, sizeof(mRenderTargets));
 	mWindow.AddWindowResizedListener(this);
 	mProgramFactory = new GfxProgramFactory(*this, scriptSystem);
-}
 
-RenderSystem::~RenderSystem()
-{
-	mWindow.RemoveWindowResizedListener(this);
-
-	if(mFrameBufferId != 0) {
-		glDeleteFramebuffers(1, &mFrameBufferId);
-		mFrameBufferId = 0;
-	}
-
-	if(mUniformVertexBuffer != NULL) {
-		delete mUniformVertexBuffer;
-		mUniformVertexBuffer = NULL;
-	}
-
-	delete mPositionVAOFactory; mPositionVAOFactory = NULL;
-	delete mPositionNormalVAOFactory; mPositionNormalVAOFactory = NULL;
-	delete mPositionTextureVAOFactory; mPositionTextureVAOFactory = NULL;
-	delete mPositionNormalTextureVAOFactory; mPositionNormalTextureVAOFactory = NULL;
-	delete mProgramFactory; mProgramFactory = NULL;
-}
-
-void RenderSystem::Initialize()
-{
 	if(!IsValidVersion())
 		THROW_EXCEPTION(RenderingException, "You'r graphics card does not support OpenGL 3.3");
 
@@ -99,6 +75,27 @@ void RenderSystem::Initialize()
 	GLenum status = glGetError();
 	if(status != GL_NO_ERROR)
 		THROW_EXCEPTION(RenderingException, "Could not create uniform vertex buffer buffer. Reason: %d", status);
+}
+
+RenderSystem::~RenderSystem()
+{
+	mWindow.RemoveWindowResizedListener(this);
+
+	if(mFrameBufferId != 0) {
+		glDeleteFramebuffers(1, &mFrameBufferId);
+		mFrameBufferId = 0;
+	}
+
+	if(mUniformVertexBuffer != NULL) {
+		delete mUniformVertexBuffer;
+		mUniformVertexBuffer = NULL;
+	}
+
+	delete mPositionVAOFactory; mPositionVAOFactory = NULL;
+	delete mPositionNormalVAOFactory; mPositionNormalVAOFactory = NULL;
+	delete mPositionTextureVAOFactory; mPositionTextureVAOFactory = NULL;
+	delete mPositionNormalTextureVAOFactory; mPositionNormalTextureVAOFactory = NULL;
+	delete mProgramFactory; mProgramFactory = NULL;
 }
 
 bool RenderSystem::IsValidVersion() const

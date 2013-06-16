@@ -64,10 +64,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 
 		// Input
 		Win32InputSystem inputSystem(window);
+
+		// Create and register a graphics driver
+		Win32GraphicsDriver gfxDriver(window);
 		
-		// Rendering
-		Win32RenderSystem renderSystem(window, ss);
-		renderSystem.Initialize();
+		// Create and register a render system
+		RenderSystem renderSystem(window, ss);
 
 		// Thread management
 		Win32ThreadFactory threadFactory;

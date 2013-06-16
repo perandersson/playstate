@@ -15,6 +15,10 @@ namespace playstate
 		//
 		// Unbinds this render context from the current thread.
 		virtual void Unbind() = 0;
+
+		//
+		// If this render context consists of multiple buffers then this method swaps those buffers.
+		virtual void SwapBuffers() = 0;
 	};
 
 }

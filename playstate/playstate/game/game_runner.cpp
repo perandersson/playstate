@@ -2,6 +2,7 @@
 #include "game_runner.h"
 #include "scripted_configuration.h"
 #include "../model/wavefront/wavefront_resource_loader.h"
+#include "../rendering/graphics_driver.h"
 using namespace playstate;
 
 namespace playstate
@@ -16,6 +17,7 @@ GameRunner::GameRunner()
 	: mWindow(IWindow::Get()), mFileSystem(IFileSystem::Get()), mScriptSystem(ScriptSystem::Get()),
 	mRenderSystem(RenderSystem::Get()), mResourceManager(ResourceManager::Get()),
 	mGame(NULL), mConfiguration(NULL), mRenderPipeline(NULL), mRunning(true),
+	mScreenRenderContext(IGraphicsDriver::Get().ScreenRenderContext),
 	ActiveScene(mScene)
 {
 }
@@ -61,7 +63,7 @@ void GameRunner::Start(IGame* game, IConfiguration* configuration)
 		mRenderPipeline->Render(&mScene, &mScene.ActiveCamera);
 		mGame->Render();
 		
-		mRenderSystem.SwapBuffers();
+		mScreenRenderContext->SwapBuffers();
 		mWindow.HandleEvents();
 		mResourceManager.Poll();
 	}

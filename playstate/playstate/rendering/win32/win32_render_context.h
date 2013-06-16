@@ -16,6 +16,11 @@ namespace playstate
 	public:
 		virtual void MakeCurrent();
 		virtual void Unbind();
+		virtual void SwapBuffers();
+
+	public:
+		// Read-only property for the render context
+		HGLRC& const RenderContext;
 
 	private:
 		HDC mDeviceContext;

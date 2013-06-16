@@ -1,6 +1,6 @@
 #include "../../memory/memory.h"
 #include "../thread_factory.h"
-#include "../../rendering/render_system.h"
+#include "../../rendering/graphics_driver.h"
 using namespace playstate;
 
 Thread::Thread(IRunnable* runnable)
@@ -63,7 +63,7 @@ public:
 	RenderAwareRunnableWrapper(IRunnable* runnable)
 		: mRunnable(runnable)
 	{
-		mRenderContext = RenderSystem::Get().CreateRenderContext();
+		mRenderContext = IGraphicsDriver::Get().CreateRenderContext();
 	}
 
 	virtual ~RenderAwareRunnableWrapper()

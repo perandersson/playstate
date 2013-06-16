@@ -33,7 +33,7 @@
 #include "input/win32/win32_input_system.h"
 
 #include "rendering/win32/win32_render_context.h"
-#include "rendering/win32/win32_render_system.h"
+#include "rendering/win32/win32_graphics_driver.h"
 
 #include "thread/win32/win32_lock.h"
 #include "thread/win32/win32_thread.h"

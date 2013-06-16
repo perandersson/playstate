@@ -230,9 +230,6 @@
     <ClCompile Include="..\..\playstate\playstate\rendering\win32\win32_render_context.cpp">
       <Filter>Source Files\rendering\win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\rendering\win32\win32_render_system.cpp">
-      <Filter>Source Files\rendering\win32</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\rendering\factories\gfx_program_factory.cpp">
       <Filter>Source Files\rendering\factories</Filter>
     </ClCompile>
@@ -352,6 +349,12 @@
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\search\sorter\render_block_array_sorter.cpp">
       <Filter>Source Files\search\sorter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\rendering\win32\win32_graphics_driver.cpp">
+      <Filter>Source Files\rendering\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\rendering\graphics_driver.cpp">
+      <Filter>Source Files\rendering</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -506,9 +509,6 @@
       <Filter>Source Files\rendering\state</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\rendering\win32\win32_render_context.h">
-      <Filter>Source Files\rendering\win32</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\rendering\win32\win32_render_system.h">
       <Filter>Source Files\rendering\win32</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\rendering\factories\gfx_program_factory.h">
@@ -696,6 +696,12 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\search\sorter\render_block_array_sorter.h">
       <Filter>Source Files\search\sorter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\graphics_driver.h">
+      <Filter>Source Files\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\win32\win32_graphics_driver.h">
+      <Filter>Source Files\rendering\win32</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

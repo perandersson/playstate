@@ -1,30 +1,14 @@
 #include "../../memory/memory.h"
-#include "win32_render_system.h"
+#include "win32_graphics_driver.h"
 #include "win32_render_context.h"
 #include <gl/glew.h>
 #include <gl/wglew.h>
 using namespace playstate;
 
-Win32RenderSystem::Win32RenderSystem(Win32Window& window, ScriptSystem& scriptSystem)
-	: RenderSystem(window, scriptSystem), mWindowHandle(window.GetWindowHandle()), mRenderContext(NULL), mDeviceContext(NULL)
-{
-}
-
-Win32RenderSystem::~Win32RenderSystem()
-{
-	if(mRenderContext != NULL) {
-		wglMakeCurrent(NULL, NULL);
-		wglDeleteContext(mRenderContext);
-		mRenderContext = NULL;
-	}
-
-	if(mDeviceContext != NULL) {
-		ReleaseDC(mWindowHandle, mDeviceContext);
-		mDeviceContext = NULL;
-	}
-}
-
-void Win32RenderSystem::Initialize()
+template<> playstate::IGraphicsDriver* playstate::Singleton<playstate::IGraphicsDriver>::gSingleton = NULL;
+Win32GraphicsDriver::Win32GraphicsDriver(Win32Window& window)
+	: mWindowHandle(window.GetWindowHandle()), mScreenRenderContext(NULL), mDeviceContext(NULL),
+	IGraphicsDriver(mScreenRenderContext)
 {
 	PIXELFORMATDESCRIPTOR pfd = {0};
 	pfd.nSize = sizeof(PIXELFORMATDESCRIPTOR);
@@ -68,32 +52,29 @@ void Win32RenderSystem::Initialize()
 		THROW_EXCEPTION(RenderingException, "You'r graphics card does not support OpenGL 3.2");
 	}
 
-	int attribs[] = {
-		WGL_CONTEXT_MAJOR_VERSION_ARB, 3,
-		WGL_CONTEXT_MINOR_VERSION_ARB, 3,
-		WGL_CONTEXT_FLAGS_ARB, 0,
-		0
-	};
-
-	mRenderContext = wglCreateContextAttribsARB(mDeviceContext, 0, attribs);
-	if(!mRenderContext) {
-		THROW_EXCEPTION(RenderingException, "You'r graphics card does not support OpenGL 3.3");
-	}
-
-	// Unbind and delete the temporary context.
-	wglMakeCurrent(NULL, NULL);
+	mScreenRenderContext = CreateRenderContext();
+	mScreenRenderContext->MakeCurrent();
 	wglDeleteContext(tempContext);
-	
-	wglMakeCurrent(mDeviceContext, mRenderContext);
-	RenderSystem::Initialize();
 }
 
-void Win32RenderSystem::SwapBuffers()
+Win32GraphicsDriver::~Win32GraphicsDriver()
 {
-	::SwapBuffers(mDeviceContext);
+	wglMakeCurrent(NULL, NULL);
+	delete mScreenRenderContext;
+	mScreenRenderContext = NULL;
+	
+	if(mDeviceContext != NULL) {
+		ReleaseDC(mWindowHandle, mDeviceContext);
+		mDeviceContext = NULL;
+	}
 }
 
-IRenderContext* Win32RenderSystem::CreateRenderContext()
+IRenderContext* Win32GraphicsDriver::CreateRenderContext()
+{
+	return CreateRenderContext(mScreenRenderContext);
+}
+
+IRenderContext* Win32GraphicsDriver::CreateRenderContext(IRenderContext* context)
 {
 	int attribs[] = {
 		WGL_CONTEXT_MAJOR_VERSION_ARB, 3,
@@ -102,9 +83,10 @@ IRenderContext* Win32RenderSystem::CreateRenderContext()
 		0
 	};
 
-	HGLRC context = wglCreateContextAttribsARB(mDeviceContext, mRenderContext, attribs);
-	if(!context) {
+	HGLRC shareWithContext = context != NULL ? static_cast<Win32RenderContext*>(context)->RenderContext :  NULL;
+	HGLRC windowsRenderContext = wglCreateContextAttribsARB(mDeviceContext, shareWithContext, attribs);
+	if(!windowsRenderContext) {
 		THROW_EXCEPTION(RenderingException, "You'r graphics card does not support OpenGL 3.3");
 	}
-	return new Win32RenderContext(mDeviceContext, context);
+	return new Win32RenderContext(mDeviceContext, windowsRenderContext);
 }
