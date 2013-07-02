@@ -1,36 +1,20 @@
 #pragma once
 
-#include "../resources/resource.h"
+#include "texture.h"
 #include "../resources/resource_loader.h"
-#include "../types.h"
 #include "state/state_policy.h"
-#include <gl/glew.h>
 
 namespace playstate
 {
-	enum TextureFormat
-	{
-		RGB, 
-		RGBA,
-		RGBA8,
-		RGBA12,
-		RGBA16,
-		RGB10_A2,
-		RGBA16F,
-		DEPTH24,
-		DEPTH24_STENCIL8,
-		UNKOWN_TEXTURE_FORMAT,
-	};
-
 	class RenderSystem;
 	class IFileSystem;
 
 	//
 	// 
-	class Texture2D : public ResourceObject
+	class Texture2D : public Texture
 	{
 	public:
-		Texture2D(GLuint textureId, uint32 width, uint32 height, TextureFormat format);
+		Texture2D(GLuint textureId, uint32 width, uint32 height, TextureFormat::Enum format);
 		virtual ~Texture2D();
 		
 		void Bind(MinFilter::Enum minFilter, MagFilter::Enum magFilter, TextureWrap::Enum ws, TextureWrap::Enum wt);
@@ -38,16 +22,10 @@ namespace playstate
 	public:
 		const uint32& Width;
 		const uint32& Height;
-		const GLuint& TextureID;
-		const TextureFormat& Format;
-		const uint32& StateID;
-	
-	private:
+
+	protected:
 		uint32 mWidth;
 		uint32 mHeight;
-		TextureFormat mFormat;
-		GLuint mTextureId;
-		uint32 mStateId;
 		
 		MinFilter::Enum mMinFilter;
 		MagFilter::Enum mMagFilter;

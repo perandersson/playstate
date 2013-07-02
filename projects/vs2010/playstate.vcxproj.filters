@@ -356,6 +356,9 @@
     <ClCompile Include="..\..\playstate\playstate\rendering\graphics_driver.cpp">
       <Filter>Source Files\rendering</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\rendering\texture.cpp">
+      <Filter>Source Files\rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\playstate\playstate\camera\camera.h">
@@ -702,6 +705,9 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\rendering\win32\win32_graphics_driver.h">
       <Filter>Source Files\rendering\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\texture.h">
+      <Filter>Source Files\rendering</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

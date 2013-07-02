@@ -1,8 +1,8 @@
 #include <iostream>
-#include "test.h"
+#include "test/test.h"
 using namespace playstate;
 
 int main()
 {
-	return TestApplication::RunTests();
+	return TestRunner::Run();
 }

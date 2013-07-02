@@ -2,28 +2,24 @@
 #include "texture2d.h"
 #include "render_system.h"
 #include "../filesystem/file_system.h"
-#include "../uuid.h"
 #include <FreeImage.h>
 using namespace playstate;
 
-Texture2D::Texture2D(GLuint textureId, uint32 width, uint32 height, TextureFormat format) 
-	: mTextureId(textureId), mWidth(width), mHeight(height), mFormat(format), mStateId(UUID::To32Bit()),
+Texture2D::Texture2D(GLuint textureId, uint32 width, uint32 height, TextureFormat::Enum format) 
+	: Texture(format), mWidth(width), mHeight(height),
 	mMinFilter(MinFilter::UNKNOWN), mMagFilter(MagFilter::UNKNOWN), mWS(TextureWrap::UNKNOWN), mWT(TextureWrap::UNKNOWN),
-	Width(mWidth), Height(mHeight), Format(mFormat), TextureID(mTextureId), StateID(mStateId)
+	Width(mWidth), Height(mHeight)
 {
+	mTextureId = textureId;
 }
 
 Texture2D::~Texture2D()
 {
-	if(mTextureId != 0) {
-		glDeleteTextures(1, &mTextureId);
-		mTextureId = 0;
-	}
 }
 
 void Texture2D::Bind(MinFilter::Enum minFilter, MagFilter::Enum magFilter, TextureWrap::Enum ws, TextureWrap::Enum wt)
 {
-	StatePolicy::BindTexture(GL_TEXTURE_2D, mTextureId);
+	Texture::BindToActiveTexture(GL_TEXTURE_2D);
 	if(mMinFilter != minFilter) {
 		mMinFilter = minFilter;
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, mMinFilter);
@@ -108,9 +104,9 @@ ResourceObject* Texture2DResourceLoader::Load(IFile& file)
 		THROW_EXCEPTION(RenderingException, "Could not load texture: '%s'. Reason: %d", file.GetPath(), error);
 	}
 	
-	TextureFormat textureFormat = RGB;
+	TextureFormat::Enum textureFormat = TextureFormat::RGB;
 	if(internalFormat == GL_RGBA) {
-		textureFormat = RGBA;
+		textureFormat = TextureFormat::RGBA;
 	}
 	
 	return new Texture2D(textureId, width, height, textureFormat);

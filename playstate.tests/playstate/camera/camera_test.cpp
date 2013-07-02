@@ -1,24 +1,27 @@
 #include <playstate/camera/camera.h>
-#include "../test.h"
+#include "../test/test.h"
 using namespace playstate;
 
-TestCase(Camera_Constructor, "Camera()")
+TEST_SUITE(Camera)
 {
-	const Camera camera;
+	UNIT_TEST(Camera_Constructor)
+	{
+		const Camera camera;
 
-	AssertEquals(camera.ViewMatrix, Matrix4x4::Identity);
-	AssertEquals(camera.ProjectionMatrix, Matrix4x4::Identity);
-}
+		ASSERT_EQUALS(camera.ViewMatrix, Matrix4x4::Identity);
+		ASSERT_EQUALS(camera.ProjectionMatrix, Matrix4x4::Identity);
+	}
 
-TestCase(Camera_MoveCamera, "Camera.Move")
-{
-	const Vector3 direction(10.0f, 5.0f, 2.0f);
-	Camera camera;
-	camera.Move(direction);
+	UNIT_TEST(Camera_MoveCamera)
+	{
+		const Vector3 direction(10.0f, 5.0f, 2.0f);
+		Camera camera;
+		camera.Move(direction);
 
-	AssertEquals(camera.Position, direction);
+		ASSERT_EQUALS(camera.Position, direction);
 	
-	camera.Move(direction);
+		camera.Move(direction);
 
-	AssertEquals(camera.Position, direction * 2);
+		ASSERT_EQUALS(camera.Position, direction * 2);
+	}
 }

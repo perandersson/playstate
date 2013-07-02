@@ -45,13 +45,13 @@ void Sampler2DGfxProgramComponent::Apply()
 
 void Sampler2DGfxProgramComponent::SetTexture(Texture2D* texture)
 {
-	const uint32 stateId = mTexture != NULL ? mTexture->StateID : 0;
+	const uint32 stateId = mTexture != NULL ? mTexture->UniqueId : 0;
 	mTexture = texture;
 	if(texture == NULL) {
 		return;
 	}
 	
-	if(texture->StateID != stateId)
+	if(texture->UniqueId != stateId)
 		BIT_SET(mDirty, TEXTURE_BIT);
 
 

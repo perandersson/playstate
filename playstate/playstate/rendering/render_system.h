@@ -13,7 +13,6 @@
 #include "../window/window_resized_listener.h"
 #include "window_render_context.h"
 #include "../window/window.h"
-#include "vertex_array_object_factory.h"
 #include "factories/gfx_program_factory.h"
 
 #include <gl/glew.h>
@@ -24,36 +23,6 @@
 
 namespace playstate
 {
-	const uint32 PositionAttribLocation = 0;
-	const uint32 NormalAttribLocation = 1;
-	const uint32 TexCoordAttribLocation = 2;
-	const uint32 ColorAttribLocation = 3;
-
-	struct PositionData
-	{
-		Vector3 Position; // always at location = 0
-	};
-
-	struct PositionTexCoordData
-	{
-		Vector3 Position; // always at location = 0
-		Vector2 TexCoord; // always at location = 2
-	};
-
-	struct PositionNormalData
-	{
-		Vector3 Position; // always at location = 0
-		Vector3 Normal; // always at location = 1
-	};
-
-	struct PositionNormalTextureData
-	{
-		Vector3 Position; // always at location = 0
-		Vector3 Normal;  // always at location = 1
-		Vector2 TexCoord; // always at location = 2
-	};
-
-	// TODO Add struct for color as well - color location = 3.
 
 	//
 	// 
@@ -71,25 +40,6 @@ namespace playstate
 		// @return
 		GfxProgram* LoadGfxProgram(const std::string& fileName);
 
-		//
-		// Creates an index buffer based on a supplied of indices
-		// @return A bindable and renderable index buffer
-		IndexBuffer* CreateIndexBuffer(uint32* indices, uint32 numIndices);
-
-		//
-		//
-		VertexBuffer* CreateStaticBufferObject(PositionData* elements, uint32 numElements);
-		VertexBuffer* CreateStaticBufferObject(PositionTexCoordData* elements, uint32 numElements);
-		VertexBuffer* CreateStaticBufferObject(PositionNormalData* elements, uint32 numElements);
-		VertexBuffer* CreateStaticBufferObject(PositionNormalTextureData* elements, uint32 numElements);
-
-		//
-		// Creates a render target
-		// @param width
-		// @param height
-		// @param format 
-		RenderTarget2D* CreateRenderTarget2D(uint32 width, uint32 height, TextureFormat format);
-		
 	// IWindowResizedListener
 	public:
 		virtual void OnWindowResized(IWindow& window, uint32 width, uint32 height);
@@ -137,10 +87,5 @@ namespace playstate
 		GLuint mFrameBufferId;
 		RenderTarget2D* mRenderTargets[MaxDrawBuffers];
 		RenderTarget2D* mDepthRenderTarget;
-
-		IVertexArrayObjectFactory* mPositionVAOFactory;
-		IVertexArrayObjectFactory* mPositionNormalVAOFactory;
-		IVertexArrayObjectFactory* mPositionTextureVAOFactory;
-		IVertexArrayObjectFactory* mPositionNormalTextureVAOFactory;
 	};
 }

@@ -4,6 +4,8 @@
 
 namespace playstate
 {
+	//
+	//
 	class UUID
 	{
 	public:

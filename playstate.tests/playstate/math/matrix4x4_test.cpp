@@ -1,10 +1,13 @@
 #include <playstate/math/matrix4x4.h>
-#include "../test.h"
+#include "../test/test.h"
 using namespace playstate;
 
-TestCase(Matrix4x4_DefaultConstructorIsIdentityMatrix, "Matrix4x4() == Matrix4x4::Identity")
+TEST_SUITE(Matrix4x4)
 {
-	const Matrix4x4 value;
+	UNIT_TEST(Matrix4x4_DefaultConstructorIsIdentityMatrix)
+	{
+		const Matrix4x4 value;
 
-	AssertEquals(value, Matrix4x4::Identity);
+		ASSERT_EQUALS(value, Matrix4x4::Identity);
+	}
 }

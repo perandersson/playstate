@@ -93,7 +93,7 @@ bool GameRunner::Initialize()
 {
 	// Register resource types
 	mResourceManager.RegisterResourceType(new Texture2DResourceLoader(mRenderSystem, mFileSystem), ".png");
-	mResourceManager.RegisterResourceType(new WavefrontResourceLoader(mRenderSystem, mResourceManager, mFileSystem), ".obj");
+	mResourceManager.RegisterResourceType(new WavefrontResourceLoader(mResourceManager, mFileSystem), ".obj");
 	//mResourceManager.RegisterResourceType(std::auto_ptr<IResourceLoader>(new ImageMapResourceLoader(*resourceManager)), ".imagemap");
 
 	int32 width = mConfiguration->FindInt("window.width");

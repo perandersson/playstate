@@ -277,7 +277,7 @@ void GfxProgram::SetDepthRenderTarget(RenderTarget2D* renderTarget)
 	mDepthRenderTarget = renderTarget;
 
 	if(mApplied) {
-		uint32 rtId = renderTarget != NULL ? renderTarget->StateID : 0;
+		uint32 rtId = renderTarget != NULL ? renderTarget->UniqueId : 0;
 		mApplyRenderTarget = true;
 		mRenderSystem.SetDepthRenderTarget(renderTarget);
 	}
@@ -289,7 +289,7 @@ void GfxProgram::SetRenderTarget(RenderTarget2D* renderTarget, uint32 index)
 	mRenderTargets[index] = renderTarget;
 
 	if(mApplied) {
-		uint32 rtId = renderTarget != NULL ? renderTarget->StateID : 0;
+		uint32 rtId = renderTarget != NULL ? renderTarget->UniqueId : 0;
 		mApplyRenderTarget = true;
 		mRenderSystem.SetRenderTarget(renderTarget, index);
 	}

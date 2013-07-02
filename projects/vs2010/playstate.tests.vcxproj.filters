@@ -30,6 +30,12 @@
     <Filter Include="Source Files\search\sorter">
       <UniqueIdentifier>{43669749-45b4-410f-b5fd-cd648db89e87}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\rendering">
+      <UniqueIdentifier>{75ababe8-5eb1-49fd-81bf-83bf508d1f1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\test">
+      <UniqueIdentifier>{5404395d-9516-4d28-b7b2-955774f1974d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\playstate.tests\playstate\main.cpp">
@@ -37,9 +43,6 @@
     </ClCompile>
     <ClCompile Include="..\..\playstate.tests\playstate\math\vector2_test.cpp">
       <Filter>Source Files\math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\playstate.tests\playstate\test.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\playstate.tests\playstate\math\vector3_test.cpp">
       <Filter>Source Files\math</Filter>
@@ -68,10 +71,40 @@
     <ClCompile Include="..\..\playstate.tests\playstate\search\sorter\render_block_array_sorter_test.cpp">
       <Filter>Source Files\search\sorter</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\playstate.tests\playstate\test\test_suite.cpp">
+      <Filter>Source Files\test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate.tests\playstate\test\unit_test.cpp">
+      <Filter>Source Files\test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate.tests\playstate\test\test_exception.cpp">
+      <Filter>Source Files\test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate.tests\playstate\test\test_runner.cpp">
+      <Filter>Source Files\test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate.tests\playstate\rendering\render_target_2d_test.cpp">
+      <Filter>Source Files\rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\playstate.tests\playstate\test.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="..\..\playstate.tests\playstate\test\test_suite.h">
+      <Filter>Source Files\test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate.tests\playstate\test\unit_test.h">
+      <Filter>Source Files\test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate.tests\playstate\test\test_callback.h">
+      <Filter>Source Files\test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate.tests\playstate\test\test_exception.h">
+      <Filter>Source Files\test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate.tests\playstate\test\test_runner.h">
+      <Filter>Source Files\test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate.tests\playstate\test\test.h">
+      <Filter>Source Files\test</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

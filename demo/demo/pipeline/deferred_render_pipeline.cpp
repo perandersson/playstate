@@ -18,11 +18,11 @@ DeferredRenderPipeline::DeferredRenderPipeline(RenderSystem& renderSystem, IWind
 	uint32 width = window.GetWidth();
 	uint32 height = window.GetHeight();
 
-	mDiffuseRenderTarget = mRenderSystem.CreateRenderTarget2D(width, height, RGBA);
-	mPositionsRenderTarget = mRenderSystem.CreateRenderTarget2D(width, height, RGBA16F);
-	mNormalsRenderTarget = mRenderSystem.CreateRenderTarget2D(width, height, RGB10_A2);
-	mDepthRenderTarget = mRenderSystem.CreateRenderTarget2D(width, height, DEPTH24);
-	mLightRenderTarget = mRenderSystem.CreateRenderTarget2D(width, height, RGBA);
+	mDiffuseRenderTarget = RenderTarget2D::Create(width, height, TextureFormat::RGBA);
+	mPositionsRenderTarget = RenderTarget2D::Create(width, height, TextureFormat::RGBA16F);
+	mNormalsRenderTarget = RenderTarget2D::Create(width, height, TextureFormat::RGB10_A2);
+	mDepthRenderTarget = RenderTarget2D::Create(width, height, TextureFormat::DEPTH24);
+	mLightRenderTarget = RenderTarget2D::Create(width, height, TextureFormat::RGBA);
 
 	mDeferredShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(std::string("/effects/deferred/deferred.lua")));
 	mDeferredShader->SetRenderTarget(mDiffuseRenderTarget, 0);
@@ -203,11 +203,11 @@ void DeferredRenderPipeline::OnWindowResized(IWindow& window, uint32 width, uint
 	if(mLightRenderTarget != NULL)
 		delete mLightRenderTarget;
 
-	mDiffuseRenderTarget = mRenderSystem.CreateRenderTarget2D(width, height, RGBA);
-	mPositionsRenderTarget = mRenderSystem.CreateRenderTarget2D(width, height, RGBA16F);
-	mNormalsRenderTarget = mRenderSystem.CreateRenderTarget2D(width, height, RGB10_A2);
-	mDepthRenderTarget = mRenderSystem.CreateRenderTarget2D(width, height, DEPTH24);
-	mLightRenderTarget = mRenderSystem.CreateRenderTarget2D(width, height, RGBA);
+	mDiffuseRenderTarget = RenderTarget2D::Create(width, height, TextureFormat::RGBA);
+	mPositionsRenderTarget = RenderTarget2D::Create(width, height, TextureFormat::RGBA16F);
+	mNormalsRenderTarget = RenderTarget2D::Create(width, height, TextureFormat::RGB10_A2);
+	mDepthRenderTarget = RenderTarget2D::Create(width, height, TextureFormat::DEPTH24);
+	mLightRenderTarget = RenderTarget2D::Create(width, height, TextureFormat::RGBA);
 
 	mDeferredShader->SetRenderTarget(mDiffuseRenderTarget, 0);
 	mDeferredShader->SetRenderTarget(mPositionsRenderTarget, 1);
