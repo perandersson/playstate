@@ -4,7 +4,7 @@
 #include <float.h>
 // Unterupt for when floating points become invalid
 // NOT USABLE WHEN USING gDEBugger
-//unsigned int fp_control_state = _controlfp(_EM_INEXACT, _MCW_EM);
+unsigned int fp_control_state = _controlfp(_EM_INEXACT | _EM_INVALID | _EM_UNDERFLOW | _EM_OVERFLOW, _MCW_EM);
 #endif
 
 #include <playstate/playstate.h>
@@ -32,8 +32,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 	{
 		// Filesystem
 		std::vector<std::string> paths;
-		paths.push_back(std::string("data/demo"));
-		paths.push_back(std::string("data/engine"));
+		paths.push_back(std::string("data"));
 		Win32FileSystem fileSystem(paths);
 		
 		// Script integratrion
@@ -42,7 +41,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 		ss.RegisterType("IWindowClosedListener", IWindowClosedListener_Methods);
 		ss.RegisterType("IGame", IGame_Methods);
 		ss.RegisterType("Game", Game_Methods);
-		ss.RegisterType("Input", IInputSystem_Methods);
+		ss.RegisterType("Keys", IInputSystem_Keys_Methods);
+		ss.RegisterType("Mouse", IInputSystem_Mouse_Methods);
 		ss.RegisterType("Scene", Scene_Methods);
 		ss.RegisterType("SceneGroup", SceneGroup_Methods);
 		ss.RegisterType("SceneNode", SceneNode_Methods);
@@ -68,11 +68,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 		// Create and register a graphics driver
 		Win32GraphicsDriver gfxDriver(window);
 		
-		// Create and register a render system
-		RenderSystem renderSystem(window, ss);
-
 		// Thread management
 		Win32ThreadFactory threadFactory;
+		
+		// Create and register a render system
+		RenderSystem renderSystem(window, ss);
 
 		// Resource management
 		ResourceManager resourceManager(renderSystem, fileSystem);

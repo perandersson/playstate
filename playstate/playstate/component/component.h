@@ -38,7 +38,7 @@ namespace playstate
 
 	public:
 		// Read-only property for the owner scene node
-		SceneNode*& const Owner;
+		SceneNode*& const Node;
 
 		// 
 		const type_mask& TypeMask;

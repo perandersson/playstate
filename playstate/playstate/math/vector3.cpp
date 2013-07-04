@@ -231,9 +231,10 @@ namespace playstate
 {
 	int Vector3_Factory(lua_State* L)
 	{
-		float32 z = lua_tointeger(L, -1); lua_pop(L, 1);
-		float32 y = lua_tointeger(L, -1); lua_pop(L, 1);
-		float32 x = lua_tointeger(L, -1); lua_pop(L, 1);
+		
+		float32 z = lua_tonumber(L, -1); lua_pop(L, 1);
+		float32 y = lua_tonumber(L, -1); lua_pop(L, 1);
+		float32 x = lua_tonumber(L, -1); lua_pop(L, 1);
 		
 		float* arr = (float*)lua_newuserdata(L, sizeof(float[3]));
 		arr[0] = x;

@@ -6,7 +6,7 @@
 namespace playstate
 {
 	//
-	//
+	// 
 	class IGraphicsDriver : public Singleton<IGraphicsDriver>
 	{
 	protected:
@@ -22,10 +22,12 @@ namespace playstate
 		virtual IRenderContext* CreateRenderContext() = 0;
 
 		//
-		// Creates a new render context. The render contexts internal resources are shared between the 
-		// newly created render context and the supplied one.
+		// Creates and connects a new render context to another render context. 
+		// The render contexts internal resources are shared between with the supplied one.
+		// This is useful for when trying to perform graphics related functionality from multiple threads
+		// while later be able to use them in the main thread.
 		// @param context
-		// 
+		// @return A new render context instance
 		virtual IRenderContext* CreateRenderContext(IRenderContext* context) = 0;
 
 	public:

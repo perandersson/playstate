@@ -16,7 +16,7 @@ ScriptableComponent::~ScriptableComponent()
 void ScriptableComponent::OnComponentAdded()
 {
 	if(mUpdateFunc != 0) {
-		Updatable::Attach(Owner->Group);
+		Updatable::Attach(Node->Group);
 	}
 	
 	if(PrepareMethod("OnComponentAdded")) {
@@ -74,5 +74,30 @@ namespace playstate
 		node->RegisterObject(L, ref);
 		return 1;
 	}
+	
+	int Component_GetNode(lua_State* L)
+	{
+		ScriptableComponent* component = luaM_popobject<ScriptableComponent>(L);
+		if(component != NULL) {
+			luaM_pushobject(L, "SceneNode", component->Node);
+		} else {
+			lua_pushnil(L);
+		}
+
+		return 1;
+	}
+	
+	int Component_TranslateNode(lua_State* L)
+	{
+		Vector3 vec((float*)lua_touserdata(L, -1)); lua_pop(L, 1);
+		ScriptableComponent* component = luaM_popobject<ScriptableComponent>(L);
+		if(component != NULL) {
+			SceneNode* owner = component->Node;
+			owner->SetPosition(owner->Position + vec);
+		}
+
+		return 0;
+	}
+
 }
 

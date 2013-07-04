@@ -132,6 +132,8 @@ namespace playstate
 	extern int SceneNode_RemoveComponent(lua_State* L);
 	extern int SceneNode_GetPosition(lua_State* L);
 	extern int SceneNode_SetPosition(lua_State* L);
+	extern int SceneNode_Translate(lua_State* L);
+	extern int SceneNode_SetRotatation(lua_State* L);
 	static luaL_Reg SceneNode_Methods[] = {
 		{ LUA_CONSTRUCTOR, SceneNode_Factory },
 		{ LUA_TOSTRING, SceneNode_GetID },
@@ -140,6 +142,8 @@ namespace playstate
 		{ "RemoveComponent", SceneNode_RemoveComponent },
 		{ "GetPosition", SceneNode_GetPosition },
 		{ "SetPosition", SceneNode_SetPosition },
+		{ "Translate", SceneNode_Translate },
+		{ "SetRotation", SceneNode_SetRotatation },
 		{ NULL, NULL }
 	};
 }

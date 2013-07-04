@@ -21,11 +21,23 @@ namespace playstate
 	// Script integration
 	//
 
-	extern int IInputSystem_IsKeyDown(lua_State* L);
-	extern int IInputSystem_GetMouseState(lua_State* L);
-	static luaL_Reg IInputSystem_Methods[] = {
-		{ "IsKeyDown", IInputSystem_IsKeyDown },
-		{ "GetMouseState", IInputSystem_GetMouseState },
+	extern int IInputSystem_Keys_IsKeyDown(lua_State* L);
+	extern int IInputSystem_Keys_IsKeyUp(lua_State* L);
+	//extern int IInputSystem_Keys_GetMouseState(lua_State* L);
+	static luaL_Reg IInputSystem_Keys_Methods[] = {
+		{ "IsKeyDown", IInputSystem_Keys_IsKeyDown },
+		{ "IsKeyUp", IInputSystem_Keys_IsKeyUp },
+//		{ "GetMouseState", IInputSystem_GetMouseState },
+		{ NULL, NULL }
+	};
+
+	extern int IInputSystem_Mouse_GetX(lua_State* L);
+	extern int IInputSystem_Mouse_GetY(lua_State* L);
+	//extern int IInputSystem_Keys_GetMouseState(lua_State* L);
+	static luaL_Reg IInputSystem_Mouse_Methods[] = {
+		{ "GetX", IInputSystem_Mouse_GetX },
+		{ "GetY", IInputSystem_Mouse_GetY },
+//		{ "GetMouseState", IInputSystem_GetMouseState },
 		{ NULL, NULL }
 	};
 }

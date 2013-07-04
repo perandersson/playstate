@@ -3,16 +3,33 @@
 
 namespace playstate
 {
-	int IInputSystem_IsKeyDown(lua_State* L)
+	int IInputSystem_Keys_IsKeyDown(lua_State* L)
 	{
 		int key = (int)lua_tonumber(L, -1); lua_pop(L, 1);
 		IKeyboardState& state = IInputSystem::Get().GetKeyboardState();
 		lua_pushboolean(L, state.IsDown((KeyboardKeys)key) ? 1 : 0);
 		return 1;
 	}
-
-	int IInputSystem_GetMouseState(lua_State* L)
+	
+	int IInputSystem_Keys_IsKeyUp(lua_State* L)
 	{
-		return 0;
+		int key = (int)lua_tonumber(L, -1); lua_pop(L, 1);
+		IKeyboardState& state = IInputSystem::Get().GetKeyboardState();
+		lua_pushboolean(L, state.IsUp((KeyboardKeys)key) ? 1 : 0);
+		return 1;
+	}
+
+	int IInputSystem_Mouse_GetX(lua_State* L)
+	{
+		IMouseState& state = IInputSystem::Get().GetMouseState();
+		lua_pushnumber(L, state.GetX());
+		return 1;
+	}
+
+	int IInputSystem_Mouse_GetY(lua_State* L)
+	{
+		IMouseState& state = IInputSystem::Get().GetMouseState();
+		lua_pushnumber(L, state.GetY());
+		return 1;
 	}
 }

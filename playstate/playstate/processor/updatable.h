@@ -45,9 +45,9 @@ namespace playstate
 
 	//
 	// Global property containing the time since last update
-	extern float32 GameDeltaTime;
+	extern const float32& GameDeltaTime;
 
 	//
 	// Global property containing the time since beginning of the game
-	extern float64 GameTotalTime;
+	extern const float64& GameTotalTime;
 }

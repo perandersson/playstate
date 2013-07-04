@@ -45,7 +45,7 @@ SceneNode::~SceneNode()
 void SceneNode::AddComponent(Component* component)
 {
 	assert_not_null(component);
-	assert(component->Owner == NULL && "You are not allowed to add a component on multiple scene nodes");
+	assert(component->Node == NULL && "You are not allowed to add a component on multiple scene nodes");
 	
 	mComponents.AddLast(component);
 	component->OnAddedToSceneNode(this);
@@ -54,7 +54,7 @@ void SceneNode::AddComponent(Component* component)
 void SceneNode::RemoveComponent(Component* component)
 {
 	assert_not_null(component);
-	assert(component->Owner == this && "You are not allowed to remove a component on that isn't attached here");
+	assert(component->Node == this && "You are not allowed to remove a component on that isn't attached here");
 
 	delete component;
 }
@@ -217,10 +217,32 @@ namespace playstate
 
 	int SceneNode_SetPosition(lua_State* L)
 	{
-		float* arr = (float*)lua_touserdata(L, -1); lua_pop(L, 1);
+		Vector3 vec((float*)lua_touserdata(L, -1)); lua_pop(L, 1);
 		SceneNode* node = luaM_popobject<SceneNode>(L);
-		if(node != NULL && arr  != NULL) {
-			node->SetPosition(Vector3(arr));
+		if(node != NULL) {
+			node->SetPosition(vec);
+		}
+
+		return 0;
+	}
+
+	int SceneNode_Translate(lua_State* L)
+	{
+		Vector3 vec((float*)lua_touserdata(L, -1)); lua_pop(L, 1);
+		SceneNode* node = luaM_popobject<SceneNode>(L);
+		if(node != NULL) {
+			node->SetPosition(node->Position + vec);
+		}
+
+		return 0;
+	}
+	
+	int SceneNode_SetRotatation(lua_State* L)
+	{
+		Vector3 vec((float*)lua_touserdata(L, -1)); lua_pop(L, 1);
+		SceneNode* node = luaM_popobject<SceneNode>(L);
+		if(node != NULL) {
+			node->SetRotation(vec);
 		}
 
 		return 0;

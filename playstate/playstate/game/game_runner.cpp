@@ -3,23 +3,31 @@
 #include "scripted_configuration.h"
 #include "../model/wavefront/wavefront_resource_loader.h"
 #include "../rendering/graphics_driver.h"
+#include "../input/input_system.h"
 using namespace playstate;
 
 namespace playstate
 {
-	float32 GameDeltaTime = 0.0f;
-	float64 GameTotalTime = 0.0;
+	float32 _GameDeltaTime = 0.0f;
+	float64 _GameTotalTime = 0.0f;
+
+	const float32& GameDeltaTime = _GameDeltaTime;
+	const float64& GameTotalTime = _GameTotalTime;
 }
 
 template<> playstate::GameRunner* playstate::Singleton<playstate::GameRunner>::gSingleton = NULL;
 
-GameRunner::GameRunner()
-	: mWindow(IWindow::Get()), mFileSystem(IFileSystem::Get()), mScriptSystem(ScriptSystem::Get()),
-	mRenderSystem(RenderSystem::Get()), mResourceManager(ResourceManager::Get()),
-	mGame(NULL), mConfiguration(NULL), mRenderPipeline(NULL), mRunning(true),
+GameRunner::GameRunner(IWindow& window, IFileSystem& fileSystem, ScriptSystem& scriptSystem,
+	RenderSystem& renderSystem, ResourceManager& resourceManager, IInputSystem& inputSystem,
+	IGame* game, IConfiguration* configuration) 
+	: mWindow(window), mFileSystem(fileSystem), mScriptSystem(scriptSystem),
+	mRenderSystem(renderSystem), mResourceManager(resourceManager), mInputSystem(inputSystem),
+	mGame(game), mConfiguration(configuration), mRenderPipeline(NULL), mRunning(true),
 	mScreenRenderContext(IGraphicsDriver::Get().ScreenRenderContext),
 	ActiveScene(mScene)
 {
+	assert_not_null(game);
+	assert_not_null(configuration);
 }
 
 GameRunner::~GameRunner()
@@ -30,14 +38,8 @@ GameRunner::~GameRunner()
 	}
 }
 
-void GameRunner::Start(IGame* game, IConfiguration* configuration)
+void GameRunner::Start()
 {
-	assert_not_null(game);
-	assert_not_null(configuration);
-
-	mGame = game;
-	mConfiguration = configuration;
-
 	if(!Initialize()) {
 		Release();
 		return;
@@ -52,19 +54,20 @@ void GameRunner::Start(IGame* game, IConfiguration* configuration)
 	mGame->LoadContent();
 
 	while(mRunning) {
-		GameDeltaTime = mWindow.GetTimeSinceLastUpdate();
-		GameTotalTime += (float64)GameDeltaTime;
+		_GameDeltaTime = mWindow.GetTimeSinceLastUpdate();
+		_GameTotalTime += (float64)GameDeltaTime;
 
 		mScriptSystem.SetGlobalVar("GameDeltaTime", GameDeltaTime);
 		mScriptSystem.SetGlobalVar("GameTotalTime", GameTotalTime);
 
 		mScene.Update();
 		mGame->Update();
-		mRenderPipeline->Render(&mScene, &mScene.ActiveCamera);
+		mRenderPipeline->Render(mScene, mScene.ActiveCamera);
 		mGame->Render();
 		
 		mScreenRenderContext->SwapBuffers();
 		mWindow.HandleEvents();
+		mInputSystem.Poll();
 		mResourceManager.Poll();
 	}
 
@@ -76,7 +79,7 @@ void GameRunner::Start(IGame* game, IConfiguration* configuration)
 
 SceneGroup* GameRunner::LoadLevel(const std::string& fileName)
 {
-	std::auto_ptr<Script> script = ScriptSystem::Get().CompileFile(fileName);
+	std::auto_ptr<Script> script = mScriptSystem.CompileFile(fileName);
 	SceneGroup* grp = script->ReadInstance<SceneGroup>();
 	return grp;
 }
@@ -94,7 +97,6 @@ bool GameRunner::Initialize()
 	// Register resource types
 	mResourceManager.RegisterResourceType(new Texture2DResourceLoader(mRenderSystem, mFileSystem), ".png");
 	mResourceManager.RegisterResourceType(new WavefrontResourceLoader(mResourceManager, mFileSystem), ".obj");
-	//mResourceManager.RegisterResourceType(std::auto_ptr<IResourceLoader>(new ImageMapResourceLoader(*resourceManager)), ".imagemap");
 
 	int32 width = mConfiguration->FindInt("window.width");
 	int32 height = mConfiguration->FindInt("window.height");
@@ -131,8 +133,9 @@ namespace playstate
 
 		ScriptableGame* game = luaM_getobject<ScriptableGame>(L);
 		if(game != NULL) {
-			GameRunner* runner = new GameRunner();
-			runner->Start(game, configuration);
+			GameRunner* runner = new GameRunner(IWindow::Get(), IFileSystem::Get(), ScriptSystem::Get(), 
+				RenderSystem::Get(), ResourceManager::Get(), IInputSystem::Get(), game, configuration);
+			runner->Start();
 
 			delete game;
 			delete configuration;

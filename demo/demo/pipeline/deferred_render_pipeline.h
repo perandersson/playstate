@@ -17,18 +17,18 @@ public:
 
 // IRenderPipeline
 public:
-	virtual void Render(const Scene* scene, const Camera* camera);
+	virtual void Render(const Scene& scene, const Camera& camera);
 
 // IWindowResizeListener
 public:
 	virtual void OnWindowResized(IWindow& window, uint32 width, uint32 height);
 		
 private:
-	void DrawGeometry(const Scene* scene, const Camera* camera);
-	void DrawLighting(const Scene* scene, const Camera* camera);
-	void DrawFinalResultToScreen(const Scene* scene, const Camera* camera);
+	void DrawGeometry(const Scene& scene, const Camera& camera);
+	void DrawLighting(const Scene& scene, const Camera& camera);
+	void DrawFinalResultToScreen(const Scene& scene, const Camera& camera);
 
-	Matrix4x4 CalculateBillboardModelMatrix(const Vector3& position, const Camera* camera);
+	Matrix4x4 CalculateBillboardModelMatrix(const Vector3& position, const Camera& camera);
 		
 private:
 	RenderSystem& mRenderSystem;

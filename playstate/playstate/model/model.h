@@ -39,9 +39,9 @@ namespace playstate
 	// Script integration
 	//
 
-	extern int Model_Factory(lua_State* L);
+	extern int Model_Load(lua_State* L);
 	static luaL_Reg Model_Methods[] = {
-		{ LUA_CONSTRUCTOR, Model_Factory },
+		{ "Load", Model_Load },
 		{ NULL, NULL }
 	};
 }

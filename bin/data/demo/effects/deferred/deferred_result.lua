@@ -1,6 +1,6 @@
-local MinFilter = require "core.minfilter"
-local MagFilter = require "core.magfilter"
-local TextureWrap = require "core.texturewrap"
+local MinFilter = require "engine.core.minfilter"
+local MagFilter = require "engine.core.magfilter"
+local TextureWrap = require "engine.core.texturewrap"
 
 return {
 	DepthTest = false,

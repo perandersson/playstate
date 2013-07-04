@@ -115,7 +115,7 @@ ResourceObject* Texture2DResourceLoader::Load(IFile& file)
 ResourceObject* Texture2DResourceLoader::GetDefaultResource()
 {
 	if(mDefaultResource == NULL) {
-		std::auto_ptr<IFile> file = mFileSystem.OpenFile("/defaults/texture2d.png");
+		std::auto_ptr<IFile> file = mFileSystem.OpenFile("/engine/defaults/texture2d.png");
 		assert(file->Exists() && "The default resource must exist");
 		mDefaultResource = Load(*file);
 	}

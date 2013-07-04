@@ -17,8 +17,8 @@ RenderStaticModel::~RenderStaticModel()
 
 void RenderStaticModel::OnComponentAdded()
 {
-	Renderable::Attach(Owner->Group);
-	SetBoundingBox(mModel->BoundingBox, Owner->AbsolutePosition);
+	Renderable::Attach(Node->Group);
+	SetBoundingBox(mModel->BoundingBox, Node->AbsolutePosition);
 }
 
 void RenderStaticModel::OnComponentRemoved()
@@ -28,12 +28,12 @@ void RenderStaticModel::OnComponentRemoved()
 
 void RenderStaticModel::OnLoaded(ResourceObject* object)
 {
-	SetBoundingBox(mModel->BoundingBox, Owner->AbsolutePosition);
+	SetBoundingBox(mModel->BoundingBox, Node->AbsolutePosition);
 }
 
 void RenderStaticModel::OnUnloading(ResourceObject* object)
 {
-	SetBoundingBox(mModel->BoundingBox, Owner->AbsolutePosition);
+	SetBoundingBox(mModel->BoundingBox, Node->AbsolutePosition);
 }
 
 void RenderStaticModel::CollectBuildingBlocks(RenderBlockResultSet& resultSet, RenderState& state)
@@ -43,7 +43,7 @@ void RenderStaticModel::CollectBuildingBlocks(RenderBlockResultSet& resultSet, R
 	for(uint32 i = 0; i < size; ++i) {
 		const ModelMesh& mesh = model->Meshes[i];
 		RenderBlock& block = resultSet.CreateAndGet(mesh.Id);
-		block.ModelMatrix = Owner->ModelMatrix;
+		block.ModelMatrix = Node->ModelMatrix;
 		//if(BIT_ISSET(state.Filter, RenderStateFilter::GEOMETRY)) {
 			block.VertexBuffer = mesh.Vertices;
 			block.IndexBuffer = mesh.Indices;

@@ -3,12 +3,12 @@
 using namespace playstate;
 
 Component::Component()
-	: mOwner(NULL), mTypeMask(0xffffffff), Owner(mOwner), TypeMask(mTypeMask)
+	: mOwner(NULL), mTypeMask(0xffffffff), Node(mOwner), TypeMask(mTypeMask)
 {
 }
 
 Component::Component(uint32 type)
-	: mOwner(NULL), mTypeMask(type), Owner(mOwner), TypeMask(mTypeMask)
+	: mOwner(NULL), mTypeMask(type), Node(mOwner), TypeMask(mTypeMask)
 {
 }
 

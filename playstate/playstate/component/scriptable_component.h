@@ -29,8 +29,12 @@ namespace playstate
 	};
 	
 	extern int Component_Init(lua_State* L);
+	extern int Component_GetNode(lua_State* L);
+	extern int Component_TranslateNode(lua_State* L);
 	static luaL_Reg Component_Methods[] = {
 		{ LUA_INHERIT_CONSTRUCTOR, Component_Init },
+		{ "GetNode", Component_GetNode },
+		{ "TranslateNode", Component_TranslateNode },
 		{ NULL, NULL }
 	};
 }

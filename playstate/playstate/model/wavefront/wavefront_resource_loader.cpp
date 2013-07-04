@@ -184,7 +184,7 @@ void WavefrontResourceLoader::LoadMaterials(IFile& file, Materials& materials) c
 ResourceObject* WavefrontResourceLoader::GetDefaultResource()
 {
 	if(mDefaultResource == NULL) {
-		std::auto_ptr<IFile> file = mFileSystem.OpenFile("/defaults/wavefront_default.obj");
+		std::auto_ptr<IFile> file = mFileSystem.OpenFile("/engine/defaults/wavefront_default.obj");
 		assert(file->Exists() && "The default resource must exist");
 		mDefaultResource = Load(*file);
 	}

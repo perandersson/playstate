@@ -24,7 +24,7 @@ Model::~Model()
 
 namespace playstate
 {
-	int Model_Factory(lua_State* L)
+	int Model_Load(lua_State* L)
 	{
 		std::string path = lua_tostring(L, -1); lua_pop(L, 1);
 		Resource<Model> model = ResourceManager::Get().GetResource<Model>(path);

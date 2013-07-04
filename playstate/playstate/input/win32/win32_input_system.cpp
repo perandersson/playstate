@@ -9,7 +9,7 @@ using namespace playstate;
 
 template<> playstate::IInputSystem* playstate::Singleton<playstate::IInputSystem>::gSingleton = NULL;
 
-Win32InputSystem::Win32InputSystem(Win32Window& window) : mWindow(mWindow)
+Win32InputSystem::Win32InputSystem(Win32Window& window) : mWindow(window)
 {
 }
 
@@ -22,8 +22,11 @@ void Win32InputSystem::Poll()
 	POINT p;
 	if(GetCursorPos(&p)) {
 		if (ScreenToClient(mWindow.GetWindowHandle(), &p)) {
-			mMouseState.SetX(p.x);
-			mMouseState.SetY(p.y);
+			if(p.x > 0 && p.y > 0 &&
+				p.x <= mWindow.GetWidth() && p.y <= mWindow.GetHeight()) {
+				mMouseState.SetX(p.x);
+				mMouseState.SetY(p.y);
+			}
 		}
 	}
 }

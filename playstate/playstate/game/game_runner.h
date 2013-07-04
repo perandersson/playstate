@@ -12,18 +12,21 @@
 
 namespace playstate
 {
+	class IInputSystem;
+
 	//
 	// The main application for the game engine
-	// TODO: Move required parameters to constructor (i.e. game and configuration).
 	class GameRunner : public Singleton<GameRunner>, public IWindowClosedListener
 	{
 	public:
-		GameRunner();
+		GameRunner(IWindow& window, IFileSystem& fileSystem, ScriptSystem& scriptSystem,
+			RenderSystem& renderSystem, ResourceManager& resourceManager, IInputSystem& inputSystem,
+			IGame* game, IConfiguration* configuration);
 		~GameRunner();
 
 		//
 		// Starts the supplied game using the supplied configuration
-		void Start(IGame* game, IConfiguration* configuration);
+		void Start();
 
 		//
 		// @param 
@@ -34,13 +37,13 @@ namespace playstate
 		//
 		void SetRenderPipeline(IRenderPipeline* renderPipeline);
 
+	public:
+		// Read-only property for the active scene
+		Scene& const ActiveScene; 
+
 	// IWindowClosedListener
 	public:
 		virtual bool OnWindowClosing(IWindow& window);
-
-	public:
-		// Read-only property for the active scene
-		Scene& const ActiveScene;
 
 	private:
 		bool Initialize();
@@ -52,6 +55,7 @@ namespace playstate
 		ScriptSystem& mScriptSystem;
 		RenderSystem& mRenderSystem;
 		ResourceManager& mResourceManager;
+		IInputSystem& mInputSystem;
 
 	private:
 		IGame* mGame;

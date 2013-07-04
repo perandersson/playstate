@@ -24,21 +24,21 @@ DeferredRenderPipeline::DeferredRenderPipeline(RenderSystem& renderSystem, IWind
 	mDepthRenderTarget = RenderTarget2D::Create(width, height, TextureFormat::DEPTH24);
 	mLightRenderTarget = RenderTarget2D::Create(width, height, TextureFormat::RGBA);
 
-	mDeferredShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(std::string("/effects/deferred/deferred.lua")));
+	mDeferredShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(std::string("/demo/effects/deferred/deferred.lua")));
 	mDeferredShader->SetRenderTarget(mDiffuseRenderTarget, 0);
 	mDeferredShader->SetRenderTarget(mPositionsRenderTarget, 1);
 	mDeferredShader->SetRenderTarget(mNormalsRenderTarget, 2);
 	mDeferredShader->SetDepthRenderTarget(mDepthRenderTarget);
 	
-	mPointLightTexture = resourceManager.GetResource<Texture2D>("/effects/deferred_point_light/light.png");
-	mPointLightShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(std::string("/effects/deferred/deferred_point_light.lua")));
+	mPointLightTexture = resourceManager.GetResource<Texture2D>("/demo/effects/deferred_point_light/light.png");
+	mPointLightShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(std::string("/demo/effects/deferred/deferred_point_light.lua")));
 	mPointLightShader->GetComponent("DiffuseTexture")->SetTexture(mDiffuseRenderTarget);
 	mPointLightShader->GetComponent("PositionsTexture")->SetTexture(mPositionsRenderTarget);
 	mPointLightShader->GetComponent("NormalsTexture")->SetTexture(mNormalsRenderTarget);
 	mPointLightShader->GetComponent("LightTexture")->SetTexture(mPointLightTexture);
 	mPointLightShader->SetRenderTarget(mLightRenderTarget, 0);
 
-	mTexturedShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(std::string("/effects/deferred/deferred_result.lua")));
+	mTexturedShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(std::string("/demo/effects/deferred/deferred_result.lua")));
 	mTexturedShader->GetComponent("DiffuseTexture")->SetTexture(mDiffuseRenderTarget);
 	mTexturedShader->GetComponent("PositionsTexture")->SetTexture(mPositionsRenderTarget);
 	mTexturedShader->GetComponent("NormalsTexture")->SetTexture(mNormalsRenderTarget);
@@ -75,23 +75,23 @@ DeferredRenderPipeline::~DeferredRenderPipeline()
 	mWindow.RemoveWindowResizedListener(this);
 }
 	
-void DeferredRenderPipeline::Render(const Scene* scene, const Camera* camera)
+void DeferredRenderPipeline::Render(const Scene& scene, const Camera& camera)
 {
 	// Draw geometry
 	DrawGeometry(scene, camera);
 }
 
-void DeferredRenderPipeline::DrawGeometry(const Scene* scene, const Camera* camera)
+void DeferredRenderPipeline::DrawGeometry(const Scene& scene, const Camera& camera)
 {
 	FindQuery query;
-	query.Camera = camera;
-	if(scene->Find(query, &mRenderBlockResultSet)) {
+	query.Camera = &camera;
+	if(scene.Find(query, &mRenderBlockResultSet)) {
 		mDeferredShader->Apply();
 		mDeferredShader->Clear(ClearTypes::COLOR | ClearTypes::DEPTH);
 
 		// Set the cameras projection- and view matrix
-		mDeferredShader->GetComponent("ProjectionMatrix")->SetMatrix(camera->ProjectionMatrix);
-		mDeferredShader->GetComponent("ViewMatrix")->SetMatrix(camera->ViewMatrix);
+		mDeferredShader->GetComponent("ProjectionMatrix")->SetMatrix(camera.ProjectionMatrix);
+		mDeferredShader->GetComponent("ViewMatrix")->SetMatrix(camera.ViewMatrix);
 		
 		IGfxProgramComponent* modelMatrix = mDeferredShader->GetComponent("ModelMatrix");
 		IGfxProgramComponent* diffuseTexture = mDeferredShader->GetComponent("DiffuseTexture");
@@ -117,7 +117,7 @@ void DeferredRenderPipeline::DrawGeometry(const Scene* scene, const Camera* came
 	CHECK_GL_ERROR();
 }
 
-void DeferredRenderPipeline::DrawLighting(const Scene* scene, const Camera* camera)
+void DeferredRenderPipeline::DrawLighting(const Scene& scene, const Camera& camera)
 {
 	//std::vector<Light*> lights;
 	//if(scene->FindLights(camera, &lights)) {
@@ -164,10 +164,10 @@ void DeferredRenderPipeline::DrawLighting(const Scene* scene, const Camera* came
 	}*/
 }
 
-Matrix4x4 DeferredRenderPipeline::CalculateBillboardModelMatrix(const Vector3& position, const Camera* camera)
+Matrix4x4 DeferredRenderPipeline::CalculateBillboardModelMatrix(const Vector3& position, const Camera& camera)
 {
-	const Vector3 direction = (camera->Position - position).GetNormalized();
-	const Vector3 right = camera->Up.CrossProduct(direction);
+	const Vector3 direction = (camera.Position - position).GetNormalized();
+	const Vector3 right = camera.Up.CrossProduct(direction);
 	const Vector3 up = direction.CrossProduct(right);
 
 	Matrix4x4 mat(right.X, right.Y, right.Z, 0.0f,
@@ -177,7 +177,7 @@ Matrix4x4 DeferredRenderPipeline::CalculateBillboardModelMatrix(const Vector3& p
 	return mat;
 }
 
-void DeferredRenderPipeline::DrawFinalResultToScreen(const Scene* scene, const Camera* camera)
+void DeferredRenderPipeline::DrawFinalResultToScreen(const Scene& scene, const Camera& camera)
 {
 	mTexturedShader->Apply();
 	mTexturedShader->Clear(ClearTypes::COLOR);
