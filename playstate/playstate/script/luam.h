@@ -10,6 +10,7 @@ extern "C"
 namespace playstate
 {
 	class Scriptable;
+	struct Vector3;
 
 	//
 	// Sets/Replaces the supplied data value as the native instance for the table at the top of the stack
@@ -33,6 +34,16 @@ namespace playstate
 	// Pushes the supplied object to the top of the stack. If the object isn't bound/registered to LUA
 	// then it will create a script representation of the class for you.
 	extern void luaM_pushobject(lua_State* L, const char* className, Scriptable* object);
+
+	//
+	// Converts a lua number array into a Vector3 structure usable by the game engine.
+	// It can convert userdata (i.e. if the user uses Vector3 in script) or a {x, y, z} array.
+	// @return A three-dimensional vector. The 
+	extern Vector3 luaM_popvector3(lua_State* L);
+
+	//
+	// 
+	extern void luaM_pushvector3(lua_State* L, const Vector3& vec);
 
 	//
 	// Pops an object parameter from the stack and returns the result

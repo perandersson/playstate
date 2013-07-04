@@ -105,11 +105,11 @@ namespace playstate
 
 	int ActiveCamera_LookAt(lua_State* L)
 	{
-		float* up = (float*)lua_touserdata(L, -1); lua_pop(L, 1);
-		float* center = (float*)lua_touserdata(L, -1); lua_pop(L, 1);
-		float* eye = (float*)lua_touserdata(L, -1); lua_pop(L, 1);
+		Vector3 up = luaM_popvector3(L);
+		Vector3 center = luaM_popvector3(L);
+		Vector3 eye = luaM_popvector3(L);
 
-		GameRunner::Get().ActiveScene.ActiveCamera.LookAt(Vector3(eye), Vector3(center), Vector3(up));
+		GameRunner::Get().ActiveScene.ActiveCamera.LookAt(eye, center, up);
 		return 0;
 	}
 

@@ -1,6 +1,7 @@
 #include "../memory/memory.h"
 #include "luam.h"
 #include "scriptable.h"
+#include "../math/vector3.h"
 
 namespace playstate
 {
@@ -55,7 +56,6 @@ namespace playstate
 		lua_setmetatable(L, -2);
 	}
 
-	
 	void luaM_pushobject(lua_State* L, const char* className, Scriptable* object)
 	{
 		assert_not_null(L);
@@ -71,5 +71,35 @@ namespace playstate
 			object->RegisterObject(L, ref);
 			lua_rawgeti(L, LUA_REGISTRYINDEX, ref);
 		}
+	}
+
+	Vector3 luaM_popvector3(lua_State* L)
+	{
+		assert_not_null(L);
+		if(lua_isuserdata(L, -1)) {
+			Vector3 vec((float*)lua_touserdata(L, -1)); lua_pop(L, 1);
+			return vec;
+		} else if(lua_istable(L, -1)) {
+			Vector3 vec;
+			float* ptr = vec.Points;
+			lua_pushnil(L);
+			while (lua_next(L, -2) != 0) {
+				*ptr++ = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+			}
+			lua_pop(L, 1);
+			return vec;
+		}	
+
+		return Vector3::Zero;
+	}
+
+	void luaM_pushvector3(lua_State* L, const Vector3& vec)
+	{
+		assert_not_null(L);
+		float* arr = (float*)lua_newuserdata(L, sizeof(float[3]));
+		arr[0] = vec.X;
+		arr[1] = vec.Y;
+		arr[2] = vec.Z;
 	}
 }

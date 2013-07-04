@@ -89,7 +89,7 @@ namespace playstate
 	
 	int Component_TranslateNode(lua_State* L)
 	{
-		Vector3 vec((float*)lua_touserdata(L, -1)); lua_pop(L, 1);
+		Vector3 vec = luaM_popvector3(L);
 		ScriptableComponent* component = luaM_popobject<ScriptableComponent>(L);
 		if(component != NULL) {
 			SceneNode* owner = component->Node;

@@ -217,7 +217,7 @@ namespace playstate
 
 	int SceneNode_SetPosition(lua_State* L)
 	{
-		Vector3 vec((float*)lua_touserdata(L, -1)); lua_pop(L, 1);
+		Vector3 vec = luaM_popvector3(L);
 		SceneNode* node = luaM_popobject<SceneNode>(L);
 		if(node != NULL) {
 			node->SetPosition(vec);
@@ -228,7 +228,7 @@ namespace playstate
 
 	int SceneNode_Translate(lua_State* L)
 	{
-		Vector3 vec((float*)lua_touserdata(L, -1)); lua_pop(L, 1);
+		Vector3 vec = luaM_popvector3(L);
 		SceneNode* node = luaM_popobject<SceneNode>(L);
 		if(node != NULL) {
 			node->SetPosition(node->Position + vec);
@@ -239,7 +239,7 @@ namespace playstate
 	
 	int SceneNode_SetRotatation(lua_State* L)
 	{
-		Vector3 vec((float*)lua_touserdata(L, -1)); lua_pop(L, 1);
+		Vector3 vec = luaM_popvector3(L);
 		SceneNode* node = luaM_popobject<SceneNode>(L);
 		if(node != NULL) {
 			node->SetRotation(vec);

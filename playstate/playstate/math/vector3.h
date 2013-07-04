@@ -1,13 +1,7 @@
 #pragma once
 
 #include "../types.h"
-
-extern "C"
-{
-   #include <lua.h>
-   #include <lauxlib.h>
-   #include <lualib.h>
-}
+#include "../script/luam.h"
 
 namespace playstate
 {
@@ -77,8 +71,10 @@ namespace playstate
 	//
 
 	extern int Vector3_Factory(lua_State* L);
+	extern int Vector3_Add(lua_State* L);
 	static luaL_Reg Vector3_Methods[] = {
-		{ "__call", Vector3_Factory },
+		{ LUA_CONSTRUCTOR, Vector3_Factory },
+		{ "__add", Vector3_Add },
 		{ NULL, NULL }
 	};
 }
