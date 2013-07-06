@@ -204,12 +204,10 @@ namespace playstate
 	{
 		SceneNode* node = luaM_popobject<SceneNode>(L);
 		if(node != NULL) {
-			float* arr = (float*)lua_newuserdata(L, sizeof(float[3]));
-			arr[0] = node->Position.X;
-			arr[1] = node->Position.Y;
-			arr[2] = node->Position.Z;
+			luaM_pushvector3(L, node->Position);
 		} else {
-			lua_pushnil(L);
+			// Print error
+			luaM_pushvector3(L, Vector3::Zero);
 		}
 
 		return 1;
