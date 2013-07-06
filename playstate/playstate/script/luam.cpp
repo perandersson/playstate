@@ -76,19 +76,23 @@ namespace playstate
 	Vector3 luaM_popvector3(lua_State* L)
 	{
 		assert_not_null(L);
-
-
-		if(lua_isuserdata(L, -1)) {
-			Vector3 vec((float*)lua_touserdata(L, -1)); lua_pop(L, 1);
-			return vec;
-		} else if(lua_istable(L, -1)) {
+		if(lua_istable(L, -1)) {
 			Vector3 vec;
 			float* ptr = vec.Points;
 			lua_pushnil(L);
-			while (lua_next(L, -2) != 0) {
-				*ptr++ = lua_tonumber(L, -1);
-				lua_pop(L, 1);
-			}
+
+			lua_next(L, -2);
+			*ptr++ = lua_tonumber(L, -1);
+			lua_pop(L, 1);
+
+			lua_next(L, -2);
+			*ptr++ = lua_tonumber(L, -1);
+			lua_pop(L, 1);
+
+			bool rest = lua_next(L, -2) != 0;
+			*ptr++ = lua_tonumber(L, -1);
+			lua_pop(L, rest ? 2 : 1);
+
 			lua_pop(L, 1);
 			return vec;
 		}	
@@ -99,23 +103,17 @@ namespace playstate
 	void luaM_pushvector3(lua_State* L, const Vector3& vec)
 	{
 		assert_not_null(L);
-		int top1 = lua_gettop(L);
+
+		// { vec.X, vec.Y, vec.Z }
 		lua_newtable(L);
-		int top2 = lua_gettop(L);
 		
 		lua_pushnumber(L, vec.X);
-		int top3 = lua_gettop(L);
 		lua_rawseti(L, -2, 1);
-		int top4 = lua_gettop(L);
 		
 		lua_pushnumber(L, vec.Y);
-		int top5 = lua_gettop(L);
 		lua_rawseti(L, -2, 2);
-		int top6 = lua_gettop(L);
 		
 		lua_pushnumber(L, vec.Z);
-		int top7 = lua_gettop(L);
 		lua_rawseti(L, -2, 3);
-		int top8 = lua_gettop(L);
 	}
 }
