@@ -28,10 +28,15 @@ namespace playstate
 		// Starts the supplied game using the supplied configuration
 		void Start();
 
-		//
-		// @param 
+		// Loads a new level and returns the level as a SceneGroup type.
+		// @param fileName 
 		// @return
 		SceneGroup* LoadLevel(const std::string& fileName);
+
+		//
+		// Starts a new level. This also starts the main game loop
+		// @param fileName
+		void StartLevel(const std::string& fileName);
 
 		//
 		//
@@ -72,10 +77,12 @@ namespace playstate
 	//
 	
 	extern int Game_LoadLevel(lua_State* L);
+	extern int Game_StartLevel(lua_State* L);
 	extern int Game_Start(lua_State* L);
 	extern int Game_SetRenderPipeline(lua_State* L);
 	static luaL_Reg Game_Methods[] = {
 		{ "LoadLevel", Game_LoadLevel },
+		{ "StartLevel", Game_StartLevel },
 		{ "Start", Game_Start },
 		{ "SetRenderPipeline", Game_SetRenderPipeline },
 		{ NULL, NULL }

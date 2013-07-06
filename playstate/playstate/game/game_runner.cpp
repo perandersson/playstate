@@ -53,6 +53,17 @@ void GameRunner::Start()
 
 	mGame->LoadContent();
 
+	mGame->UnloadContent();
+
+	mGame->Release();
+	Release();
+}
+
+void GameRunner::StartLevel(const std::string& level)
+{
+	SceneGroup* group = LoadLevel(level);
+	mScene.AddSceneGroup(group);
+
 	while(mRunning) {
 		_GameDeltaTime = mWindow.GetTimeSinceLastUpdate();
 		_GameTotalTime += (float64)GameDeltaTime;
@@ -70,18 +81,18 @@ void GameRunner::Start()
 		mInputSystem.Poll();
 		mResourceManager.Poll();
 	}
-
-	mGame->UnloadContent();
-
-	mGame->Release();
-	Release();
 }
 
 SceneGroup* GameRunner::LoadLevel(const std::string& fileName)
 {
-	std::auto_ptr<Script> script = mScriptSystem.CompileFile(fileName);
-	SceneGroup* grp = script->ReadInstance<SceneGroup>();
-	return grp;
+	try {
+		std::auto_ptr<Script> script = mScriptSystem.CompileFile(fileName);
+		SceneGroup* grp = script->ReadInstance<SceneGroup>();
+		return grp;
+	} catch(ScriptException e) {
+		// TODO: Add logging
+	}
+	return NULL;
 }
 
 void GameRunner::SetRenderPipeline(IRenderPipeline* renderPipeline)
@@ -154,8 +165,14 @@ namespace playstate
 		} else {
 			lua_pushnil(L);
 		}
-
 		return 1;
+	}
+
+	int Game_StartLevel(lua_State* L)
+	{
+		const std::string levelFileName = lua_tostring(L, -1); lua_pop(L, 1);
+		GameRunner::Get().StartLevel(levelFileName);
+		return 0;
 	}
 
 	int Game_SetRenderPipeline(lua_State* L)
