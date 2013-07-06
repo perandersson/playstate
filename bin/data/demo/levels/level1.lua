@@ -23,7 +23,7 @@ local playerModel = Model.Load("/demo/models/chinalamp/China_lampEX.obj")
 local player1 = SceneNode(level1)
 player1:AddComponent(MovePlayerBehaviour(10.0))
 player1:AddComponent(RenderStaticModel(playerModel))
-player1:SetPosition(Vector3(0, 0, 10))	
+player1:SetPosition({0, 0, 10})
 
 -- Node used to load new levels after a specific time
 local loaderNode = SceneNode(level1)
