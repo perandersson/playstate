@@ -1,4 +1,5 @@
 local MovePlayerBehaviour = require "demo.behaviours.moveplayerbehaviour"
+local FollowCameraBehaviour = require "demo.behaviours.followcamerabehaviour"
 
 AddMoreSceneGroupsOnTime = class(Component, function(self, totalTime)
 	Component.__init(self)
@@ -22,6 +23,7 @@ level1 = SceneGroup()
 local playerModel = Model.Load("/demo/models/chinalamp/China_lampEX.obj")
 local player1 = SceneNode(level1)
 player1:AddComponent(MovePlayerBehaviour(10.0))
+player1:AddComponent(FollowCameraBehaviour())
 player1:AddComponent(RenderStaticModel(playerModel))
 player1:SetPosition({0, 0, 10})
 

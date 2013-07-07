@@ -2,6 +2,8 @@
 #include "luam.h"
 #include "scriptable.h"
 #include "../math/vector3.h"
+#include "../math/vector2.h"
+#include "../math/point.h"
 
 namespace playstate
 {
@@ -105,6 +107,8 @@ namespace playstate
 		assert_not_null(L);
 
 		// { vec.X, vec.Y, vec.Z }
+		// @see http://www.lua.org/pil/11.1.html 
+		// ", it is customary in Lua to start arrays with index 1"
 		lua_newtable(L);
 		
 		lua_pushnumber(L, vec.X);
@@ -115,5 +119,33 @@ namespace playstate
 		
 		lua_pushnumber(L, vec.Z);
 		lua_rawseti(L, -2, 3);
+	}
+
+	void luaM_pushvector2(lua_State* L, const Vector2& vec)
+	{
+		assert_not_null(L);
+
+		// { vec.X, vec.Y }
+		lua_newtable(L);
+		
+		lua_pushnumber(L, vec.X);
+		lua_rawseti(L, -2, 1);
+		
+		lua_pushnumber(L, vec.Y);
+		lua_rawseti(L, -2, 2);
+	}
+	
+	void luaM_pushpoint(lua_State* L, const Point& point)
+	{
+		assert_not_null(L);
+
+		// { point.X, point.Y }
+		lua_newtable(L);
+		
+		lua_pushinteger(L, point.X);
+		lua_rawseti(L, -2, 1);
+		
+		lua_pushinteger(L, point.Y);
+		lua_rawseti(L, -2, 2);
 	}
 }

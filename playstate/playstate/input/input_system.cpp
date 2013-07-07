@@ -19,17 +19,10 @@ namespace playstate
 		return 1;
 	}
 
-	int IInputSystem_Mouse_GetX(lua_State* L)
+	int IInputSystem_Mouse_GetPosition(lua_State* L)
 	{
 		IMouseState& state = IInputSystem::Get().GetMouseState();
-		lua_pushnumber(L, state.GetX());
-		return 1;
-	}
-
-	int IInputSystem_Mouse_GetY(lua_State* L)
-	{
-		IMouseState& state = IInputSystem::Get().GetMouseState();
-		lua_pushnumber(L, state.GetY());
+		luaM_pushpoint(L, state.GetPosition());
 		return 1;
 	}
 }

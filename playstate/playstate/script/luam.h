@@ -10,7 +10,10 @@ extern "C"
 namespace playstate
 {
 	class Scriptable;
+
 	struct Vector3;
+	struct Vector2;
+	struct Point;
 
 	//
 	// Sets/Replaces the supplied data value as the native instance for the table at the top of the stack
@@ -44,6 +47,14 @@ namespace playstate
 	//
 	// 
 	extern void luaM_pushvector3(lua_State* L, const Vector3& vec);
+	
+	//
+	//
+	extern void luaM_pushvector2(lua_State* L, const Vector2& vec);
+
+	//
+	//
+	extern void luaM_pushpoint(lua_State* L, const Point& point);
 
 	//
 	// Pops an object parameter from the stack and returns the result

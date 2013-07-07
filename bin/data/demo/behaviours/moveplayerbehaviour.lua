@@ -4,8 +4,7 @@ local KeyboardKeys = require "engine.core.keyboardkeys"
 MovePlayerBehaviour = class(Component, function(self, speed)
 	Component.__init(self)
 	self.speed = speed
-	self.prevX = 0
-	self.prevY = 0
+	self.prevPos = {0, 0}
 end)
 
 function MovePlayerBehaviour:Update()
@@ -14,21 +13,17 @@ function MovePlayerBehaviour:Update()
 end
 
 function MovePlayerBehaviour:RotateNode()
-	local currentX = Mouse.GetX()
-	local currentY = Mouse.GetY()
-		
-	if currentX == self.prevX and currentY == self.prevY then
+	local currentPos = Mouse.GetPosition()
+	if currentPos[1] == self.prevPos[1] and currentPos[2] == self.prevPos[2] then
 		return
 	end
 	
-	x, y = self:GetArcballVector(currentX, currentY)
+	x, y = self:GetArcballVector(currentPos[1], currentPos[2])
 	local angle = math.atan2(x, y)
 		
 	self:GetNode():SetRotation({0, angle, 0})
 	
-	self.prevX = currentX
-	self.prevY = currentY
-	
+	self.prevPos = currentPos
 end
 
 function MovePlayerBehaviour:GetArcballVector(x, y)
@@ -40,10 +35,7 @@ function MovePlayerBehaviour:GetArcballVector(x, y)
 	
 	-- Normalize px,py,0
 	local length = math.sqrt(px * px + py * py + 0)
-	px = px / length
-	py = py / length
-	
-	return px, py
+	return px / length, py / length
 end
 
 function MovePlayerBehaviour:TranslateNode()
@@ -51,22 +43,22 @@ function MovePlayerBehaviour:TranslateNode()
 	local move = false
 		
 	if Keys.IsKeyDown(KeyboardKeys.W) then
-		velocity[2] = velocity[2] - self.speed * GameDeltaTime
+		velocity[3] = velocity[3] - self.speed * GameDeltaTime
 		move = true
 	end
 	
 	if Keys.IsKeyDown(KeyboardKeys.S) then
-		velocity[2] = velocity[2] + self.speed * GameDeltaTime
+		velocity[3] = velocity[3] + self.speed * GameDeltaTime
 		move = true
 	end
 	
 	if Keys.IsKeyDown(KeyboardKeys.A) then
-		velocity[0] = velocity[0] - self.speed * GameDeltaTime
+		velocity[1] = velocity[1] - self.speed * GameDeltaTime
 		move = true
 	end
 	
 	if Keys.IsKeyDown(KeyboardKeys.D) then
-		velocity[0] = velocity[0] + self.speed * GameDeltaTime
+		velocity[1] = velocity[1] + self.speed * GameDeltaTime
 		move = true
 	end
 	

@@ -54,7 +54,7 @@ bool Win32KeyboardState::IsUp(KeyboardKeys key)
 }
 
 
-Win32MouseState::Win32MouseState() : mX(0), mY(0)
+Win32MouseState::Win32MouseState()
 {
 }
 
@@ -92,23 +92,14 @@ bool Win32MouseState::IsUp(MouseKeys key)
 	}
 }
 
-int Win32MouseState::GetX()
+Point Win32MouseState::GetPosition()
 {
-	return mX;
+	return mPoint;
 }
 
-int Win32MouseState::GetY()
+void Win32MouseState::SetPosition(const Point& pt)
 {
-	return mY;
+	mPoint = pt;
 }
 
-void Win32MouseState::SetX(int x)
-{
-	mX = x;
-}
-
-void Win32MouseState::SetY(int y)
-{
-	mY = y;
-}
 

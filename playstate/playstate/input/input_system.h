@@ -31,12 +31,10 @@ namespace playstate
 		{ NULL, NULL }
 	};
 
-	extern int IInputSystem_Mouse_GetX(lua_State* L);
-	extern int IInputSystem_Mouse_GetY(lua_State* L);
+	extern int IInputSystem_Mouse_GetPosition(lua_State* L);
 	//extern int IInputSystem_Keys_GetMouseState(lua_State* L);
 	static luaL_Reg IInputSystem_Mouse_Methods[] = {
-		{ "GetX", IInputSystem_Mouse_GetX },
-		{ "GetY", IInputSystem_Mouse_GetY },
+		{ "GetPosition", IInputSystem_Mouse_GetPosition },
 //		{ "GetMouseState", IInputSystem_GetMouseState },
 		{ NULL, NULL }
 	};

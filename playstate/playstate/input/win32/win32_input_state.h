@@ -34,15 +34,11 @@ namespace playstate
 
 		virtual bool IsDown(MouseKeys key);
 		virtual bool IsUp(MouseKeys key);
+		virtual Point GetPosition();
 
-		virtual int GetX();
-		virtual int GetY();
-
-		void SetX(int x);
-		void SetY(int y);
+		void SetPosition(const Point& pt);
 
 	private:
-		int mX;
-		int mY;
+		Point mPoint;
 	};
 }

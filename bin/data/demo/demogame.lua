@@ -1,4 +1,5 @@
 local class = require "engine.class"
+local config = require "config"
 
 DemoGame = class(IGame, function(self) 
 	IGame.__init(self)
@@ -19,7 +20,7 @@ function DemoGame:LoadContent()
 	-- Set the actives cmaeras perspective
 	local ratio = Window.GetWidth() / Window.GetHeight()
 	ActiveCamera.SetPerspective(0.1, 1000.0, 45.0, ratio)
-	ActiveCamera.LookAt({0, 50.0, 50.0}, {0, 0, 0}, {0, 1, 0})
+	ActiveCamera.LookAt(config.camera.eye, config.camera.center, config.camera.up)
 	
 	-- Start a new level (in it's own scipt scope, which prevents the game from crashing
 	-- if the lua script is invalid

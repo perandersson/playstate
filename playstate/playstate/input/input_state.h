@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../math/vector2.h"
+#include "../math/point.h"
 
 namespace playstate
 {
@@ -47,8 +48,6 @@ namespace playstate
 	public:
 		virtual bool IsDown(MouseKeys key) = 0;
 		virtual bool IsUp(MouseKeys key) = 0;
-
-		virtual int GetX() = 0;
-		virtual int GetY() = 0;
+		virtual Point GetPosition() = 0;
 	};
 }
