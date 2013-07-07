@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../types.h"
-#include "../script/luam.h"
 
 namespace playstate
 {
@@ -64,17 +63,5 @@ namespace playstate
 		static const Vector3 NegativeUnitX;
 		static const Vector3 NegativeUnitY;
 		static const Vector3 NegativeUnitZ;
-	};
-	
-	//
-	// Script integration
-	//
-
-	extern int Vector3_Factory(lua_State* L);
-	extern int Vector3_Add(lua_State* L);
-	static luaL_Reg Vector3_Methods[] = {
-		{ LUA_CONSTRUCTOR, Vector3_Factory },
-		{ "__add", Vector3_Add },
-		{ NULL, NULL }
 	};
 }

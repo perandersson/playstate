@@ -226,25 +226,3 @@ bool Vector3::IsZero() const
 	return abs(X) <= FLT_EPSILON &&
 		abs(Y) <= FLT_EPSILON;
 }
-
-namespace playstate
-{
-	int Vector3_Factory(lua_State* L)
-	{
-		float32 z = lua_tonumber(L, -1); lua_pop(L, 1);
-		float32 y = lua_tonumber(L, -1); lua_pop(L, 1);
-		float32 x = lua_tonumber(L, -1); lua_pop(L, 1);
-
-		luaM_pushvector3(L, Vector3(x, y, z));
-		return 1;
-	}
-
-	int Vector3_Add(lua_State* L)
-	{
-		Vector3 val2 = luaM_popvector3(L);
-		Vector3 val1 = luaM_popvector3(L);
-		
-		luaM_pushvector3(L, val1 + val2);
-		return 1;
-	}
-}

@@ -63,10 +63,12 @@ namespace playstate
 	extern int Scene_AddSceneGroup(lua_State* L);
 	extern int Scene_RemoveSceneGroup(lua_State* L);
 	extern int Scene_SetAmbientLight(lua_State* L);
+	extern int Scene_GetAmbientLight(lua_State* L);
 	static luaL_Reg Scene_Methods[] = {
 		{ "AddSceneGroup", Scene_AddSceneGroup },
 		{ "RemoveSceneGroup", Scene_RemoveSceneGroup },
 		{ "SetAmbientLight", Scene_SetAmbientLight },
+		{ "GetAmbientLight", Scene_GetAmbientLight },
 		{ NULL, NULL }
 	};
 }

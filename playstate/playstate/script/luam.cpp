@@ -187,6 +187,12 @@ namespace playstate
 				numElements++;
 				lua_pop(L, 1);
 			}
+
+			if(numElements == 1) {
+				color.Green = color.Blue = color.Alpha = color.Red;
+			} else if(numElements == 3) {
+				color.Alpha = 1.0f;
+			}
 			
 			lua_pop(L, 1);
 			return color;

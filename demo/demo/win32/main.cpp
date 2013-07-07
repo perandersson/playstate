@@ -46,10 +46,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 		ss.RegisterType("Scene", Scene_Methods);
 		ss.RegisterType("SceneGroup", SceneGroup_Methods);
 		ss.RegisterType("SceneNode", SceneNode_Methods);
+		ss.RegisterType("PointLight", SceneNode_Methods);
+		ss.RegisterType("PointLight", PointLight_Methods);
 		ss.RegisterType("Component", Component_Methods);
 		ss.RegisterType("Model", Model_Methods);
 		ss.RegisterType("RenderStaticModel", RenderStaticModel_Methods);
-		ss.RegisterType("Vector3", Vector3_Methods);
 		ss.RegisterType("ActiveCamera", ActiveCamera_Methods);
 		ss.RegisterType("DeferredRenderPipeline", DeferredRenderPipeline_Methods);
 

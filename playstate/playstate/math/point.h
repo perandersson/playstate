@@ -1,4 +1,5 @@
 #pragma once
+#include "../types.h"
 
 namespace playstate
 {
@@ -8,15 +9,15 @@ namespace playstate
 		{
 			struct
 			{
-				int X;
-				int Y;
+				int32 X;
+				int32 Y;
 			};
-			int Points[2];
+			int32 Points[2];
 		};
 
 		Point();
 		Point(const Point& point);
-		Point(int x, int y);
+		Point(int32 x, int32 y);
 
 		void operator = (const Point& pt);
 

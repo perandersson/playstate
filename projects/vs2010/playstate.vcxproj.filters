@@ -90,9 +90,6 @@
     <Filter Include="Source Files\script\exception">
       <UniqueIdentifier>{b206010b-c824-424b-b410-b5d5d2360f45}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\search">
-      <UniqueIdentifier>{6d85e2e8-6dac-4fce-af77-2c2ec0408fa6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\thread">
       <UniqueIdentifier>{a91e27f5-0729-4861-8c5a-f3224ec6e79c}</UniqueIdentifier>
     </Filter>
@@ -111,7 +108,13 @@
     <Filter Include="Source Files\game\win32">
       <UniqueIdentifier>{e5d726bc-3a45-4191-b191-89b90df29008}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\search\sorter">
+    <Filter Include="Source Files\light">
+      <UniqueIdentifier>{c6fcb0d9-d588-43d2-9b1d-c978ccf2a937}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\script\search">
+      <UniqueIdentifier>{6d85e2e8-6dac-4fce-af77-2c2ec0408fa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\script\search\sorter">
       <UniqueIdentifier>{83b57648-dacd-43af-97c7-fb93cf697de3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -342,13 +345,13 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\search\sorter\quick_sort_array_sorter.cpp">
-      <Filter>Source Files\search\sorter</Filter>
+      <Filter>Source Files\script\search\sorter</Filter>
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\search\render_block_result_set.cpp">
-      <Filter>Source Files\search</Filter>
+      <Filter>Source Files\script\search</Filter>
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\search\sorter\render_block_array_sorter.cpp">
-      <Filter>Source Files\search\sorter</Filter>
+      <Filter>Source Files\script\search\sorter</Filter>
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\rendering\win32\win32_graphics_driver.cpp">
       <Filter>Source Files\rendering\win32</Filter>
@@ -361,6 +364,9 @@
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\math\point.cpp">
       <Filter>Source Files\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\light\point_light.cpp">
+      <Filter>Source Files\light</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -614,7 +620,7 @@
       <Filter>Source Files\script\exception</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\search\find_query.h">
-      <Filter>Source Files\search</Filter>
+      <Filter>Source Files\script\search</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\thread\lock.h">
       <Filter>Source Files\thread</Filter>
@@ -689,19 +695,19 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\search\render_block_result_set.h">
-      <Filter>Source Files\search</Filter>
+      <Filter>Source Files\script\search</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\search\sorter\quick_sort_array_sorter.h">
-      <Filter>Source Files\search\sorter</Filter>
+      <Filter>Source Files\script\search\sorter</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\search\array_sorter.h">
-      <Filter>Source Files\search</Filter>
+      <Filter>Source Files\script\search</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\rendering\render_block.h">
       <Filter>Source Files\rendering</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\search\sorter\render_block_array_sorter.h">
-      <Filter>Source Files\search\sorter</Filter>
+      <Filter>Source Files\script\search\sorter</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\rendering\graphics_driver.h">
       <Filter>Source Files\rendering</Filter>
@@ -714,6 +720,9 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\math\point.h">
       <Filter>Source Files\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\light\point_light.h">
+      <Filter>Source Files\light</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

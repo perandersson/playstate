@@ -62,7 +62,8 @@ namespace playstate
 	extern void luaM_pushcolor(lua_State* L, const Color& color);
 	
 	//
-	// Pops the color from the top of the stack and returns the result. Color::Nothing if no color is found at the top of the stack
+	// Pops the color from the top of the stack and returns the result. 
+	// How the table converts to a Color object works the same way as how the constructors work for the Color object.
 	extern Color luaM_popcolor(lua_State* L);
 	
 	//

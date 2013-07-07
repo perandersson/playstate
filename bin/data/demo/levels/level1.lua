@@ -16,10 +16,10 @@ function AddMoreSceneGroupsOnTime:Update()
 	end
 end
 
--- The group name
+-- The group name.
 level1 = SceneGroup()
 
--- The nodes inside this group
+-- The player object. Can be moved using keyboard and mouse
 local playerModel = Model.Load("/demo/models/player/player.obj")
 local player1 = SceneNode(level1)
 player1:AddComponent(MovePlayerBehaviour(10.0))
@@ -42,14 +42,26 @@ for i=1, 20 do
 	end
 end
 
--- Set ambient lighting on the scene
-Scene.SetAmbientLight({0.1, 0.2, 0.3})
-
 -- Add lighting using random positions
 math.randomseed( os.time() )
 for i=1, 20 do
 	for j=1, 20 do
+		-- Randomize values between [0, 200]
+		local position = {math.random(0, 2000) / 10.0, 0.0, math.random(0, 2000) / 10.0}
+		-- Randomize values between [0,1]
+		local color = {math.random(0, 100) / 100.0, math.random(0, 100) / 100.0, math.random(0, 100) / 100.0}
+		local radius = 10.0
+		local constantAttenuation = 0.0
+		local linearAttenuation = 0.0
+		local quadricAttenuation = 0.5
 		
+		local light = PointLight(level1)
+		light:SetPosition(position)
+		light:SetLightColor(color)
+		light:SetRadius(radius)
+		light:SetConstantAttenuation(constantAttenuation)
+		light:SetLinearAttenuation(linearAttenuation)
+		light:SetQuadricAttenuation(quadricAttenuation)
 	end
 end
 

@@ -28,6 +28,7 @@
     <ClCompile Include="..\..\playstate\playstate\input\input_system.cpp" />
     <ClCompile Include="..\..\playstate\playstate\input\win32\win32_input_state.cpp" />
     <ClCompile Include="..\..\playstate\playstate\input\win32\win32_input_system.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\light\point_light.cpp" />
     <ClCompile Include="..\..\playstate\playstate\math\color.cpp" />
     <ClCompile Include="..\..\playstate\playstate\math\matrix4x4.cpp" />
     <ClCompile Include="..\..\playstate\playstate\math\plane.cpp" />
@@ -119,6 +120,7 @@
     <ClInclude Include="..\..\playstate\playstate\input\input_system.h" />
     <ClInclude Include="..\..\playstate\playstate\input\win32\win32_input_state.h" />
     <ClInclude Include="..\..\playstate\playstate\input\win32\win32_input_system.h" />
+    <ClInclude Include="..\..\playstate\playstate\light\point_light.h" />
     <ClInclude Include="..\..\playstate\playstate\linked_list.h" />
     <ClInclude Include="..\..\playstate\playstate\math\color.h" />
     <ClInclude Include="..\..\playstate\playstate\math\matrix4x4.h" />

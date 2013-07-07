@@ -19,6 +19,8 @@
 #include "resources/resource_manager.h"
 #include "rendering/render_system.h"
 
+#include "light/point_light.h"
+
 #include "model/model.h"
 
 #include "component/scriptable_component.h"

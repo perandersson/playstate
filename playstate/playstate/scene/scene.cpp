@@ -85,4 +85,11 @@ namespace playstate
 		GameRunner::Get().ActiveScene.SetAmbientLight(ambientColor);
 		return 0;
 	}
+	
+	int Scene_GetAmbientLight(lua_State* L)
+	{
+		luaM_pushcolor(L, GameRunner::Get().ActiveScene.AmbientLight);
+		return 1;
+	}
+
 }
