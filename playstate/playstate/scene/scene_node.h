@@ -134,6 +134,8 @@ namespace playstate
 	extern int SceneNode_SetPosition(lua_State* L);
 	extern int SceneNode_Translate(lua_State* L);
 	extern int SceneNode_SetRotatation(lua_State* L);
+	extern int SceneNode_AddChildNode(lua_State* L);
+	extern int SceneNode_RemoveChildNode(lua_State* L);
 	static luaL_Reg SceneNode_Methods[] = {
 		{ LUA_CONSTRUCTOR, SceneNode_Factory },
 		{ LUA_TOSTRING, SceneNode_GetID },
@@ -144,6 +146,8 @@ namespace playstate
 		{ "SetPosition", SceneNode_SetPosition },
 		{ "Translate", SceneNode_Translate },
 		{ "SetRotation", SceneNode_SetRotatation },
+		{ "AddChildNode", SceneNode_AddChildNode },
+		{ "RemoveChildNode", SceneNode_RemoveChildNode },
 		{ NULL, NULL }
 	};
 }

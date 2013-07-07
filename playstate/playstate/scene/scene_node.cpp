@@ -245,4 +245,26 @@ namespace playstate
 
 		return 0;
 	}
+
+	int SceneNode_AddChildNode(lua_State* L)
+	{
+		SceneNode* child = luaM_popobject<SceneNode>(L);
+		SceneNode* parent = luaM_popobject<SceneNode>(L);
+		if(child != NULL && parent != NULL) {
+			parent->AddChildNode(child);
+		}
+
+		return 0;
+	}
+
+	int SceneNode_RemoveChildNode(lua_State* L)
+	{
+		SceneNode* child = luaM_popobject<SceneNode>(L);
+		SceneNode* parent = luaM_popobject<SceneNode>(L);
+		if(child != NULL && parent != NULL) {
+			parent->RemoveChildNode(child);
+		}
+
+		return 0;
+	}
 }

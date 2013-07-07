@@ -37,7 +37,7 @@ namespace playstate
 		// Query the scene for lights located in it
 		// @param query
 		// @param target
-		//bool QueryLights(const FindQuery& query, std::vector<Light*>* target) const;
+		//bool Find(const FindQuery& query, std::vector<Light*>* target) const;
 
 		//
 		// Sets the ambient lighting on the entire scene. 
