@@ -5,7 +5,7 @@
 using namespace playstate;
 
 Scene::Scene()
-	: ActiveCamera(mCamera)
+	: ActiveCamera(mCamera), AmbientLight(mAmbientLight)
 {
 }
 
@@ -52,6 +52,11 @@ bool Scene::Find(const FindQuery& query, RenderBlockResultSet* target) const
 	return found;
 }
 
+void Scene::SetAmbientLight(const Color& color)
+{
+	mAmbientLight = color;
+}
+
 namespace playstate
 {
 	int Scene_AddSceneGroup(lua_State* L)
@@ -71,6 +76,13 @@ namespace playstate
 			GameRunner::Get().ActiveScene.RemoveSceneGroup(sceneGroup);
 		}
 
+		return 0;
+	}
+	
+	int Scene_SetAmbientLight(lua_State* L)
+	{
+		Color ambientColor = luaM_popcolor(L);
+		GameRunner::Get().ActiveScene.SetAmbientLight(ambientColor);
 		return 0;
 	}
 }

@@ -61,7 +61,8 @@ void GameRunner::Start()
 
 void GameRunner::StartLevel(const std::string& level)
 {
-	SceneGroup* group = LoadLevel(level);
+	std::auto_ptr<Script> script = mScriptSystem.CompileFile(level);
+	SceneGroup* group = script->ReadInstance<SceneGroup>();
 	mScene.AddSceneGroup(group);
 
 	while(mRunning) {

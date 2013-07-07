@@ -39,12 +39,21 @@ namespace playstate
 		// @param target
 		//bool QueryLights(const FindQuery& query, std::vector<Light*>* target) const;
 
+		//
+		// Sets the ambient lighting on the entire scene. 
+		// @param color The color of the ambient light.
+		void SetAmbientLight(const Color& color);
+
 	public:
 		Camera& const ActiveCamera;
+
+		// Read-only property for the color of the ambient light.
+		Color& const AmbientLight;
 
 	private:
 		LinkedList<SceneGroup, &SceneGroup::GroupLink> mSceneGroups;
 		Camera mCamera;
+		Color mAmbientLight;
 	};
 	
 	//
@@ -53,9 +62,11 @@ namespace playstate
 
 	extern int Scene_AddSceneGroup(lua_State* L);
 	extern int Scene_RemoveSceneGroup(lua_State* L);
+	extern int Scene_SetAmbientLight(lua_State* L);
 	static luaL_Reg Scene_Methods[] = {
 		{ "AddSceneGroup", Scene_AddSceneGroup },
 		{ "RemoveSceneGroup", Scene_RemoveSceneGroup },
+		{ "SetAmbientLight", Scene_SetAmbientLight },
 		{ NULL, NULL }
 	};
 }

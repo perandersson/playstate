@@ -30,7 +30,7 @@ GfxProgram::GfxProgram(GLuint programId, GLuint vertexShader, GLuint pixelShader
 	mPixelShader(pixelShader), mGeometryShader(geometryShader), mApplied(false),
 	mDepthTest(true), mDepthFunc(DepthFunc::Default),
 	mBlend(false), mSrcFunc(SrcBlend::Default), mDestFunc(DestBlend::Default), 
-	mClearColor(Color::NOTHING), mClearDepth(1.0f), mCullFaces(CullFaces::Default),
+	mClearColor(Color::Nothing), mClearDepth(1.0f), mCullFaces(CullFaces::Default),
 	mRenderSystem(renderSystem), mDepthRenderTarget(NULL), mApplyRenderTarget(false),
 	Applied(mApplied)
 {

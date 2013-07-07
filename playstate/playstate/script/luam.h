@@ -14,6 +14,7 @@ namespace playstate
 	struct Vector3;
 	struct Vector2;
 	struct Point;
+	struct Color;
 
 	//
 	// Sets/Replaces the supplied data value as the native instance for the table at the top of the stack
@@ -56,6 +57,14 @@ namespace playstate
 	//
 	extern void luaM_pushpoint(lua_State* L, const Point& point);
 
+	//
+	//
+	extern void luaM_pushcolor(lua_State* L, const Color& color);
+	
+	//
+	// Pops the color from the top of the stack and returns the result. Color::Nothing if no color is found at the top of the stack
+	extern Color luaM_popcolor(lua_State* L);
+	
 	//
 	// Pops an object parameter from the stack and returns the result
 	template<class T>

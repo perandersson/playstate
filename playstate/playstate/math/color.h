@@ -31,8 +31,8 @@ namespace playstate
 
 		void operator = (const Color &c);
 
-		static const Color WHITE;
-		static const Color BLACK;
-		static const Color NOTHING;
+		static const Color White;
+		static const Color Black;
+		static const Color Nothing;
 	};
 }

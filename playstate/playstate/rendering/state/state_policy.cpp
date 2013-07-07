@@ -14,7 +14,7 @@ namespace {
 
 	CullFaces::Enum _cullFaces = CullFaces::CCW;
 
-	Color _clearColor = Color::NOTHING;
+	Color _clearColor = Color::Nothing;
 	float32 _clearDepth = 1.0f;
 
 	uint32 _activeTexture = 0;

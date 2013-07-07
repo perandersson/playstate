@@ -89,9 +89,9 @@ void WavefrontResourceLoader::LoadMaterials(IFile& file, Materials& materials) c
 
 			currentMaterial = new WavefrontMaterial();
 			currentMaterial->Alpha = 1.0f;
-			currentMaterial->AmbientColor = Color::WHITE;
-			currentMaterial->SpecularColor = Color::WHITE;
-			currentMaterial->DiffuseColor = Color::WHITE;
+			currentMaterial->AmbientColor = Color::White;
+			currentMaterial->SpecularColor = Color::White;
+			currentMaterial->DiffuseColor = Color::White;
 
 			dataStream >> currentMaterial->Name;
 			continue;

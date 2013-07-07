@@ -3,9 +3,9 @@
 
 using namespace playstate;
 
-const Color Color::WHITE(1, 1, 1, 1);
-const Color Color::BLACK(0, 0, 0, 1);
-const Color Color::NOTHING(0, 0, 0, 0);
+const Color Color::White(1, 1, 1, 1);
+const Color Color::Black(0, 0, 0, 1);
+const Color Color::Nothing(0, 0, 0, 0);
 
 Color::Color() : Red(0), Green(0), Blue(0), Alpha(0)
 {
