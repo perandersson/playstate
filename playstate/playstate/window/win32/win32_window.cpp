@@ -86,13 +86,16 @@ void Win32Window::Resize(uint32 width, uint32 height)
 	SetWindowPos(mWindowHandle, NULL, 0, 0, width, height, SWP_NOMOVE);
 	GetClientRect(mWindowHandle, &rcClient);
 
+	mWidth = rcClient.right - rcClient.left;
+	mHeight = rcClient.bottom - rcClient.top;
+
 	WindowResizedListeners::size_type size = mWindowResizeListeners.size();
 	for(WindowResizedListeners::size_type i = 0; i < size; ++i) {
 		mWindowResizeListeners[i]->OnWindowResized(*this, mWidth, mHeight);
 	}
 
-	mPrevWidth = rcClient.right - rcClient.left;
-	mPrevHeight = rcClient.bottom - rcClient.top;
+	mPrevWidth = mWidth;
+	mPrevHeight = mHeight;
 }
 
 const std::string& Win32Window::GetTitle() const
