@@ -21,7 +21,6 @@ TEST_SUITE(Scene)
 
 		virtual bool Find(const FindQuery& query, RenderBlockResultSet* target) const
 		{
-		
 			return true;
 		}
 
@@ -59,6 +58,27 @@ TEST_SUITE(Scene)
 		virtual IUpdateProcessor* Create() const
 		{
 			return new MockUpdateProcessor();
+		}
+	};
+
+	class MockLightSourceProcessor : public ILightSourceProcessor
+	{
+	public:
+		virtual void AttachLightSource(LightSource* lightSource)
+		{
+		}
+
+		virtual void DetachLightSource(LightSource* lightSource)
+		{
+		}
+	};
+
+	class MockLightSourceProcessorFactory : public ILightSourceProcessorFactory
+	{
+	public:
+		virtual ILightSourceProcessor* Create() const
+		{
+			return new MockLightSourceProcessor();
 		}
 	};
 
@@ -101,9 +121,10 @@ TEST_SUITE(Scene)
 	{
 		MockUpdateProcessFactory updateProcessorFactory;
 		MockRenderProcessorFactory renderProcessorFactory;
+		MockLightSourceProcessorFactory lightSourceProcessorFactory;
 
 		Scene scene;
-		SceneGroup* group = new SceneGroup(updateProcessorFactory, renderProcessorFactory);
+		SceneGroup* group = new SceneGroup(updateProcessorFactory, renderProcessorFactory, lightSourceProcessorFactory);
 		SceneNode* node1 = new SceneNode(group);
 		node1->AddComponent(new MockRenderableComponent());
 		SceneNode* node2 = new SceneNode(group);

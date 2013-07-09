@@ -4,20 +4,22 @@
 #include "../linked_list.h"
 #include "../processor/update_processor_factory.h"
 #include "../processor/render_processor_factory.h"
+#include "../processor/light_source_processor_factory.h"
 
 namespace playstate
 {
 	//
 	// A SceneGroup is the concept where we group scene nodes together in a logical structure. A scene group can
 	// be a level, where all the contained nodes are items for that specific level.
-	class SceneGroup : public Scriptable, public IUpdateProcessor, public IRenderProcessor
+	class SceneGroup : public Scriptable, public IUpdateProcessor, public IRenderProcessor, public ILightSourceProcessor
 	{
 	public:
 		LinkedListLink<SceneGroup> GroupLink;
 
 	public:
 		SceneGroup();
-		SceneGroup(IUpdateProcessorFactory& updateProcessFactory, IRenderProcessorFactory& renderProcessFactory);
+		SceneGroup(IUpdateProcessorFactory& updateProcessFactory, IRenderProcessorFactory& renderProcessFactory, 
+			ILightSourceProcessorFactory& lightSourceProcessorFactory);
 		virtual ~SceneGroup();
 
 		//
@@ -40,10 +42,16 @@ namespace playstate
 		virtual void DetachRenderable(Renderable* renderable);
 		virtual bool Find(const FindQuery& query, RenderBlockResultSet* target) const;
 
+	// ILightSourceProcessor
+	public:
+		virtual void AttachLightSource(LightSource* lightSource);
+		virtual void DetachLightSource(LightSource* lightSource);
+
 	private:
 		LinkedList<SceneNode, &SceneNode::NodeLink> mSceneNodes;
 		IUpdateProcessor* mUpdateProcessor;
 		IRenderProcessor* mRenderProcessor;
+		ILightSourceProcessor* mLightSourceProcessor;
 	};
 	
 	//

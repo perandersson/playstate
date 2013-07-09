@@ -4,18 +4,23 @@ using namespace playstate;
 
 SceneGroup::SceneGroup()
 	: mUpdateProcessor(IUpdateProcessorFactory::Get().Create()),
-	mRenderProcessor(IRenderProcessorFactory::Get().Create())
+	mRenderProcessor(IRenderProcessorFactory::Get().Create()),
+	mLightSourceProcessor(ILightSourceProcessorFactory::Get().Create())
 {
 	assert(mUpdateProcessor != NULL && "IUpdateProcessorFactory did not create a valid update processor");
 	assert(mRenderProcessor != NULL && "IRenderProcessorFactory did not create a valid render processor");
+	assert(mLightSourceProcessor != NULL && "ILightSourceProcessorFactory did not create a valid light source processor");
 }
 
-SceneGroup::SceneGroup(IUpdateProcessorFactory& updateProcessFactory, IRenderProcessorFactory& renderProcessFactory)
+SceneGroup::SceneGroup(IUpdateProcessorFactory& updateProcessFactory, IRenderProcessorFactory& renderProcessFactory,
+	ILightSourceProcessorFactory& lightSourceProcessorFactory)
 	: mUpdateProcessor(updateProcessFactory.Create()),
-	mRenderProcessor(renderProcessFactory.Create())
+	mRenderProcessor(renderProcessFactory.Create()),
+	mLightSourceProcessor(lightSourceProcessorFactory.Create())
 {
 	assert(mUpdateProcessor != NULL && "IUpdateProcessorFactory did not create a valid update processor");
 	assert(mRenderProcessor != NULL && "IRenderProcessorFactory did not create a valid render processor");
+	assert(mLightSourceProcessor != NULL && "ILightSourceProcessorFactory did not create a valid light source processor");
 }
 
 SceneGroup::~SceneGroup()
@@ -30,6 +35,11 @@ SceneGroup::~SceneGroup()
 	if(mRenderProcessor != NULL) {
 		delete mRenderProcessor;
 		mRenderProcessor = NULL;
+	}
+
+	if(mLightSourceProcessor != NULL) {
+		delete mLightSourceProcessor;
+		mLightSourceProcessor = NULL;
 	}
 }
 
@@ -72,6 +82,18 @@ void SceneGroup::DetachRenderable(Renderable* renderable)
 {
 	assert_not_null(renderable);
 	mRenderProcessor->DetachRenderable(renderable);
+}
+
+void SceneGroup::AttachLightSource(LightSource* lightSource)
+{
+	assert_not_null(lightSource);
+	mLightSourceProcessor->AttachLightSource(lightSource);
+}
+
+void SceneGroup::DetachLightSource(LightSource* lightSource)
+{
+	assert_not_null(lightSource);
+	mLightSourceProcessor->DetachLightSource(lightSource);
 }
 
 bool SceneGroup::Find(const FindQuery& query, RenderBlockResultSet* target) const

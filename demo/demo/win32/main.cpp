@@ -46,19 +46,21 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 		ss.RegisterType("Scene", Scene_Methods);
 		ss.RegisterType("SceneGroup", SceneGroup_Methods);
 		ss.RegisterType("SceneNode", SceneNode_Methods);
-		ss.RegisterType("PointLight", SceneNode_Methods);
-		ss.RegisterType("PointLight", PointLight_Methods);
 		ss.RegisterType("Component", Component_Methods);
 		ss.RegisterType("Model", Model_Methods);
 		ss.RegisterType("RenderStaticModel", RenderStaticModel_Methods);
 		ss.RegisterType("ActiveCamera", ActiveCamera_Methods);
 		ss.RegisterType("DeferredRenderPipeline", DeferredRenderPipeline_Methods);
+		ss.RegisterType("PointLight", PointLight_Methods);
 
 		// Linked list update processor
 		LinkedListUpdateProcessorFactory linkedListUpdateProcessorFactory;
 
 		// Render processor
 		OctreeRenderProcessorFactory octreeRenderProcessorFactory;
+
+		// Light Source processor
+		SimpleLightSourceProcessorFactory simpleLightSourceProcessorFactory;
 	
 		// Window 
 		Win32Window window(GetModuleHandle(NULL), 320, 240, "");

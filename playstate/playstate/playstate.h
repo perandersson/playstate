@@ -9,6 +9,7 @@
 
 #include "processor/processors/linked_list_update_processor.h"
 #include "processor/processors/octree_render_processor.h"
+#include "processor/processors/simple_light_source_processor.h"
 
 #include "filesystem/file_system.h"
 #include "script/script_system.h"
@@ -19,12 +20,11 @@
 #include "resources/resource_manager.h"
 #include "rendering/render_system.h"
 
-#include "light/point_light.h"
-
 #include "model/model.h"
 
 #include "component/scriptable_component.h"
 #include "component/renderable/render_static_model.h"
+#include "component/lightsources/point_light.h"
 
 #ifdef WIN32
 #include "filesystem/win32/win32_filesystem.h"

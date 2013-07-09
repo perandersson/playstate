@@ -108,14 +108,14 @@
     <Filter Include="Source Files\game\win32">
       <UniqueIdentifier>{e5d726bc-3a45-4191-b191-89b90df29008}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\light">
-      <UniqueIdentifier>{c6fcb0d9-d588-43d2-9b1d-c978ccf2a937}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\script\search">
       <UniqueIdentifier>{6d85e2e8-6dac-4fce-af77-2c2ec0408fa6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\script\search\sorter">
       <UniqueIdentifier>{83b57648-dacd-43af-97c7-fb93cf697de3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\component\lightsources">
+      <UniqueIdentifier>{dc72c0e5-8f08-4cee-9f21-d78b848ad2f8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -365,8 +365,17 @@
     <ClCompile Include="..\..\playstate\playstate\math\point.cpp">
       <Filter>Source Files\math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\light\point_light.cpp">
-      <Filter>Source Files\light</Filter>
+    <ClCompile Include="..\..\playstate\playstate\processor\light_source.cpp">
+      <Filter>Source Files\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\processor\light_source_processor_factory.cpp">
+      <Filter>Source Files\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\processor\processors\simple_light_source_processor.cpp">
+      <Filter>Source Files\processor\processors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\component\lightsources\point_light.cpp">
+      <Filter>Source Files\component\lightsources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -577,9 +586,6 @@
     <ClInclude Include="..\..\playstate\playstate\resources\exception\resource_exception.h">
       <Filter>Source Files\resources\exception</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\scene\light.h">
-      <Filter>Source Files\scene</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\scene\scene.h">
       <Filter>Source Files\scene</Filter>
     </ClInclude>
@@ -721,8 +727,17 @@
     <ClInclude Include="..\..\playstate\playstate\math\point.h">
       <Filter>Source Files\math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\light\point_light.h">
-      <Filter>Source Files\light</Filter>
+    <ClInclude Include="..\..\playstate\playstate\processor\light_source.h">
+      <Filter>Source Files\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\processor\light_source_processor_factory.h">
+      <Filter>Source Files\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\processor\processors\simple_light_source_processor.h">
+      <Filter>Source Files\processor\processors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\component\lightsources\point_light.h">
+      <Filter>Source Files\component\lightsources</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

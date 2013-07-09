@@ -46,22 +46,16 @@ end
 math.randomseed( os.time() )
 for i=1, 20 do
 	for j=1, 20 do
-		-- Randomize values between [0, 200]
+		local node = SceneNode(level1)
 		local position = {math.random(0, 2000) / 10.0, 0.0, math.random(0, 2000) / 10.0}
-		-- Randomize values between [0,1]
+		node:SetPosition(position)
+		
 		local color = {math.random(0, 100) / 100.0, math.random(0, 100) / 100.0, math.random(0, 100) / 100.0}
 		local radius = 10.0
 		local constantAttenuation = 0.0
 		local linearAttenuation = 0.0
 		local quadricAttenuation = 0.5
-		
-		local light = PointLight(level1)
-		light:SetPosition(position)
-		light:SetLightColor(color)
-		light:SetRadius(radius)
-		light:SetConstantAttenuation(constantAttenuation)
-		light:SetLinearAttenuation(linearAttenuation)
-		light:SetQuadricAttenuation(quadricAttenuation)
+		node:AddComponent(PointLight(color, radius, constantAttenuation, linearAttenuation, quadricAttenuation))
 	end
 end
 
