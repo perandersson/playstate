@@ -198,6 +198,7 @@
     <ClInclude Include="..\..\playstate\playstate\search\array_sorter.h" />
     <ClInclude Include="..\..\playstate\playstate\search\find_query.h" />
     <ClInclude Include="..\..\playstate\playstate\search\render_block_result_set.h" />
+    <ClInclude Include="..\..\playstate\playstate\search\result_set.h" />
     <ClInclude Include="..\..\playstate\playstate\search\sorter\quick_sort_array_sorter.h" />
     <ClInclude Include="..\..\playstate\playstate\search\sorter\render_block_array_sorter.h" />
     <ClInclude Include="..\..\playstate\playstate\singleton.h" />

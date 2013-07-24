@@ -108,14 +108,14 @@
     <Filter Include="Source Files\game\win32">
       <UniqueIdentifier>{e5d726bc-3a45-4191-b191-89b90df29008}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\script\search">
-      <UniqueIdentifier>{6d85e2e8-6dac-4fce-af77-2c2ec0408fa6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\script\search\sorter">
-      <UniqueIdentifier>{83b57648-dacd-43af-97c7-fb93cf697de3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\component\lightsources">
       <UniqueIdentifier>{dc72c0e5-8f08-4cee-9f21-d78b848ad2f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\search">
+      <UniqueIdentifier>{6d85e2e8-6dac-4fce-af77-2c2ec0408fa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\search\sorter">
+      <UniqueIdentifier>{83b57648-dacd-43af-97c7-fb93cf697de3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -345,13 +345,13 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\search\sorter\quick_sort_array_sorter.cpp">
-      <Filter>Source Files\script\search\sorter</Filter>
+      <Filter>Source Files\search\sorter</Filter>
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\search\render_block_result_set.cpp">
-      <Filter>Source Files\script\search</Filter>
+      <Filter>Source Files\search</Filter>
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\search\sorter\render_block_array_sorter.cpp">
-      <Filter>Source Files\script\search\sorter</Filter>
+      <Filter>Source Files\search\sorter</Filter>
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\rendering\win32\win32_graphics_driver.cpp">
       <Filter>Source Files\rendering\win32</Filter>
@@ -626,7 +626,7 @@
       <Filter>Source Files\script\exception</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\search\find_query.h">
-      <Filter>Source Files\script\search</Filter>
+      <Filter>Source Files\search</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\thread\lock.h">
       <Filter>Source Files\thread</Filter>
@@ -701,19 +701,19 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\search\render_block_result_set.h">
-      <Filter>Source Files\script\search</Filter>
+      <Filter>Source Files\search</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\search\sorter\quick_sort_array_sorter.h">
-      <Filter>Source Files\script\search\sorter</Filter>
+      <Filter>Source Files\search\sorter</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\search\array_sorter.h">
-      <Filter>Source Files\script\search</Filter>
+      <Filter>Source Files\search</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\rendering\render_block.h">
       <Filter>Source Files\rendering</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\search\sorter\render_block_array_sorter.h">
-      <Filter>Source Files\script\search\sorter</Filter>
+      <Filter>Source Files\search\sorter</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\rendering\graphics_driver.h">
       <Filter>Source Files\rendering</Filter>
@@ -738,6 +738,9 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\processor\processors\octree_light_source_processor.h">
       <Filter>Source Files\processor\processors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\search\result_set.h">
+      <Filter>Source Files\search</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
