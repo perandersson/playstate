@@ -38,15 +38,23 @@ namespace playstate
 		void Clear(uint32 clearBits);
 	
 		//
-		// Retrieves a component based on it's variable name in a program.
-		// @param name
-		// @return 
-		IGfxProgramComponent* GetComponent(const char* name);
-		IGfxProgramComponent* GetComponent(const std::string& name);
+		// Retrieves a component based on it's uniform variable name in one of the shaders.
+		//
+		// @param name The name of the component
+		// @return The component if found; A pointer to an GfxProgramComponentNotFound instance (to prevent crashes and unneccessary null checks) if
+		//	no component is found.
+		IGfxProgramComponent* FindComponent(const char* name);
+		IGfxProgramComponent* FindComponent(const std::string& name);
 
 		//
 		// Draw the supplied buffer object using this graphics program.
+		// @param buffer
 		void Render(VertexBuffer* buffer);
+
+		//
+		// Draw the supplied buffer object using the supplied index buffer using this graphics program.
+		// @param buffer
+		// @param indexBuffer
 		void Render(VertexBuffer* buffer, IndexBuffer* indexBuffer);
 
 		//

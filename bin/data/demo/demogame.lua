@@ -25,8 +25,7 @@ function DemoGame:LoadContent()
 	-- Set ambient lighting on the scene.
 	Scene.SetAmbientLight({0.1, 0.2, 0.3})
 	
-	-- Start a new level (in it's own scipt scope, which prevents the game from crashing
-	-- if the lua script is invalid
+	-- Start the first level
 	Game.StartLevel("/demo/levels/level1.lua")
 end
 

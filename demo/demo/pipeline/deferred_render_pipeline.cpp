@@ -32,45 +32,35 @@ DeferredRenderPipeline::DeferredRenderPipeline(RenderSystem& renderSystem, IWind
 	
 	mPointLightTexture = resourceManager.GetResource<Texture2D>("/demo/effects/deferred_point_light/light.png");
 	mPointLightShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(std::string("/demo/effects/deferred/deferred_point_light.lua")));
-	mPointLightShader->GetComponent("DiffuseTexture")->SetTexture(mDiffuseRenderTarget);
-	mPointLightShader->GetComponent("PositionsTexture")->SetTexture(mPositionsRenderTarget);
-	mPointLightShader->GetComponent("NormalsTexture")->SetTexture(mNormalsRenderTarget);
-	mPointLightShader->GetComponent("LightTexture")->SetTexture(mPointLightTexture);
+	mPointLightShader->FindComponent("DiffuseTexture")->SetTexture(mDiffuseRenderTarget);
+	mPointLightShader->FindComponent("PositionsTexture")->SetTexture(mPositionsRenderTarget);
+	mPointLightShader->FindComponent("NormalsTexture")->SetTexture(mNormalsRenderTarget);
+	mPointLightShader->FindComponent("LightTexture")->SetTexture(mPointLightTexture);
 	mPointLightShader->SetRenderTarget(mLightRenderTarget, 0);
 
 	mTexturedShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(std::string("/demo/effects/deferred/deferred_result.lua")));
-	mTexturedShader->GetComponent("DiffuseTexture")->SetTexture(mDiffuseRenderTarget);
-	mTexturedShader->GetComponent("PositionsTexture")->SetTexture(mPositionsRenderTarget);
-	mTexturedShader->GetComponent("NormalsTexture")->SetTexture(mNormalsRenderTarget);
-	mTexturedShader->GetComponent("LightTexture")->SetTexture(mLightRenderTarget);
+	mTexturedShader->FindComponent("DiffuseTexture")->SetTexture(mDiffuseRenderTarget);
+	mTexturedShader->FindComponent("PositionsTexture")->SetTexture(mPositionsRenderTarget);
+	mTexturedShader->FindComponent("NormalsTexture")->SetTexture(mNormalsRenderTarget);
+	mTexturedShader->FindComponent("LightTexture")->SetTexture(mLightRenderTarget);
 }
 
 DeferredRenderPipeline::~DeferredRenderPipeline()
 {
-	if(mDiffuseRenderTarget != NULL) {
-		delete mDiffuseRenderTarget;
-		mDiffuseRenderTarget = NULL;
-	}
+	delete mDiffuseRenderTarget;
+	mDiffuseRenderTarget = NULL;
 	
-	if(mPositionsRenderTarget != NULL) {
-		delete mPositionsRenderTarget;
-		mPositionsRenderTarget = NULL;
-	}
+	delete mPositionsRenderTarget;
+	mPositionsRenderTarget = NULL;
 
-	if(mNormalsRenderTarget != NULL) {
-		delete mNormalsRenderTarget;
-		mNormalsRenderTarget = NULL;
-	}
+	delete mNormalsRenderTarget;
+	mNormalsRenderTarget = NULL;
 
-	if(mDepthRenderTarget != NULL) {
-		delete mDepthRenderTarget;
-		mDepthRenderTarget = NULL;
-	}
+	delete mDepthRenderTarget;
+	mDepthRenderTarget = NULL;
 
-	if(mLightRenderTarget != NULL) {
-		delete mLightRenderTarget;
-		mLightRenderTarget = NULL;
-	}
+	delete mLightRenderTarget;
+	mLightRenderTarget = NULL;
 
 	mWindow.RemoveWindowResizedListener(this);
 }
@@ -90,12 +80,12 @@ void DeferredRenderPipeline::DrawGeometry(const Scene& scene, const Camera& came
 		mDeferredShader->Clear(ClearTypes::COLOR | ClearTypes::DEPTH);
 
 		// Set the cameras projection- and view matrix
-		mDeferredShader->GetComponent("ProjectionMatrix")->SetMatrix(camera.ProjectionMatrix);
-		mDeferredShader->GetComponent("ViewMatrix")->SetMatrix(camera.ViewMatrix);
+		mDeferredShader->FindComponent("ProjectionMatrix")->SetMatrix(camera.ProjectionMatrix);
+		mDeferredShader->FindComponent("ViewMatrix")->SetMatrix(camera.ViewMatrix);
 		
-		IGfxProgramComponent* modelMatrix = mDeferredShader->GetComponent("ModelMatrix");
-		IGfxProgramComponent* diffuseTexture = mDeferredShader->GetComponent("DiffuseTexture");
-		IGfxProgramComponent* diffuseColor = mDeferredShader->GetComponent("DiffuseColor");
+		IGfxProgramComponent* modelMatrix = mDeferredShader->FindComponent("ModelMatrix");
+		IGfxProgramComponent* diffuseTexture = mDeferredShader->FindComponent("DiffuseTexture");
+		IGfxProgramComponent* diffuseColor = mDeferredShader->FindComponent("DiffuseColor");
 		
 		// Draw scene objects
 		GfxProgram* deferredShader = mDeferredShader.get();
@@ -108,7 +98,7 @@ void DeferredRenderPipeline::DrawGeometry(const Scene& scene, const Camera& came
 		}
 		
 		// Draw lighting to the lighting render target
-		//DrawLighting(scene, camera);
+		DrawLighting(scene, camera);
 
 		// Draw the final result onto the screen
 		DrawFinalResultToScreen(scene, camera);
@@ -119,13 +109,20 @@ void DeferredRenderPipeline::DrawGeometry(const Scene& scene, const Camera& came
 
 void DeferredRenderPipeline::DrawLighting(const Scene& scene, const Camera& camera)
 {
-	//std::vector<Light*> lights;
-	//if(scene->FindLights(camera, &lights)) {
+
+	// Get lights that affect drawable geometry?
+	// 
+	/*
+
+
+	FindQuery query;
+	query.Camera = &camera;
+	if(scene.Find(query, mLightSourceResultSet)) {
 		mPointLightShader->Apply();
 		mPointLightShader->Clear(ClearTypes::COLOR);
-/*
-		mPointLightShader->GetComponent("ProjectionMatrix")->SetMatrix(camera->ProjectionMatrix);
-		mPointLightShader->GetComponent("ViewMatrix")->SetMatrix(camera->ViewMatrix);
+
+		mPointLightShader->GetComponent("ProjectionMatrix")->SetMatrix(camera.ProjectionMatrix);
+		mPointLightShader->GetComponent("ViewMatrix")->SetMatrix(camera.ViewMatrix);
 
 		IGfxProgramComponent* modelMatrix = mPointLightShader->GetComponent("ModelMatrix");
 		IGfxProgramComponent* lightColor = mPointLightShader->GetComponent("LightColor");
@@ -134,6 +131,14 @@ void DeferredRenderPipeline::DrawLighting(const Scene& scene, const Camera& came
 		IGfxProgramComponent* linearAttenuation = mPointLightShader->GetComponent("LinearAttenuation");
 		IGfxProgramComponent* quadraticAttenuation = mPointLightShader->GetComponent("QuadraticAttenuation");
 		IGfxProgramComponent* lightRadius = mPointLightShader->GetComponent("LightRadius");
+
+		for(uint32 index = 0; index < mLightSourceResultSet.Size; ++index) {
+			RenderBlock* block = mRenderBlockResultSet.RenderBlocks[index];
+			diffuseTexture->SetTexture(block->DiffuseTexture);
+			diffuseColor->SetColorRGB(block->DiffuseColor);
+			modelMatrix->SetMatrix(block->ModelMatrix);
+			deferredShader->Render(block->VertexBuffer, block->IndexBuffer);
+		}
 
 		// Draw the lights
 		// TODO Check shader version so that we can decide what technique should be used
@@ -161,7 +166,10 @@ void DeferredRenderPipeline::DrawLighting(const Scene& scene, const Camera& came
 				continue;
 			}
 		}
-	}*/
+	}
+	*/
+	
+	CHECK_GL_ERROR();
 }
 
 Matrix4x4 DeferredRenderPipeline::CalculateBillboardModelMatrix(const Vector3& position, const Camera& camera)
@@ -181,27 +189,17 @@ void DeferredRenderPipeline::DrawFinalResultToScreen(const Scene& scene, const C
 {
 	mTexturedShader->Apply();
 	mTexturedShader->Clear(ClearTypes::COLOR);
-	//mTexturedShader->GetComponent("AmbientColor")->SetColorRGB(scene->GetAmbientLight());
-	mTexturedShader->GetComponent("AmbientColor")->SetColorRGB(Color(0.f, 0.f, 0.f));
+	mTexturedShader->FindComponent("AmbientColor")->SetColorRGB(scene.AmbientLight);
 	mTexturedShader->Render(mRenderSystem.UniformVertexBuffer);
 }
 
 void DeferredRenderPipeline::OnWindowResized(IWindow& window, uint32 width, uint32 height)
 {
-	if(mDiffuseRenderTarget != NULL)
-		delete mDiffuseRenderTarget;
-	
-	if(mPositionsRenderTarget != NULL)
-		delete mPositionsRenderTarget;
-
-	if(mNormalsRenderTarget != NULL)
-		delete mNormalsRenderTarget;
-
-	if(mDepthRenderTarget != NULL)
-		delete mDepthRenderTarget;
-
-	if(mLightRenderTarget != NULL)
-		delete mLightRenderTarget;
+	delete mDiffuseRenderTarget;
+	delete mPositionsRenderTarget;
+	delete mNormalsRenderTarget;
+	delete mDepthRenderTarget;
+	delete mLightRenderTarget;
 
 	mDiffuseRenderTarget = RenderTarget2D::Create(width, height, TextureFormat::RGBA);
 	mPositionsRenderTarget = RenderTarget2D::Create(width, height, TextureFormat::RGBA16F);
@@ -214,15 +212,15 @@ void DeferredRenderPipeline::OnWindowResized(IWindow& window, uint32 width, uint
 	mDeferredShader->SetRenderTarget(mNormalsRenderTarget, 2);
 	mDeferredShader->SetDepthRenderTarget(mDepthRenderTarget);
 	
-	mPointLightShader->GetComponent("DiffuseTexture")->SetTexture(mDiffuseRenderTarget);
-	mPointLightShader->GetComponent("PositionsTexture")->SetTexture(mPositionsRenderTarget);
-	mPointLightShader->GetComponent("NormalsTexture")->SetTexture(mNormalsRenderTarget);
+	mPointLightShader->FindComponent("DiffuseTexture")->SetTexture(mDiffuseRenderTarget);
+	mPointLightShader->FindComponent("PositionsTexture")->SetTexture(mPositionsRenderTarget);
+	mPointLightShader->FindComponent("NormalsTexture")->SetTexture(mNormalsRenderTarget);
 	mPointLightShader->SetRenderTarget(mLightRenderTarget, 0);
 
-	mTexturedShader->GetComponent("DiffuseTexture")->SetTexture(mDiffuseRenderTarget);
-	mTexturedShader->GetComponent("PositionsTexture")->SetTexture(mPositionsRenderTarget);
-	mTexturedShader->GetComponent("NormalsTexture")->SetTexture(mNormalsRenderTarget);
-	mTexturedShader->GetComponent("LightTexture")->SetTexture(mLightRenderTarget);
+	mTexturedShader->FindComponent("DiffuseTexture")->SetTexture(mDiffuseRenderTarget);
+	mTexturedShader->FindComponent("PositionsTexture")->SetTexture(mPositionsRenderTarget);
+	mTexturedShader->FindComponent("NormalsTexture")->SetTexture(mNormalsRenderTarget);
+	mTexturedShader->FindComponent("LightTexture")->SetTexture(mLightRenderTarget);
 }
 
 int DeferredRenderPipeline_Factory(lua_State* L)

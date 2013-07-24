@@ -371,11 +371,11 @@
     <ClCompile Include="..\..\playstate\playstate\processor\light_source_processor_factory.cpp">
       <Filter>Source Files\processor</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\processor\processors\simple_light_source_processor.cpp">
-      <Filter>Source Files\processor\processors</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\component\lightsources\point_light.cpp">
       <Filter>Source Files\component\lightsources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\processor\processors\octree_light_source_processor.cpp">
+      <Filter>Source Files\processor\processors</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -733,11 +733,11 @@
     <ClInclude Include="..\..\playstate\playstate\processor\light_source_processor_factory.h">
       <Filter>Source Files\processor</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\processor\processors\simple_light_source_processor.h">
-      <Filter>Source Files\processor\processors</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\component\lightsources\point_light.h">
       <Filter>Source Files\component\lightsources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\processor\processors\octree_light_source_processor.h">
+      <Filter>Source Files\processor\processors</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

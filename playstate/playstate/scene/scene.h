@@ -27,11 +27,22 @@ namespace playstate
 		// Query the Scene for items located in it.
 		// @param query The query we are performing
 		// @param target Container where all the found items are put into
+		// {@code
+		//	FindQuery query;
+		//	query.Camera = &myCamera;
+		//	RenderBlockResultSet resultSet;
+		//	if(scene.Find(query, &resultSet)) {
+		//		
+		//	}
+		// }
 		bool Find(const FindQuery& query, RenderBlockResultSet* target) const;
 
 		//
-		// Queries the scene for items and sorts them using the supplied sorter algorithm
-		//bool Find(const FindQuery& query, RenderBlockResultSet* target, IArraySorter<uint32>* sorter) const;
+		// Query the Scene for items located in it and sorts them using the supplied sorter algorithm
+		// @param query
+		// @param target
+		// @param sorter
+		bool Find(const FindQuery& query, RenderBlockResultSet* target, IArraySorter<RenderBlock*>* sorter) const;
 
 		//
 		// Query the scene for lights located in it

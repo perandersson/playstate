@@ -39,6 +39,13 @@ void Scene::Update()
 
 bool Scene::Find(const FindQuery& query, RenderBlockResultSet* target) const
 {
+	RenderBlockArraySorter defaultSorter;
+	return Find(query, target, &defaultSorter);
+}
+
+
+bool Scene::Find(const FindQuery& query, RenderBlockResultSet* target, IArraySorter<RenderBlock*>* sorter) const
+{
 	bool found = false;
 	const SceneGroup* group = mSceneGroups.First();
 	while(group != NULL) {
@@ -47,8 +54,7 @@ bool Scene::Find(const FindQuery& query, RenderBlockResultSet* target) const
 			found = true;
 		group = next;
 	}
-	RenderBlockArraySorter defaultSorter;
-	target->Sort(&defaultSorter);
+	target->Sort(sorter);
 	return found;
 }
 

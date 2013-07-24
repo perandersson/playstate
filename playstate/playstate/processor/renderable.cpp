@@ -3,7 +3,7 @@
 #include "render_processor_factory.h"
 using namespace playstate;
 
-Renderable::Renderable()
+Renderable::Renderable() : OctreeNode()
 {
 }
 

@@ -1,15 +1,16 @@
 #pragma once
 #include "../light_source_processor_factory.h"
+#include "../../scene/tree/octree.h"
 
 namespace playstate
 {
 	//
 	// 
-	class SimpleLightSourceProcessor : public ILightSourceProcessor
+	class OctreeLightSourceProcessor : public ILightSourceProcessor
 	{
 	public:
-		SimpleLightSourceProcessor();
-		virtual ~SimpleLightSourceProcessor();
+		OctreeLightSourceProcessor();
+		virtual ~OctreeLightSourceProcessor();
 		
 	// ILightSourceProcessorFactory
 	public:
@@ -18,13 +19,14 @@ namespace playstate
 
 	private:
 		LinkedList<LightSource, &LightSource::LightSourceLink> mLightSources;
+		Octree mOctree;
 	};
 
-	class SimpleLightSourceProcessorFactory : public ILightSourceProcessorFactory
+	class OctreeLightSourceProcessorFactory : public ILightSourceProcessorFactory
 	{
 	public:
-		SimpleLightSourceProcessorFactory();
-		virtual ~SimpleLightSourceProcessorFactory();
+		OctreeLightSourceProcessorFactory();
+		virtual ~OctreeLightSourceProcessorFactory();
 
 	public:
 		virtual ILightSourceProcessor* Create() const;

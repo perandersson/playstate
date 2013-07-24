@@ -9,7 +9,7 @@
 
 #include "processor/processors/linked_list_update_processor.h"
 #include "processor/processors/octree_render_processor.h"
-#include "processor/processors/simple_light_source_processor.h"
+#include "processor/processors/octree_light_source_processor.h"
 
 #include "filesystem/file_system.h"
 #include "script/script_system.h"

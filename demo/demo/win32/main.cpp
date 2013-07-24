@@ -60,7 +60,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 		OctreeRenderProcessorFactory octreeRenderProcessorFactory;
 
 		// Light Source processor
-		SimpleLightSourceProcessorFactory simpleLightSourceProcessorFactory;
+		OctreeLightSourceProcessorFactory octreeLightSourceProcessorFactory;
 	
 		// Window 
 		Win32Window window(GetModuleHandle(NULL), 320, 240, "");

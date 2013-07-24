@@ -3,7 +3,7 @@
 #include "light_source_processor_factory.h"
 using namespace playstate;
 
-LightSource::LightSource()
+LightSource::LightSource() : OctreeNode()
 {
 }
 

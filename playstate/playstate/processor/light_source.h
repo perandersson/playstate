@@ -1,11 +1,12 @@
 #pragma once
 #include "../linked_list.h"
+#include "../scene/tree/octree_node.h"
 
 namespace playstate
 {
 	class ILightSourceProcessor;
 
-	class LightSource
+	class LightSource : public OctreeNode
 	{
 	public:
 		LinkedListLink<LightSource> LightSourceLink;
@@ -17,7 +18,7 @@ namespace playstate
 
 		//
 		// Destructor
-		~LightSource();
+		virtual ~LightSource();
 
 		//
 		// Attaches this light source so that it can affect renderable items

@@ -180,12 +180,12 @@ void GfxProgram::ApplyComponents()
 	}
 }
 
-IGfxProgramComponent* GfxProgram::GetComponent(const char* name)
+IGfxProgramComponent* GfxProgram::FindComponent(const char* name)
 {
-	return GetComponent(std::string(name));
+	return FindComponent(std::string(name));
 }
 
-IGfxProgramComponent* GfxProgram::GetComponent(const std::string& name)
+IGfxProgramComponent* GfxProgram::FindComponent(const std::string& name)
 {
 	IGfxProgramComponent* component = NULL;
 	ComponentMap::iterator it = mComponents.find(name);
@@ -202,19 +202,19 @@ void GfxProgram::Render(VertexBuffer* buffer)
 
 void GfxProgram::Render(VertexBuffer* buffer, IndexBuffer* indexBuffer)
 {
+	assert(_current_program == this && "You are trying to render a vertex and/or index buffer on a non-bound gfx program");
+
 	if(mApplyRenderTarget) {
 		mApplyRenderTarget = false;
 		mRenderSystem.ApplyRenderTargets();
 		CHECK_GL_ERROR();
 	}
 
-	//const GLVertexBuffer* glBufferObject = static_cast<const GLVertexBuffer*>(buffer);
 	if(_current_vertexBuffer != buffer) {
 		_current_vertexBuffer = buffer;
 		buffer->Bind();
 	}
 
-	//const GLIndexBuffer* glIndexBuffer = static_cast<const GLIndexBuffer*>(indexBuffer);
 	if(_current_indexBuffer != indexBuffer) {
 		_current_indexBuffer = indexBuffer;
 		indexBuffer->Bind();
