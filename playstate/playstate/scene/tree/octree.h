@@ -34,11 +34,15 @@ namespace playstate
 
 			NUM_PARTS
 		};
+
+	protected:
+		Octree(const AABB& boundingBox, uint32 level, uint32 maxLevel, Octree* top);
 		
 	public:
 		//
-		// Constructor
-		Octree(const AABB& boundingBox, uint32 level, uint32 maxLevel);
+		// @param maxLevel
+		// @todo Make sure that the octree's bounding box is not a static value but is instead dynamic - i.e. it resizes when in need
+		Octree(uint32 maxLevel);
 
 		//
 		// Destructor
@@ -72,11 +76,21 @@ namespace playstate
 		void Clean();
 
 		//
-		// Invalidates a specific node
+		// Invalidates a specific node. This usually means that the bounding-box has changed somehow - i.e. it needs to be moved inside the
+		// octree tree structure.
+		//
+		// @param node 
 		void Invalidate(OctreeNode* node);
 
 	private:
+		void Initialize(const AABB& boundingBox, uint32 level, uint32 maxLevel);
+
+		//
 		bool Insert(OctreeNode* node);
+
+		//
+		// Checks if this octree is a leaf tree-node.
+		bool IsLeafNode() const;
 
 		//
 		// Method called if the current octree is completely inside the view - i.e. no collision detection is needed.
@@ -89,6 +103,7 @@ namespace playstate
 		uint32 mLevel;
 
 		Octree* mParts[NUM_PARTS];
+		Octree* mTop;
 
 	private:
 		LinkedList<OctreeNode, &OctreeNode::OctreeLink> mNodes;

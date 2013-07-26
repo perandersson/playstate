@@ -28,8 +28,15 @@ namespace playstate
 		virtual void OnComponentAdded();
 		virtual void OnComponentRemoved();
 
+	public:
+		const Color& LightColor;
+		const float& Radius;
+		const float& ConstantAttenuation;
+		const float& LinearAttenuation;
+		const float& QuadricAttenuation;
+
 	private:
-		Color mColor;
+		Color mLightColor;
 		float mRadius;
 		float mConstantAttenuation;
 		float mLinearAttenuation;

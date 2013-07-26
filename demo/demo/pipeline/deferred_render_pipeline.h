@@ -5,6 +5,7 @@
 #include <playstate/window/window_resized_listener.h>
 #include <playstate/rendering/gfx_program.h>
 #include <playstate/search/render_block_result_set.h>
+#include <playstate/search/light_source_result_set.h>
 using namespace playstate;
 
 //
@@ -46,6 +47,7 @@ private:
 
 	RenderTarget2D* mLightRenderTarget;
 	RenderBlockResultSet mRenderBlockResultSet;
+	LightSourceResultSet mLightSourceResultSet;
 };
 
 

@@ -5,6 +5,8 @@
 
 namespace playstate
 {
+	//
+	// There is only one scene for the entire game. The tree-structure looks like this: Scene ->* SceneGroup ->* SceneNode.
 	class Scene
 	{
 	public:
@@ -24,7 +26,8 @@ namespace playstate
 		void Update();
 
 		//
-		// Query the Scene for items located in it.
+		// Query this scene for items located in it.
+		//
 		// @param query The query we are performing
 		// @param target Container where all the found items are put into
 		// {@code
@@ -38,17 +41,20 @@ namespace playstate
 		bool Find(const FindQuery& query, RenderBlockResultSet* target) const;
 
 		//
-		// Query the Scene for items located in it and sorts them using the supplied sorter algorithm
+		// Query this scene for items located in it and sorts them using the supplied sorter algorithm
+		//
 		// @param query
 		// @param target
 		// @param sorter
 		bool Find(const FindQuery& query, RenderBlockResultSet* target, IArraySorter<RenderBlock*>* sorter) const;
 
 		//
-		// Query the scene for lights located in it
+		// Queries this scene for light sources, based on the supplied query. The result of the found light 
+		// sources are put in the supplied target.
+		// 
 		// @param query
 		// @param target
-		//bool Find(const FindQuery& query, std::vector<Light*>* target) const;
+		bool Find(const FindQuery& query, LightSourceResultSet* target) const;
 
 		//
 		// Sets the ambient lighting on the entire scene. 

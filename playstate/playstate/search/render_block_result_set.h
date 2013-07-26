@@ -24,12 +24,12 @@ namespace playstate
 		RenderBlock* Create(uint32 id);
 		
 		//
-		// Sort this result-set using the supplied array sorter
+		// Sort this result-set using the supplied array sorter.
 		void Sort(IArraySorter<RenderBlock*>* sorter);
 
 	public:
 		// Read-only property for the sorted render blocks
-		RenderBlock**& const RenderBlocks;
+		RenderBlock**& const SortedRenderBlocks;
 
 	private:
 		RenderBlock** mSortedRenderBlocks;

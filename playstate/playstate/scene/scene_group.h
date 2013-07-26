@@ -46,6 +46,7 @@ namespace playstate
 	public:
 		virtual void AttachLightSource(LightSource* lightSource);
 		virtual void DetachLightSource(LightSource* lightSource);
+		virtual bool Find(const FindQuery& query, LightSourceResultSet* target) const;
 
 	private:
 		LinkedList<SceneNode, &SceneNode::NodeLink> mSceneNodes;

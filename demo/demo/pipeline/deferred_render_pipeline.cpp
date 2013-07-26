@@ -4,9 +4,7 @@
 #include <playstate/camera/camera.h>
 #include <playstate/scene/scene.h>
 #include <playstate/window/window.h>
-//#include "../../renderable.h"
-//#include "../../light/point_light.h"
-//#include "../../scene/tree/octree.h"
+#include <playstate/component/lightsources/point_light.h>
 
 DeferredRenderPipeline::DeferredRenderPipeline(RenderSystem& renderSystem, IWindow& window, ResourceManager& resourceManager)
 	: mRenderSystem(renderSystem), mWindow(window), 
@@ -30,12 +28,11 @@ DeferredRenderPipeline::DeferredRenderPipeline(RenderSystem& renderSystem, IWind
 	mDeferredShader->SetRenderTarget(mNormalsRenderTarget, 2);
 	mDeferredShader->SetDepthRenderTarget(mDepthRenderTarget);
 	
-	mPointLightTexture = resourceManager.GetResource<Texture2D>("/demo/effects/deferred_point_light/light.png");
+	mPointLightTexture = resourceManager.GetResource<Texture2D>("/demo/effects/deferred/light.png");
 	mPointLightShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(std::string("/demo/effects/deferred/deferred_point_light.lua")));
 	mPointLightShader->FindComponent("DiffuseTexture")->SetTexture(mDiffuseRenderTarget);
 	mPointLightShader->FindComponent("PositionsTexture")->SetTexture(mPositionsRenderTarget);
 	mPointLightShader->FindComponent("NormalsTexture")->SetTexture(mNormalsRenderTarget);
-	mPointLightShader->FindComponent("LightTexture")->SetTexture(mPointLightTexture);
 	mPointLightShader->SetRenderTarget(mLightRenderTarget, 0);
 
 	mTexturedShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(std::string("/demo/effects/deferred/deferred_result.lua")));
@@ -90,7 +87,7 @@ void DeferredRenderPipeline::DrawGeometry(const Scene& scene, const Camera& came
 		// Draw scene objects
 		GfxProgram* deferredShader = mDeferredShader.get();
 		for(uint32 index = 0; index < mRenderBlockResultSet.Size; ++index) {
-			RenderBlock* block = mRenderBlockResultSet.RenderBlocks[index];
+			RenderBlock* block = mRenderBlockResultSet.SortedRenderBlocks[index];
 			diffuseTexture->SetTexture(block->DiffuseTexture);
 			diffuseColor->SetColorRGB(block->DiffuseColor);
 			modelMatrix->SetMatrix(block->ModelMatrix);
@@ -109,66 +106,49 @@ void DeferredRenderPipeline::DrawGeometry(const Scene& scene, const Camera& came
 
 void DeferredRenderPipeline::DrawLighting(const Scene& scene, const Camera& camera)
 {
-
-	// Get lights that affect drawable geometry?
-	// 
-	/*
-
-
 	FindQuery query;
 	query.Camera = &camera;
-	if(scene.Find(query, mLightSourceResultSet)) {
+	if(scene.Find(query, &mLightSourceResultSet)) {
 		mPointLightShader->Apply();
 		mPointLightShader->Clear(ClearTypes::COLOR);
 
-		mPointLightShader->GetComponent("ProjectionMatrix")->SetMatrix(camera.ProjectionMatrix);
-		mPointLightShader->GetComponent("ViewMatrix")->SetMatrix(camera.ViewMatrix);
-
-		IGfxProgramComponent* modelMatrix = mPointLightShader->GetComponent("ModelMatrix");
-		IGfxProgramComponent* lightColor = mPointLightShader->GetComponent("LightColor");
-		IGfxProgramComponent* lightPosition = mPointLightShader->GetComponent("LightPosition");
-		IGfxProgramComponent* constantAttenuation = mPointLightShader->GetComponent("ConstantAttenuation");
-		IGfxProgramComponent* linearAttenuation = mPointLightShader->GetComponent("LinearAttenuation");
-		IGfxProgramComponent* quadraticAttenuation = mPointLightShader->GetComponent("QuadraticAttenuation");
-		IGfxProgramComponent* lightRadius = mPointLightShader->GetComponent("LightRadius");
+		mPointLightShader->FindComponent("ProjectionMatrix")->SetMatrix(camera.ProjectionMatrix);
+		mPointLightShader->FindComponent("ViewMatrix")->SetMatrix(camera.ViewMatrix);
+		mPointLightShader->FindComponent("LightTexture")->SetTexture(mPointLightTexture);
+		
+		IGfxProgramComponent* modelMatrix = mPointLightShader->FindComponent("ModelMatrix");
+		IGfxProgramComponent* lightColor = mPointLightShader->FindComponent("LightColor");
+		IGfxProgramComponent* lightPosition = mPointLightShader->FindComponent("LightPosition");
+		IGfxProgramComponent* constantAttenuation = mPointLightShader->FindComponent("ConstantAttenuation");
+		IGfxProgramComponent* linearAttenuation = mPointLightShader->FindComponent("LinearAttenuation");
+		IGfxProgramComponent* quadraticAttenuation = mPointLightShader->FindComponent("QuadraticAttenuation");
+		IGfxProgramComponent* lightRadius = mPointLightShader->FindComponent("LightRadius");
 
 		for(uint32 index = 0; index < mLightSourceResultSet.Size; ++index) {
-			RenderBlock* block = mRenderBlockResultSet.RenderBlocks[index];
-			diffuseTexture->SetTexture(block->DiffuseTexture);
-			diffuseColor->SetColorRGB(block->DiffuseColor);
-			modelMatrix->SetMatrix(block->ModelMatrix);
-			deferredShader->Render(block->VertexBuffer, block->IndexBuffer);
-		}
-
-		// Draw the lights
-		// TODO Check shader version so that we can decide what technique should be used
-		// to render the light
-		std::vector<Light*>::size_type size = lights.size();
-		for(std::vector<Light*>::size_type i = 0; i < size; ++i) {
-			const PointLight* pl = dynamic_cast<const PointLight*>(lights[i]);
+			LightSource* lightSource = mLightSourceResultSet.Elements[index];
+			PointLight* pl = dynamic_cast<PointLight*>(lightSource);
 			if(pl != NULL)   {
 				// TODO Render point lights as six spot-lights with texture "LightTexture" that's specified above.
-				modelMatrix->SetMatrix(CalculateBillboardModelMatrix(pl->AbsolutePosition, camera));
+				modelMatrix->SetMatrix(CalculateBillboardModelMatrix(pl->Node->AbsolutePosition, camera));
 				
 				lightColor->SetColorRGB(pl->LightColor);
-				lightPosition->SetVector3(pl->AbsolutePosition);
+				lightPosition->SetVector3(pl->Node->AbsolutePosition);
 				constantAttenuation->SetFloat(pl->ConstantAttenuation);
 				linearAttenuation->SetFloat(pl->LinearAttenuation);
 				quadraticAttenuation->SetFloat(pl->QuadricAttenuation);
 				lightRadius->SetFloat(pl->Radius);
 
-				mPointLightShader->Render(mQuadBufferObject);
+				mPointLightShader->Render(mRenderSystem.UniformVertexBuffer);
 				continue;
 			}
-
+			/*
 			const SpotLight* spl = dynamic_cast<const SpotLight*>(lights[i]);
 			if(spl != NULL) {
 				continue;
-			}
+			}*/
 		}
 	}
-	*/
-	
+	mLightSourceResultSet.Reset();
 	CHECK_GL_ERROR();
 }
 

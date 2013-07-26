@@ -18,6 +18,17 @@ function AddMoreSceneGroupsOnTime:Update()
 	end
 end
 
+TestMoveLight = class(Component, function(self, speed)
+	Component.__init(self)
+	self.speed = speed
+end)
+
+function TestMoveLight:Update()
+	local position = self:GetNode():GetPosition()
+	position[2] = math.abs(math.sin(GameTotalTime * self.speed) * 5.0);
+	self:GetNode():SetPosition(position)
+end
+
 -- The group name.
 level1 = SceneGroup()
 
@@ -58,6 +69,7 @@ for i=1, 20 do
 		local linearAttenuation = 0.0
 		local quadricAttenuation = 0.5
 		node:AddComponent(PointLight(color, radius, constantAttenuation, linearAttenuation, quadricAttenuation))
+		node:AddComponent(TestMoveLight(math.random(0, 100) / 100.0 * 5.0))
 	end
 end
 

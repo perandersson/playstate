@@ -30,5 +30,12 @@ namespace playstate
 		// Method called when a collection of items has been loaded.
 		virtual void OnLoaded() = 0;
 	};
+
+	//
+	// The default resource changed listener class. This adds itself as a listener in the constructor
+	// and then removes itself on destruction or if the remove listener method is invoked
+	//class DefaultResourceChangedListener : public IResourceChangedListener
+	//{
+	//};
 }
 

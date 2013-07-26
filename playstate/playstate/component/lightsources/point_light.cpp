@@ -4,8 +4,11 @@
 #include "../../scene/scene_group.h"
 using namespace playstate;
 
-PointLight::PointLight(const Color& color, float radius, float constantAttenuation,
-	float linearAttenuation, float quadricAttenuation)
+PointLight::PointLight(const Color& color, float radius, float constantAttenuation, float linearAttenuation, float quadricAttenuation)
+	: Component(), LightSource(), 
+	mLightColor(color), mRadius(radius), mConstantAttenuation(constantAttenuation), mLinearAttenuation(linearAttenuation), mQuadricAttenuation(quadricAttenuation),
+	LightColor(mLightColor), Radius(mRadius), ConstantAttenuation(mConstantAttenuation), LinearAttenuation(mLinearAttenuation),
+	QuadricAttenuation(mQuadricAttenuation)
 {
 }
 
@@ -15,6 +18,7 @@ PointLight::~PointLight()
 
 void PointLight::OnComponentAdded()
 {
+	SetBoundingBox(AABB(Node->AbsolutePosition, 50.0f, 50.0f, 50.0f));
 	LightSource::Attach(Node->Group);
 }
 

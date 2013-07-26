@@ -19,4 +19,5 @@ void LightSource::Attach(ILightSourceProcessor* processor)
 void LightSource::Detach()
 {
 	LightSourceLink.Unlink();
+	OctreeLink.Unlink();
 }

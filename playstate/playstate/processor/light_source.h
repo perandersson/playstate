@@ -6,19 +6,17 @@ namespace playstate
 {
 	class ILightSourceProcessor;
 
+	//
+	// A LightSource is represented as an invisible mesh located in a SceneGroup's Octree. This makes it possible
+	// to find visible lights using the camera.
 	class LightSource : public OctreeNode
 	{
 	public:
 		LinkedListLink<LightSource> LightSourceLink;
 
 	public:
-		//
-		// Constructor
 		LightSource();
-
-		//
-		// Destructor
-		virtual ~LightSource();
+		~LightSource();
 
 		//
 		// Attaches this light source so that it can affect renderable items

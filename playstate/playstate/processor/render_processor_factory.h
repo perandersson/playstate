@@ -8,6 +8,8 @@ namespace playstate
 {
 	struct RenderBlock;
 
+	//
+	// The processor used to contain all renderable objects and then query them using a specific find query.
 	class IRenderProcessor
 	{
 	public:

@@ -101,6 +101,11 @@ bool SceneGroup::Find(const FindQuery& query, RenderBlockResultSet* target) cons
 	return mRenderProcessor->Find(query, target);
 }
 
+bool SceneGroup::Find(const FindQuery& query, LightSourceResultSet* target) const
+{
+	return mLightSourceProcessor->Find(query, target);
+}
+
 namespace playstate
 {
 	int SceneGroup_Factory(lua_State* L)

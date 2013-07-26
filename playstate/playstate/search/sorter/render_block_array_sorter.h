@@ -5,7 +5,7 @@
 namespace playstate
 {
 	//
-	// A quick-sort implementation used by the engine to render blocks.
+	// A quick-sort implementation used by the engine to sort render blocks.
 	// Useful for making sore we are rendering the same items in succession instead of drawing
 	// them on the screen randomly (random => many state changes => slow)
 	class RenderBlockArraySorter : public IArraySorter<RenderBlock*>

@@ -5,30 +5,35 @@
 namespace playstate
 {
 	//
+	// The ResultSet base class is used when performing different types of find queries inside the the game engine.
 	template<typename T>
 	class ResultSet
 	{
-	public:
+	protected:
 		//
 		// Default constructor
+		// @param initialBlocksCount How many blocks this array contains when this instance is created.
+		// @param blocksResizeCount The amount of blocks added when the array is full.
 		ResultSet(uint32 initialBlocksCount, uint32 blocksResizeCount);
 
-		//
-		// Destructor
+	public:
 		virtual ~ResultSet();
 
 		//
 		// Resets this result-set. This is to preseve the allocated memory.
 		void Reset();
 
-	protected:
 		//
-		// Creates a new instance and returns it.
-		T* Create();
+		// Creates a new instance and returns it. This increases the Size with 1.
+		// @return Returns a free object from the memory pool. Resizes the array when the memory pool is full.
+		T* GetOrCreate();
 
 	public:
-		// Read-only property for the number of elements allocated
+		// Read-only property for the number of created elements.
 		const uint32& Size;
+
+		// Read-only property for all the elements. Use the Size to know how many there are that have been created.
+		T*& const Elements;
 
 	protected:
 		T* mMemory;
@@ -41,7 +46,7 @@ namespace playstate
 	template<typename T>
 	ResultSet<T>::ResultSet(uint32 initialBlocksCount, uint32 blocksResizeCount) : mMemory(0), mSize(0), mNumElements(initialBlocksCount),
 		mInitialBlocksCount(initialBlocksCount), mBlocksResizeCount(blocksResizeCount),
-		Size(mSize)
+		Size(mSize), Elements(mMemory)
 	{
 		mMemory = (T*)malloc(initialBlocksCount * sizeof(T));
 	}
@@ -56,7 +61,7 @@ namespace playstate
 	}
 	
 	template<typename T>
-	T* ResultSet<T>::Create()
+	T* ResultSet<T>::GetOrCreate()
 	{
 		if(mSize >= mNumElements) {
 			mNumElements += mBlocksResizeCount;

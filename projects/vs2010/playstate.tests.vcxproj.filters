@@ -86,6 +86,12 @@
     <ClCompile Include="..\..\playstate.tests\playstate\rendering\render_target_2d_test.cpp">
       <Filter>Source Files\rendering</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\playstate.tests\playstate\search\render_block_result_set.cpp">
+      <Filter>Source Files\search</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate.tests\playstate\search\light_source_result_set.cpp">
+      <Filter>Source Files\search</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\playstate.tests\playstate\test\test_suite.h">

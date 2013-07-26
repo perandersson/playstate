@@ -3,9 +3,6 @@ local config = require "config"
 
 DemoGame = class(IGame, function(self) 
 	IGame.__init(self)
-	
-	-- Local variables here
-	-- self.something = true
 end)
 
 function DemoGame:Initialize()
@@ -23,7 +20,7 @@ function DemoGame:LoadContent()
 	ActiveCamera.LookAt(config.camera.eye, config.camera.center, config.camera.up)
 	
 	-- Set ambient lighting on the scene.
-	Scene.SetAmbientLight({0.1, 0.2, 0.3})
+	Scene.SetAmbientLight({0.1, 0.1, 0.1})
 	
 	-- Start the first level
 	Game.StartLevel("/demo/levels/level1.lua")

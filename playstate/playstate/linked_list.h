@@ -139,6 +139,10 @@ namespace playstate
 			LinkedListLink<T>* link = (LinkedListLink<T>*)((char*)(Tail) + mOffset);
 			link->Head = Head;
 		}
+
+		List = NULL;
+		Head = NULL;
+		Tail = NULL;
 	}
 
 	template<class T>

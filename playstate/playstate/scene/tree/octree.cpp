@@ -2,49 +2,18 @@
 #include "octree.h"
 using namespace playstate;
 
-Octree::Octree(const AABB& boundingBox, uint32 level, uint32 maxLevel)
-	: mBoundingBox(boundingBox), mMaxLevel(maxLevel), mLevel(level)
+Octree::Octree(const AABB& boundingBox, uint32 level, uint32 maxLevel, Octree* top)
+	: mBoundingBox(boundingBox), mMaxLevel(maxLevel), mLevel(level), mTop(top)
 {
-	memset(mParts, 0 , sizeof(mParts));
+	assert_not_null(top);
+	Initialize(boundingBox, level, maxLevel);
+}
 
-	if(level >= maxLevel)
-		return;
-
-	const Vector3 mid = boundingBox.GetPosition();
-	const float partWidth = boundingBox.GetWidth() / 2.0f;
-	const float partHeight = boundingBox.GetHeight() / 2.0f;
-	const float partDepth = boundingBox.GetDepth() / 2.0f;
-
-	// Can use TFL and BBR to calculate all midpoints for each part.
-	const Vector3 tfl((boundingBox.MinPoint.X + mid.X) / 2.0f, (boundingBox.MaxPoint.Y + mid.Y) / 2.0f, 
-		(boundingBox.MinPoint.Z + mid.Z) / 2.0f);
-	const Vector3 bbr((boundingBox.MaxPoint.X + mid.X) / 2.0f, (boundingBox.MinPoint.Y + mid.Y) / 2.0f,
-		(boundingBox.MaxPoint.Z + mid.Z) / 2.0f);
-
-	// Create child nodes
-	mParts[TOP_FRONT_LEFT] = new Octree(AABB(tfl, 
-		partWidth, partHeight, partDepth), level + 1, maxLevel);
-
-	mParts[TOP_FRONT_RIGHT] = new Octree(AABB(Vector3(bbr.X, tfl.Y, tfl.Z), 
-		partWidth, partHeight, partDepth), level + 1, maxLevel);
-
-	mParts[TOP_BACK_LEFT] = new Octree(AABB(Vector3(tfl.X, tfl.Y, bbr.Z), 
-		partWidth, partHeight, partDepth), level + 1, maxLevel);
-
-	mParts[TOP_BACK_RIGHT] = new Octree(AABB(Vector3(bbr.X, tfl.Y, bbr.Z), 
-		partWidth, partHeight, partDepth), level + 1, maxLevel);
-
-	mParts[BOTTOM_FRONT_LEFT] = new Octree(AABB(Vector3(tfl.X, bbr.Y, tfl.Z), 
-		partWidth, partHeight, partDepth), level + 1, maxLevel);
-
-	mParts[BOTTOM_FRONT_RIGHT] = new Octree(AABB(Vector3(bbr.X, bbr.Y, tfl.Z), 
-		partWidth, partHeight, partDepth), level + 1, maxLevel);
-
-	mParts[BOTTOM_BACK_LEFT] = new Octree(AABB(Vector3(tfl.X, bbr.Y, bbr.Z), 
-		partWidth, partHeight, partDepth), level + 1, maxLevel);
-
-	mParts[BOTTOM_BACK_RIGHT] = new Octree(AABB(bbr, 
-		partWidth, partHeight, partDepth), level + 1, maxLevel);
+Octree::Octree(uint32 maxLevel)
+	: mBoundingBox(AABB(Vector3(0, 0, 0), 1000.0f, 1000.0f, 1000.0f)), mMaxLevel(maxLevel), mLevel(0), mTop(0)
+{
+	mTop = this;
+	Initialize(mBoundingBox, mLevel, maxLevel);
 }
 
 Octree::~Octree()
@@ -55,10 +24,12 @@ Octree::~Octree()
 void Octree::Add(OctreeNode* node)
 {
 	assert_not_null(node);
+	Insert(node);
+}
 
-	if(!Insert(node)) {
-		mNodes.AddLast(node);
-	}
+bool Octree::IsLeafNode() const
+{
+	return mLevel >= mMaxLevel;
 }
 
 void Octree::Remove(OctreeNode* node)
@@ -172,7 +143,50 @@ void Octree::Invalidate(OctreeNode* node)
 	assert_not_null(node);
 
 	Remove(node);
-	Add(node);
+	mTop->Add(node);
+}
+
+void Octree::Initialize(const AABB& boundingBox, uint32 level, uint32 maxLevel)
+{
+	memset(mParts, 0 , sizeof(mParts));
+	if(level >= maxLevel)
+		return;
+
+	const Vector3 mid = boundingBox.GetPosition();
+	const float partWidth = boundingBox.GetWidth() / 2.0f;
+	const float partHeight = boundingBox.GetHeight() / 2.0f;
+	const float partDepth = boundingBox.GetDepth() / 2.0f;
+
+	// Can use TFL and BBR to calculate all midpoints for each part.
+	const Vector3 tfl((boundingBox.MinPoint.X + mid.X) / 2.0f, (boundingBox.MaxPoint.Y + mid.Y) / 2.0f, 
+		(boundingBox.MinPoint.Z + mid.Z) / 2.0f);
+	const Vector3 bbr((boundingBox.MaxPoint.X + mid.X) / 2.0f, (boundingBox.MinPoint.Y + mid.Y) / 2.0f,
+		(boundingBox.MaxPoint.Z + mid.Z) / 2.0f);
+
+	// Create child nodes
+	mParts[TOP_FRONT_LEFT] = new Octree(AABB(tfl, 
+		partWidth, partHeight, partDepth), level + 1, maxLevel, mTop);
+
+	mParts[TOP_FRONT_RIGHT] = new Octree(AABB(Vector3(bbr.X, tfl.Y, tfl.Z), 
+		partWidth, partHeight, partDepth), level + 1, maxLevel, mTop);
+
+	mParts[TOP_BACK_LEFT] = new Octree(AABB(Vector3(tfl.X, tfl.Y, bbr.Z), 
+		partWidth, partHeight, partDepth), level + 1, maxLevel, mTop);
+
+	mParts[TOP_BACK_RIGHT] = new Octree(AABB(Vector3(bbr.X, tfl.Y, bbr.Z), 
+		partWidth, partHeight, partDepth), level + 1, maxLevel, mTop);
+
+	mParts[BOTTOM_FRONT_LEFT] = new Octree(AABB(Vector3(tfl.X, bbr.Y, tfl.Z), 
+		partWidth, partHeight, partDepth), level + 1, maxLevel, mTop);
+
+	mParts[BOTTOM_FRONT_RIGHT] = new Octree(AABB(Vector3(bbr.X, bbr.Y, tfl.Z), 
+		partWidth, partHeight, partDepth), level + 1, maxLevel, mTop);
+
+	mParts[BOTTOM_BACK_LEFT] = new Octree(AABB(Vector3(tfl.X, bbr.Y, bbr.Z), 
+		partWidth, partHeight, partDepth), level + 1, maxLevel, mTop);
+
+	mParts[BOTTOM_BACK_RIGHT] = new Octree(AABB(bbr, 
+		partWidth, partHeight, partDepth), level + 1, maxLevel, mTop);
 }
 
 bool Octree::Insert(OctreeNode* node)

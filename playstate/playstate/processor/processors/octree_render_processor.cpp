@@ -2,8 +2,7 @@
 #include "octree_render_processor.h"
 using namespace playstate;
 
-// TODO: Make sure that the octree's bounding box is not a static value.
-OctreeRenderProcessor::OctreeRenderProcessor() : mOctree(AABB(Vector3(0, 0, 0), 1000.0f, 1000.0f, 1000.0f), 0, 4)
+OctreeRenderProcessor::OctreeRenderProcessor() : mOctree(4)
 {
 }
 

@@ -17,8 +17,8 @@ RenderStaticModel::~RenderStaticModel()
 
 void RenderStaticModel::OnComponentAdded()
 {
-	Renderable::Attach(Node->Group);
 	SetBoundingBox(mModel->BoundingBox, Node->AbsolutePosition);
+	Renderable::Attach(Node->Group);
 }
 
 void RenderStaticModel::OnComponentRemoved()

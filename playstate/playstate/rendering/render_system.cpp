@@ -167,7 +167,7 @@ void RenderSystem::ApplyRenderTargets()
 		}
 	} else {
 		if(_current_depthRenderTarget != NULL) {
-			GLenum attachmentType = GL_DEPTH_ATTACHMENT | GL_DEPTH_STENCIL_ATTACHMENT;
+			GLenum attachmentType = GL_DEPTH_ATTACHMENT;
 			_current_depthRenderTarget = 0;
 			glFramebufferTexture2D(GL_FRAMEBUFFER, attachmentType, GL_TEXTURE_2D, 0, 0);
 		}

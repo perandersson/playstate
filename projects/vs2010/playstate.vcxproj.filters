@@ -377,6 +377,9 @@
     <ClCompile Include="..\..\playstate\playstate\processor\processors\octree_light_source_processor.cpp">
       <Filter>Source Files\processor\processors</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\search\light_source_result_set.cpp">
+      <Filter>Source Files\search</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\playstate\playstate\camera\camera.h">
@@ -740,6 +743,9 @@
       <Filter>Source Files\processor\processors</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\search\result_set.h">
+      <Filter>Source Files\search</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\search\light_source_result_set.h">
       <Filter>Source Files\search</Filter>
     </ClInclude>
   </ItemGroup>

@@ -3,8 +3,7 @@
 #include "../../types.h"
 using namespace playstate;
 
-// TODO: Make sure that the octree's bounding box is not a static value.
-OctreeLightSourceProcessor::OctreeLightSourceProcessor() : mOctree(AABB(Vector3(0, 0, 0), 1000.0f, 1000.0f, 1000.0f), 0, 4)
+OctreeLightSourceProcessor::OctreeLightSourceProcessor() : mOctree(4)
 {
 }
 
@@ -27,6 +26,36 @@ void OctreeLightSourceProcessor::DetachLightSource(LightSource* lightSource)
 
 	mLightSources.Remove(lightSource);
 	mOctree.Remove(lightSource);
+}
+
+class LightSourceEventHandlerVisitor : public IOctreeVisitor
+{
+public:
+	LightSourceEventHandlerVisitor(LightSourceResultSet* target)
+		: mResultSetTarget(target)
+	{
+		assert_not_null(target);
+	}
+	
+	~LightSourceEventHandlerVisitor() {}
+
+// IOctreeVisitor
+public:
+	virtual void Visit(OctreeNode* item)
+	{
+		LightSource** ptr = mResultSetTarget->GetOrCreate();
+		*ptr = static_cast<LightSource*>(item);
+	}
+
+private:
+	LightSourceResultSet* mResultSetTarget;
+};
+
+bool OctreeLightSourceProcessor::Find(const FindQuery& query, LightSourceResultSet* target) const
+{
+	LightSourceEventHandlerVisitor visitor(target);
+	mOctree.FindItems(query.Camera->ViewFrustum, &visitor);
+	return target->Size > 0;
 }
 
 ///////////////////////////////////

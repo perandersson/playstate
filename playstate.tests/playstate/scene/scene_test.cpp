@@ -71,6 +71,11 @@ TEST_SUITE(Scene)
 		virtual void DetachLightSource(LightSource* lightSource)
 		{
 		}
+
+		virtual bool Find(const FindQuery& query, LightSourceResultSet* target) const
+		{
+			return true;
+		}
 	};
 
 	class MockLightSourceProcessorFactory : public ILightSourceProcessorFactory

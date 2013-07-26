@@ -56,8 +56,8 @@ return {
 			
 			//image *= texture2D(LightTexture, uvCoords);
 			vec4 light = texture2D(LightTexture, uvCoords);
-			//gl_FragColor = (image + vec4(AmbientColor, 1.0)) * (light + vec4(AmbientColor, 1.0));
-			gl_FragColor = image;
+			gl_FragColor = (image + vec4(AmbientColor, 1.0)) * (light + vec4(AmbientColor, 1.0));
+			//gl_FragColor = image;
 			//gl_FragColor = vec4(normal, 1.0);
 		}
 
