@@ -5,7 +5,7 @@ config.window = {}
 config.window.width = 1024
 config.window.height = 768
 config.window.fullscreen = false
-config.window.title = "Demo"
+config.window.title = "Demo FPS: "
 
 -- Camera configuration
 config.camera = {}

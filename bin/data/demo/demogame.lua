@@ -32,7 +32,7 @@ function DemoGame:Update()
 	self.totalTime = self.totalTime + GameDeltaTime
 	self.numFrames = self.numFrames + 1
 	if self.totalTime > 1.0 then
-		Window.SetTitle("FPS: " .. self.numFrames)
+		Window.SetTitle(config.window.title .. self.numFrames)
 		self.totalTime = 1.0 - self.totalTime
 		self.numFrames = 0
 	end

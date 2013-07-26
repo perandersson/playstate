@@ -28,7 +28,7 @@ Plane::~Plane()
 
 float32 Plane::GetDistance(const Vector3& point) const
 {
-	Vector3 delta = point - Point;
+	const Vector3 delta = point - Point;
 	float32 d = Normal.DotProduct(delta);
 	return d;
 }

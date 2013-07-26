@@ -8,6 +8,10 @@ namespace std { using namespace __gnu_cxx; }
 #include <hash_map>
 #endif
 
+#ifndef NULL
+#define NULL 0
+#endif
+
 #ifndef NO_ID
 #define NO_ID NULL
 #endif

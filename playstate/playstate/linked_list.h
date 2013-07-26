@@ -1,14 +1,16 @@
 #pragma once
 #include <cassert>
-#ifndef NULL
-#define NULL 0
-#endif
+#include "types.h"
 
 namespace playstate
 {
+	template<class T> class LinkedListLink;
+
 	template<class T>
 	class LinkedListBase
 	{
+		friend class LinkedListLink<T>;
+
 	public:
 		LinkedListBase();
 		virtual ~LinkedListBase();
@@ -16,6 +18,13 @@ namespace playstate
 	public:
 		T* Head;
 		T* Tail;
+
+	public:
+		// How many elements are added to this list
+		const uint32& Size;
+
+	protected:
+		uint32 mSize;
 	};
 
 	template<class T>
@@ -87,13 +96,12 @@ namespace playstate
 		//
 		// Retrieves the link value from the supplied item.
 		Link& GetLink(T* item);
-	
 	};
 
 	///////////////////////////////////
 
 	template<class T>
-	LinkedListBase<T>::LinkedListBase() : Head(NULL), Tail(NULL)
+	LinkedListBase<T>::LinkedListBase() : Head(NULL), Tail(NULL), mSize(0), Size(mSize)
 	{
 	}
 
@@ -128,16 +136,18 @@ namespace playstate
 			if(Tail == NULL) {
 				List->Tail = Head;
 			}
-		}
 
-		if(Head != NULL) {
-			LinkedListLink<T>* link = (LinkedListLink<T>*)((char*)(Head) + mOffset);
-			link->Tail = Tail;
-		}
+			if(Head != NULL) {
+				LinkedListLink<T>* link = (LinkedListLink<T>*)((char*)(Head) + mOffset);
+				link->Tail = Tail;
+			}
 
-		if(Tail != NULL) {
-			LinkedListLink<T>* link = (LinkedListLink<T>*)((char*)(Tail) + mOffset);
-			link->Head = Head;
+			if(Tail != NULL) {
+				LinkedListLink<T>* link = (LinkedListLink<T>*)((char*)(Tail) + mOffset);
+				link->Head = Head;
+			}
+
+			List->mSize--;
 		}
 
 		List = NULL;
@@ -187,6 +197,7 @@ namespace playstate
 
 		// Link the item with this list
 		link.Link(item, this);
+		mSize++;
 	}
 
 	template<class T, typename LinkedListLink<T> T::*_LinkAddr>
