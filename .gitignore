@@ -5,6 +5,7 @@ projects/vs2010/ipch/*
 bin/Debug/*
 bin/Release/*
 bin/Debug Without Test/*
+bin/Release Without Test/*
 bin/*.exe
 bin/*.ilk
 bin/*.pdb
