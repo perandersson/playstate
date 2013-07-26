@@ -48,7 +48,6 @@ loaderNode:AddComponent(AddMoreSceneGroupsOnTime(5))
 local chinalampModel = Model.Load("/demo/models/chinalamp/China_lampEX.obj")
 for i=1, 20 do
 	for j=1, 20 do
-		--math.random
 		local node = SceneNode(level1)
 		node:AddComponent(RenderStaticModel(chinalampModel))
 		node:SetPosition({i * 20, 0, j * 20})
@@ -70,6 +69,16 @@ for i=1, 20 do
 		local quadricAttenuation = 0.5
 		node:AddComponent(PointLight(color, radius, constantAttenuation, linearAttenuation, quadricAttenuation))
 		node:AddComponent(TestMoveLight(math.random(0, 100) / 100.0 * 5.0))
+	end
+end
+
+-- Add ground
+local ground1 = Model.Load("/demo/models/ground1/ground1.obj")
+for i=1, 20 do
+	for j=1, 20 do
+		local node = SceneNode(level1)
+		node:AddComponent(RenderStaticModel(ground1))
+		node:SetPosition({i * 20, 0, j * 20})
 	end
 end
 
