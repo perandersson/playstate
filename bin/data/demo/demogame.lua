@@ -3,6 +3,8 @@ local config = require "config"
 
 DemoGame = class(IGame, function(self) 
 	IGame.__init(self)
+	self.numFrames = 0
+	self.totalTime = 0
 end)
 
 function DemoGame:Initialize()
@@ -24,6 +26,16 @@ function DemoGame:LoadContent()
 	
 	-- Start the first level
 	Game.StartLevel("/demo/levels/level1.lua")
+end
+
+function DemoGame:Update()
+	self.totalTime = self.totalTime + GameDeltaTime
+	self.numFrames = self.numFrames + 1
+	if self.totalTime > 1.0 then
+		Window.SetTitle("FPS: " .. self.numFrames)
+		self.totalTime = 1.0 - self.totalTime
+		self.numFrames = 0
+	end
 end
 
 function DemoGame:UnloadContent()
