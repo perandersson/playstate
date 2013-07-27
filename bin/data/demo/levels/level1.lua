@@ -26,7 +26,7 @@ end)
 function TestMoveLight:Update()
 	local position = self:GetNode():GetPosition()
 	position[2] = math.abs(math.sin(GameTotalTime * self.speed) * 5.0);
-	self:GetNode():SetPosition(position)
+	self:SetNodePosition(position)
 end
 
 -- The group name.

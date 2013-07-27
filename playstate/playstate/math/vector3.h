@@ -37,24 +37,72 @@ namespace playstate
 		void Set(float32 xValue, float32 yValue, float32 zValue);
 		void Set(const Vector3& vector3);
 
-		Vector3 operator + (const Vector3& vector3) const;
-		Vector3 operator - (const Vector3& vector3) const;
-		Vector3	operator * (const float32 scalar) const;
-		Vector3	operator * (const Vector3& scalar) const;
-		Vector3 operator / (const float32 scalar) const;
+		inline Vector3 operator + (const Vector3& vector3) const {
+			return Vector3(X + vector3.X, Y + vector3.Y, Z + vector3.Z);
+		}
 
-		void operator += (const Vector3& vector3);
-		void operator -= (const Vector3& vector3);
-		void operator *= (const float32 scalar);
-		void operator *= (const Vector3& scalar);
-		void operator /= (const float32 scalar);
+		inline Vector3 operator - (const Vector3& vector3) const {
+			return Vector3(X - vector3.X, Y - vector3.Y, Z - vector3.Z);
+		}
 
-		void operator = (const Vector3 &vector3);
+		inline Vector3 operator * (const float32 scalar) const {
+			return Vector3(X * scalar, Y * scalar, Z * scalar);
+		}
+
+		inline Vector3 operator * (const Vector3& scalar) const {
+			return Vector3(X * scalar.X, Y * scalar.Y, Z * scalar.Z);
+		}
+
+		inline Vector3 operator / (float32 scalar) const {
+			assert(scalar != 0.0f && "You are not allowed to divide by 0");
+			scalar = 1.0f / scalar;
+			return Vector3(X * scalar, Y * scalar, Z * scalar);
+		}
+
+		inline void operator += (const Vector3& vector3) {
+			X += vector3.X;
+			Y += vector3.Y;
+			Z += vector3.Z;
+		}
+
+		inline void operator -= (const Vector3& vector3) {
+			X -= vector3.X;
+			Y -= vector3.Y;
+			Z -= vector3.Z;
+		}
+
+		inline void operator *= (const float32 scalar) {
+			X *= scalar;
+			Y *= scalar;
+			Z *= scalar;
+		}
+
+		inline void operator *= (const Vector3& scalar) {
+			X *= scalar.X;
+			Y *= scalar.Y;
+			Z *= scalar.Z;
+		}
+
+		inline void operator /= (float32 scalar) {
+			assert(scalar != 0.0f && "You are not allowed to divide by 0");
+			scalar = 1.0f / scalar;
+			X *= scalar;
+			Y *= scalar;
+			Z *= scalar;
+		}
+
+		inline void operator = (const Vector3 &vector3) {
+			X = vector3.X;
+			Y = vector3.Y;
+			Z = vector3.Z;
+		}
 
 		bool operator == (const Vector3 &vector3) const;
 		bool operator != (const Vector3 &vector3) const;
 
-		Vector3 operator - ();
+		inline Vector3 operator - () {
+			return Vector3(-X, -Y, -Z);
+		}
 
 		static const Vector3 Zero; 
 		static const Vector3 UnitX; 

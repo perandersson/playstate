@@ -8,11 +8,11 @@ MovePlayerBehaviour = class(Component, function(self, speed)
 end)
 
 function MovePlayerBehaviour:Update()
-	self:RotateNode()
-	self:TranslateNode()
+	self:RotateThis()
+	self:TranslateThis()
 end
 
-function MovePlayerBehaviour:RotateNode()
+function MovePlayerBehaviour:RotateThis()
 	local currentPos = Mouse.GetPosition()
 	if currentPos[1] == self.prevPos[1] and currentPos[2] == self.prevPos[2] then
 		return
@@ -21,7 +21,7 @@ function MovePlayerBehaviour:RotateNode()
 	x, y = self:GetArcballVector(currentPos[1], currentPos[2])
 	local angle = math.atan2(x, y)
 		
-	self:GetNode():SetRotation({0, angle, 0})
+	self:SetNodeRotation({0, angle, 0})
 	
 	self.prevPos = currentPos
 end
@@ -38,7 +38,7 @@ function MovePlayerBehaviour:GetArcballVector(x, y)
 	return px / length, py / length
 end
 
-function MovePlayerBehaviour:TranslateNode()
+function MovePlayerBehaviour:TranslateThis()
 	local velocity = {0, 0, 0}
 	local move = false
 		
@@ -63,7 +63,7 @@ function MovePlayerBehaviour:TranslateNode()
 	end
 	
 	if move then
-		self:GetNode():Translate(velocity)
+		self:TranslateNode(velocity)
 	end
 end
 

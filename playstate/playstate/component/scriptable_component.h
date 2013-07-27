@@ -31,10 +31,16 @@ namespace playstate
 	extern int Component_Init(lua_State* L);
 	extern int Component_GetNode(lua_State* L);
 	extern int Component_TranslateNode(lua_State* L);
+	extern int Component_SetNodePosition(lua_State* L);
+	extern int Component_SetNodeRotation(lua_State* L);
+	extern int Component_GetNodePosition(lua_State* L);
 	static luaL_Reg Component_Methods[] = {
 		{ LUA_INHERIT_CONSTRUCTOR, Component_Init },
 		{ "GetNode", Component_GetNode },
 		{ "TranslateNode", Component_TranslateNode },
+		{ "SetNodePosition", Component_SetNodePosition },
+		{ "SetNodeRotation", Component_SetNodeRotation },
+		{ "GetNodePosition", Component_GetNodePosition },
 		{ NULL, NULL }
 	};
 }

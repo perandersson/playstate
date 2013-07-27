@@ -7,7 +7,7 @@ FollowCameraBehaviour = class(Component, function(self)
 end)
 
 function FollowCameraBehaviour:Update()
-	local pos = self:GetNode():GetPosition()
+	local pos = self:GetNodePosition()
 	local eye = vector3.add(pos, config.camera.eye)
 	
 	ActiveCamera.LookAt(eye, pos, config.camera.up)

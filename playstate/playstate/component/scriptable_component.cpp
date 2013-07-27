@@ -101,5 +101,41 @@ namespace playstate
 		return 0;
 	}
 
+	int Component_SetNodePosition(lua_State* L)
+	{
+		Vector3 vec = luaM_popvector3(L);
+		ScriptableComponent* component = luaM_popobject<ScriptableComponent>(L);
+		if(component != NULL) {
+			SceneNode* owner = component->Node;
+			owner->SetPosition(vec);
+		}
+
+		return 0;
+	}
+
+	int Component_SetNodeRotation(lua_State* L)
+	{
+		Vector3 vec = luaM_popvector3(L);
+		ScriptableComponent* component = luaM_popobject<ScriptableComponent>(L);
+		if(component != NULL) {
+			SceneNode* owner = component->Node;
+			owner->SetRotation(vec);
+		}
+
+		return 0;
+	}
+	
+	int Component_GetNodePosition(lua_State* L)
+	{
+		ScriptableComponent* component = luaM_popobject<ScriptableComponent>(L);
+		if(component != NULL) {
+			luaM_pushvector3(L, component->Node->Position);
+		} else {
+			// Print error
+			luaM_pushvector3(L, Vector3::Zero);
+		}
+		
+		return 1;
+	}	
 }
 

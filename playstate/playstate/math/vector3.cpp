@@ -110,98 +110,6 @@ void Vector3::Set(const Vector3& vector3)
 	Z = vector3.Z;
 }
 
-void Vector3::operator += (const Vector3 &vector3)
-{
-	X += vector3.X;
-	Y += vector3.Y;
-	Z += vector3.Z;
-}
-
-void Vector3::operator -= (const Vector3 &vector3)
-{
-	X -= vector3.X;
-	Y -= vector3.Y;
-	Z -= vector3.Z;
-}
-
-void Vector3::operator *= (const float32 scalar)
-{
-	X *= scalar;
-	Y *= scalar;
-	Z *= scalar;
-}
-
-void Vector3::operator *= (const Vector3& scalar)
-{
-	X *= scalar.X;
-	Y *= scalar.Y;
-	Z *= scalar.Z;
-}
-
-void Vector3::operator /= (const float32 scalar)
-{
-	if (scalar != 0)
-	{
-		X /= scalar;
-		Y /= scalar;
-		Z /= scalar;
-	}
-}
-
-Vector3 Vector3::operator + (const Vector3& vector3) const
-{
-	Vector3 vector3Temp;
-	vector3Temp.X = X + vector3.X;
-	vector3Temp.Y = Y + vector3.Y;
-	vector3Temp.Z = Z + vector3.Z;
-
-	return vector3Temp;
-}
-
-Vector3 Vector3::operator - (const Vector3& vector3) const
-{
-	return Vector3(X - vector3.X, Y - vector3.Y, Z - vector3.Z);
-}
-
-Vector3 Vector3::operator * (const float32 scalar) const
-{
-	Vector3 vector3Temp;
-	vector3Temp.X = X * scalar;
-	vector3Temp.Y = Y * scalar;
-	vector3Temp.Z = Z * scalar;
-
-	return vector3Temp;
-}
-
-Vector3	Vector3::operator * (const Vector3& scalar) const
-{
-	Vector3 tmp;
-	tmp.X = X * scalar.X;
-	tmp.Y = Y * scalar.Y;
-	tmp.Z = Z * scalar.Z;
-	return tmp;
-}
-
-Vector3 Vector3::operator / (const float32 scalar) const
-{
-	Vector3 vector3Temp;
-	if (scalar != 0)
-	{
-		vector3Temp.X = X / scalar;
-		vector3Temp.Y = Y / scalar;
-		vector3Temp.Z = Z / scalar;
-	}
-
-	return vector3Temp;
-}
-
-void Vector3::operator = (const Vector3 &vector3)
-{
-	X = vector3.X;
-	Y = vector3.Y;
-	Z = vector3.Z;
-}
-
 bool Vector3::operator == (const Vector3 &vector3) const
 {
 	return abs(X - vector3.X) <= FLT_EPSILON &&
@@ -216,13 +124,9 @@ bool Vector3::operator != (const Vector3 &vector3) const
 		abs(Z - vector3.Z) > FLT_EPSILON;
 }
 
-Vector3 Vector3::operator - ()
-{
-	return Vector3(-X, -Y, -Z);
-}
-
 bool Vector3::IsZero() const
 {
 	return abs(X) <= FLT_EPSILON &&
-		abs(Y) <= FLT_EPSILON;
+		abs(Y) <= FLT_EPSILON &&
+		abs(Z) <= FLT_EPSILON;
 }
