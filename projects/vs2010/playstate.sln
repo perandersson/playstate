@@ -14,14 +14,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "playstate.tests", "playstat
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BEDCD2C3-11CA-408C-BF7B-2DD4D79E2380}"
-	ProjectSection(SolutionItems) = preProject
-		Performance1.psess = Performance1.psess
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug Without Test|Win32 = Debug Without Test|Win32
 		Debug|Win32 = Debug|Win32
+		Release Without Test|Win32 = Release Without Test|Win32
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
@@ -29,18 +27,24 @@ Global
 		{49640F0E-B772-4535-9E7B-4C0C7C5C1CFF}.Debug Without Test|Win32.Build.0 = Debug|Win32
 		{49640F0E-B772-4535-9E7B-4C0C7C5C1CFF}.Debug|Win32.ActiveCfg = Debug|Win32
 		{49640F0E-B772-4535-9E7B-4C0C7C5C1CFF}.Debug|Win32.Build.0 = Debug|Win32
+		{49640F0E-B772-4535-9E7B-4C0C7C5C1CFF}.Release Without Test|Win32.ActiveCfg = Release|Win32
+		{49640F0E-B772-4535-9E7B-4C0C7C5C1CFF}.Release Without Test|Win32.Build.0 = Release|Win32
 		{49640F0E-B772-4535-9E7B-4C0C7C5C1CFF}.Release|Win32.ActiveCfg = Release|Win32
 		{49640F0E-B772-4535-9E7B-4C0C7C5C1CFF}.Release|Win32.Build.0 = Release|Win32
 		{BA87D3D9-B255-4246-AC1A-BD6BE7DC83B4}.Debug Without Test|Win32.ActiveCfg = Debug|Win32
 		{BA87D3D9-B255-4246-AC1A-BD6BE7DC83B4}.Debug Without Test|Win32.Build.0 = Debug|Win32
 		{BA87D3D9-B255-4246-AC1A-BD6BE7DC83B4}.Debug|Win32.ActiveCfg = Debug|Win32
 		{BA87D3D9-B255-4246-AC1A-BD6BE7DC83B4}.Debug|Win32.Build.0 = Debug|Win32
+		{BA87D3D9-B255-4246-AC1A-BD6BE7DC83B4}.Release Without Test|Win32.ActiveCfg = Release|Win32
+		{BA87D3D9-B255-4246-AC1A-BD6BE7DC83B4}.Release Without Test|Win32.Build.0 = Release|Win32
 		{BA87D3D9-B255-4246-AC1A-BD6BE7DC83B4}.Release|Win32.ActiveCfg = Release|Win32
 		{BA87D3D9-B255-4246-AC1A-BD6BE7DC83B4}.Release|Win32.Build.0 = Release|Win32
 		{8BAC8A17-CD0B-4376-A93B-3472139B8A3A}.Debug Without Test|Win32.ActiveCfg = Debug Without Test|Win32
 		{8BAC8A17-CD0B-4376-A93B-3472139B8A3A}.Debug Without Test|Win32.Build.0 = Debug Without Test|Win32
 		{8BAC8A17-CD0B-4376-A93B-3472139B8A3A}.Debug|Win32.ActiveCfg = Debug|Win32
 		{8BAC8A17-CD0B-4376-A93B-3472139B8A3A}.Debug|Win32.Build.0 = Debug|Win32
+		{8BAC8A17-CD0B-4376-A93B-3472139B8A3A}.Release Without Test|Win32.ActiveCfg = Release Without Test|Win32
+		{8BAC8A17-CD0B-4376-A93B-3472139B8A3A}.Release Without Test|Win32.Build.0 = Release Without Test|Win32
 		{8BAC8A17-CD0B-4376-A93B-3472139B8A3A}.Release|Win32.ActiveCfg = Release|Win32
 		{8BAC8A17-CD0B-4376-A93B-3472139B8A3A}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
