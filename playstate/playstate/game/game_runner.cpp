@@ -81,6 +81,8 @@ void GameRunner::StartLevel(const std::string& level)
 		mWindow.HandleEvents();
 		mInputSystem.Poll();
 		mResourceManager.Poll();
+
+		mScriptSystem.HandleGC();
 	}
 }
 

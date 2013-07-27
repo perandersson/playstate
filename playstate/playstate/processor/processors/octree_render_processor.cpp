@@ -2,7 +2,7 @@
 #include "octree_render_processor.h"
 using namespace playstate;
 
-OctreeRenderProcessor::OctreeRenderProcessor() : mOctree(4)
+OctreeRenderProcessor::OctreeRenderProcessor() : mOctree(3)
 {
 }
 

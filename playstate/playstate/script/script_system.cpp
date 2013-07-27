@@ -63,6 +63,7 @@ ScriptSystem::ScriptSystem(IFileSystem& fileSystem)
 	}
 
 	lua_register(mLuaState, "Delete", __playstate_delete);
+
 }
 
 ScriptSystem::~ScriptSystem()
@@ -155,3 +156,10 @@ void ScriptSystem::SetGlobalVar(const char* name, const char* value)
 	lua_pushstring(mLuaState, value);
 	lua_setglobal(mLuaState, name);
 }
+
+void ScriptSystem::HandleGC()
+{
+	lua_gc(mLuaState, LUA_GCSTEP, 180);
+	lua_gc(mLuaState, LUA_GCSTOP, 0);
+}
+

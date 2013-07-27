@@ -210,7 +210,7 @@ namespace playstate
 			luaM_pushvector3(L, Vector3::Zero);
 		}
 
-		return 1;
+		return 3;
 	}
 
 	int SceneNode_SetPosition(lua_State* L)

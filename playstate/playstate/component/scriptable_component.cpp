@@ -131,11 +131,10 @@ namespace playstate
 		if(component != NULL) {
 			luaM_pushvector3(L, component->Node->Position);
 		} else {
-			// Print error
 			luaM_pushvector3(L, Vector3::Zero);
 		}
 		
-		return 1;
+		return 3;
 	}	
 }
 

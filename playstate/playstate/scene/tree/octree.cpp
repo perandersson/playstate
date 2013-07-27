@@ -52,7 +52,7 @@ void Octree::FindItems(const Frustum& frustum, IOctreeVisitor* visitor) const
 		return;
 	}
 		
-	if(mParts[0] != NULL) {		
+	if(!IsLeafNode()) {		
 		mParts[TOP_FRONT_LEFT]->FindItems(frustum, visitor);
 		mParts[TOP_FRONT_RIGHT]->FindItems(frustum, visitor);
 		mParts[TOP_BACK_LEFT]->FindItems(frustum, visitor);
@@ -85,7 +85,7 @@ void Octree::FindItems(const AABB& boundingBox, IOctreeVisitor* visitor) const
 		return;
 	}
 
-	if(mParts[0] != NULL) {
+	if(!IsLeafNode()) {
 		mParts[TOP_FRONT_LEFT]->FindItems(boundingBox, visitor);
 		mParts[TOP_FRONT_RIGHT]->FindItems(boundingBox, visitor);
 		mParts[TOP_BACK_LEFT]->FindItems(boundingBox, visitor);
@@ -114,7 +114,7 @@ void Octree::IterateAndVisit(IOctreeVisitor* visitor) const
 		node = tmp;
 	}
 	
-	if(mParts[0] != NULL) {
+	if(!IsLeafNode()) {
 		mParts[TOP_FRONT_LEFT]->IterateAndVisit(visitor);
 		mParts[TOP_FRONT_RIGHT]->IterateAndVisit(visitor);
 		mParts[TOP_BACK_LEFT]->IterateAndVisit(visitor);

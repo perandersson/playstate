@@ -3,7 +3,7 @@
 #include "../../types.h"
 using namespace playstate;
 
-OctreeLightSourceProcessor::OctreeLightSourceProcessor() : mOctree(4)
+OctreeLightSourceProcessor::OctreeLightSourceProcessor() : mOctree(3)
 {
 }
 

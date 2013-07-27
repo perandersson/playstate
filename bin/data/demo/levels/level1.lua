@@ -24,9 +24,9 @@ TestMoveLight = class(Component, function(self, speed)
 end)
 
 function TestMoveLight:Update()
-	local position = self:GetNode():GetPosition()
-	position[2] = math.abs(math.sin(GameTotalTime * self.speed) * 5.0);
-	self:SetNodePosition(position)
+	local x, y, z = self:GetNodePosition()
+	y = math.abs(math.sin(GameTotalTime * self.speed) * 5.0);
+	self:SetNodePosition({x, y, z})
 end
 
 -- The group name.

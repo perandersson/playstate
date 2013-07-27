@@ -4,7 +4,8 @@ local KeyboardKeys = require "engine.core.keyboardkeys"
 MovePlayerBehaviour = class(Component, function(self, speed)
 	Component.__init(self)
 	self.speed = speed
-	self.prevPos = {0, 0}
+	self.prevMouseX = 0
+	self.prevMouseY = 0
 end)
 
 function MovePlayerBehaviour:Update()
@@ -13,17 +14,18 @@ function MovePlayerBehaviour:Update()
 end
 
 function MovePlayerBehaviour:RotateThis()
-	local currentPos = Mouse.GetPosition()
-	if currentPos[1] == self.prevPos[1] and currentPos[2] == self.prevPos[2] then
+	local mouseX, mouseY = Mouse.GetPosition()
+	if mouseX == self.prevMouseX and mouseY == self.prevMouseY then
 		return
 	end
 	
-	x, y = self:GetArcballVector(currentPos[1], currentPos[2])
+	x, y = self:GetArcballVector(mouseX, mouseY)
 	local angle = math.atan2(x, y)
 		
 	self:SetNodeRotation({0, angle, 0})
 	
-	self.prevPos = currentPos
+	self.prevMouseX = mouseX
+	self.prevMouseY = mouseY
 end
 
 function MovePlayerBehaviour:GetArcballVector(x, y)

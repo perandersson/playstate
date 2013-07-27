@@ -23,6 +23,6 @@ namespace playstate
 	{
 		IMouseState& state = IInputSystem::Get().GetMouseState();
 		luaM_pushpoint(L, state.GetPosition());
-		return 1;
+		return 2;
 	}
 }

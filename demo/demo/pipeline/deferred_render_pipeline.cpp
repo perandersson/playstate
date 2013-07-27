@@ -139,13 +139,7 @@ void DeferredRenderPipeline::DrawLighting(const Scene& scene, const Camera& came
 				lightRadius->SetFloat(pl->Radius);
 
 				mPointLightShader->Render(mRenderSystem.UniformVertexBuffer);
-				continue;
 			}
-			/*
-			const SpotLight* spl = dynamic_cast<const SpotLight*>(lights[i]);
-			if(spl != NULL) {
-				continue;
-			}*/
 		}
 	}
 	mLightSourceResultSet.Reset();

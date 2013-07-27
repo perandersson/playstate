@@ -63,6 +63,10 @@ namespace playstate
 		// Sets a global value
 		void SetGlobalVar(const char* name, const char* value);
 
+		//
+		//
+		void HandleGC();
+
 	private:
 		IFileSystem& mFileSystem;
 		lua_State* mLuaState;

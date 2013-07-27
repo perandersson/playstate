@@ -8,6 +8,8 @@
 
 namespace playstate
 {
+	const uint32 LuaInstanceID = 1;
+
 	void luaM_setinstance(lua_State* L, Scriptable* data)
 	{
 		assert_not_null(L);
@@ -16,7 +18,7 @@ namespace playstate
 			return;
 		}
 
-		lua_pushstring(L, "_instance");
+		lua_pushnumber(L, LuaInstanceID);
 		if(data == NULL)
 			lua_pushnil(L);
 		else
@@ -31,7 +33,7 @@ namespace playstate
 		if(lua_istable(L, -1) == 0) {
 			return NULL;
 		}
-		lua_pushstring(L, "_instance");
+		lua_pushnumber(L, LuaInstanceID);
 		lua_gettable(L, -2);
 		if(lua_isuserdata(L, -1) == 0) {
 			lua_pop(L, 1);
@@ -107,67 +109,39 @@ namespace playstate
 	{
 		assert_not_null(L);
 
-		// { vec.X, vec.Y, vec.Z }
-		// @see http://www.lua.org/pil/11.1.html 
-		// ", it is customary in Lua to start arrays with index 1"
-		lua_newtable(L);
-		
+		// X, Y, Z
 		lua_pushnumber(L, vec.X);
-		lua_rawseti(L, -2, 1);
-		
 		lua_pushnumber(L, vec.Y);
-		lua_rawseti(L, -2, 2);
-		
 		lua_pushnumber(L, vec.Z);
-		lua_rawseti(L, -2, 3);
 	}
 
 	void luaM_pushvector2(lua_State* L, const Vector2& vec)
 	{
 		assert_not_null(L);
 
-		// { vec.X, vec.Y }
-		lua_newtable(L);
-		
+		// X, Y
 		lua_pushnumber(L, vec.X);
-		lua_rawseti(L, -2, 1);
-		
 		lua_pushnumber(L, vec.Y);
-		lua_rawseti(L, -2, 2);
 	}
 	
 	void luaM_pushpoint(lua_State* L, const Point& point)
 	{
 		assert_not_null(L);
 
-		// { point.X, point.Y }
-		lua_newtable(L);
-		
+		// X, Y
 		lua_pushinteger(L, point.X);
-		lua_rawseti(L, -2, 1);
-		
 		lua_pushinteger(L, point.Y);
-		lua_rawseti(L, -2, 2);
 	}
 	
 	void luaM_pushcolor(lua_State* L, const Color& color)
 	{
 		assert_not_null(L);
 
-		// { color.Red, color.Green, color.Blue, color.Alpha }
-		lua_newtable(L);
-		
+		// Red, Green, Blue, Alpha
 		lua_pushnumber(L, color.Red);
-		lua_rawseti(L, -2, 1);
-		
 		lua_pushnumber(L, color.Green);
-		lua_rawseti(L, -2, 2);
-		
 		lua_pushnumber(L, color.Blue);
-		lua_rawseti(L, -2, 3);
-
 		lua_pushnumber(L, color.Alpha);
-		lua_rawseti(L, -2, 4);
 	}
 
 	Color luaM_popcolor(lua_State* L)
