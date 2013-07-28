@@ -26,6 +26,8 @@
 #include "component/renderable/render_static_model.h"
 #include "component/lightsources/point_light.h"
 
+#include "logging/console/console_logger.h"
+
 #ifdef WIN32
 #include "filesystem/win32/win32_filesystem.h"
 #include "filesystem/win32/win32_file.h"

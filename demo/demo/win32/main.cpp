@@ -30,13 +30,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 
 	try
 	{
+		ConsoleLoggerFactory consoleLoggerFactory;
+
 		// Filesystem
 		std::vector<std::string> paths;
 		paths.push_back(std::string("data"));
 		Win32FileSystem fileSystem(paths);
 		
 		// Script integratrion
-		ScriptSystem ss(fileSystem);
+		ScriptSystem ss(fileSystem, consoleLoggerFactory);
 		ss.RegisterType("Window", IWindow_Methods);
 		ss.RegisterType("IWindowClosedListener", IWindowClosedListener_Methods);
 		ss.RegisterType("IGame", IGame_Methods);

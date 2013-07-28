@@ -10,6 +10,8 @@
 #include "exception/script_exception.h"
 #include "exception/script_not_found_exception.h"
 
+#include "../logging/logger_factory.h"
+
 extern "C"
 {
    #include <lua.h>
@@ -24,7 +26,7 @@ namespace playstate
 	class ScriptSystem : public Singleton<ScriptSystem>
 	{
 	public:
-		ScriptSystem(IFileSystem& fileSystem);
+		ScriptSystem(IFileSystem& fileSystem, ILoggerFactory& loggerFactory);
 		virtual ~ScriptSystem();
 
 	public:
@@ -69,6 +71,7 @@ namespace playstate
 
 	private:
 		IFileSystem& mFileSystem;
+		ILogger& mLogger;
 		lua_State* mLuaState;
 	};
 }

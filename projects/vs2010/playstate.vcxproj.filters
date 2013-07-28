@@ -117,6 +117,12 @@
     <Filter Include="Source Files\search\sorter">
       <UniqueIdentifier>{83b57648-dacd-43af-97c7-fb93cf697de3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\logging">
+      <UniqueIdentifier>{08e1ce7c-469c-4d24-b09c-702cd5137fc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\logging\console">
+      <UniqueIdentifier>{d54d3169-177e-44cf-8e9e-d64ebd42748b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\playstate\playstate\camera\camera.cpp">
@@ -379,6 +385,12 @@
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\search\light_source_result_set.cpp">
       <Filter>Source Files\search</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\logging\console\console_logger.cpp">
+      <Filter>Source Files\logging\console</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\logging\logger_factory.cpp">
+      <Filter>Source Files\logging</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -747,6 +759,12 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\search\light_source_result_set.h">
       <Filter>Source Files\search</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\logging\logger_factory.h">
+      <Filter>Source Files\logging</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\logging\console\console_logger.h">
+      <Filter>Source Files\logging\console</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

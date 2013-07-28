@@ -49,8 +49,8 @@ int __playstate_lua_require(lua_State* L)
 	return 1;
 }
 
-ScriptSystem::ScriptSystem(IFileSystem& fileSystem)
-	: mFileSystem(fileSystem), mLuaState(NULL)
+ScriptSystem::ScriptSystem(IFileSystem& fileSystem, ILoggerFactory& loggerFactory)
+	: mFileSystem(fileSystem), mLogger(loggerFactory.GetLogger("playstate.ScriptSystem")), mLuaState(NULL)
 {
 	mLuaState = luaL_newstate();
 	luaL_openlibs(mLuaState);
@@ -83,8 +83,10 @@ std::auto_ptr<Script> ScriptSystem::CompileFile(const std::string& fileName)
 std::auto_ptr<Script> ScriptSystem::CompileFile(const std::string& fileName, const std::string& module)
 {
 	std::auto_ptr<IFile> scriptFile = mFileSystem.OpenFile(fileName);
-	if(!scriptFile->Exists())
+	if(!scriptFile->Exists()) {
+		mLogger.Error("Could not find script file: '%s'", fileName.c_str());
 		THROW_EXCEPTION(ScriptNotFoundException, "Could not find script file: '%s'", fileName.c_str());
+	}
 
 	uint32 numResults = lua_gettop(mLuaState);
 	std::string value = scriptFile->Read().str();
@@ -92,12 +94,14 @@ std::auto_ptr<Script> ScriptSystem::CompileFile(const std::string& fileName, con
 	if(res != 0) {
 		std::string err = lua_tostring(mLuaState, -1);
 		lua_pop(mLuaState, 1);
+		mLogger.Error("Could not load file: %s. Reason: %s", fileName.c_str(), err.c_str());
 		THROW_EXCEPTION(ScriptException, "Could not load file: %s. Reason: %s", fileName.c_str(), err.c_str());
 	} else {
 		res = lua_pcall(mLuaState, 0, LUA_MULTRET, NULL);
 		if(res != 0) {
 			std::string err = lua_tostring(mLuaState, -1);
 			lua_pop(mLuaState, 1);
+			mLogger.Error("Could not compile file: %s. Reason: %s", fileName.c_str(), err.c_str());
 			THROW_EXCEPTION(ScriptException, "Could not compile file: %s. Reason: %s", fileName.c_str(), err.c_str());
 		}
 		numResults = lua_gettop(mLuaState) - numResults;
