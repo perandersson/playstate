@@ -24,17 +24,11 @@
     <Filter Include="Source Files\filesystem">
       <UniqueIdentifier>{05107f29-e498-4c1a-acaf-8dd7cbab59c1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\filesystem\win32">
-      <UniqueIdentifier>{28c24f12-018e-4537-90ea-c23c277638be}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\game">
       <UniqueIdentifier>{df6b26da-6979-443d-8a2c-c930954f2e92}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\input">
       <UniqueIdentifier>{e681f6ad-1981-4b05-b3e6-0fb341a2fa65}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\input\win32">
-      <UniqueIdentifier>{133353c5-95c5-4f35-b61a-318a2f07b171}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\math">
       <UniqueIdentifier>{eb4d9767-da5a-4c0f-ad55-a13ca9245fca}</UniqueIdentifier>
@@ -102,9 +96,6 @@
     <Filter Include="Source Files\window">
       <UniqueIdentifier>{f166e526-5578-4379-a8b4-572cfe6c594c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\window\win32">
-      <UniqueIdentifier>{0b1fd027-38b5-4d08-8a57-d2fb48635930}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\game\win32">
       <UniqueIdentifier>{e5d726bc-3a45-4191-b191-89b90df29008}</UniqueIdentifier>
     </Filter>
@@ -143,15 +134,6 @@
     <ClCompile Include="..\..\playstate\playstate\component\renderable\render_static_model.cpp">
       <Filter>Source Files\component\renderable</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\filesystem\win32\win32_directory.cpp">
-      <Filter>Source Files\filesystem\win32</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\filesystem\win32\win32_file.cpp">
-      <Filter>Source Files\filesystem\win32</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\filesystem\win32\win32_filesystem.cpp">
-      <Filter>Source Files\filesystem\win32</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\game\game.cpp">
       <Filter>Source Files\game</Filter>
     </ClCompile>
@@ -163,12 +145,6 @@
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\input\input_system.cpp">
       <Filter>Source Files\input</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\input\win32\win32_input_state.cpp">
-      <Filter>Source Files\input\win32</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\input\win32\win32_input_system.cpp">
-      <Filter>Source Files\input\win32</Filter>
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\math\color.cpp">
       <Filter>Source Files\math</Filter>
@@ -335,9 +311,6 @@
     <ClCompile Include="..\..\playstate\playstate\thread\wrapper\thread_wrapper.cpp">
       <Filter>Source Files\thread\wrapper</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\window\win32\win32_window.cpp">
-      <Filter>Source Files\window\win32</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\exception.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -389,8 +362,8 @@
     <ClCompile Include="..\..\playstate\playstate\logging\console\console_logger.cpp">
       <Filter>Source Files\logging\console</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\logging\logger_factory.cpp">
-      <Filter>Source Files\logging</Filter>
+    <ClCompile Include="..\..\playstate\playstate\kernel.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -424,15 +397,6 @@
     <ClInclude Include="..\..\playstate\playstate\filesystem\file_system.h">
       <Filter>Source Files\filesystem</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\filesystem\win32\win32_directory.h">
-      <Filter>Source Files\filesystem\win32</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\filesystem\win32\win32_file.h">
-      <Filter>Source Files\filesystem\win32</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\filesystem\win32\win32_filesystem.h">
-      <Filter>Source Files\filesystem\win32</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\game\configuration.h">
       <Filter>Source Files\game</Filter>
     </ClInclude>
@@ -450,12 +414,6 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\input\input_system.h">
       <Filter>Source Files\input</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\input\win32\win32_input_state.h">
-      <Filter>Source Files\input\win32</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\input\win32\win32_input_system.h">
-      <Filter>Source Files\input\win32</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\math\color.h">
       <Filter>Source Files\math</Filter>
@@ -685,9 +643,6 @@
     <ClInclude Include="..\..\playstate\playstate\window\window_resized_listener.h">
       <Filter>Source Files\window</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\window\win32\win32_window.h">
-      <Filter>Source Files\window\win32</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\config.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -760,11 +715,14 @@
     <ClInclude Include="..\..\playstate\playstate\search\light_source_result_set.h">
       <Filter>Source Files\search</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\logging\logger_factory.h">
-      <Filter>Source Files\logging</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\logging\console\console_logger.h">
       <Filter>Source Files\logging\console</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\kernel.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\logging\logger.h">
+      <Filter>Source Files\logging</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,7 +1,5 @@
 #pragma once
 
-#include "../singleton.h"
-
 namespace playstate
 {
 	//
@@ -16,15 +14,4 @@ namespace playstate
 		virtual void Info(const char* msg, ...) = 0;
 		virtual void Debug(const char* msg, ...) = 0;
 	};
-
-	//
-	// 
-	class ILoggerFactory : public Singleton<ILoggerFactory>
-	{
-	public:
-		//
-		// @return A logger based on the supplied name
-		virtual ILogger& GetLogger(const char* name) = 0;
-	};
-
 }

@@ -1,14 +1,17 @@
-#include "../../memory/memory.h"
+#include <playstate/memory/memory.h>
 #include "win32_file.h"
 #include "win32_directory.h"
 #include "win32_filesystem.h"
 #include <algorithm>
 
-using playstate::Win32FileSystem;
-using playstate::IFile;
-using playstate::IDirectory;
+using namespace playstate;
+using namespace playstate::win32;
 
-template<> playstate::IFileSystem* playstate::Singleton<playstate::IFileSystem>::gSingleton = NULL;
+Win32FileSystem::Win32FileSystem(const std::string& path)
+	: mPaths()
+{
+	mPaths.push_back(path);
+}
 
 Win32FileSystem::Win32FileSystem(const std::vector<std::string>& paths)
 	: mPaths(paths)

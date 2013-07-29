@@ -1,13 +1,12 @@
-#include "../../memory/memory.h"
+#include <playstate/memory/memory.h>
 #include "win32_input_system.h"
-#include "../../window/win32/win32_window.h"
+#include "../window/win32_window.h"
 
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 
 using namespace playstate;
-
-template<> playstate::IInputSystem* playstate::Singleton<playstate::IInputSystem>::gSingleton = NULL;
+using namespace playstate::win32;
 
 Win32InputSystem::Win32InputSystem(Win32Window& window) : mWindow(window)
 {

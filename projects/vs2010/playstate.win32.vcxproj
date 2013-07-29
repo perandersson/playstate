@@ -11,31 +11,41 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\demo\demo\demo.h" />
-    <ClInclude Include="..\..\demo\demo\pipeline\deferred_render_pipeline.h" />
+    <ClInclude Include="..\..\playstate.win32\playstate\win32\filesystem\win32_directory.h" />
+    <ClInclude Include="..\..\playstate.win32\playstate\win32\filesystem\win32_file.h" />
+    <ClInclude Include="..\..\playstate.win32\playstate\win32\filesystem\win32_filesystem.h" />
+    <ClInclude Include="..\..\playstate.win32\playstate\win32\input\win32_input_state.h" />
+    <ClInclude Include="..\..\playstate.win32\playstate\win32\input\win32_input_system.h" />
+    <ClInclude Include="..\..\playstate.win32\playstate\win32\rendering\win32_graphics_driver.h" />
+    <ClInclude Include="..\..\playstate.win32\playstate\win32\rendering\win32_render_context.h" />
+    <ClInclude Include="..\..\playstate.win32\playstate\win32\win32_default_kernel.h" />
+    <ClInclude Include="..\..\playstate.win32\playstate\win32\window\win32_window.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\demo\demo\demo.cpp" />
-    <ClCompile Include="..\..\demo\demo\pipeline\deferred_render_pipeline.cpp" />
-    <ClCompile Include="..\..\demo\demo\win32\main.cpp" />
+    <ClCompile Include="..\..\playstate.win32\playstate\win32\filesystem\win32_directory.cpp" />
+    <ClCompile Include="..\..\playstate.win32\playstate\win32\filesystem\win32_file.cpp" />
+    <ClCompile Include="..\..\playstate.win32\playstate\win32\filesystem\win32_filesystem.cpp" />
+    <ClCompile Include="..\..\playstate.win32\playstate\win32\input\win32_input_state.cpp" />
+    <ClCompile Include="..\..\playstate.win32\playstate\win32\input\win32_input_system.cpp" />
+    <ClCompile Include="..\..\playstate.win32\playstate\win32\rendering\win32_graphics_driver.cpp" />
+    <ClCompile Include="..\..\playstate.win32\playstate\win32\rendering\win32_render_context.cpp" />
+    <ClCompile Include="..\..\playstate.win32\playstate\win32\win32_default_kernel.cpp" />
+    <ClCompile Include="..\..\playstate.win32\playstate\win32\window\win32_window.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{BA87D3D9-B255-4246-AC1A-BD6BE7DC83B4}</ProjectGuid>
+    <ProjectGuid>{18FCFBC0-D4DA-4193-90D3-D88F2FFC00EE}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>snowpeak</RootNamespace>
-    <ProjectName>demo</ProjectName>
+    <RootNamespace>playstatewin32</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -48,13 +58,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)../../bin/</OutDir>
     <IntDir>$(SolutionDir)../../bin/$(Configuration)/$(ProjectName)/intermediate/</IntDir>
     <TargetName>$(ProjectName)_d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)../../bin/</OutDir>
     <IntDir>$(SolutionDir)../../bin/$(Configuration)/$(ProjectName)/intermediate/</IntDir>
   </PropertyGroup>
@@ -64,17 +72,12 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)../../playstate;$(SolutionDir)../../libraries/lua-5.2.1;$(SolutionDir)../../libraries/glew-1.9.0/include;$(SolutionDir)../../playstate.win32</AdditionalIncludeDirectories>
-      <DisableSpecificWarnings>4227</DisableSpecificWarnings>
-      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
-      <FloatingPointModel>Fast</FloatingPointModel>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../playstate;$(SolutionDir)../../libraries/lua-5.2.1;$(SolutionDir)../../libraries/glew-1.9.0/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)libraries/FreeImage/;$(SolutionDir)libraries/glew-1.9.0/lib/;$(SolutionDir)libraries/lua-5.2.1/;$(SolutionDir)../../bin/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>playstate_d.lib;luad.lib;glew32.lib;FreeImage.lib;OpenGL32.lib;GLU32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
@@ -88,20 +91,14 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <StringPooling>true</StringPooling>
-      <AdditionalIncludeDirectories>$(SolutionDir)../../playstate;$(SolutionDir)../../libraries/lua-5.2.1;$(SolutionDir)../../libraries/glew-1.9.0/include;$(SolutionDir)../../playstate.win32</AdditionalIncludeDirectories>
-      <DisableSpecificWarnings>4227</DisableSpecificWarnings>
-      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
-      <FloatingPointModel>Fast</FloatingPointModel>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../playstate;$(SolutionDir)../../libraries/lua-5.2.1;$(SolutionDir)../../libraries/glew-1.9.0/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)libraries/FreeImage/;$(SolutionDir)libraries/glew-1.9.0/lib/;$(SolutionDir)libraries/lua-5.2.1/;$(SolutionDir)../../bin/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>playstate.lib;lua.lib;glew32.lib;FreeImage.lib;OpenGL32.lib;GLU32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>

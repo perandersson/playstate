@@ -1,5 +1,6 @@
 #include "../memory/memory.h"
 #include "script_system.h"
+#include "../kernel.h"
 using namespace playstate;
 
 template<> playstate::ScriptSystem* playstate::Singleton<playstate::ScriptSystem>::gSingleton = NULL;
@@ -34,7 +35,7 @@ int __playstate_lua_require(lua_State* L)
 		package += ".lua";
 		package = std::string("/") + package;
 	}
-	std::auto_ptr<IFile> file = IFileSystem::Get().OpenFile(package);
+	std::auto_ptr<IFile> file = IKernel::Get().FileSystem->OpenFile(package);
 
 	if(file->Exists()) {
 		std::string value = file->Read().str();
@@ -49,8 +50,8 @@ int __playstate_lua_require(lua_State* L)
 	return 1;
 }
 
-ScriptSystem::ScriptSystem(IFileSystem& fileSystem, ILoggerFactory& loggerFactory)
-	: mFileSystem(fileSystem), mLogger(loggerFactory.GetLogger("playstate.ScriptSystem")), mLuaState(NULL)
+ScriptSystem::ScriptSystem(IFileSystem& fileSystem, ILogger& logger)
+	: mFileSystem(fileSystem), mLogger(logger), mLuaState(NULL)
 {
 	mLuaState = luaL_newstate();
 	luaL_openlibs(mLuaState);

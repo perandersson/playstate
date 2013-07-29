@@ -2,7 +2,6 @@
 
 #include "file.h"
 #include "directory.h"
-#include "../singleton.h"
 
 #include <memory>
 
@@ -10,7 +9,7 @@ namespace playstate
 {
 	//
 	// 
-	class IFileSystem : public Singleton<IFileSystem>
+	class IFileSystem
 	{
 	public:
 		virtual ~IFileSystem() {}

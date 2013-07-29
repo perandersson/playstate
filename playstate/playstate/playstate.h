@@ -29,10 +29,6 @@
 #include "logging/console/console_logger.h"
 
 #ifdef WIN32
-#include "filesystem/win32/win32_filesystem.h"
-#include "filesystem/win32/win32_file.h"
-#include "filesystem/win32/win32_directory.h"
-
 #include "input/win32/win32_input_state.h"
 #include "input/win32/win32_input_system.h"
 

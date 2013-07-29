@@ -1,16 +1,11 @@
-#include "../../memory/memory.h"
+#include <playstate/memory/memory.h>
 #include "win32_directory.h"
 #include "win32_file.h"
 #include "win32_filesystem.h"
-
 #include <cassert>
 
-using playstate::Win32Directory;
-using playstate::Win32File;
-using playstate::Win32FileSystem;
-
-using playstate::IFile;
-using playstate::IDirectory;
+using namespace playstate;
+using namespace playstate::win32;
 
 Win32Directory::Win32Directory(const Win32FileSystem& fileSystem) 
 	: mFileSystem(fileSystem), mDirectoryHandle(NULL)

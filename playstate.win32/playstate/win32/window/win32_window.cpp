@@ -1,10 +1,10 @@
-#include "../../memory/memory.h"
-#include "../../game/game_runner.h"
+#include <playstate/memory/memory.h>
+//#include "../../game/game_runner.h"
 #include "win32_window.h"
 #include <algorithm>
-using namespace playstate;
 
-template<> playstate::IWindow* playstate::Singleton<playstate::IWindow>::gSingleton = NULL;
+using namespace playstate;
+using namespace playstate::win32;
 
 // Anonymouse code
 namespace {
@@ -15,13 +15,35 @@ namespace {
 	}
 }
 
-Win32Window::Win32Window(HINSTANCE hInstance, uint32 width, uint32 height, const std::string& title) : mAppInstance(hInstance), 
-	mWindowHandle(NULL), mWidth(width), mPrevWidth(width), mHeight(height), mPrevHeight(height), mWindowTitle(title),
+Win32Window::Win32Window(HINSTANCE hInstance) : mAppInstance(hInstance), 
+	mWindowHandle(NULL), mWidth(0), mPrevWidth(0), mHeight(0), mPrevHeight(0), mWindowTitle(),
 	mTimeSinceLastUpdate(0.0f), mLastTime(0)
 {
 	_window = this;
 	memset(&mMessageQueue, 0, sizeof(MSG));
+}
 
+Win32Window::~Win32Window()
+{
+	mWindowResizeListeners.clear();
+	mWindowClosedListeners.clear();
+
+	if(mWindowHandle != NULL)
+	{
+		CloseWindow(mWindowHandle);
+		mWindowHandle = NULL;
+	}
+
+	UnregisterClass("playstate.Game", mAppInstance);
+	mAppInstance = NULL;
+}
+
+void Win32Window::Open(uint32 width, uint32 height, const std::string& title)
+{
+	mWidth = mPrevWidth = width;
+	mHeight = mPrevHeight = height;
+	mWindowTitle = title;
+	
 	// Register the class used by the 
 	WNDCLASSEX windowProperties = {0};
 	windowProperties.cbSize = sizeof(WNDCLASSEX);
@@ -50,21 +72,6 @@ Win32Window::Win32Window(HINSTANCE hInstance, uint32 width, uint32 height, const
 		ShowWindow(mWindowHandle, SW_SHOW);
 		UpdateWindow(mWindowHandle);
 	}
-}
-
-Win32Window::~Win32Window()
-{
-	mWindowResizeListeners.clear();
-	mWindowClosedListeners.clear();
-
-	if(mWindowHandle != NULL)
-	{
-		CloseWindow(mWindowHandle);
-		mWindowHandle = NULL;
-	}
-
-	UnregisterClass("playstate.Game", mAppInstance);
-	mAppInstance = NULL;
 }
 
 uint32 Win32Window::GetWidth() const 
@@ -264,9 +271,8 @@ namespace playstate
 	int IWindow_AddWindowClosedListener(lua_State* L)
 	{
 		ScriptWindowClosedListener* listener = luaM_popobject<ScriptWindowClosedListener>(L);
-		Win32Window* window = static_cast<Win32Window*>(&IWindow::Get());
 		if(listener != NULL) {
-			window->AddWindowClosedListener(listener);
+			_window->AddWindowClosedListener(listener);
 		}
 		return 0;
 	}
@@ -275,23 +281,26 @@ namespace playstate
 	{
 		int top = lua_gettop(L);
 		std::string title = lua_tostring(L, -1); lua_pop(L, 1);
-		Win32Window* window = static_cast<Win32Window*>(&IWindow::Get());
-		window->SetTitle(title);
+		_window->SetTitle(title);
 		return 0;
 	}
 	
 	int IWindow_GetWidth(lua_State* L)
 	{
-		Win32Window* window = static_cast<Win32Window*>(&IWindow::Get());
-		lua_pushnumber(L, window->GetWidth());
+		lua_pushnumber(L, _window->GetWidth());
 		return 1;
 	}
 
 	int IWindow_GetHeight(lua_State* L)
 	{
-		Win32Window* window = static_cast<Win32Window*>(&IWindow::Get());
-		lua_pushnumber(L, window->GetHeight());
+		lua_pushnumber(L, _window->GetHeight());
 		return 1;
+	}
+
+	int IWindow_Close(lua_State* L)
+	{
+		//_window->Close();
+		return 0;
 	}
 
 	/////////////////////////////////////////////////////

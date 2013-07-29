@@ -8,12 +8,15 @@ unsigned int fp_control_state = _controlfp(_EM_INEXACT | _EM_INVALID | _EM_UNDER
 #endif
 
 #include <playstate/playstate.h>
+#include <playstate/win32/win32_default_kernel.h>
 
 #include "../pipeline/deferred_render_pipeline.h"
 #include "../demo.h"
 #include <vector>
 #include <set>
+
 using namespace playstate;
+using namespace playstate::win32;
 
 #ifdef _DEBUG
 int main(int argc, char** argv)
@@ -30,13 +33,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 
 	try
 	{
-		ConsoleLoggerFactory consoleLoggerFactory;
+		Win32DefaultKernel kernel(GetModuleHandle(NULL), "data");
+		kernel.Initialize();
 
-		// Filesystem
-		std::vector<std::string> paths;
-		paths.push_back(std::string("data"));
-		Win32FileSystem fileSystem(paths);
-		
 		// Script integratrion
 		ScriptSystem ss(fileSystem, consoleLoggerFactory);
 		ss.RegisterType("Window", IWindow_Methods);
@@ -64,12 +63,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 		// Light Source processor
 		OctreeLightSourceProcessorFactory octreeLightSourceProcessorFactory;
 	
-		// Window 
-		Win32Window window(GetModuleHandle(NULL), 320, 240, "");
-
-		// Input
-		Win32InputSystem inputSystem(window);
-
 		// Create and register a graphics driver
 		Win32GraphicsDriver gfxDriver(window);
 		
@@ -84,6 +77,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 
 		// Initialize the scripting engine and start the application
 		ss.CompileFile("/main.lua")->Execute("main()");
+
+		kernel.Release();
 	} 
 	catch(Exception e)
 	{

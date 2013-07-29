@@ -10,7 +10,7 @@
 #include "exception/script_exception.h"
 #include "exception/script_not_found_exception.h"
 
-#include "../logging/logger_factory.h"
+#include "../logging/logger.h"
 
 extern "C"
 {
@@ -26,7 +26,7 @@ namespace playstate
 	class ScriptSystem : public Singleton<ScriptSystem>
 	{
 	public:
-		ScriptSystem(IFileSystem& fileSystem, ILoggerFactory& loggerFactory);
+		ScriptSystem(IFileSystem& fileSystem, ILogger& logger);
 		virtual ~ScriptSystem();
 
 	public:

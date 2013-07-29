@@ -1,10 +1,11 @@
-#include "../../memory/memory.h"
+#include <playstate/memory/memory.h>
 #include "win32_input_state.h"
 
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 
 using namespace playstate;
+using namespace win32;
 
 Win32GamePadState::Win32GamePadState()
 {

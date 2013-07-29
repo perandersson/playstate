@@ -4,8 +4,7 @@
 #include <stdarg.h>
 using namespace playstate;
 
-ConsoleLogger::ConsoleLogger(const std::string& name)
-	: mName(name)
+ConsoleLogger::ConsoleLogger()
 {
 }
 
@@ -21,7 +20,7 @@ void ConsoleLogger::Error(const char* msg, ...)
     vsprintf_s(tmp, 5096, msg, arglist);
     va_end(arglist);
 
-	std::cout << "[ERROR " << mName << "] " << tmp << std::endl;
+	std::cout << "[ERROR] " << tmp << std::endl;
 }
 
 void ConsoleLogger::Info(const char* msg, ...)
@@ -32,7 +31,7 @@ void ConsoleLogger::Info(const char* msg, ...)
     vsprintf_s(tmp, 5096, msg, arglist);
     va_end(arglist);
 
-	std::cout << "[INFO " << mName << "] " << tmp << std::endl;
+	std::cout << "[INFO] " << tmp << std::endl;
 }
 
 void ConsoleLogger::Debug(const char* msg, ...)
@@ -43,33 +42,5 @@ void ConsoleLogger::Debug(const char* msg, ...)
     vsprintf_s(tmp, 5096, msg, arglist);
     va_end(arglist);
 	
-	std::cout << "[DEBUG " << mName << "] " << tmp << std::endl;
-}
-
-//////////////////////////////////////////
-
-ConsoleLoggerFactory::ConsoleLoggerFactory()
-{
-}
-
-ConsoleLoggerFactory::~ConsoleLoggerFactory()
-{
-	Loggers::iterator it = mLoggers.begin();
-	Loggers::iterator end = mLoggers.end();
-	for(; it != end; ++it) {
-		delete it->second;
-	}
-}
-
-ILogger& ConsoleLoggerFactory::GetLogger(const char* name)
-{
-	std::string sName(name);
-	Loggers::iterator it = mLoggers.find(sName);
-	if(it != mLoggers.end()) {
-		return *it->second;
-	}
-
-	ConsoleLogger* logger = new ConsoleLogger(sName);
-	mLoggers.insert(std::make_pair(sName, logger));
-	return *logger;
+	std::cout << "[DEBUG] " << tmp << std::endl;
 }

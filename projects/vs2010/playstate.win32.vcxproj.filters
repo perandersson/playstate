@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\win32">
+      <UniqueIdentifier>{996ec64d-3910-4b10-b35e-aad6d569b4e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\win32\filesystem">
+      <UniqueIdentifier>{b6eac1ea-52bf-4136-b756-5f3e8725a28b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\win32\input">
+      <UniqueIdentifier>{4f8efbdd-4f0a-43c2-94f2-13983952dae2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\win32\window">
+      <UniqueIdentifier>{5c5538c0-a6e8-4068-8017-791c339475f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\win32\rendering">
+      <UniqueIdentifier>{d9579097-f768-4262-a645-fd080a336737}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\playstate.win32\playstate\win32\filesystem\win32_directory.h">
+      <Filter>Source Files\win32\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate.win32\playstate\win32\filesystem\win32_file.h">
+      <Filter>Source Files\win32\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate.win32\playstate\win32\filesystem\win32_filesystem.h">
+      <Filter>Source Files\win32\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate.win32\playstate\win32\input\win32_input_state.h">
+      <Filter>Source Files\win32\input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate.win32\playstate\win32\input\win32_input_system.h">
+      <Filter>Source Files\win32\input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate.win32\playstate\win32\window\win32_window.h">
+      <Filter>Source Files\win32\window</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate.win32\playstate\win32\win32_default_kernel.h">
+      <Filter>Source Files\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate.win32\playstate\win32\rendering\win32_graphics_driver.h">
+      <Filter>Source Files\win32\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate.win32\playstate\win32\rendering\win32_render_context.h">
+      <Filter>Source Files\win32\rendering</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\playstate.win32\playstate\win32\filesystem\win32_directory.cpp">
+      <Filter>Source Files\win32\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate.win32\playstate\win32\filesystem\win32_file.cpp">
+      <Filter>Source Files\win32\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate.win32\playstate\win32\filesystem\win32_filesystem.cpp">
+      <Filter>Source Files\win32\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate.win32\playstate\win32\input\win32_input_state.cpp">
+      <Filter>Source Files\win32\input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate.win32\playstate\win32\input\win32_input_system.cpp">
+      <Filter>Source Files\win32\input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate.win32\playstate\win32\window\win32_window.cpp">
+      <Filter>Source Files\win32\window</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate.win32\playstate\win32\win32_default_kernel.cpp">
+      <Filter>Source Files\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate.win32\playstate\win32\rendering\win32_graphics_driver.cpp">
+      <Filter>Source Files\win32\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate.win32\playstate\win32\rendering\win32_render_context.cpp">
+      <Filter>Source Files\win32\rendering</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
