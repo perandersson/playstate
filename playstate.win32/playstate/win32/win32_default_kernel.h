@@ -10,7 +10,7 @@ namespace playstate
 	{
 		//
 		// The default kernel for the windows version of this game engine. Use this unless you are absolutely sure what you are doing
-		class Win32DefaultKernel : public IKernel
+		class Win32DefaultKernel : public Kernel
 		{
 		public:
 			Win32DefaultKernel(HINSTANCE app, const std::string& fileSystemPath);
@@ -20,6 +20,7 @@ namespace playstate
 		public:
 			virtual void Initialize();
 			virtual void Release();
+			virtual void Process();
 
 		private:
 			HINSTANCE mAppInstance;

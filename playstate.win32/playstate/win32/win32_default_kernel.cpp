@@ -9,7 +9,7 @@ using namespace playstate;
 using namespace playstate::win32;
 
 Win32DefaultKernel::Win32DefaultKernel(HINSTANCE app, const std::string& fileSystemPath) 
-	: IKernel(), mAppInstance(app)
+	: Kernel(), mAppInstance(app)
 {
 	mFileSystem = new Win32FileSystem(fileSystemPath);
 	mLogger = new ConsoleLogger();
@@ -34,4 +34,11 @@ void Win32DefaultKernel::Initialize()
 void Win32DefaultKernel::Release()
 {
 	//delete Window;
+}
+
+void Win32DefaultKernel::Process()
+{
+	// Poll resource manager
+	// Update timers?
+	// Update windows events
 }

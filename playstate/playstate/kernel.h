@@ -17,13 +17,13 @@ namespace playstate
 
 	//
 	// {@code
-	//	IKernel& kernel = IKernel::Get();
+	//	Kernel& kernel = Kernel::Get();
 	//	IWindow& window = kernel.Window;
 	// }
-	class IKernel : public Singleton<IKernel>
+	class Kernel : public Singleton<Kernel>
 	{
 	protected:
-		IKernel();
+		Kernel();
 
 	public:
 		//
@@ -34,6 +34,10 @@ namespace playstate
 		//
 		// Releases this kernels internal resources.
 		virtual void Release() = 0;
+
+		//
+		//
+		virtual void Process() = 0;
 
 	public:
 		IWindow*& const Window;

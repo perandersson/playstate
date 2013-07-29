@@ -2,10 +2,10 @@
 #include "kernel.h"
 using namespace playstate;
 
-template<> playstate::IKernel* playstate::Singleton<playstate::IKernel>::gSingleton = NULL;
+template<> playstate::Kernel* playstate::Singleton<playstate::Kernel>::gSingleton = NULL;
 
-IKernel::IKernel()
-	: Singleton<IKernel>(), 
+Kernel::Kernel()
+	: Singleton<Kernel>(), 
 	mWindow(NULL), mLogger(NULL), mUpdateProcessorFactory(NULL), mRenderProcessorFactory(NULL), mLightSourceProcessorFactory(NULL),
 	mInputSystem(NULL), mGraphicsDriver(NULL), mRenderSystem(NULL), mThreadFactory(NULL), mResourceManager(NULL), mFileSystem(NULL),
 	Window(mWindow), Logger(mLogger), UpdateProcessorFactory(mUpdateProcessorFactory), RenderProcessorFactory(mRenderProcessorFactory), LightSourceProcessorFactory(mLightSourceProcessorFactory),
