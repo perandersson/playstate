@@ -7,6 +7,8 @@
 
 namespace playstate
 {
+	//
+	//
 	class Camera
 	{
 	public:
@@ -19,32 +21,26 @@ namespace playstate
 		void Move(const Vector3& direction);
 		void LookAt(const Vector3& eye, const Vector3& center, const Vector3& up);
 
+		//
+		// @return This camera's view frustum.
+		// @see http://en.wikipedia.org/wiki/Viewing_frustum
+		const Frustum& GetViewFrustum() const;
+
+		//
+		// @return This camera's view matrix. 
+		const Matrix4x4& GetViewMatrix() const;
+		const Matrix4x4& GetProjectionMatrix() const;
+		const Vector3& GetPosition() const;
+		const Vector3& GetUp() const;
+		const Vector3& GetCenter() const;
+
 	private:
 		void CalculateLookAt(const Vector3& eye, const Vector3& center, const Vector3& up);
 		
-	public:
-		// Readonly property for the view matrix
-		const Matrix4x4& ViewMatrix;
-
-		// Readonly property for the projection matrix
-		const Matrix4x4& ProjectionMatrix;
-
-		// Readonly property for the cameras position vector
-		const Vector3& Position;
-
-		// Readonly property for the cameras center vector
-		const Vector3& Center;
-
-		// Readonly property for the cameras up vector
-		const Vector3& Up;
-
-		// Read-only property for the view frustum of this camera.
-		const Frustum& ViewFrustum;
-
 	private:
 		Frustum mViewFrustum;
 		Matrix4x4 mViewMatrix;
-		Matrix4x4 mProjection;
+		Matrix4x4 mProjectionMatrix;
 
 		Vector3 mPosition;
 		Vector3 mCenter;

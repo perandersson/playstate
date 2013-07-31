@@ -1,6 +1,8 @@
 #include "../memory/memory.h"
 #include "input_system.h"
 
+template<> playstate::IInputSystem* playstate::Singleton<playstate::IInputSystem>::gSingleton = NULL;
+
 namespace playstate
 {
 	int IInputSystem_Keys_IsKeyDown(lua_State* L)

@@ -42,7 +42,7 @@ namespace playstate
 
 	// IWindowResizedListener
 	public:
-		virtual void OnWindowResized(IWindow& window, uint32 width, uint32 height);
+		virtual void OnWindowResized(uint32 width, uint32 height);
 
 	public:
 		// Read-only property where the uniform [-1, 1] vertex buffer is located

@@ -3,7 +3,7 @@
 using namespace playstate;
 
 RenderBlockResultSet::RenderBlockResultSet() 
-	: ResultSet<RenderBlock>(InitialRenderBlocksCount, RenderBlocksResizeCount), SortedRenderBlocks(mSortedRenderBlocks)
+	: ResultSet<RenderBlock>(InitialRenderBlocksCount, RenderBlocksResizeCount)
 {
 	mSortedRenderBlocks = (RenderBlock**)malloc(InitialRenderBlocksCount * sizeof(RenderBlock**));
 }
@@ -18,7 +18,6 @@ RenderBlock* RenderBlockResultSet::Create(uint32 id)
 {
 	if(mSize >= mNumElements) {
 		mSortedRenderBlocks = (RenderBlock**)realloc(mSortedRenderBlocks, (mNumElements + mBlocksResizeCount) * sizeof(RenderBlock**));
-		SortedRenderBlocks = mSortedRenderBlocks;
 	}
 
 	RenderBlock* block = GetOrCreate();
@@ -30,4 +29,9 @@ RenderBlock* RenderBlockResultSet::Create(uint32 id)
 void RenderBlockResultSet::Sort(IArraySorter<RenderBlock*>* sorter)
 {
 	sorter->Sort(mSortedRenderBlocks, mSize);
+}
+
+RenderBlock** RenderBlockResultSet::GetSortedRenderBlocks()
+{
+	return mSortedRenderBlocks;
 }

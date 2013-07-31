@@ -6,6 +6,7 @@ config.window.width = 1024
 config.window.height = 768
 config.window.fullscreen = false
 config.window.title = "Demo FPS: "
+config.window.bpp = 32
 
 -- Camera configuration
 config.camera = {}

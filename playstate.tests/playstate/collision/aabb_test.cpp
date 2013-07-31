@@ -8,8 +8,8 @@ TEST_SUITE(AABB)
 	{
 		const AABB val;
 
-		ASSERT_EQUALS(val.MinPoint, Vector3::Zero);
-		ASSERT_EQUALS(val.MaxPoint, Vector3::Zero);
+		ASSERT_EQUALS(val.GetMinPoint(), Vector3::Zero);
+		ASSERT_EQUALS(val.GetMaxPoint(), Vector3::Zero);
 	}
 
 	UNIT_TEST(AABB_IsNotCollidingWithBox)

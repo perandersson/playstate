@@ -54,8 +54,8 @@ private:
 bool OctreeLightSourceProcessor::Find(const FindQuery& query, LightSourceResultSet* target) const
 {
 	LightSourceEventHandlerVisitor visitor(target);
-	mOctree.FindItems(query.Camera->ViewFrustum, &visitor);
-	return target->Size > 0;
+	mOctree.FindItems(query.Camera->GetViewFrustum(), &visitor);
+	return target->GetSize() > 0;
 }
 
 ///////////////////////////////////

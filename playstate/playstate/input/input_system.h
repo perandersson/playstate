@@ -6,11 +6,8 @@
 
 namespace playstate
 {
-	class IInputSystem
+	class IInputSystem : public Singleton<IInputSystem>
 	{
-	public:
-		virtual ~IInputSystem() {}
-
 	public:
 		//
 		// Poll the input system for events

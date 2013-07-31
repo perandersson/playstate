@@ -18,6 +18,10 @@
     <ClInclude Include="..\..\playstate.win32\playstate\win32\input\win32_input_system.h" />
     <ClInclude Include="..\..\playstate.win32\playstate\win32\rendering\win32_graphics_driver.h" />
     <ClInclude Include="..\..\playstate.win32\playstate\win32\rendering\win32_render_context.h" />
+    <ClInclude Include="..\..\playstate.win32\playstate\win32\thread\win32_lock.h" />
+    <ClInclude Include="..\..\playstate.win32\playstate\win32\thread\win32_thread.h" />
+    <ClInclude Include="..\..\playstate.win32\playstate\win32\thread\win32_thread_event.h" />
+    <ClInclude Include="..\..\playstate.win32\playstate\win32\thread\win32_thread_factory.h" />
     <ClInclude Include="..\..\playstate.win32\playstate\win32\win32_default_kernel.h" />
     <ClInclude Include="..\..\playstate.win32\playstate\win32\window\win32_window.h" />
   </ItemGroup>
@@ -29,6 +33,10 @@
     <ClCompile Include="..\..\playstate.win32\playstate\win32\input\win32_input_system.cpp" />
     <ClCompile Include="..\..\playstate.win32\playstate\win32\rendering\win32_graphics_driver.cpp" />
     <ClCompile Include="..\..\playstate.win32\playstate\win32\rendering\win32_render_context.cpp" />
+    <ClCompile Include="..\..\playstate.win32\playstate\win32\thread\win32_lock.cpp" />
+    <ClCompile Include="..\..\playstate.win32\playstate\win32\thread\win32_thread.cpp" />
+    <ClCompile Include="..\..\playstate.win32\playstate\win32\thread\win32_thread_event.cpp" />
+    <ClCompile Include="..\..\playstate.win32\playstate\win32\thread\win32_thread_factory.cpp" />
     <ClCompile Include="..\..\playstate.win32\playstate\win32\win32_default_kernel.cpp" />
     <ClCompile Include="..\..\playstate.win32\playstate\win32\window\win32_window.cpp" />
   </ItemGroup>

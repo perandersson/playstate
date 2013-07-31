@@ -8,8 +8,8 @@ TEST_SUITE(Camera)
 	{
 		const Camera camera;
 
-		ASSERT_EQUALS(camera.ViewMatrix, Matrix4x4::Identity);
-		ASSERT_EQUALS(camera.ProjectionMatrix, Matrix4x4::Identity);
+		ASSERT_EQUALS(camera.GetViewMatrix(), Matrix4x4::Identity);
+		ASSERT_EQUALS(camera.GetProjectionMatrix(), Matrix4x4::Identity);
 	}
 
 	UNIT_TEST(Camera_MoveCamera)
@@ -18,10 +18,10 @@ TEST_SUITE(Camera)
 		Camera camera;
 		camera.Move(direction);
 
-		ASSERT_EQUALS(camera.Position, direction);
+		ASSERT_EQUALS(camera.GetPosition(), direction);
 	
 		camera.Move(direction);
 
-		ASSERT_EQUALS(camera.Position, direction * 2);
+		ASSERT_EQUALS(camera.GetPosition(), direction * 2);
 	}
 }

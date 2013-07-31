@@ -42,18 +42,14 @@ namespace playstate
 
 	public:
 		virtual ~Texture();
-
-	public:
-		// Read-only property for the format of this texture.
-		const TextureFormat::Enum& Format;
-
-		// Read-only property for a unique id for this object.
-		const uint32& UniqueId;
 		
+		TextureFormat::Enum GetFormat() const;
+		uint32 GetUniqueId() const;
+
 	protected:
 		GLuint mTextureId;
 		uint32 mUniqueId;
-		TextureFormat::Enum mTextureFormat;
+		TextureFormat::Enum mFormat;
 	};
 
 }

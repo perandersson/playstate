@@ -28,18 +28,4 @@
 
 #include "logging/console/console_logger.h"
 
-#ifdef WIN32
-#include "input/win32/win32_input_state.h"
-#include "input/win32/win32_input_system.h"
-
-#include "rendering/win32/win32_render_context.h"
-#include "rendering/win32/win32_graphics_driver.h"
-
-#include "thread/win32/win32_lock.h"
-#include "thread/win32/win32_thread.h"
-#include "thread/win32/win32_thread_event.h"
-#include "thread/win32/win32_thread_factory.h"
-
-#include "window/win32/win32_window.h"
-
-#endif
+#include "kernel.h"

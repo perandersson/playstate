@@ -19,9 +19,7 @@ namespace playstate
 	class GameRunner : public Singleton<GameRunner>, public IWindowClosedListener
 	{
 	public:
-		GameRunner(IWindow& window, IFileSystem& fileSystem, ScriptSystem& scriptSystem,
-			RenderSystem& renderSystem, ResourceManager& resourceManager, IInputSystem& inputSystem,
-			IGame* game, IConfiguration* configuration);
+		GameRunner(IGame* game, IConfiguration* configuration);
 		~GameRunner();
 
 		//
@@ -42,31 +40,24 @@ namespace playstate
 		//
 		void SetRenderPipeline(IRenderPipeline* renderPipeline);
 
-	public:
-		// Read-only property for the active scene
-		Scene& const ActiveScene; 
+		//
+		// @return This games scene. Each game has only one scene. The scene can contain multiple scene groups - which can be 
+		//	seen as the level of the game.
+		Scene& GetScene();
+		const Scene& GetScene() const;
 
 	// IWindowClosedListener
 	public:
-		virtual bool OnWindowClosing(IWindow& window);
+		virtual bool OnWindowClosing();
 
 	private:
 		bool Initialize();
 		void Release();
 
 	private:
-		IWindow& mWindow;
-		IFileSystem& mFileSystem;
-		ScriptSystem& mScriptSystem;
-		RenderSystem& mRenderSystem;
-		ResourceManager& mResourceManager;
-		IInputSystem& mInputSystem;
-
-	private:
 		IGame* mGame;
 		IConfiguration* mConfiguration;
 		IRenderPipeline* mRenderPipeline;
-		IRenderContext* mScreenRenderContext;
 		Scene mScene;
 		bool mRunning;
 	};

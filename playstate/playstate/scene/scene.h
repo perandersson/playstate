@@ -60,12 +60,13 @@ namespace playstate
 		// Sets the ambient lighting on the entire scene. 
 		// @param color The color of the ambient light.
 		void SetAmbientLight(const Color& color);
+		const Color& GetAmbientLight() const;
 
-	public:
-		Camera& const ActiveCamera;
-
-		// Read-only property for the color of the ambient light.
-		Color& const AmbientLight;
+		//
+		// @return 
+		Camera& GetActiveCamera();
+		const Camera& GetActiveCamera() const;
+		
 
 	private:
 		LinkedList<SceneGroup, &SceneGroup::GroupLink> mSceneGroups;

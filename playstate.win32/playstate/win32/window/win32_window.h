@@ -21,10 +21,10 @@ namespace playstate
 	
 			HWND GetWindowHandle() const;
 			LRESULT CALLBACK HandleEvent(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam);
-		
+			void HandleEvents();
+
 		// IWindowManager
 		public:
-			virtual void Open(uint32 width, uint32 height, const std::string& title);
 			virtual uint32 GetWidth() const;
 			virtual uint32 GetHeight() const;
 			virtual void Resize(uint32 width, uint32 height);
@@ -40,8 +40,7 @@ namespace playstate
 		
 			virtual float32 GetTimeSinceLastUpdate() const;
 
-			virtual void HandleEvents();
-
+			
 		private:
 			HINSTANCE mAppInstance;
 			HWND mWindowHandle;

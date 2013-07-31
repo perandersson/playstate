@@ -1,9 +1,10 @@
-#include "../../memory/memory.h"
+#include <playstate/memory/memory.h>
 #include "win32_thread.h"
 
 #include <cassert>
 
 using namespace playstate;
+using namespace playstate::win32;
 
 struct Win32ThreadParam
 {

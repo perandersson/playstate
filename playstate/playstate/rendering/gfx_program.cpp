@@ -31,8 +31,7 @@ GfxProgram::GfxProgram(GLuint programId, GLuint vertexShader, GLuint pixelShader
 	mDepthTest(true), mDepthFunc(DepthFunc::Default),
 	mBlend(false), mSrcFunc(SrcBlend::Default), mDestFunc(DestBlend::Default), 
 	mClearColor(Color::Nothing), mClearDepth(1.0f), mCullFaces(CullFaces::Default),
-	mRenderSystem(renderSystem), mDepthRenderTarget(NULL), mApplyRenderTarget(false),
-	Applied(mApplied)
+	mRenderSystem(renderSystem), mDepthRenderTarget(NULL), mApplyRenderTarget(false)
 {
 	memset(mRenderTargets, 0, sizeof(mRenderTargets));
 	Prepare(collection);
@@ -277,7 +276,7 @@ void GfxProgram::SetDepthRenderTarget(RenderTarget2D* renderTarget)
 	mDepthRenderTarget = renderTarget;
 
 	if(mApplied) {
-		uint32 rtId = renderTarget != NULL ? renderTarget->UniqueId : 0;
+		uint32 rtId = renderTarget != NULL ? renderTarget->GetUniqueId() : 0;
 		mApplyRenderTarget = true;
 		mRenderSystem.SetDepthRenderTarget(renderTarget);
 	}
@@ -289,8 +288,13 @@ void GfxProgram::SetRenderTarget(RenderTarget2D* renderTarget, uint32 index)
 	mRenderTargets[index] = renderTarget;
 
 	if(mApplied) {
-		uint32 rtId = renderTarget != NULL ? renderTarget->UniqueId : 0;
+		uint32 rtId = renderTarget != NULL ? renderTarget->GetUniqueId() : 0;
 		mApplyRenderTarget = true;
 		mRenderSystem.SetRenderTarget(renderTarget, index);
 	}
+}
+
+bool GfxProgram::IsApplied() const
+{
+	return mApplied;
 }

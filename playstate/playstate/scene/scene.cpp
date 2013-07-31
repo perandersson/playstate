@@ -5,7 +5,6 @@
 using namespace playstate;
 
 Scene::Scene()
-	: ActiveCamera(mCamera), AmbientLight(mAmbientLight)
 {
 }
 
@@ -74,13 +73,28 @@ void Scene::SetAmbientLight(const Color& color)
 	mAmbientLight = color;
 }
 
+const Color& Scene::GetAmbientLight() const
+{
+	return mAmbientLight;
+}
+
+Camera& Scene::GetActiveCamera()
+{
+	return mCamera;
+}
+
+const Camera& Scene::GetActiveCamera() const
+{
+	return mCamera;
+}
+
 namespace playstate
 {
 	int Scene_AddSceneGroup(lua_State* L)
 	{
 		SceneGroup* sceneGroup = luaM_popobject<SceneGroup>(L);
 		if(sceneGroup != NULL) {
-			GameRunner::Get().ActiveScene.AddSceneGroup(sceneGroup);
+			GameRunner::Get().GetScene().AddSceneGroup(sceneGroup);
 		}
 
 		return 0;
@@ -90,7 +104,7 @@ namespace playstate
 	{
 		SceneGroup* sceneGroup = luaM_popobject<SceneGroup>(L);
 		if(sceneGroup != NULL) {
-			GameRunner::Get().ActiveScene.RemoveSceneGroup(sceneGroup);
+			GameRunner::Get().GetScene().RemoveSceneGroup(sceneGroup);
 		}
 
 		return 0;
@@ -99,13 +113,13 @@ namespace playstate
 	int Scene_SetAmbientLight(lua_State* L)
 	{
 		Color ambientColor = luaM_popcolor(L);
-		GameRunner::Get().ActiveScene.SetAmbientLight(ambientColor);
+		GameRunner::Get().GetScene().SetAmbientLight(ambientColor);
 		return 0;
 	}
 	
 	int Scene_GetAmbientLight(lua_State* L)
 	{
-		luaM_pushcolor(L, GameRunner::Get().ActiveScene.AmbientLight);
+		luaM_pushcolor(L, GameRunner::Get().GetScene().GetAmbientLight());
 		return 1;
 	}
 

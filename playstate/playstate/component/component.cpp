@@ -3,12 +3,12 @@
 using namespace playstate;
 
 Component::Component()
-	: mOwner(NULL), mTypeMask(0xffffffff), Node(mOwner), TypeMask(mTypeMask)
+	: mNode(NULL), mTypeMask(0xffffffff)
 {
 }
 
 Component::Component(uint32 type)
-	: mOwner(NULL), mTypeMask(type), Node(mOwner), TypeMask(mTypeMask)
+	: mNode(NULL), mTypeMask(type)
 {
 }
 
@@ -19,7 +19,7 @@ Component::~Component()
 
 void Component::OnAddedToSceneNode(SceneNode* node)
 {
-	mOwner = node;
+	mNode = node;
 	this->OnComponentAdded();
 }
 
@@ -30,3 +30,14 @@ void Component::OnComponentAdded()
 void Component::OnComponentRemoved()
 {
 }
+
+SceneNode* Component::GetNode() const
+{
+	return mNode;
+}
+
+type_mask Component::GetTypeMask() const
+{
+	return mTypeMask;
+}
+

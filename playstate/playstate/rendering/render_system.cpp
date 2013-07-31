@@ -104,7 +104,7 @@ GfxProgram* RenderSystem::LoadGfxProgram(const std::string& fileName)
 	return mProgramFactory->Create(fileName);
 }
 
-void RenderSystem::OnWindowResized(IWindow& window, uint32 width, uint32 height)
+void RenderSystem::OnWindowResized(uint32 width, uint32 height)
 {
 	mScreenWidth = width;
 	mScreenHeight = height;
@@ -158,10 +158,10 @@ void RenderSystem::ApplyRenderTargets()
 	GLsizei height = 0;
 
 	if(mDepthRenderTarget != NULL) {
-		if(_current_depthRenderTarget != mDepthRenderTarget->UniqueId) {
-			_current_depthRenderTarget = mDepthRenderTarget->UniqueId;
+		if(_current_depthRenderTarget != mDepthRenderTarget->GetUniqueId()) {
+			_current_depthRenderTarget = mDepthRenderTarget->GetUniqueId();
 			GLenum attachmentType = GL_DEPTH_ATTACHMENT;
-			if(mDepthRenderTarget->Format == TextureFormat::DEPTH24_STENCIL8)
+			if(mDepthRenderTarget->GetFormat() == TextureFormat::DEPTH24_STENCIL8)
 				attachmentType = GL_DEPTH_STENCIL_ATTACHMENT;
 			mDepthRenderTarget->BindToFrameBuffer(attachmentType);
 		}
@@ -178,11 +178,11 @@ void RenderSystem::ApplyRenderTargets()
 	for(int i = 0; i < MaxDrawBuffers; ++i) {
 		RenderTarget2D* rt = mRenderTargets[i];
 		if(rt != NULL) {
-			width = rt->Width;
-			height = rt->Height;
+			width = rt->GetWidth();
+			height = rt->GetHeight();
 			drawBuffers[numDrawBuffers++] = GL_COLOR_ATTACHMENT0 + i;
-			if(_current_renderTargets[i] != rt->UniqueId) {
-				_current_renderTargets[i] = rt->UniqueId;
+			if(_current_renderTargets[i] != rt->GetUniqueId()) {
+				_current_renderTargets[i] = rt->GetUniqueId();
 				rt->BindToFrameBuffer(GL_COLOR_ATTACHMENT0 + i);
 			}
 		} else {

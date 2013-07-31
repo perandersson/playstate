@@ -4,10 +4,7 @@
 using namespace playstate;
 
 SceneNode::SceneNode(SceneGroup* group)
-	: mSceneGroup(group), mTypeMask(0xffffffff), mParent(NULL),
-	Rotation(mRotation), AbsoluteRotation(mAbsoluteRotation),
-	Position(mPosition), AbsolutePosition(mAbsolutePosition),
-	ModelMatrix(mModelMatrix), Group(mSceneGroup), TypeMask(mTypeMask)
+	: mSceneGroup(group), mTypeMask(0xffffffff), mParent(NULL)
 {
 	assert_not_null(group);
 	group->AddSceneNode(this);
@@ -15,10 +12,7 @@ SceneNode::SceneNode(SceneGroup* group)
 
 
 SceneNode::SceneNode(SceneGroup* group, type_mask typeMask)
-	: mSceneGroup(group), mTypeMask(typeMask), mParent(NULL),
-	Rotation(mRotation), AbsoluteRotation(mAbsoluteRotation),
-	Position(mPosition), AbsolutePosition(mAbsolutePosition),
-	ModelMatrix(mModelMatrix), Group(mSceneGroup), TypeMask(mTypeMask)
+	: mSceneGroup(group), mTypeMask(typeMask), mParent(NULL)
 {
 	assert_not_null(group);
 	group->AddSceneNode(this);
@@ -45,7 +39,7 @@ SceneNode::~SceneNode()
 void SceneNode::AddComponent(Component* component)
 {
 	assert_not_null(component);
-	assert(component->Node == NULL && "You are not allowed to add a component on multiple scene nodes");
+	assert(component->GetNode() == NULL && "You are not allowed to add a component on multiple scene nodes");
 	
 	mComponents.AddLast(component);
 	component->OnAddedToSceneNode(this);
@@ -54,7 +48,7 @@ void SceneNode::AddComponent(Component* component)
 void SceneNode::RemoveComponent(Component* component)
 {
 	assert_not_null(component);
-	assert(component->Node == this && "You are not allowed to remove a component on that isn't attached here");
+	assert(component->GetNode() == this && "You are not allowed to remove a component on that isn't attached here");
 
 	delete component;
 }
@@ -63,7 +57,7 @@ Component* SceneNode::GetComponent(type_mask typeMask)
 {
 	Component* component = mComponents.First();
 	while(component != NULL) {
-		if((component->TypeMask & typeMask) != 0)
+		if((component->GetTypeMask() & typeMask) != 0)
 			return component;
 
 		component = component->ComponentLink.Tail;
@@ -109,6 +103,16 @@ void SceneNode::SetPosition(const Vector3& position)
 	}
 }
 
+const Vector3& SceneNode::GetPosition() const
+{
+	return mPosition;
+}
+
+const Vector3& SceneNode::GetAbsolutePosition() const
+{
+	return mAbsolutePosition;
+}
+
 void SceneNode::UpdatePosition()
 {
 	assert(mParent != NULL && "Illegal call when no parent is found for this object");
@@ -131,6 +135,16 @@ void SceneNode::SetRotation(const Vector3& rotation)
 	}
 }
 
+const Vector3& SceneNode::GetRotation() const
+{
+	return mRotation;
+}
+
+const Vector3& SceneNode::GetAbsoluteRotation() const
+{
+	return mAbsoluteRotation;
+}
+
 void SceneNode::UpdateRotation()
 {
 	assert(mParent != NULL && "Illegal call when no parent is found for this object");
@@ -144,6 +158,21 @@ void SceneNode::UpdateModelMatrix()
 		mModelMatrix = Matrix4x4::Rotation(mAbsoluteRotation) * Matrix4x4::Translation(mAbsolutePosition);
 	else
 		mModelMatrix = Matrix4x4::Translation(mAbsolutePosition);
+}
+
+const Matrix4x4& SceneNode::GetModelMatrix() const
+{
+	return mModelMatrix;
+}
+
+type_mask SceneNode::GetTypeMask() const
+{
+	return mTypeMask;
+}
+
+SceneGroup* SceneNode::GetGroup()
+{
+	return mSceneGroup;
 }
 
 void SceneNode::RemoveFromScene()
@@ -204,7 +233,7 @@ namespace playstate
 	{
 		SceneNode* node = luaM_popobject<SceneNode>(L);
 		if(node != NULL) {
-			luaM_pushvector3(L, node->Position);
+			luaM_pushvector3(L, node->GetPosition());
 		} else {
 			// Print error
 			luaM_pushvector3(L, Vector3::Zero);
@@ -229,7 +258,7 @@ namespace playstate
 		Vector3 vec = luaM_popvector3(L);
 		SceneNode* node = luaM_popobject<SceneNode>(L);
 		if(node != NULL) {
-			node->SetPosition(node->Position + vec);
+			node->SetPosition(node->GetPosition() + vec);
 		}
 
 		return 0;

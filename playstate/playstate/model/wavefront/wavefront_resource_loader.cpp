@@ -3,6 +3,7 @@
 #include "../../math/vector3.h"
 #include "../../resources/resource_manager.h"
 #include "../../functions.h"
+#include "../../uuid.h"
 
 #include <vector>
 
@@ -54,12 +55,16 @@ ResourceObject* WavefrontResourceLoader::Load(IFile& file)
 	ModelMesh* meshesArray = new ModelMesh[meshes.size()];
 	unsigned int size = meshes.size();
 	for(unsigned int i = 0; i < size; ++i) {
-		meshesArray[i].SetVertices(meshes[i]->Vertices);
+		meshesArray[i].Vertices = meshes[i]->Vertices;
+		meshesArray[i].Indices = NULL;
+		meshesArray[i].SpecularCoefficient = 0.0f;
+		meshesArray[i].Alpha = 1.0f;
+		meshesArray[i].Id = UUID::To32Bit();
 
 		Materials::iterator it = materials.find(meshes[i]->Material);
 		if(it != materials.end()) {
-			meshesArray[i].SetDiffuseTexture(it->second->DiffuseTexture);
-			meshesArray[i].SetDiffuseColor(it->second->DiffuseColor);
+			meshesArray[i].DiffuseTexture = it->second->DiffuseTexture;
+			meshesArray[i].DiffuseColor = it->second->DiffuseColor;
 		}
 
 		delete meshes[i];

@@ -1,23 +1,27 @@
 #pragma once
-#include "../graphics_driver.h"
-#include "../../window/win32/win32_window.h"
+#include <playstate/rendering/graphics_driver.h>
+#include "../window/win32_window.h"
 
 namespace playstate
 {
-	class Win32GraphicsDriver : public IGraphicsDriver
+	namespace win32
 	{
-	public:
-		Win32GraphicsDriver(Win32Window& window);
-		~Win32GraphicsDriver();
+		class Win32GraphicsDriver : public IGraphicsDriver
+		{
+		public:
+			Win32GraphicsDriver(Win32Window& window);
+			virtual ~Win32GraphicsDriver();
 
-	// IGraphicsDriver
-	public:
-		virtual IRenderContext* CreateRenderContext();
-		virtual IRenderContext* CreateRenderContext(IRenderContext* context);
+		// IGraphicsDriver
+		public:
+			virtual IRenderContext* CreateRenderContext();
+			virtual IRenderContext* CreateRenderContext(IRenderContext* context);
+			virtual IRenderContext* GetScreenRenderContext();
 
-	private:
-		HWND mWindowHandle;
-		IRenderContext* mScreenRenderContext;
-		HDC mDeviceContext;
-	};
+		private:
+			HWND mWindowHandle;
+			IRenderContext* mScreenRenderContext;
+			HDC mDeviceContext;
+		};
+	}
 }

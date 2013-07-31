@@ -16,6 +16,6 @@ namespace playstate
 		// @param window
 		// @param width
 		// @param height
-		virtual void OnWindowResized(IWindow& window, uint32 width, uint32 height) = 0;
+		virtual void OnWindowResized(uint32 width, uint32 height) = 0;
 	};
 }

@@ -36,8 +36,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 		Win32DefaultKernel kernel(GetModuleHandle(NULL), "data");
 		kernel.Initialize();
 
-		// Script integratrion
-		ScriptSystem ss(fileSystem, consoleLoggerFactory);
+		ScriptSystem& ss = ScriptSystem::Get();
 		ss.RegisterType("Window", IWindow_Methods);
 		ss.RegisterType("IWindowClosedListener", IWindowClosedListener_Methods);
 		ss.RegisterType("IGame", IGame_Methods);
@@ -53,27 +52,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 		ss.RegisterType("ActiveCamera", ActiveCamera_Methods);
 		ss.RegisterType("DeferredRenderPipeline", DeferredRenderPipeline_Methods);
 		ss.RegisterType("PointLight", PointLight_Methods);
-
-		// Linked list update processor
-		LinkedListUpdateProcessorFactory linkedListUpdateProcessorFactory;
-
-		// Render processor
-		OctreeRenderProcessorFactory octreeRenderProcessorFactory;
-
-		// Light Source processor
-		OctreeLightSourceProcessorFactory octreeLightSourceProcessorFactory;
-	
-		// Create and register a graphics driver
-		Win32GraphicsDriver gfxDriver(window);
-		
-		// Thread management
-		Win32ThreadFactory threadFactory;
-		
-		// Create and register a render system
-		RenderSystem renderSystem(window, ss);
-
-		// Resource management
-		ResourceManager resourceManager(renderSystem, fileSystem);
 
 		// Initialize the scripting engine and start the application
 		ss.CompileFile("/main.lua")->Execute("main()");

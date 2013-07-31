@@ -16,11 +16,40 @@ namespace {
 }
 
 Win32Window::Win32Window(HINSTANCE hInstance) : mAppInstance(hInstance), 
-	mWindowHandle(NULL), mWidth(0), mPrevWidth(0), mHeight(0), mPrevHeight(0), mWindowTitle(),
+	mWindowHandle(NULL), mWidth(320), mPrevWidth(320), mHeight(240), mPrevHeight(240), mWindowTitle("playstate"),
 	mTimeSinceLastUpdate(0.0f), mLastTime(0)
 {
 	_window = this;
 	memset(&mMessageQueue, 0, sizeof(MSG));
+
+	// Register the class used by the 
+	WNDCLASSEX windowProperties = {0};
+	windowProperties.cbSize = sizeof(WNDCLASSEX);
+	windowProperties.style = CS_HREDRAW | CS_VREDRAW;
+	windowProperties.lpfnWndProc = WindowsWindowWindowProc;
+	windowProperties.hInstance = mAppInstance;
+	windowProperties.lpszClassName = "playstate.Game";
+	windowProperties.hCursor = (HCURSOR)LoadImage(NULL, MAKEINTRESOURCE(IDC_ARROW), IMAGE_CURSOR, 0, 0, LR_SHARED);
+	RegisterClassEx(&windowProperties);
+
+	DWORD winStyleEx = WS_EX_CLIENTEDGE;
+	DWORD winStyle = WS_CAPTION | WS_SYSMENU | WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_OVERLAPPEDWINDOW;
+
+	RECT windowSize = {0, 0, mWidth, mHeight};
+	AdjustWindowRectEx(&windowSize, winStyle, false, winStyleEx);
+
+	mWindowHandle = CreateWindowEx(winStyleEx, "playstate.Game", mWindowTitle.c_str(), winStyle, CW_USEDEFAULT, CW_USEDEFAULT,
+		windowSize.right - windowSize.left, windowSize.bottom - windowSize.top,
+		NULL, NULL, mAppInstance, NULL);
+	
+	if(mWindowHandle != NULL) {
+		LARGE_INTEGER performanceFrequency;
+		QueryPerformanceFrequency(&performanceFrequency);
+		mFrequency = (double)(performanceFrequency.QuadPart);
+	
+		ShowWindow(mWindowHandle, SW_SHOW);
+		UpdateWindow(mWindowHandle);
+	}
 }
 
 Win32Window::~Win32Window()
@@ -36,42 +65,6 @@ Win32Window::~Win32Window()
 
 	UnregisterClass("playstate.Game", mAppInstance);
 	mAppInstance = NULL;
-}
-
-void Win32Window::Open(uint32 width, uint32 height, const std::string& title)
-{
-	mWidth = mPrevWidth = width;
-	mHeight = mPrevHeight = height;
-	mWindowTitle = title;
-	
-	// Register the class used by the 
-	WNDCLASSEX windowProperties = {0};
-	windowProperties.cbSize = sizeof(WNDCLASSEX);
-	windowProperties.style = CS_HREDRAW | CS_VREDRAW;
-	windowProperties.lpfnWndProc = WindowsWindowWindowProc;
-	windowProperties.hInstance = mAppInstance;
-	windowProperties.lpszClassName = "playstate.Game";
-	windowProperties.hCursor = (HCURSOR)LoadImage(NULL, MAKEINTRESOURCE(IDC_ARROW), IMAGE_CURSOR, 0, 0, LR_SHARED);
-	RegisterClassEx(&windowProperties);
-
-	DWORD winStyleEx = WS_EX_CLIENTEDGE;
-	DWORD winStyle = WS_CAPTION | WS_SYSMENU | WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_OVERLAPPEDWINDOW;
-
-	RECT windowSize = {0, 0, width, height};
-	AdjustWindowRectEx(&windowSize, winStyle, false, winStyleEx);
-
-	mWindowHandle = CreateWindowEx(winStyleEx, "playstate.Game", title.c_str(), winStyle, CW_USEDEFAULT, CW_USEDEFAULT,
-		windowSize.right - windowSize.left, windowSize.bottom - windowSize.top,
-		NULL, NULL, mAppInstance, NULL);
-	
-	if(mWindowHandle != NULL) {
-		LARGE_INTEGER performanceFrequency;
-		QueryPerformanceFrequency(&performanceFrequency);
-		mFrequency = (double)(performanceFrequency.QuadPart);
-	
-		ShowWindow(mWindowHandle, SW_SHOW);
-		UpdateWindow(mWindowHandle);
-	}
 }
 
 uint32 Win32Window::GetWidth() const 
@@ -98,7 +91,7 @@ void Win32Window::Resize(uint32 width, uint32 height)
 
 	WindowResizedListeners::size_type size = mWindowResizeListeners.size();
 	for(WindowResizedListeners::size_type i = 0; i < size; ++i) {
-		mWindowResizeListeners[i]->OnWindowResized(*this, mWidth, mHeight);
+		mWindowResizeListeners[i]->OnWindowResized(mWidth, mHeight);
 	}
 
 	mPrevWidth = mWidth;
@@ -156,7 +149,7 @@ LRESULT CALLBACK Win32Window::HandleEvent(HWND hwnd, UINT message, WPARAM wparam
 
 			WindowResizedListeners::size_type size = mWindowResizeListeners.size();
 			for(WindowResizedListeners::size_type i = 0; i < size; ++i) {
-				mWindowResizeListeners[i]->OnWindowResized(*this, width, height);
+				mWindowResizeListeners[i]->OnWindowResized(width, height);
 			}
 		}
 		
@@ -199,7 +192,7 @@ void Win32Window::HandleEvents()
 		{
 			WindowClosedListeners::size_type size = mWindowClosedListeners.size();
 			for(WindowClosedListeners::size_type i = 0; i < size; ++i) {
-				if(mWindowClosedListeners[i]->OnWindowClosing(*this) == false) {
+				if(mWindowClosedListeners[i]->OnWindowClosing() == false) {
 					// TODO: IGNORE CLOSE!!!
 				}
 			}
@@ -234,113 +227,4 @@ void Win32Window::RemoveWindowClosedListener(IWindowClosedListener* listener)
 	WindowClosedListeners::iterator it = std::find(mWindowClosedListeners.begin(), mWindowClosedListeners.end(), listener);
 	if(it != mWindowClosedListeners.end()) 
 		mWindowClosedListeners.erase(it);
-}
-
-namespace playstate
-{
-	class ScriptWindowClosedListener : public IWindowClosedListener, public Scriptable
-	{
-	public:
-		ScriptWindowClosedListener() {}
-		virtual ~ScriptWindowClosedListener() {}
-		
-		virtual void OnRegistered() {
-			mOnWindowClosingID = GetMethodID("OnWindowClosing");
-		}
-
-		virtual bool OnWindowClosing(IWindow& window) {
-			if(PrepareMethod(mOnWindowClosingID)) {
-				lua_rawgeti(mCurrentState, LUA_REGISTRYINDEX, window.GetID());
-				if(lua_pcall(mCurrentState, 2, 1, NULL) == 0) {
-					bool ret = lua_toboolean(mCurrentState, -1) == 1; lua_pop(mCurrentState, -1);
-					return ret;
-				} else {
-					const char* err = lua_tostring(mCurrentState, -1);
-					lua_pop(mCurrentState, 1);
-				}
-			}
-			return true;
-		}
-
-	private:
-		uint32 mOnWindowClosingID;
-	};
-	
-	/////////////////////////////////////////////////
-
-	int IWindow_AddWindowClosedListener(lua_State* L)
-	{
-		ScriptWindowClosedListener* listener = luaM_popobject<ScriptWindowClosedListener>(L);
-		if(listener != NULL) {
-			_window->AddWindowClosedListener(listener);
-		}
-		return 0;
-	}
-	
-	int IWindow_SetTitle(lua_State* L)
-	{
-		int top = lua_gettop(L);
-		std::string title = lua_tostring(L, -1); lua_pop(L, 1);
-		_window->SetTitle(title);
-		return 0;
-	}
-	
-	int IWindow_GetWidth(lua_State* L)
-	{
-		lua_pushnumber(L, _window->GetWidth());
-		return 1;
-	}
-
-	int IWindow_GetHeight(lua_State* L)
-	{
-		lua_pushnumber(L, _window->GetHeight());
-		return 1;
-	}
-
-	int IWindow_Close(lua_State* L)
-	{
-		//_window->Close();
-		return 0;
-	}
-
-	/////////////////////////////////////////////////////
-
-	int IWindowClosedListener_GetID(lua_State* L)
-	{
-		ScriptWindowClosedListener* listener = luaM_popobject<ScriptWindowClosedListener>(L);
-		if(listener == NULL)
-			return LUA_NOREF;
-
-		return listener->GetID();
-	}
-
-	int IWindowClosedListener_Override(lua_State* L)
-	{
-		if(lua_istable(L, -1) == 0) {
-			lua_pop(L, 1);
-			return 0;
-		}
-		
-		ScriptWindowClosedListener* listener = new ScriptWindowClosedListener();
-		luaM_setinstance(L, listener);
-		
-		const int ref = luaL_ref(L, LUA_REGISTRYINDEX);
-		listener->RegisterObject(L, ref);
-		int top1 = lua_gettop(L);
-
-		return 0;
-	}
-	
-	int IWindowClosedListener_OnWindowClosing(lua_State* L)
-	{
-		ScriptWindowClosedListener* listener = luaM_popobject<ScriptWindowClosedListener>(L);
-		Win32Window* window = luaM_popobject<Win32Window>(L);
-		if(listener != NULL && window != NULL) {
-			bool res = listener->OnWindowClosing(*window);
-			lua_pushboolean(L, res ? 1 : 0);
-			return 1;
-		}
-		lua_pushboolean(L, 0);
-		return 1;
-	}
 }

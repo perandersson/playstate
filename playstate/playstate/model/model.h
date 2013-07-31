@@ -17,21 +17,24 @@ namespace playstate
 		//
 		// Destructor
 		virtual ~Model();
-		
-	public:
-		// Read-only property for this objects bounding box
-		const AABB& BoundingBox;
-		
-		// Read-only property about the number of meshes
-		const uint32& Size;
 
-		// Read-only array for the actual mesh data
-		ModelMesh*& const Meshes;
+		//
+		// @return This model's bounding box
+		const AABB& GetBoundingBox() const;
+
+		//
+		// @return
+		uint32 GetNumMeshes() const;
+
+		//
+		// @return
+		const ModelMesh* GetMeshes() const;
+	
+		ModelMesh* GetMeshes();	
 
 	private:
 		AABB mBoundingBox;
-
-		uint32 mSize;
+		uint32 mNumMeshes;
 		ModelMesh* mMeshes;
 	};
 	

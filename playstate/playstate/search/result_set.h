@@ -28,12 +28,9 @@ namespace playstate
 		// @return Returns a free object from the memory pool. Resizes the array when the memory pool is full.
 		T* GetOrCreate();
 
-	public:
-		// Read-only property for the number of created elements.
-		const uint32& Size;
+		T* GetElements();
 
-		// Read-only property for all the elements. Use the Size to know how many there are that have been created.
-		T*& const Elements;
+		uint32 GetSize();
 
 	protected:
 		T* mMemory;
@@ -45,8 +42,7 @@ namespace playstate
 
 	template<typename T>
 	ResultSet<T>::ResultSet(uint32 initialBlocksCount, uint32 blocksResizeCount) : mMemory(0), mSize(0), mNumElements(initialBlocksCount),
-		mInitialBlocksCount(initialBlocksCount), mBlocksResizeCount(blocksResizeCount),
-		Size(mSize), Elements(mMemory)
+		mInitialBlocksCount(initialBlocksCount), mBlocksResizeCount(blocksResizeCount)
 	{
 		mMemory = (T*)malloc(initialBlocksCount * sizeof(T));
 	}
@@ -78,5 +74,17 @@ namespace playstate
 	void ResultSet<T>::Reset()
 	{
 		mSize = 0;
+	}
+	
+	template<typename T>
+	T* ResultSet<T>::GetElements()
+	{
+		return mMemory;
+	}
+	
+	template<typename T>
+	uint32 ResultSet<T>::GetSize()
+	{
+		return mSize;
 	}
 }

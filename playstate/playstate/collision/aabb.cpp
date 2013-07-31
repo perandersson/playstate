@@ -6,18 +6,17 @@ using namespace playstate;
 
 playstate::AABB playstate::AABB::OutsideWorld(playstate::Vector3(-10000.0f, -10000.0f, -10000.0f), 0.01f, 0.01f, 0.01f);
 
-AABB::AABB() : MaxPoint(mMaxPoint), MinPoint(mMinPoint)
+AABB::AABB()
 {
 }
 
-AABB::AABB(const Vector3& position, float32 width, float32 height, float32 depth) : MaxPoint(mMaxPoint), MinPoint(mMinPoint)
+AABB::AABB(const Vector3& position, float32 width, float32 height, float32 depth)
 {
 	Set(position, width, height, depth);
 }
 
 AABB::AABB(const AABB& box)
-	: mMinPoint(box.mMinPoint), mMaxPoint(box.mMaxPoint), 
-	MaxPoint(mMaxPoint), MinPoint(mMinPoint)
+	: mMinPoint(box.mMinPoint), mMaxPoint(box.mMaxPoint)
 {
 }
 
@@ -101,6 +100,16 @@ AABB::CollisionResult AABB::IsColliding(const AABB& otherBox) const
 	}
 
 	return INTERSECT;
+}
+
+const Vector3& AABB::GetMaxPoint() const
+{
+	return mMaxPoint;
+}
+
+const Vector3& AABB::GetMinPoint() const
+{
+	return mMinPoint;
 }
 
 void AABB::Set(const Vector3& position, float32 width, float32 height, float32 depth)

@@ -19,9 +19,8 @@ namespace playstate
 		
 		void Bind(MinFilter::Enum minFilter, MagFilter::Enum magFilter, TextureWrap::Enum ws, TextureWrap::Enum wt);
 
-	public:
-		const uint32& Width;
-		const uint32& Height;
+		uint32 GetWidth() const;
+		uint32 GetHeight() const;
 
 	protected:
 		uint32 mWidth;

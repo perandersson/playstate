@@ -157,11 +157,16 @@ void Octree::Initialize(const AABB& boundingBox, uint32 level, uint32 maxLevel)
 	const float partHeight = boundingBox.GetHeight() / 2.0f;
 	const float partDepth = boundingBox.GetDepth() / 2.0f;
 
+	const Vector3& minPoint = boundingBox.GetMinPoint();
+	const Vector3& maxPoint = boundingBox.GetMaxPoint();
+
 	// Can use TFL and BBR to calculate all midpoints for each part.
-	const Vector3 tfl((boundingBox.MinPoint.X + mid.X) / 2.0f, (boundingBox.MaxPoint.Y + mid.Y) / 2.0f, 
-		(boundingBox.MinPoint.Z + mid.Z) / 2.0f);
-	const Vector3 bbr((boundingBox.MaxPoint.X + mid.X) / 2.0f, (boundingBox.MinPoint.Y + mid.Y) / 2.0f,
-		(boundingBox.MaxPoint.Z + mid.Z) / 2.0f);
+	const Vector3 tfl((minPoint.X + mid.X) / 2.0f, 
+		(maxPoint.Y + mid.Y) / 2.0f, 
+		(minPoint.Z + mid.Z) / 2.0f);
+	const Vector3 bbr((maxPoint.X + mid.X) / 2.0f, 
+		(minPoint.Y + mid.Y) / 2.0f,
+		(maxPoint.Z + mid.Z) / 2.0f);
 
 	// Create child nodes
 	mParts[TOP_FRONT_LEFT] = new Octree(AABB(tfl, 

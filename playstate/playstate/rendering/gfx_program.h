@@ -29,8 +29,12 @@ namespace playstate
 		~GfxProgram();
 
 		//
-		// 
+		// Sets this graphics program as the active one the graphics card.
 		void Apply();
+
+		//
+		// @return TRUE if this program is the one active on the graphics card; FALSE otherwise.
+		bool IsApplied() const;
 
 		//
 		// Clear the view-port based on this programs assigned clear colors.
@@ -48,18 +52,21 @@ namespace playstate
 
 		//
 		// Draw the supplied buffer object using this graphics program.
+		//
 		// @param buffer
 		void Render(VertexBuffer* buffer);
 
 		//
 		// Draw the supplied buffer object using the supplied index buffer using this graphics program.
+		//
 		// @param buffer
 		// @param indexBuffer
 		void Render(VertexBuffer* buffer, IndexBuffer* indexBuffer);
 
 		//
 		// Flags if this program should enable or disable Z-writing.
-		// Default = true.
+		//
+		// @default true
 		// @param enable
 		void EnableDepthTest(bool enable);
 
@@ -75,19 +82,25 @@ namespace playstate
 		void EnableBlend(bool enable);
 
 		//
-		// Glags that this program should use the supplied source blend function while render. SOURCE_SRC_ALPHA is used by default.
+		// Glags that this program should use the supplied source blend function while render.
 		// If the program isnt used then you notify it to use it the next time it's applied
+		//
+		// @default SrcBlend::SOURCE_SRC_ALPHA, DestBlend::ONE_MINUS_DST_ALPHA
 		// @param srcFunc
 		// @param destFunc.
 		void SetBlendFunc(SrcBlend::Enum srcFunc, DestBlend::Enum destFunc);
 
 		//
 		// Enable and set cull faces for the geometry drawn by this shader.
+		//
+		// @default CullFaces::CCW
 		// @param cullFaces
 		void SetCullFaces(CullFaces::Enum cullFaces);
 
 		//
 		// Sets the color this shader should use then clearing the screen.
+		//
+		// @default
 		// @param color
 		void SetClearColor(const Color& color);
 		
@@ -101,10 +114,6 @@ namespace playstate
 		// @param renderTarget
 		// @param index
 		void SetRenderTarget(RenderTarget2D* renderTarget, uint32 index);
-
-	public:
-		// Read-only property which tells if this program is active or not
-		const bool& Applied;
 
 	private:
 		void ApplyComponents();

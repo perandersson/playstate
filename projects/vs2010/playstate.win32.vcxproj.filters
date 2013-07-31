@@ -24,6 +24,9 @@
     <Filter Include="Source Files\win32\rendering">
       <UniqueIdentifier>{d9579097-f768-4262-a645-fd080a336737}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\win32\thread">
+      <UniqueIdentifier>{5f5ad6e6-1772-467d-aa6c-ca09453bfca5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\playstate.win32\playstate\win32\filesystem\win32_directory.h">
@@ -53,6 +56,18 @@
     <ClInclude Include="..\..\playstate.win32\playstate\win32\rendering\win32_render_context.h">
       <Filter>Source Files\win32\rendering</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\playstate.win32\playstate\win32\thread\win32_lock.h">
+      <Filter>Source Files\win32\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate.win32\playstate\win32\thread\win32_thread.h">
+      <Filter>Source Files\win32\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate.win32\playstate\win32\thread\win32_thread_event.h">
+      <Filter>Source Files\win32\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate.win32\playstate\win32\thread\win32_thread_factory.h">
+      <Filter>Source Files\win32\thread</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\playstate.win32\playstate\win32\filesystem\win32_directory.cpp">
@@ -81,6 +96,18 @@
     </ClCompile>
     <ClCompile Include="..\..\playstate.win32\playstate\win32\rendering\win32_render_context.cpp">
       <Filter>Source Files\win32\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate.win32\playstate\win32\thread\win32_lock.cpp">
+      <Filter>Source Files\win32\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate.win32\playstate\win32\thread\win32_thread.cpp">
+      <Filter>Source Files\win32\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate.win32\playstate\win32\thread\win32_thread_event.cpp">
+      <Filter>Source Files\win32\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate.win32\playstate\win32\thread\win32_thread_factory.cpp">
+      <Filter>Source Files\win32\thread</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

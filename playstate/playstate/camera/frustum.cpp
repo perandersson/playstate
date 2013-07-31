@@ -98,26 +98,26 @@ AABB::CollisionResult Frustum::IsColliding(const AABB& box) const
 
 Vector3 Frustum::GetPositiveVertex(const AABB& boundingBox, const Vector3& normal) const
 {
-	Vector3 p = boundingBox.MinPoint;
+	Vector3 p = boundingBox.GetMinPoint();
 	if (normal.X >= 0)
-		p.X = boundingBox.MaxPoint.X;
+		p.X = boundingBox.GetMaxPoint().X;
 	if (normal.Y >= 0)
-		p.Y = boundingBox.MaxPoint.Y;
+		p.Y = boundingBox.GetMaxPoint().Y;
 	if (normal.Z >= 0)
-		p.Z = boundingBox.MaxPoint.Z;
+		p.Z = boundingBox.GetMaxPoint().Z;
 
 	return p;
 }
 
 Vector3 Frustum::GetNegativeVertex(const AABB& boundingBox, const Vector3& normal) const
 {
-	Vector3 n = boundingBox.MaxPoint;
+	Vector3 n = boundingBox.GetMaxPoint();
 	if (normal.X >= 0)
-		n.X = boundingBox.MinPoint.X;
+		n.X = boundingBox.GetMinPoint().X;
 	if (normal.Y >= 0)
-		n.Y = boundingBox.MinPoint.Y;
+		n.Y = boundingBox.GetMinPoint().Y;
 	if (normal.Z >= 0)
-		n.Z = boundingBox.MinPoint.Z;
+		n.Z = boundingBox.GetMinPoint().Z;
 
 	return n;
 }

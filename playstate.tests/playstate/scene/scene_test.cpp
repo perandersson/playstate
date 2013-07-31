@@ -100,7 +100,7 @@ TEST_SUITE(Scene)
 
 		virtual void OnComponentAdded()
 		{
-			Renderable::Attach(Node->Group);
+			Renderable::Attach(GetNode()->GetGroup());
 		}
 
 		virtual void OnComponentRemoved()

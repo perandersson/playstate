@@ -19,6 +19,7 @@
     <ClCompile Include="..\..\playstate\playstate\component\renderable\render_static_model.cpp" />
     <ClCompile Include="..\..\playstate\playstate\component\scriptable_component.cpp" />
     <ClCompile Include="..\..\playstate\playstate\exception.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\filesystem\file_system.cpp" />
     <ClCompile Include="..\..\playstate\playstate\functions.cpp" />
     <ClCompile Include="..\..\playstate\playstate\game\game.cpp" />
     <ClCompile Include="..\..\playstate\playstate\game\game_runner.cpp" />
@@ -26,6 +27,7 @@
     <ClCompile Include="..\..\playstate\playstate\input\input_system.cpp" />
     <ClCompile Include="..\..\playstate\playstate\kernel.cpp" />
     <ClCompile Include="..\..\playstate\playstate\logging\console\console_logger.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\logging\logger.cpp" />
     <ClCompile Include="..\..\playstate\playstate\math\color.cpp" />
     <ClCompile Include="..\..\playstate\playstate\math\matrix4x4.cpp" />
     <ClCompile Include="..\..\playstate\playstate\math\plane.cpp" />
@@ -34,7 +36,6 @@
     <ClCompile Include="..\..\playstate\playstate\math\vector2.cpp" />
     <ClCompile Include="..\..\playstate\playstate\math\vector3.cpp" />
     <ClCompile Include="..\..\playstate\playstate\model\model.cpp" />
-    <ClCompile Include="..\..\playstate\playstate\model\model_mesh.cpp" />
     <ClCompile Include="..\..\playstate\playstate\model\wavefront\wavefront_resource_loader.cpp" />
     <ClCompile Include="..\..\playstate\playstate\processor\light_source.cpp" />
     <ClCompile Include="..\..\playstate\playstate\processor\light_source_processor_factory.cpp" />
@@ -64,8 +65,6 @@
     <ClCompile Include="..\..\playstate\playstate\rendering\texture.cpp" />
     <ClCompile Include="..\..\playstate\playstate\rendering\texture2d.cpp" />
     <ClCompile Include="..\..\playstate\playstate\rendering\vertex_buffer.cpp" />
-    <ClCompile Include="..\..\playstate\playstate\rendering\win32\win32_graphics_driver.cpp" />
-    <ClCompile Include="..\..\playstate\playstate\rendering\win32\win32_render_context.cpp" />
     <ClCompile Include="..\..\playstate\playstate\resources\exception\load_resource_exception.cpp" />
     <ClCompile Include="..\..\playstate\playstate\resources\exception\resource_exception.cpp" />
     <ClCompile Include="..\..\playstate\playstate\resources\resource_data.cpp" />
@@ -86,14 +85,12 @@
     <ClCompile Include="..\..\playstate\playstate\search\render_block_result_set.cpp" />
     <ClCompile Include="..\..\playstate\playstate\search\sorter\quick_sort_array_sorter.cpp" />
     <ClCompile Include="..\..\playstate\playstate\search\sorter\render_block_array_sorter.cpp" />
-    <ClCompile Include="..\..\playstate\playstate\thread\win32\win32_lock.cpp" />
-    <ClCompile Include="..\..\playstate\playstate\thread\win32\win32_thread.cpp" />
-    <ClCompile Include="..\..\playstate\playstate\thread\win32\win32_thread_event.cpp" />
-    <ClCompile Include="..\..\playstate\playstate\thread\win32\win32_thread_factory.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\thread\thread_factory.cpp" />
     <ClCompile Include="..\..\playstate\playstate\thread\wrapper\lock_wrapper.cpp" />
     <ClCompile Include="..\..\playstate\playstate\thread\wrapper\thread_wrapper.cpp" />
     <ClCompile Include="..\..\playstate\playstate\uuid.cpp" />
     <ClCompile Include="..\..\playstate\playstate\version.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\window\window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\playstate\playstate\camera\camera.h" />
@@ -166,8 +163,6 @@
     <ClInclude Include="..\..\playstate\playstate\rendering\texture2d.h" />
     <ClInclude Include="..\..\playstate\playstate\rendering\vertex_array_object_factory.h" />
     <ClInclude Include="..\..\playstate\playstate\rendering\vertex_buffer.h" />
-    <ClInclude Include="..\..\playstate\playstate\rendering\win32\win32_graphics_driver.h" />
-    <ClInclude Include="..\..\playstate\playstate\rendering\win32\win32_render_context.h" />
     <ClInclude Include="..\..\playstate\playstate\rendering\window_render_context.h" />
     <ClInclude Include="..\..\playstate\playstate\resources\exception\load_resource_exception.h" />
     <ClInclude Include="..\..\playstate\playstate\resources\exception\resource_exception.h" />
@@ -203,10 +198,6 @@
     <ClInclude Include="..\..\playstate\playstate\thread\thread.h" />
     <ClInclude Include="..\..\playstate\playstate\thread\thread_event.h" />
     <ClInclude Include="..\..\playstate\playstate\thread\thread_factory.h" />
-    <ClInclude Include="..\..\playstate\playstate\thread\win32\win32_lock.h" />
-    <ClInclude Include="..\..\playstate\playstate\thread\win32\win32_thread.h" />
-    <ClInclude Include="..\..\playstate\playstate\thread\win32\win32_thread_event.h" />
-    <ClInclude Include="..\..\playstate\playstate\thread\win32\win32_thread_factory.h" />
     <ClInclude Include="..\..\playstate\playstate\thread\wrapper\lock_wrapper.h" />
     <ClInclude Include="..\..\playstate\playstate\thread\wrapper\thread_wrapper.h" />
     <ClInclude Include="..\..\playstate\playstate\types.h" />

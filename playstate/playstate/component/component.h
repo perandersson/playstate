@@ -36,12 +36,13 @@ namespace playstate
 		// 
 		void OnAddedToSceneNode(SceneNode* node);
 
-	public:
-		// Read-only property for the owner scene node
-		SceneNode*& const Node;
+		//
+		// @return The owner scene node for this component
+		SceneNode* GetNode() const;
 
-		// 
-		const type_mask& TypeMask;
+		//
+		// @return This componenents type mask.
+		type_mask GetTypeMask() const;
 
 	protected:		
 		//
@@ -53,7 +54,7 @@ namespace playstate
 		virtual void OnComponentRemoved();
 
 	protected:
-		SceneNode* mOwner;
+		SceneNode* mNode;
 		type_mask mTypeMask;
 	};
 }

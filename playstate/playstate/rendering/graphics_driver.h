@@ -9,12 +9,6 @@ namespace playstate
 	// 
 	class IGraphicsDriver : public Singleton<IGraphicsDriver>
 	{
-	protected:
-		//
-		// Property initializer constructor
-		IGraphicsDriver(IRenderContext*& screenRenderContext);
-		virtual ~IGraphicsDriver();
-
 	public:
 		//
 		// Creates a new render context
@@ -30,8 +24,8 @@ namespace playstate
 		// @return A new render context instance
 		virtual IRenderContext* CreateRenderContext(IRenderContext* context) = 0;
 
-	public:
-		// Read-only property for the render context used to draw onto the screen
-		IRenderContext*& const ScreenRenderContext;
+		//
+		// @return 
+		virtual IRenderContext* GetScreenRenderContext() = 0;
 	};
 }

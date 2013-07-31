@@ -74,7 +74,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)libraries/FreeImage/;$(SolutionDir)libraries/glew-1.9.0/lib/;$(SolutionDir)libraries/lua-5.2.1/;$(SolutionDir)../../bin/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>playstate_d.lib;luad.lib;glew32.lib;FreeImage.lib;OpenGL32.lib;GLU32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>playstate_d.lib;playstate.win32_d.lib;luad.lib;glew32.lib;FreeImage.lib;OpenGL32.lib;GLU32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>

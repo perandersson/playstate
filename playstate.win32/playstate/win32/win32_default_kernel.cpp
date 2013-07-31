@@ -1,25 +1,41 @@
 #include <playstate/memory/memory.h>
 #include "win32_default_kernel.h"
-#include "filesystem/win32_filesystem.h"
-#include "input/win32_input_system.h"
-#include "window/win32_window.h"
-#include <playstate/logging/console/console_logger.h>
 
 using namespace playstate;
 using namespace playstate::win32;
 
 Win32DefaultKernel::Win32DefaultKernel(HINSTANCE app, const std::string& fileSystemPath) 
-	: Kernel(), mAppInstance(app)
+	: mAppInstance(app)
 {
 	mFileSystem = new Win32FileSystem(fileSystemPath);
 	mLogger = new ConsoleLogger();
-	Win32Window* window = new Win32Window(app);
-	mWindow = window;
-	mInputSystem = new Win32InputSystem(*window);
+	mWindow = new Win32Window(app);
+	mInputSystem = new Win32InputSystem(*mWindow);
+
+	mScriptSystem = new ScriptSystem(*mFileSystem, *mLogger);
+	mUpdateProcessorFactory = new LinkedListUpdateProcessorFactory();
+	mRenderProcessorFactory = new OctreeRenderProcessorFactory();
+	mLightSourceProcessorFactory = new OctreeLightSourceProcessorFactory();
+
+	mGraphicsDriver = new Win32GraphicsDriver(*mWindow);
+	mThreadFactory = new Win32ThreadFactory();
+	mRenderSystem = new RenderSystem(*mWindow, *mScriptSystem);
+	mResourceManager = new ResourceManager(*mRenderSystem, *mFileSystem);
 }
 
 Win32DefaultKernel::~Win32DefaultKernel()
 {
+	delete mResourceManager;
+	delete mRenderSystem;
+	delete mThreadFactory;
+	delete mGraphicsDriver;
+
+	delete mLightSourceProcessorFactory;
+	delete mRenderProcessorFactory;
+	delete mUpdateProcessorFactory;
+
+	delete mScriptSystem;
+
 	delete mInputSystem;
 	delete mWindow;
 	delete mLogger;
@@ -38,7 +54,8 @@ void Win32DefaultKernel::Release()
 
 void Win32DefaultKernel::Process()
 {
-	// Poll resource manager
-	// Update timers?
-	// Update windows events
+	mWindow->HandleEvents();
+	mInputSystem->Poll();
+	mResourceManager->Poll();
+	mScriptSystem->HandleGC();
 }

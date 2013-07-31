@@ -8,8 +8,8 @@ TEST_SUITE(LightSourceResultSet)
 	{
 		LightSourceResultSet resultSet;
 		
-		ASSERT_EQUALS(resultSet.Size, 0);
-		ASSERT_NOT_NULL(resultSet.Elements);
+		ASSERT_EQUALS(resultSet.GetSize(), 0);
+		ASSERT_NOT_NULL(resultSet.GetElements());
 	}
 	
 	UNIT_TEST(CreateBlockFromResultSet)
@@ -17,8 +17,8 @@ TEST_SUITE(LightSourceResultSet)
 		LightSourceResultSet resultSet;
 		LightSource** block = resultSet.GetOrCreate();
 
-		ASSERT_NOT_NULL(resultSet.Elements);
-		ASSERT_EQUALS(&resultSet.Elements[0], block);
+		ASSERT_NOT_NULL(resultSet.GetElements());
+		ASSERT_EQUALS(&resultSet.GetElements()[0], block);
 	}
 
 	UNIT_TEST(CreateTwoBlocksFromResultSet)
@@ -27,8 +27,8 @@ TEST_SUITE(LightSourceResultSet)
 		LightSource** block1 = resultSet.GetOrCreate();
 		LightSource** block2 = resultSet.GetOrCreate();
 
-		ASSERT_NOT_NULL(resultSet.Elements);
-		ASSERT_EQUALS(&resultSet.Elements[0], block1);
-		ASSERT_EQUALS(&resultSet.Elements[1], block2);
+		ASSERT_NOT_NULL(resultSet.GetElements());
+		ASSERT_EQUALS(&resultSet.GetElements()[0], block1);
+		ASSERT_EQUALS(&resultSet.GetElements()[1], block2);
 	}
 }

@@ -35,7 +35,7 @@ int __playstate_lua_require(lua_State* L)
 		package += ".lua";
 		package = std::string("/") + package;
 	}
-	std::auto_ptr<IFile> file = Kernel::Get().FileSystem->OpenFile(package);
+	std::auto_ptr<IFile> file = IFileSystem::Get().OpenFile(package);
 
 	if(file->Exists()) {
 		std::string value = file->Read().str();

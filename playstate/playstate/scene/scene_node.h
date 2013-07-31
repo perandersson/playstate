@@ -33,21 +33,6 @@ namespace playstate
 		//
 		//
 		virtual ~SceneNode();
-		
-	protected:
-		//
-		// Updates the absolute position value based on the parents position
-		void UpdatePosition();
-
-		//
-		// Updates the absolute rotation value based on the parents rotation
-		void UpdateRotation();
-
-		//
-		// Update the model matrix value based on the position and rotation
-		void UpdateModelMatrix();
-
-	public:
 		//
 		// Add the supplied component
 		// @param component
@@ -67,11 +52,27 @@ namespace playstate
 		//
 		// Sets the position of this node.
 		void SetPosition(const Vector3& position);
+		const Vector3& GetPosition() const;
+		const Vector3& GetAbsolutePosition() const;
 
 		//
 		// Sets the rotation of this node. 
 		void SetRotation(const Vector3& rotation);
-		
+		const Vector3& GetRotation() const;
+		const Vector3& GetAbsoluteRotation() const;
+
+		//
+		// @return This nodes model matrix
+		const Matrix4x4& GetModelMatrix() const;
+
+		//
+		// @return
+		type_mask GetTypeMask() const;
+
+		//
+		// @return The group where this node is located
+		SceneGroup* GetGroup();
+
 		//
 		// Remove this item from the scene. 
 		// This will also delete this object and clean-up all related resources (child nodes for example).
@@ -84,29 +85,20 @@ namespace playstate
 		//
 		// 
 		void RemoveChildNode(SceneNode* node);
+		
+	protected:
+		//
+		// Updates the absolute position value based on the parents position
+		void UpdatePosition();
+
+		//
+		// Updates the absolute rotation value based on the parents rotation
+		void UpdateRotation();
+
+		//
+		// Update the model matrix value based on the position and rotation
+		void UpdateModelMatrix();
 				
-	public:
-		// Public read-only property for retrieving the relative rotation of this node.
-		const Vector3& Rotation;
-
-		// Public read-only property for reading the absolute rotation of this node.
-		const Vector3& AbsoluteRotation;
-
-		// Public read-only property for reading the relative position of this node
-		const Vector3& Position;
-
-		// Public read-only property for reading the absolute position of this node
-		const Vector3& AbsolutePosition;
-
-		// Public read-only property for reading the absolute model matrix of this node.
-		const Matrix4x4& ModelMatrix;
-		
-		// Read-only property for where this node is contain in.
-		SceneGroup*& const Group;
-
-		// Public read-only property for the type mask.
-		const type_mask& TypeMask;
-		
 	private:
 		Vector3 mRotation;
 		Vector3 mAbsoluteRotation;

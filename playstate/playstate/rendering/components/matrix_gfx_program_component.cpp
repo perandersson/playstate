@@ -27,6 +27,6 @@ void MatrixGfxProgramComponent::SetMatrix(const Matrix4x4& matrix)
 	assert(mType == GL_FLOAT_MAT4 && "Invalid matrix type type");
 	memcpy(mValues, matrix.Values, sizeof(float32) * 16);
 
-	if(mProgram.Applied)
+	if(mProgram.IsApplied())
 		MatrixGfxProgramComponent::Apply();
 }

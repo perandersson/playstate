@@ -16,31 +16,30 @@ namespace playstate
 		// @param constantAttenuation
 		// @param linearAttenuation
 		// @param quadricAttenuation
-		PointLight(const Color& color, float radius, float constantAttenuation,
-			float linearAttenuation, float quadricAttenuation);
+		PointLight(const Color& color, float32 radius, float32 constantAttenuation,
+			float32 linearAttenuation, float32 quadricAttenuation);
 
 		//
 		// Destructor
 		virtual ~PointLight();
+
+		const Color& GetColor();
+		float32 GetRadius() const;
+		float32 GetConstantAttenuation() const;
+		float32 GetLinearAttenuation() const;
+		float32 GetQuadricAttenuation() const;
 
 	// Component
 	public:
 		virtual void OnComponentAdded();
 		virtual void OnComponentRemoved();
 
-	public:
-		const Color& LightColor;
-		const float& Radius;
-		const float& ConstantAttenuation;
-		const float& LinearAttenuation;
-		const float& QuadricAttenuation;
-
 	private:
-		Color mLightColor;
-		float mRadius;
-		float mConstantAttenuation;
-		float mLinearAttenuation;
-		float mQuadricAttenuation;
+		Color mColor;
+		float32 mRadius;
+		float32 mConstantAttenuation;
+		float32 mLinearAttenuation;
+		float32 mQuadricAttenuation;
 	};
 
 	//

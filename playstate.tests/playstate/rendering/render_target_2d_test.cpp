@@ -24,9 +24,9 @@ TEST_SUITE(RenderTarget2D)
 		RenderTarget2D* unitToTest = RenderTarget2D::Create(width, height, format);
 
 		ASSERT_NOT_NULL(unitToTest);
-		ASSERT_EQUALS(unitToTest->Width, width);
-		ASSERT_EQUALS(unitToTest->Height, height);
-		ASSERT_EQUALS(unitToTest->Format, TextureFormat::RGBA12);
+		ASSERT_EQUALS(unitToTest->GetWidth(), width);
+		ASSERT_EQUALS(unitToTest->GetHeight(), height);
+		ASSERT_EQUALS(unitToTest->GetFormat(), TextureFormat::RGBA12);
 
 		delete unitToTest;
 		glmock::Destroy(mock);

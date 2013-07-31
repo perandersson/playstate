@@ -75,7 +75,7 @@ void IntGfxProgramComponent::SetInt(int32 a)
 	mCount = 1;
 	mValues[0] = a;
 
-	if(mProgram.Applied)
+	if(mProgram.IsApplied())
 		IntGfxProgramComponent::Apply();
 }
 
@@ -85,7 +85,7 @@ void IntGfxProgramComponent::SetInt(int32 a, int32 b)
 	mValues[0] = a;
 	mValues[1] = b;
 
-	if(mProgram.Applied)
+	if(mProgram.IsApplied())
 		IntGfxProgramComponent::Apply();
 }
 
@@ -96,7 +96,7 @@ void IntGfxProgramComponent::SetInt(int32 a, int32 b, int32 c)
 	mValues[1] = b;
 	mValues[2] = c;
 
-	if(mProgram.Applied)
+	if(mProgram.IsApplied())
 		IntGfxProgramComponent::Apply();
 }
 
@@ -108,6 +108,6 @@ void IntGfxProgramComponent::SetInt(int32 a, int32 b, int32 c, int32 d)
 	mValues[2] = c;
 	mValues[3] = d;
 
-	if(mProgram.Applied)
+	if(mProgram.IsApplied())
 		IntGfxProgramComponent::Apply();
 }

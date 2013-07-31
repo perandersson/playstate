@@ -5,14 +5,12 @@
 using namespace playstate;
 
 Texture::Texture()
-	: mTextureId(0), mUniqueId(UUID::To32Bit()), mTextureFormat(TextureFormat::RGB),
-	Format(mTextureFormat), UniqueId(mUniqueId)
+	: mTextureId(0), mUniqueId(UUID::To32Bit()), mFormat(TextureFormat::RGB)
 {
 }
 
 Texture::Texture(TextureFormat::Enum format)
-	: mTextureId(0), mUniqueId(UUID::To32Bit()), mTextureFormat(format),
-	Format(mTextureFormat), UniqueId(mUniqueId)
+	: mTextureId(0), mUniqueId(UUID::To32Bit()), mFormat(format)
 {
 }
 
@@ -28,3 +26,14 @@ void Texture::BindToActiveTexture(GLenum type)
 {
 	StatePolicy::BindTexture(type, mTextureId);
 }
+
+TextureFormat::Enum Texture::GetFormat() const
+{
+	return mFormat;
+}
+
+uint32 Texture::GetUniqueId() const
+{
+	return mUniqueId;
+}
+

@@ -1,14 +1,12 @@
 #pragma once
+#include "../singleton.h"
 
 namespace playstate
 {
 	//
 	//
-	class ILogger
+	class ILogger : public Singleton<ILogger>
 	{
-	public:
-		virtual ~ILogger() {}
-
 	public:
 		virtual void Error(const char* msg, ...) = 0;
 		virtual void Info(const char* msg, ...) = 0;

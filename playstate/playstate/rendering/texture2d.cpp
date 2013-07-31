@@ -7,8 +7,7 @@ using namespace playstate;
 
 Texture2D::Texture2D(GLuint textureId, uint32 width, uint32 height, TextureFormat::Enum format) 
 	: Texture(format), mWidth(width), mHeight(height),
-	mMinFilter(MinFilter::UNKNOWN), mMagFilter(MagFilter::UNKNOWN), mWS(TextureWrap::UNKNOWN), mWT(TextureWrap::UNKNOWN),
-	Width(mWidth), Height(mHeight)
+	mMinFilter(MinFilter::UNKNOWN), mMagFilter(MagFilter::UNKNOWN), mWS(TextureWrap::UNKNOWN), mWT(TextureWrap::UNKNOWN)
 {
 	mTextureId = textureId;
 }
@@ -39,6 +38,16 @@ void Texture2D::Bind(MinFilter::Enum minFilter, MagFilter::Enum magFilter, Textu
 		mWT = wt;
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, mWT);
 	}
+}
+
+uint32 Texture2D::GetWidth() const
+{
+	return mWidth;
+}
+
+uint32 Texture2D::GetHeight() const
+{
+	return mHeight;
 }
 
 Texture2DResourceLoader::Texture2DResourceLoader(RenderSystem& renderSystem, IFileSystem& fileSystem) : 

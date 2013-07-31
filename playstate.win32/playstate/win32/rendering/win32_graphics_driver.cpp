@@ -1,14 +1,15 @@
-#include "../../memory/memory.h"
+#include <playstate/memory/memory.h>
 #include "win32_graphics_driver.h"
 #include "win32_render_context.h"
 #include <gl/glew.h>
 #include <gl/wglew.h>
 using namespace playstate;
+using namespace playstate::win32;
 
 template<> playstate::IGraphicsDriver* playstate::Singleton<playstate::IGraphicsDriver>::gSingleton = NULL;
+
 Win32GraphicsDriver::Win32GraphicsDriver(Win32Window& window)
-	: mWindowHandle(window.GetWindowHandle()), mScreenRenderContext(NULL), mDeviceContext(NULL),
-	IGraphicsDriver(mScreenRenderContext)
+	: mWindowHandle(window.GetWindowHandle()), mScreenRenderContext(NULL), mDeviceContext(NULL)
 {
 	PIXELFORMATDESCRIPTOR pfd = {0};
 	pfd.nSize = sizeof(PIXELFORMATDESCRIPTOR);
@@ -89,4 +90,9 @@ IRenderContext* Win32GraphicsDriver::CreateRenderContext(IRenderContext* context
 		THROW_EXCEPTION(RenderingException, "You'r graphics card does not support OpenGL 3.3");
 	}
 	return new Win32RenderContext(mDeviceContext, windowsRenderContext);
+}
+
+IRenderContext* Win32GraphicsDriver::GetScreenRenderContext()
+{
+	return mScreenRenderContext;
 }

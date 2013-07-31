@@ -27,9 +27,9 @@ namespace playstate
 		// Sort this result-set using the supplied array sorter.
 		void Sort(IArraySorter<RenderBlock*>* sorter);
 
-	public:
-		// Read-only property for the sorted render blocks
-		RenderBlock**& const SortedRenderBlocks;
+		//
+		// @return 
+		RenderBlock** GetSortedRenderBlocks();
 
 	private:
 		RenderBlock** mSortedRenderBlocks;

@@ -1,6 +1,8 @@
-#include "../../memory/memory.h"
+#include <playstate/memory/memory.h>
 #include "win32_lock.h"
+
 using namespace playstate;
+using namespace playstate::win32;
 
 Win32Lock::Win32Lock()// : mLockHandle(NULL)
 {

@@ -22,7 +22,7 @@ public:
 
 // IWindowResizeListener
 public:
-	virtual void OnWindowResized(IWindow& window, uint32 width, uint32 height);
+	virtual void OnWindowResized(uint32 width, uint32 height);
 		
 private:
 	void DrawGeometry(const Scene& scene, const Camera& camera);

@@ -1,6 +1,8 @@
-#include "../../memory/memory.h"
+#include <playstate/memory/memory.h>
 #include "win32_thread_event.h"
+
 using namespace playstate;
+using namespace playstate::win32;
 
 Win32ThreadEvent::Win32ThreadEvent(Win32Lock* lock) : mLock(lock)
 {

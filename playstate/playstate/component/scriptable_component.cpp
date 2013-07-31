@@ -16,7 +16,7 @@ ScriptableComponent::~ScriptableComponent()
 void ScriptableComponent::OnComponentAdded()
 {
 	if(mUpdateFunc != 0) {
-		Updatable::Attach(Node->Group);
+		Updatable::Attach(GetNode()->GetGroup());
 	}
 	
 	if(PrepareMethod("OnComponentAdded")) {
@@ -81,7 +81,7 @@ namespace playstate
 	{
 		ScriptableComponent* component = luaM_popobject<ScriptableComponent>(L);
 		if(component != NULL) {
-			luaM_pushobject(L, "SceneNode", component->Node);
+			luaM_pushobject(L, "SceneNode", component->GetNode());
 		} else {
 			lua_pushnil(L);
 		}
@@ -94,8 +94,8 @@ namespace playstate
 		Vector3 vec = luaM_popvector3(L);
 		ScriptableComponent* component = luaM_popobject<ScriptableComponent>(L);
 		if(component != NULL) {
-			SceneNode* owner = component->Node;
-			owner->SetPosition(owner->Position + vec);
+			SceneNode* owner = component->GetNode();
+			owner->SetPosition(owner->GetPosition() + vec);
 		}
 
 		return 0;
@@ -106,7 +106,7 @@ namespace playstate
 		Vector3 vec = luaM_popvector3(L);
 		ScriptableComponent* component = luaM_popobject<ScriptableComponent>(L);
 		if(component != NULL) {
-			SceneNode* owner = component->Node;
+			SceneNode* owner = component->GetNode();
 			owner->SetPosition(vec);
 		}
 
@@ -118,7 +118,7 @@ namespace playstate
 		Vector3 vec = luaM_popvector3(L);
 		ScriptableComponent* component = luaM_popobject<ScriptableComponent>(L);
 		if(component != NULL) {
-			SceneNode* owner = component->Node;
+			SceneNode* owner = component->GetNode();
 			owner->SetRotation(vec);
 		}
 
@@ -129,7 +129,7 @@ namespace playstate
 	{
 		ScriptableComponent* component = luaM_popobject<ScriptableComponent>(L);
 		if(component != NULL) {
-			luaM_pushvector3(L, component->Node->Position);
+			luaM_pushvector3(L, component->GetNode()->GetPosition());
 		} else {
 			luaM_pushvector3(L, Vector3::Zero);
 		}

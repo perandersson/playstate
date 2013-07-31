@@ -58,8 +58,8 @@ bool OctreeRenderProcessor::Find(const FindQuery& query, RenderBlockResultSet* t
 	state.Camera = query.Camera;
 
 	RenderableEventHandlerVisitor visitor(state, target);
-	mOctree.FindItems(state.Camera->ViewFrustum, &visitor);
-	return target->Size > 0;
+	mOctree.FindItems(state.Camera->GetViewFrustum(), &visitor);
+	return target->GetSize() > 0;
 }
 
 OctreeRenderProcessorFactory::OctreeRenderProcessorFactory()

@@ -6,8 +6,7 @@
 
 using namespace playstate;
 
-Camera::Camera() : ViewMatrix(mViewMatrix), ProjectionMatrix(mProjection), 
-	Position(mPosition), Center(mCenter), Up(mUp), ViewFrustum(mViewFrustum)
+Camera::Camera()
 {}
 
 Camera::~Camera()
@@ -30,14 +29,14 @@ void Camera::SetPerspective(float32 nearPlane, float32 farPlane, float32 fov, fl
 	float32 temp3 = top - bottom;
 	float32 temp4 = farPlane - nearPlane;
 
-	mProjection = Matrix4x4::Zero;
-	mProjection._11 = temp / temp2;
-	mProjection._22 = temp / temp3;
-	mProjection._31 = (right + left) / temp2;
-	mProjection._32 = (top + bottom) / temp3;
-	mProjection._33 = (-farPlane - nearPlane) / temp4;
-	mProjection._34 = -1.0f;
-	mProjection._43 = (-temp * farPlane) / temp4;
+	mProjectionMatrix = Matrix4x4::Zero;
+	mProjectionMatrix._11 = temp / temp2;
+	mProjectionMatrix._22 = temp / temp3;
+	mProjectionMatrix._31 = (right + left) / temp2;
+	mProjectionMatrix._32 = (top + bottom) / temp3;
+	mProjectionMatrix._33 = (-farPlane - nearPlane) / temp4;
+	mProjectionMatrix._34 = -1.0f;
+	mProjectionMatrix._43 = (-temp * farPlane) / temp4;
 
 	mViewFrustum.SetPerspective(nearPlane, farPlane, fov, ratio);
 }
@@ -51,17 +50,17 @@ void Camera::SetOrtho2D(float32 left, float32 right, float32 bottom, float32 top
 	float32 ty = -((top + bottom) / (top - bottom));
 	float32 tz = -((far + near) / (far - near));
 
-	mProjection = Matrix4x4::Zero;
+	mProjectionMatrix = Matrix4x4::Zero;
 
-	mProjection._11 = 2.0f / (right - left);
-	mProjection._14 = tx;
-	mProjection._22 = 2.0f / (top - bottom);
-	mProjection._24 = ty;
-	mProjection._33 = -2.0f / (far - near);
-	mProjection._34 = tz;
-	mProjection._44 = 1.0f;
+	mProjectionMatrix._11 = 2.0f / (right - left);
+	mProjectionMatrix._14 = tx;
+	mProjectionMatrix._22 = 2.0f / (top - bottom);
+	mProjectionMatrix._24 = ty;
+	mProjectionMatrix._33 = -2.0f / (far - near);
+	mProjectionMatrix._34 = tz;
+	mProjectionMatrix._44 = 1.0f;
 	// TODO: Seriously - need to fix so that matrices doesn't need to be transposed!!!
-	mProjection.Transpose();
+	mProjectionMatrix.Transpose();
 }
 
 void Camera::Move(const Vector3& direction)
@@ -90,6 +89,36 @@ void Camera::LookAt(const Vector3& eye, const Vector3& center, const Vector3& up
 	mViewFrustum.LookAt(eye, center, up);
 }
 
+const Frustum& Camera::GetViewFrustum() const
+{
+	return mViewFrustum;
+}
+
+const Matrix4x4& Camera::GetViewMatrix() const
+{
+	return mViewMatrix;
+}
+
+const Matrix4x4& Camera::GetProjectionMatrix() const
+{
+	return mProjectionMatrix;
+}
+
+const Vector3& Camera::GetPosition() const
+{
+	return mPosition;
+}
+
+const Vector3& Camera::GetUp() const
+{
+	return mUp;
+}
+
+const Vector3& Camera::GetCenter() const
+{
+	return mCenter;
+}
+
 namespace playstate
 {
 	int ActiveCamera_SetPerspective(lua_State* L)
@@ -99,7 +128,7 @@ namespace playstate
 		float32 farPlane = (float32)lua_tonumber(L, -1); lua_pop(L, 1);
 		float32 nearPlane = (float32)lua_tonumber(L, -1); lua_pop(L, 1);
 
-		GameRunner::Get().ActiveScene.ActiveCamera.SetPerspective(nearPlane, farPlane, fov, ratio);
+		GameRunner::Get().GetScene().GetActiveCamera().SetPerspective(nearPlane, farPlane, fov, ratio);
 		return 0;
 	}
 
@@ -109,7 +138,7 @@ namespace playstate
 		Vector3 center = luaM_popvector3(L);
 		Vector3 eye = luaM_popvector3(L);
 
-		GameRunner::Get().ActiveScene.ActiveCamera.LookAt(eye, center, up);
+		GameRunner::Get().GetScene().GetActiveCamera().LookAt(eye, center, up);
 		return 0;
 	}
 
@@ -117,7 +146,7 @@ namespace playstate
 	{
 		float* direction = (float*)lua_touserdata(L, -1); lua_pop(L, 1);
 
-		GameRunner::Get().ActiveScene.ActiveCamera.Move(Vector3(direction));
+		GameRunner::Get().GetScene().GetActiveCamera().Move(Vector3(direction));
 		return 0;
 	}
 }

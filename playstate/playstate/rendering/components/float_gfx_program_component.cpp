@@ -75,7 +75,7 @@ void FloatGfxProgramComponent::SetFloat(float32 a)
 	mCount = 1;
 	mValues[0] = a;
 
-	if(mProgram.Applied)
+	if(mProgram.IsApplied())
 		FloatGfxProgramComponent::Apply();
 }
 
@@ -85,7 +85,7 @@ void FloatGfxProgramComponent::SetFloat(float32 a, float32 b)
 	mValues[0] = a;
 	mValues[1] = b;
 
-	if(mProgram.Applied)
+	if(mProgram.IsApplied())
 		FloatGfxProgramComponent::Apply();
 }
 
@@ -96,7 +96,7 @@ void FloatGfxProgramComponent::SetFloat(float32 a, float32 b, float32 c)
 	mValues[1] = b;
 	mValues[2] = c;
 
-	if(mProgram.Applied)
+	if(mProgram.IsApplied())
 		FloatGfxProgramComponent::Apply();
 }
 
@@ -108,7 +108,7 @@ void FloatGfxProgramComponent::SetFloat(float32 a, float32 b, float32 c, float32
 	mValues[2] = c;
 	mValues[3] = d;
 
-	if(mProgram.Applied)
+	if(mProgram.IsApplied())
 		FloatGfxProgramComponent::Apply();
 }
 
@@ -120,7 +120,7 @@ void FloatGfxProgramComponent::SetColorRGBA(const Color& color)
 	mValues[2] = color.Blue;
 	mValues[3] = color.Alpha;
 
-	if(mProgram.Applied)
+	if(mProgram.IsApplied())
 		FloatGfxProgramComponent::Apply();
 }
 
@@ -131,7 +131,7 @@ void FloatGfxProgramComponent::SetColorRGB(const Color& color)
 	mValues[1] = color.Green;
 	mValues[2] = color.Blue;
 
-	if(mProgram.Applied)
+	if(mProgram.IsApplied())
 		FloatGfxProgramComponent::Apply();
 }
 
@@ -142,7 +142,7 @@ void FloatGfxProgramComponent::SetVector3(const Vector3& vec)
 	mValues[1] = vec.Y;
 	mValues[2] = vec.Z;
 
-	if(mProgram.Applied)
+	if(mProgram.IsApplied())
 		FloatGfxProgramComponent::Apply();
 }
 
@@ -152,6 +152,6 @@ void FloatGfxProgramComponent::SetVector2(const Vector2& vec)
 	mValues[0] = vec.X;
 	mValues[1] = vec.Y;
 
-	if(mProgram.Applied)
+	if(mProgram.IsApplied())
 		FloatGfxProgramComponent::Apply();
 }

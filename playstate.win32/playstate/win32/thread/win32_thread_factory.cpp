@@ -1,11 +1,13 @@
-#include "../../memory/memory.h"
+#include <playstate/memory/memory.h>
 #include "win32_thread_factory.h"
 #include "win32_thread.h"
 #include "win32_lock.h"
 #include "win32_thread_event.h"
-using namespace playstate;
 
-template<> playstate::IThreadFactory* playstate::Singleton<playstate::IThreadFactory>::gSingleton = NULL;
+using namespace playstate;
+using namespace playstate::win32;
+
+//template<> playstate::IThreadFactory* playstate::Singleton<playstate::IThreadFactory>::gSingleton = NULL;
 
 Win32ThreadFactory::Win32ThreadFactory() : mCoreCount(0)
 {

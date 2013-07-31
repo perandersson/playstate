@@ -1,4 +1,5 @@
 #include "../memory/memory.h"
+#include "../kernel.h"
 #include "game_runner.h"
 #include "scripted_configuration.h"
 #include "../model/wavefront/wavefront_resource_loader.h"
@@ -8,23 +9,14 @@ using namespace playstate;
 
 namespace playstate
 {
-	float32 _GameDeltaTime = 0.0f;
-	float64 _GameTotalTime = 0.0f;
-
-	const float32& GameDeltaTime = _GameDeltaTime;
-	const float64& GameTotalTime = _GameTotalTime;
+	float32 GameDeltaTime = 0.0f;
+	float64 GameTotalTime = 0.0f;
 }
 
 template<> playstate::GameRunner* playstate::Singleton<playstate::GameRunner>::gSingleton = NULL;
 
-GameRunner::GameRunner(IWindow& window, IFileSystem& fileSystem, ScriptSystem& scriptSystem,
-	RenderSystem& renderSystem, ResourceManager& resourceManager, IInputSystem& inputSystem,
-	IGame* game, IConfiguration* configuration) 
-	: mWindow(window), mFileSystem(fileSystem), mScriptSystem(scriptSystem),
-	mRenderSystem(renderSystem), mResourceManager(resourceManager), mInputSystem(inputSystem),
-	mGame(game), mConfiguration(configuration), mRenderPipeline(NULL), mRunning(true),
-	mScreenRenderContext(IGraphicsDriver::Get().ScreenRenderContext),
-	ActiveScene(mScene)
+GameRunner::GameRunner(IGame* game, IConfiguration* configuration) 
+	: mGame(game), mConfiguration(configuration), mRenderPipeline(NULL), mRunning(true)
 {
 	assert_not_null(game);
 	assert_not_null(configuration);
@@ -61,35 +53,38 @@ void GameRunner::Start()
 
 void GameRunner::StartLevel(const std::string& level)
 {
-	std::auto_ptr<Script> script = mScriptSystem.CompileFile(level);
+	ScriptSystem& scriptSystem = ScriptSystem::Get();
+
+	std::auto_ptr<Script> script = scriptSystem.CompileFile(level);
 	SceneGroup* group = script->ReadInstance<SceneGroup>();
 	mScene.AddSceneGroup(group);
 
-	while(mRunning) {
-		_GameDeltaTime = mWindow.GetTimeSinceLastUpdate();
-		_GameTotalTime += (float64)GameDeltaTime;
+	IKernel& kernel = IKernel::Get();
+	IWindow& window = IWindow::Get();
+	IRenderContext* screenRenderContext = IGraphicsDriver::Get().GetScreenRenderContext();
 
-		mScriptSystem.SetGlobalVar("GameDeltaTime", GameDeltaTime);
-		mScriptSystem.SetGlobalVar("GameTotalTime", GameTotalTime);
+	while(mRunning) {
+		GameDeltaTime = window.GetTimeSinceLastUpdate();
+		GameTotalTime += (float64)GameDeltaTime;
+
+		scriptSystem.SetGlobalVar("GameDeltaTime", GameDeltaTime);
+		scriptSystem.SetGlobalVar("GameTotalTime", GameTotalTime);
 
 		mScene.Update();
 		mGame->Update();
-		mRenderPipeline->Render(mScene, mScene.ActiveCamera);
+		mRenderPipeline->Render(mScene, mScene.GetActiveCamera());
 		mGame->Render();
 		
-		mScreenRenderContext->SwapBuffers();
-		mWindow.HandleEvents();
-		mInputSystem.Poll();
-		mResourceManager.Poll();
-
-		mScriptSystem.HandleGC();
+		screenRenderContext->SwapBuffers();
+		kernel.Process();
 	}
 }
 
 SceneGroup* GameRunner::LoadLevel(const std::string& fileName)
 {
 	try {
-		std::auto_ptr<Script> script = mScriptSystem.CompileFile(fileName);
+		ScriptSystem& scriptSystem = ScriptSystem::Get();
+		std::auto_ptr<Script> script = scriptSystem.CompileFile(fileName);
 		SceneGroup* grp = script->ReadInstance<SceneGroup>();
 		return grp;
 	} catch(ScriptException e) {
@@ -108,30 +103,46 @@ void GameRunner::SetRenderPipeline(IRenderPipeline* renderPipeline)
 
 bool GameRunner::Initialize()
 {
+	ResourceManager& resourceManager = ResourceManager::Get();
+	IFileSystem& fileSystem = IFileSystem::Get();
+	RenderSystem& renderSystem = RenderSystem::Get();
+	IWindow& window = IWindow::Get();
+
 	// Register resource types
-	mResourceManager.RegisterResourceType(new Texture2DResourceLoader(mRenderSystem, mFileSystem), ".png");
-	mResourceManager.RegisterResourceType(new WavefrontResourceLoader(mResourceManager, mFileSystem), ".obj");
+	resourceManager.RegisterResourceType(new Texture2DResourceLoader(renderSystem, fileSystem), ".png");
+	resourceManager.RegisterResourceType(new WavefrontResourceLoader(resourceManager, fileSystem), ".obj");
 
 	int32 width = mConfiguration->FindInt("window.width");
 	int32 height = mConfiguration->FindInt("window.height");
 	std::string title = mConfiguration->FindString("window.title");
 
-	mWindow.Resize(width, height);
-	mWindow.SetTitle(title);
-	mWindow.AddWindowClosedListener(this);
+	window.Resize(width, height);
+	window.SetTitle(title);
+	window.AddWindowClosedListener(this);
 	
 	return true;
 }
 
 void GameRunner::Release()
 {
-	mWindow.RemoveWindowClosedListener(this);
+	IWindow& window = IWindow::Get();
+	window.RemoveWindowClosedListener(this);
 }
 
-bool GameRunner::OnWindowClosing(IWindow& window)
+bool GameRunner::OnWindowClosing()
 {
 	mRunning = false;
 	return true;
+}
+
+const Scene& GameRunner::GetScene() const
+{
+	return mScene;
+}
+
+Scene& GameRunner::GetScene()
+{
+	return mScene;
 }
 
 //
@@ -147,13 +158,11 @@ namespace playstate
 
 		ScriptableGame* game = luaM_getobject<ScriptableGame>(L);
 		if(game != NULL) {
-			GameRunner* runner = new GameRunner(IWindow::Get(), IFileSystem::Get(), ScriptSystem::Get(), 
-				RenderSystem::Get(), ResourceManager::Get(), IInputSystem::Get(), game, configuration);
-			runner->Start();
+			GameRunner runner(game, configuration);
+			runner.Start();
 
 			delete game;
 			delete configuration;
-			delete runner;
 		}
 
 		return 0;

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../singleton.h"
 #include "file.h"
 #include "directory.h"
 
@@ -9,11 +10,8 @@ namespace playstate
 {
 	//
 	// 
-	class IFileSystem
+	class IFileSystem : public Singleton<IFileSystem>
 	{
-	public:
-		virtual ~IFileSystem() {}
-
 	public:
 		//
 		// Tries to open a file for the supplied absolute path.

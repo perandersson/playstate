@@ -77,8 +77,8 @@ void DeferredRenderPipeline::DrawGeometry(const Scene& scene, const Camera& came
 		mDeferredShader->Clear(ClearTypes::COLOR | ClearTypes::DEPTH);
 
 		// Set the cameras projection- and view matrix
-		mDeferredShader->FindComponent("ProjectionMatrix")->SetMatrix(camera.ProjectionMatrix);
-		mDeferredShader->FindComponent("ViewMatrix")->SetMatrix(camera.ViewMatrix);
+		mDeferredShader->FindComponent("ProjectionMatrix")->SetMatrix(camera.GetProjectionMatrix());
+		mDeferredShader->FindComponent("ViewMatrix")->SetMatrix(camera.GetViewMatrix());
 		
 		IGfxProgramComponent* modelMatrix = mDeferredShader->FindComponent("ModelMatrix");
 		IGfxProgramComponent* diffuseTexture = mDeferredShader->FindComponent("DiffuseTexture");
@@ -86,8 +86,10 @@ void DeferredRenderPipeline::DrawGeometry(const Scene& scene, const Camera& came
 		
 		// Draw scene objects
 		GfxProgram* deferredShader = mDeferredShader.get();
-		for(uint32 index = 0; index < mRenderBlockResultSet.Size; ++index) {
-			RenderBlock* block = mRenderBlockResultSet.SortedRenderBlocks[index];
+		uint32 size = mRenderBlockResultSet.GetSize();
+		RenderBlock** blocks = mRenderBlockResultSet.GetSortedRenderBlocks();
+		for(uint32 index = 0; index < size; ++index) {
+			RenderBlock* block = blocks[index];
 			diffuseTexture->SetTexture(block->DiffuseTexture);
 			diffuseColor->SetColorRGB(block->DiffuseColor);
 			modelMatrix->SetMatrix(block->ModelMatrix);
@@ -112,8 +114,8 @@ void DeferredRenderPipeline::DrawLighting(const Scene& scene, const Camera& came
 		mPointLightShader->Apply();
 		mPointLightShader->Clear(ClearTypes::COLOR);
 
-		mPointLightShader->FindComponent("ProjectionMatrix")->SetMatrix(camera.ProjectionMatrix);
-		mPointLightShader->FindComponent("ViewMatrix")->SetMatrix(camera.ViewMatrix);
+		mPointLightShader->FindComponent("ProjectionMatrix")->SetMatrix(camera.GetProjectionMatrix());
+		mPointLightShader->FindComponent("ViewMatrix")->SetMatrix(camera.GetViewMatrix());
 		mPointLightShader->FindComponent("LightTexture")->SetTexture(mPointLightTexture);
 		
 		IGfxProgramComponent* modelMatrix = mPointLightShader->FindComponent("ModelMatrix");
@@ -124,19 +126,21 @@ void DeferredRenderPipeline::DrawLighting(const Scene& scene, const Camera& came
 		IGfxProgramComponent* quadraticAttenuation = mPointLightShader->FindComponent("QuadraticAttenuation");
 		IGfxProgramComponent* lightRadius = mPointLightShader->FindComponent("LightRadius");
 
-		for(uint32 index = 0; index < mLightSourceResultSet.Size; ++index) {
-			LightSource* lightSource = mLightSourceResultSet.Elements[index];
+		uint32 size = mLightSourceResultSet.GetSize();
+		LightSource** lightSources = mLightSourceResultSet.GetElements();
+		for(uint32 index = 0; index < size; ++index) {
+			LightSource* lightSource = lightSources[index];
 			PointLight* pl = dynamic_cast<PointLight*>(lightSource);
 			if(pl != NULL)   {
 				// TODO Render point lights as six spot-lights with texture "LightTexture" that's specified above.
-				modelMatrix->SetMatrix(CalculateBillboardModelMatrix(pl->Node->AbsolutePosition, camera));
+				modelMatrix->SetMatrix(CalculateBillboardModelMatrix(pl->GetNode()->GetAbsolutePosition(), camera));
 				
-				lightColor->SetColorRGB(pl->LightColor);
-				lightPosition->SetVector3(pl->Node->AbsolutePosition);
-				constantAttenuation->SetFloat(pl->ConstantAttenuation);
-				linearAttenuation->SetFloat(pl->LinearAttenuation);
-				quadraticAttenuation->SetFloat(pl->QuadricAttenuation);
-				lightRadius->SetFloat(pl->Radius);
+				lightColor->SetColorRGB(pl->GetColor());
+				lightPosition->SetVector3(pl->GetNode()->GetAbsolutePosition());
+				constantAttenuation->SetFloat(pl->GetConstantAttenuation());
+				linearAttenuation->SetFloat(pl->GetLinearAttenuation());
+				quadraticAttenuation->SetFloat(pl->GetQuadricAttenuation());
+				lightRadius->SetFloat(pl->GetRadius());
 
 				mPointLightShader->Render(mRenderSystem.UniformVertexBuffer);
 			}
@@ -148,8 +152,8 @@ void DeferredRenderPipeline::DrawLighting(const Scene& scene, const Camera& came
 
 Matrix4x4 DeferredRenderPipeline::CalculateBillboardModelMatrix(const Vector3& position, const Camera& camera)
 {
-	const Vector3 direction = (camera.Position - position).GetNormalized();
-	const Vector3 right = camera.Up.CrossProduct(direction);
+	const Vector3 direction = (camera.GetPosition() - position).GetNormalized();
+	const Vector3 right = camera.GetUp().CrossProduct(direction);
 	const Vector3 up = direction.CrossProduct(right);
 
 	Matrix4x4 mat(right.X, right.Y, right.Z, 0.0f,
@@ -163,11 +167,11 @@ void DeferredRenderPipeline::DrawFinalResultToScreen(const Scene& scene, const C
 {
 	mTexturedShader->Apply();
 	mTexturedShader->Clear(ClearTypes::COLOR);
-	mTexturedShader->FindComponent("AmbientColor")->SetColorRGB(scene.AmbientLight);
+	mTexturedShader->FindComponent("AmbientColor")->SetColorRGB(scene.GetAmbientLight());
 	mTexturedShader->Render(mRenderSystem.UniformVertexBuffer);
 }
 
-void DeferredRenderPipeline::OnWindowResized(IWindow& window, uint32 width, uint32 height)
+void DeferredRenderPipeline::OnWindowResized(uint32 width, uint32 height)
 {
 	delete mDiffuseRenderTarget;
 	delete mPositionsRenderTarget;
