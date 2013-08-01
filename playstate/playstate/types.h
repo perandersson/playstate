@@ -131,3 +131,7 @@ namespace playstate
 #define assert_not_null(param) \
 	assert(param != NULL && "Parameter "## #param ##" cannot be NULL")
 #endif
+
+#ifndef OFFSET
+#define OFFSET(x) ((char *)NULL + x)
+#endif

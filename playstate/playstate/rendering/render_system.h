@@ -14,16 +14,12 @@
 #include "window_render_context.h"
 #include "../window/window.h"
 #include "factories/gfx_program_factory.h"
+#include "factories/vertex_array_object_factories.h"
 
 #include <gl/glew.h>
 
-#ifndef OFFSET
-#define OFFSET(x) ((char *)NULL + x)
-#endif
-
 namespace playstate
 {
-
 	//
 	// 
 	class RenderSystem : public Singleton<RenderSystem>, public IWindowResizedListener
@@ -40,17 +36,39 @@ namespace playstate
 		// @return
 		GfxProgram* LoadGfxProgram(const std::string& fileName);
 
+		//
+		// @return The shader-version on the current computer.
+		const Version& GetShaderVersion() const;
+
+		//
+		// @return A vertex buffer representing a uniform [-1, 1] buffer.
+		VertexBuffer* GetUniformVertexBuffer() const;
+
+		//
+		// Creates an index buffer based on a supplied of indices
+		// @return A bindable and renderable index buffer
+		// @throws RenderingException
+		IndexBuffer* CreateStatic(uint32* indices, uint32 numIndices);
+
+		
+		VertexBuffer* CreateStatic(PositionData* elements, uint32 numElements);
+		VertexBuffer* CreateStatic(PositionTexCoordData* elements, uint32 numElements);
+		VertexBuffer* CreateStatic(PositionNormalData* elements, uint32 numElements);
+		VertexBuffer* CreateStatic(PositionNormalTextureData* elements, uint32 numElements);
+		
+		//
+		// Creates a new render target based on the supplied width, height and format.
+		//
+		// @param width The render targets width
+		// @param height The render targets height
+		// @param format What types of components should be in use for this render target
+		// @throws RenderingException If an error occured while creating the render target
+		RenderTarget2D* CreateRenderTarget2D(uint32 width, uint32 height, TextureFormat::Enum format);
+
 	// IWindowResizedListener
 	public:
 		virtual void OnWindowResized(uint32 width, uint32 height);
-
-	public:
-		// Read-only property where the uniform [-1, 1] vertex buffer is located
-		VertexBuffer*& const UniformVertexBuffer;
-
-		// Read-only property of the shader version on the current computer.
-		const Version& ShaderVersion;
-
+		
 	private:
 		//
 		// Sets the supplied render target to the given attachment index number.
@@ -83,9 +101,15 @@ namespace playstate
 		uint32 mScreenHeight;
 
 		GfxProgramFactory* mProgramFactory;
+		LinkedList<GfxProgram, &GfxProgram::Link> mGfxPrograms;
 
 		GLuint mFrameBufferId;
 		RenderTarget2D* mRenderTargets[MaxDrawBuffers];
 		RenderTarget2D* mDepthRenderTarget;
+
+		PositionVAOFactory mPositionVAOFactory;
+		PositionTexCoordVAOFactory mPositionTexCoordVAOFactory;
+		PositionNormalVAOFactory mPositionNormalVAOFactory;
+		PositionNormalTextureVAOFactory mPositionNormalTextureVAOFactory;
 	};
 }

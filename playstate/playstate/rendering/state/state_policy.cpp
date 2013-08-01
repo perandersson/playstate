@@ -19,6 +19,11 @@ namespace {
 
 	uint32 _activeTexture = 0;
 	uint32 _bindTextures[MaxActiveTextures] = {0};
+
+	GLint _viewport_x = 0;
+	GLint _viewport_y = 0;
+	GLsizei _viewport_width = 0;
+	GLsizei _viewport_height = 0;
 }
 
 void StatePolicy::UseProgram(GLuint programID)
@@ -144,4 +149,42 @@ void StatePolicy::BindTexture(GLenum type, GLuint texture)
 
 	glBindTexture(type, texture);
 	_bindTextures[_activeTexture] = texture;
+}
+
+void StatePolicy::Viewport(GLint x, GLint y, GLsizei width, GLsizei height)
+{
+	if(_viewport_x == x && _viewport_y == y && _viewport_width == width && _viewport_height == height)
+		return;
+
+	glViewport(x, y, width, height);
+	_viewport_x = x;
+	_viewport_y = y;
+	_viewport_width = width;
+	_viewport_height = height;
+}
+
+void StatePolicy::MarkAsDirty()
+{
+	UseProgram(0);
+	
+	EnableDepthTest(true);
+	SetDepthFunc(DepthFunc::LEQUAL);
+
+	EnableBlend(false);
+	SetBlendFunc(SrcBlend::SRC_ALPHA, DestBlend::ONE_MINUS_DST_ALPHA);
+
+	SetCullFaces(CullFaces::CCW);
+
+	SetClearColor(Color::Nothing);
+	SetClearDepth(1.0f);
+
+	SetActiveTexture(0);
+	for(uint32 i = 0; i < MaxActiveTextures; ++i) {
+		_bindTextures[i] = 0;
+	}
+	
+	_viewport_x = 0;
+	_viewport_y = 0;
+	_viewport_width = 0;
+	_viewport_height = 0;
 }

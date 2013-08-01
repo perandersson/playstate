@@ -17,6 +17,7 @@ namespace playstate
 	public:
 		virtual void Apply();
 		virtual void SetMatrix(const Matrix4x4& matrix);
+		virtual void MarkAsDirty();
 
 	private:
 		GfxProgram& mProgram;

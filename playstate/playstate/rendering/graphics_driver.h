@@ -12,6 +12,7 @@ namespace playstate
 	public:
 		//
 		// Creates a new render context
+		//
 		// @return
 		virtual IRenderContext* CreateRenderContext() = 0;
 
@@ -20,6 +21,7 @@ namespace playstate
 		// The render contexts internal resources are shared between with the supplied one.
 		// This is useful for when trying to perform graphics related functionality from multiple threads
 		// while later be able to use them in the main thread.
+		//
 		// @param context
 		// @return A new render context instance
 		virtual IRenderContext* CreateRenderContext(IRenderContext* context) = 0;

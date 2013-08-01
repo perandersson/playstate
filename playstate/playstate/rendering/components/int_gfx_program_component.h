@@ -20,6 +20,7 @@ namespace playstate
 		virtual void SetInt(int32 a, int32 b);
 		virtual void SetInt(int32 a, int32 b, int32 c);
 		virtual void SetInt(int32 a, int32 b, int32 c, int32 d);
+		virtual void MarkAsDirty();
 
 	private:
 		GfxProgram& mProgram;

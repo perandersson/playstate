@@ -97,6 +97,17 @@ void GfxProgram::Apply()
 	ApplyComponents();
 }
 
+void GfxProgram::MarkAsDirty()
+{
+	ComponentMap::iterator it = mComponents.begin();
+	ComponentMap::const_iterator end = mComponents.end();
+	for(;it != end; ++it) {
+		it->second->MarkAsDirty();
+	}
+
+	mApplied = false;
+}
+
 void GfxProgram::Clear(uint32 clearBits)
 {
 	GLenum clear = 0;
@@ -276,7 +287,6 @@ void GfxProgram::SetDepthRenderTarget(RenderTarget2D* renderTarget)
 	mDepthRenderTarget = renderTarget;
 
 	if(mApplied) {
-		uint32 rtId = renderTarget != NULL ? renderTarget->GetUniqueId() : 0;
 		mApplyRenderTarget = true;
 		mRenderSystem.SetDepthRenderTarget(renderTarget);
 	}
@@ -288,7 +298,6 @@ void GfxProgram::SetRenderTarget(RenderTarget2D* renderTarget, uint32 index)
 	mRenderTargets[index] = renderTarget;
 
 	if(mApplied) {
-		uint32 rtId = renderTarget != NULL ? renderTarget->GetUniqueId() : 0;
 		mApplyRenderTarget = true;
 		mRenderSystem.SetRenderTarget(renderTarget, index);
 	}

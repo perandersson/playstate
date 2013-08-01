@@ -6,14 +6,13 @@ template<> playstate::RenderSystem* playstate::Singleton<playstate::RenderSystem
 
 namespace {
 	GLuint _current_frameBufferObject = 0;
-	uint32 _current_depthRenderTarget = 0;
-	uint32 _current_renderTargets[MaxDrawBuffers] = {0};
+	RenderTarget2D* _current_depthRenderTarget = NULL;
+	RenderTarget2D* _current_renderTargets[MaxDrawBuffers] = {NULL};
 }
 
 RenderSystem::RenderSystem(IWindow& window, ScriptSystem& scriptSystem) : mWindow(window), mProgramFactory(NULL), 
 	mUniformVertexBuffer(NULL), 
-	mFrameBufferId(0), mDepthRenderTarget(NULL), mScreenWidth(window.GetWidth()), mScreenHeight(window.GetHeight()),
-	UniformVertexBuffer(mUniformVertexBuffer), ShaderVersion(mShaderVersion)
+	mFrameBufferId(0), mDepthRenderTarget(NULL), mScreenWidth(window.GetWidth()), mScreenHeight(window.GetHeight())
 {
 	memset(mRenderTargets, 0, sizeof(mRenderTargets));
 	mWindow.AddWindowResizedListener(this);
@@ -28,7 +27,6 @@ RenderSystem::RenderSystem(IWindow& window, ScriptSystem& scriptSystem) : mWindo
 	sscanf((const char*)str, "%d.%d", &major, &minor);
 	mShaderVersion = Version(major, minor);
 	
-	//glShadeModel(GL_SMOOTH); // Deprecated > 3.0
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClearDepth(1.0f);
 	glEnable(GL_DEPTH_TEST);
@@ -37,7 +35,6 @@ RenderSystem::RenderSystem(IWindow& window, ScriptSystem& scriptSystem) : mWindo
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_2D, 0);
 
 	glFrontFace(GL_CCW);
 	glCullFace(GL_BACK);
@@ -67,11 +64,7 @@ RenderSystem::RenderSystem(IWindow& window, ScriptSystem& scriptSystem) : mWindo
 	elements[5].Position.Set(1.0f, -1.0f, 0.0f);
 	elements[5].TexCoord.Set(1.0f, 0.0f);
 
-	mUniformVertexBuffer = VertexBuffer::CreateStatic(elements, 6);
-	
-	GLenum status = glGetError();
-	if(status != GL_NO_ERROR)
-		THROW_EXCEPTION(RenderingException, "Could not create uniform vertex buffer buffer. Reason: %d", status);
+	mUniformVertexBuffer = CreateStatic(elements, 6);
 }
 
 RenderSystem::~RenderSystem()
@@ -89,6 +82,7 @@ RenderSystem::~RenderSystem()
 	}
 
 	delete mProgramFactory; mProgramFactory = NULL;
+	mGfxPrograms.DeleteAll();
 }
 
 bool RenderSystem::IsValidVersion() const
@@ -101,14 +95,25 @@ bool RenderSystem::IsValidVersion() const
 
 GfxProgram* RenderSystem::LoadGfxProgram(const std::string& fileName)
 {
-	return mProgramFactory->Create(fileName);
+	GfxProgram* program = mProgramFactory->Create(fileName);
+	mGfxPrograms.AddLast(program);
+	return program;
 }
 
 void RenderSystem::OnWindowResized(uint32 width, uint32 height)
 {
 	mScreenWidth = width;
 	mScreenHeight = height;
-	glViewport(0, 0, mScreenWidth, mScreenHeight);
+
+	// Mark system as dirty
+	StatePolicy::MarkAsDirty();
+
+	// Mark gfx programs as dirty
+	GfxProgram* program = mGfxPrograms.First();
+	while(program != NULL) {
+		program->MarkAsDirty();
+		program = program->Link.Tail;
+	}
 
 	CHECK_GL_ERROR();
 }
@@ -141,7 +146,7 @@ void RenderSystem::ApplyRenderTargets()
 	if(disableFBO) {
 		if(_current_frameBufferObject != 0) {
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
-			glViewport(0, 0, mScreenWidth, mScreenHeight);
+			StatePolicy::Viewport(0, 0, mScreenWidth, mScreenHeight);
 			_current_frameBufferObject = 0;
 		}
 		
@@ -158,8 +163,8 @@ void RenderSystem::ApplyRenderTargets()
 	GLsizei height = 0;
 
 	if(mDepthRenderTarget != NULL) {
-		if(_current_depthRenderTarget != mDepthRenderTarget->GetUniqueId()) {
-			_current_depthRenderTarget = mDepthRenderTarget->GetUniqueId();
+		if(_current_depthRenderTarget != mDepthRenderTarget) {
+			_current_depthRenderTarget = mDepthRenderTarget;
 			GLenum attachmentType = GL_DEPTH_ATTACHMENT;
 			if(mDepthRenderTarget->GetFormat() == TextureFormat::DEPTH24_STENCIL8)
 				attachmentType = GL_DEPTH_STENCIL_ATTACHMENT;
@@ -168,6 +173,8 @@ void RenderSystem::ApplyRenderTargets()
 	} else {
 		if(_current_depthRenderTarget != NULL) {
 			GLenum attachmentType = GL_DEPTH_ATTACHMENT;
+			if(_current_depthRenderTarget->GetFormat() == TextureFormat::DEPTH24_STENCIL8)
+				attachmentType = GL_DEPTH_STENCIL_ATTACHMENT;
 			_current_depthRenderTarget = 0;
 			glFramebufferTexture2D(GL_FRAMEBUFFER, attachmentType, GL_TEXTURE_2D, 0, 0);
 		}
@@ -181,8 +188,8 @@ void RenderSystem::ApplyRenderTargets()
 			width = rt->GetWidth();
 			height = rt->GetHeight();
 			drawBuffers[numDrawBuffers++] = GL_COLOR_ATTACHMENT0 + i;
-			if(_current_renderTargets[i] != rt->GetUniqueId()) {
-				_current_renderTargets[i] = rt->GetUniqueId();
+			if(_current_renderTargets[i] != rt) {
+				_current_renderTargets[i] = rt;
 				rt->BindToFrameBuffer(GL_COLOR_ATTACHMENT0 + i);
 			}
 		} else {
@@ -194,7 +201,7 @@ void RenderSystem::ApplyRenderTargets()
 	}
 	glDrawBuffers(numDrawBuffers, drawBuffers);
 
-	glViewport(0, 0, width, height);
+	StatePolicy::Viewport(0, 0, width, height);
 
 	// Check for any GL errors
 	GLenum status = glGetError();
@@ -241,4 +248,168 @@ void RenderSystem::ApplyRenderTargets()
 		THROW_EXCEPTION(RenderingException, "Unknow error");
         break;
     }
+}
+
+const Version& RenderSystem::GetShaderVersion() const
+{
+	return mShaderVersion;
+}
+
+VertexBuffer* RenderSystem::GetUniformVertexBuffer() const
+{
+	return mUniformVertexBuffer;
+}
+
+IndexBuffer* RenderSystem::CreateStatic(uint32* indices, uint32 numIndices)
+{
+	GLuint indexBuffer;
+	glGenBuffers(1, &indexBuffer);
+	
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, numIndices * sizeof(uint32), indices, GL_STATIC_DRAW);
+	
+	GLenum status = glGetError();
+	if(status != GL_NO_ERROR) {
+		THROW_EXCEPTION(RenderingException, "Could not create index buffer. Reason: %d", status);
+	}
+
+	return new IndexBuffer(indexBuffer, numIndices);
+}
+
+
+VertexBuffer* RenderSystem::CreateStatic(PositionData* elements, uint32 numElements)
+{
+	GLuint bufferID;
+	glGenBuffers(1, &bufferID);
+
+	glBindBuffer(GL_ARRAY_BUFFER, bufferID);
+	glBufferData(GL_ARRAY_BUFFER, numElements * sizeof(PositionData), elements, GL_STATIC_DRAW);
+	glFlush();
+
+	GLenum status = glGetError();
+	if(status != GL_NO_ERROR) {
+		THROW_EXCEPTION(RenderingException, "Could not create vertex buffer. Reason: %d", status);
+	}
+	
+	return new VertexBuffer(GL_TRIANGLES, mPositionVAOFactory, bufferID, numElements);
+}
+
+VertexBuffer* RenderSystem::CreateStatic(PositionTexCoordData* elements, uint32 numElements)
+{
+	GLuint bufferID;
+	glGenBuffers(1, &bufferID);
+
+	glBindBuffer(GL_ARRAY_BUFFER, bufferID);
+	glBufferData(GL_ARRAY_BUFFER, numElements * sizeof(PositionTexCoordData), elements, GL_STATIC_DRAW);
+	glFlush();
+
+	GLenum status = glGetError();
+	if(status != GL_NO_ERROR) {
+		THROW_EXCEPTION(RenderingException, "Could not create vertex buffer. Reason: %d", status);
+	}
+
+	return new VertexBuffer(GL_TRIANGLES, mPositionTexCoordVAOFactory, bufferID, numElements);
+}
+
+VertexBuffer* RenderSystem::CreateStatic(PositionNormalData* elements, uint32 numElements)
+{
+	GLuint bufferID;
+	glGenBuffers(1, &bufferID);
+
+	glBindBuffer(GL_ARRAY_BUFFER, bufferID);
+	glBufferData(GL_ARRAY_BUFFER, numElements * sizeof(PositionNormalData), elements, GL_STATIC_DRAW);
+	glFlush();
+
+	GLenum status = glGetError();
+	if(status != GL_NO_ERROR) {
+		THROW_EXCEPTION(RenderingException, "Could not create vertex buffer. Reason: %d", status);
+	}
+	
+	return new VertexBuffer(GL_TRIANGLES, mPositionNormalVAOFactory, bufferID, numElements);
+}
+
+VertexBuffer* RenderSystem::CreateStatic(PositionNormalTextureData* elements, uint32 numElements)
+{
+	GLuint bufferID;
+	glGenBuffers(1, &bufferID);
+
+	glBindBuffer(GL_ARRAY_BUFFER, bufferID);
+	glBufferData(GL_ARRAY_BUFFER, numElements * sizeof(PositionNormalTextureData), elements, GL_STATIC_DRAW);
+	glFlush();
+
+	GLenum status = glGetError();
+	if(status != GL_NO_ERROR) {
+		THROW_EXCEPTION(RenderingException, "Could not create vertex buffer. Reason: %d", status);
+	}
+
+	return new VertexBuffer(GL_TRIANGLES, mPositionNormalTextureVAOFactory, bufferID, numElements);
+}
+
+RenderTarget2D* RenderSystem::CreateRenderTarget2D(uint32 width, uint32 height, TextureFormat::Enum format)
+{
+	assert(width > 0.0f && "You cannot create a render target with 0 width");
+	assert(height > 0.0f && "You cannot create a render target with 0 height");
+
+	GLint _format = GL_RGBA;
+	GLint _internalFormat = GL_RGBA;
+	GLenum _minMag = GL_LINEAR;
+
+	switch(format)
+	{
+	case TextureFormat::RGB:
+		_format = GL_RGB;
+		_internalFormat = GL_RGB;
+		break;
+	case TextureFormat::RGBA:
+		break;
+	case TextureFormat::RGBA8:
+		_format = GL_RGBA;
+		_internalFormat = GL_RGBA8;
+		break;
+	case TextureFormat::RGBA12:
+		_format = GL_RGBA;
+		_internalFormat = GL_RGBA12;
+		break;
+	case TextureFormat::RGBA16:
+		_format = GL_RGBA;
+		_internalFormat = GL_RGBA16;
+		break;
+	case TextureFormat::RGB10_A2:
+		_format = GL_RGBA;
+		_internalFormat = GL_RGB10_A2;
+		break;
+	case TextureFormat::RGBA16F:
+		_format = GL_RGBA;
+		_internalFormat = GL_RGBA16F;
+		break;
+	case TextureFormat::DEPTH24:
+		_format = GL_DEPTH_COMPONENT;
+		_internalFormat = GL_DEPTH_COMPONENT24;
+		_minMag = GL_NEAREST;
+		break;
+	case TextureFormat::DEPTH24_STENCIL8:
+		_format = GL_DEPTH_STENCIL;
+		_internalFormat = GL_DEPTH24_STENCIL8;
+		_minMag = GL_NEAREST;
+		break;
+	}
+
+	GLuint boundTextureId = 0;
+	glGetIntegerv(GL_TEXTURE_BINDING_2D, (GLint*)&boundTextureId);
+
+	GLuint textureId = 0;
+	glGenTextures(1, &textureId);
+	glBindTexture(GL_TEXTURE_2D, textureId);
+	glTexImage2D(GL_TEXTURE_2D, 0, _internalFormat, width, height, 0, _format, GL_FLOAT, NULL);
+	glFlush();
+
+	if(boundTextureId != 0)
+		glBindTexture(GL_TEXTURE_2D, boundTextureId);
+
+	GLenum status = glGetError();
+	if(status != GL_NO_ERROR) {
+		THROW_EXCEPTION(RenderingException, "Could not create 2D render target. Reason: %d", status);
+	}
+
+	return new RenderTarget2D(textureId, width, height, format);
 }

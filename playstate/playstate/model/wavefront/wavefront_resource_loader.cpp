@@ -12,8 +12,8 @@ using namespace playstate;
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
 
-WavefrontResourceLoader::WavefrontResourceLoader(ResourceManager& resourceManager, IFileSystem& fileSystem) 
-	: mResourceManager(resourceManager), mFileSystem(fileSystem), mDefaultResource(NULL)
+WavefrontResourceLoader::WavefrontResourceLoader(ResourceManager& resourceManager, IFileSystem& fileSystem, RenderSystem& renderSystem) 
+	: mResourceManager(resourceManager), mFileSystem(fileSystem), mRenderSystem(renderSystem), mDefaultResource(NULL)
 {
 }
 
@@ -263,7 +263,7 @@ void WavefrontResourceLoader::LoadMesh(std::istringstream& stream, std::vector<W
 			if(currentMaterial.length() > 0) {
 				WavefrontMesh* mesh = new WavefrontMesh();
 				mesh->Material = currentMaterial;
-				mesh->Vertices = VertexBuffer::CreateStatic(data, numVertices);
+				mesh->Vertices = mRenderSystem.CreateStatic(data, numVertices);
 				meshes.push_back(mesh);
 				
 				numVertices = 0;
@@ -312,7 +312,7 @@ void WavefrontResourceLoader::LoadMesh(std::istringstream& stream, std::vector<W
 	if(currentMaterial.length() > 0) {
 		WavefrontMesh* mesh = new WavefrontMesh();
 		mesh->Material = currentMaterial;
-		mesh->Vertices = VertexBuffer::CreateStatic(data, numVertices);
+		mesh->Vertices = mRenderSystem.CreateStatic(data, numVertices);
 		meshes.push_back(mesh);
 	}
 

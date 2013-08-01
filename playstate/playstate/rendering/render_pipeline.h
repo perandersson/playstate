@@ -13,7 +13,8 @@ namespace playstate
 	{
 	public:
 		//
-		// Method called when the the scene should be drawn onto the screen.
+		// Method called when the the supplied scene should be drawn.
+		//
 		// @param scene 
 		// @param camera
 		virtual void Render(const Scene& scene, const Camera& camera) = 0;

@@ -4,7 +4,7 @@ using namespace playstate;
 
 TEST_SUITE(RenderTarget2D)
 {
-	UNIT_TEST(RenderTarget2D_CreateWithNoBoundTextureSuccessfully)
+	/*UNIT_TEST(RenderTarget2D_CreateWithNoBoundTextureSuccessfully)
 	{
 		const uint32 width = 1024;
 		const uint32 height = 768;
@@ -30,5 +30,5 @@ TEST_SUITE(RenderTarget2D)
 
 		delete unitToTest;
 		glmock::Destroy(mock);
-	}
+	}*/
 }

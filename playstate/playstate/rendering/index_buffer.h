@@ -18,12 +18,6 @@ namespace playstate
 		IndexBuffer(GLuint indexBufferId, uint32 numElements);
 		~IndexBuffer();
 
-		//
-		// Creates an index buffer based on a supplied of indices
-		// @return A bindable and renderable index buffer
-		// @throws RenderingException
-		static IndexBuffer* CreateStatic(uint32* indices, uint32 numIndices);
-
 	private:
 		void Render() const;
 		void Bind() const;

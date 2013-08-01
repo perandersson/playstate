@@ -155,3 +155,11 @@ void FloatGfxProgramComponent::SetVector2(const Vector2& vec)
 	if(mProgram.IsApplied())
 		FloatGfxProgramComponent::Apply();
 }
+
+void FloatGfxProgramComponent::MarkAsDirty()
+{
+	mValuesSet[0] = FLT_MAX;
+	mValuesSet[1] = FLT_MAX;
+	mValuesSet[2] = FLT_MAX;
+	mValuesSet[3] = FLT_MAX;
+}

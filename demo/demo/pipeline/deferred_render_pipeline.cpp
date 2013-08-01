@@ -16,11 +16,11 @@ DeferredRenderPipeline::DeferredRenderPipeline(RenderSystem& renderSystem, IWind
 	uint32 width = window.GetWidth();
 	uint32 height = window.GetHeight();
 
-	mDiffuseRenderTarget = RenderTarget2D::Create(width, height, TextureFormat::RGBA);
-	mPositionsRenderTarget = RenderTarget2D::Create(width, height, TextureFormat::RGBA16F);
-	mNormalsRenderTarget = RenderTarget2D::Create(width, height, TextureFormat::RGB10_A2);
-	mDepthRenderTarget = RenderTarget2D::Create(width, height, TextureFormat::DEPTH24);
-	mLightRenderTarget = RenderTarget2D::Create(width, height, TextureFormat::RGBA);
+	mDiffuseRenderTarget = mRenderSystem.CreateRenderTarget2D(width, height, TextureFormat::RGBA);
+	mPositionsRenderTarget = mRenderSystem.CreateRenderTarget2D(width, height, TextureFormat::RGBA16F);
+	mNormalsRenderTarget = mRenderSystem.CreateRenderTarget2D(width, height, TextureFormat::RGB10_A2);
+	mDepthRenderTarget = mRenderSystem.CreateRenderTarget2D(width, height, TextureFormat::DEPTH24);
+	mLightRenderTarget = mRenderSystem.CreateRenderTarget2D(width, height, TextureFormat::RGBA);
 
 	mDeferredShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(std::string("/demo/effects/deferred/deferred.lua")));
 	mDeferredShader->SetRenderTarget(mDiffuseRenderTarget, 0);
@@ -142,7 +142,7 @@ void DeferredRenderPipeline::DrawLighting(const Scene& scene, const Camera& came
 				quadraticAttenuation->SetFloat(pl->GetQuadricAttenuation());
 				lightRadius->SetFloat(pl->GetRadius());
 
-				mPointLightShader->Render(mRenderSystem.UniformVertexBuffer);
+				mPointLightShader->Render(mRenderSystem.GetUniformVertexBuffer());
 			}
 		}
 	}
@@ -168,7 +168,7 @@ void DeferredRenderPipeline::DrawFinalResultToScreen(const Scene& scene, const C
 	mTexturedShader->Apply();
 	mTexturedShader->Clear(ClearTypes::COLOR);
 	mTexturedShader->FindComponent("AmbientColor")->SetColorRGB(scene.GetAmbientLight());
-	mTexturedShader->Render(mRenderSystem.UniformVertexBuffer);
+	mTexturedShader->Render(mRenderSystem.GetUniformVertexBuffer());
 }
 
 void DeferredRenderPipeline::OnWindowResized(uint32 width, uint32 height)
@@ -179,11 +179,11 @@ void DeferredRenderPipeline::OnWindowResized(uint32 width, uint32 height)
 	delete mDepthRenderTarget;
 	delete mLightRenderTarget;
 
-	mDiffuseRenderTarget = RenderTarget2D::Create(width, height, TextureFormat::RGBA);
-	mPositionsRenderTarget = RenderTarget2D::Create(width, height, TextureFormat::RGBA16F);
-	mNormalsRenderTarget = RenderTarget2D::Create(width, height, TextureFormat::RGB10_A2);
-	mDepthRenderTarget = RenderTarget2D::Create(width, height, TextureFormat::DEPTH24);
-	mLightRenderTarget = RenderTarget2D::Create(width, height, TextureFormat::RGBA);
+	mDiffuseRenderTarget = mRenderSystem.CreateRenderTarget2D(width, height, TextureFormat::RGBA);
+	mPositionsRenderTarget = mRenderSystem.CreateRenderTarget2D(width, height, TextureFormat::RGBA16F);
+	mNormalsRenderTarget = mRenderSystem.CreateRenderTarget2D(width, height, TextureFormat::RGB10_A2);
+	mDepthRenderTarget = mRenderSystem.CreateRenderTarget2D(width, height, TextureFormat::DEPTH24);
+	mLightRenderTarget = mRenderSystem.CreateRenderTarget2D(width, height, TextureFormat::RGBA);
 
 	mDeferredShader->SetRenderTarget(mDiffuseRenderTarget, 0);
 	mDeferredShader->SetRenderTarget(mPositionsRenderTarget, 1);

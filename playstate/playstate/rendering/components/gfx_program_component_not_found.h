@@ -30,5 +30,6 @@ namespace playstate
 		virtual void SetColorRGB(const Color& color);
 		virtual void SetVector3(const Vector3& vec);
 		virtual void SetVector2(const Vector2& vec);
+		virtual void MarkAsDirty();
 	};
 }

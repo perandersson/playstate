@@ -36,5 +36,10 @@ namespace playstate
 		virtual void SetMatrix(const Matrix4x4& matrix) = 0;
 		virtual void SetVector3(const Vector3& vec) = 0;
 		virtual void SetVector2(const Vector2& vec) = 0;
+
+		//
+		// Marks this component as dirty. THis means that the game engine will re-bind this component
+		// as soon as it's used
+		virtual void MarkAsDirty() = 0;
 	};
 }

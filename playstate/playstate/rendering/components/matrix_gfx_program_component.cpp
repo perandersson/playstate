@@ -30,3 +30,7 @@ void MatrixGfxProgramComponent::SetMatrix(const Matrix4x4& matrix)
 	if(mProgram.IsApplied())
 		MatrixGfxProgramComponent::Apply();
 }
+
+void MatrixGfxProgramComponent::MarkAsDirty()
+{
+}

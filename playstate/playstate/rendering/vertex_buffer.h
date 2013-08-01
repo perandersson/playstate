@@ -2,10 +2,10 @@
 
 #include "../types.h"
 #include "exception/rendering_exception.h"
-#include "factories/vertex_array_object_factories.h"
 #include "../math/color.h"
 #include "../math/vector3.h"
 #include "../math/vector2.h"
+#include "vertex_array_object_factory.h"
 #include <gl/glew.h>
 
 namespace playstate
@@ -52,11 +52,6 @@ namespace playstate
 	public:
 		VertexBuffer(GLenum vertexType, IVertexArrayObjectFactory& factory, GLuint bufferID, int numElements);
 		~VertexBuffer();
-		
-		static VertexBuffer* CreateStatic(PositionData* elements, uint32 numElements);
-		static VertexBuffer* CreateStatic(PositionTexCoordData* elements, uint32 numElements);
-		static VertexBuffer* CreateStatic(PositionNormalData* elements, uint32 numElements);
-		static VertexBuffer* CreateStatic(PositionNormalTextureData* elements, uint32 numElements);
 
 	private:
 		void Bind();
@@ -68,12 +63,6 @@ namespace playstate
 		GLuint mBufferID;
 		uint32 mNumElements;
 		IVertexArrayObjectFactory& mFactory;
-
-	private:
-		static PositionVAOFactory sPositionVAOFactory;
-		static PositionTexCoordVAOFactory sPositionTexCoordVAOFactory;
-		static PositionNormalVAOFactory sPositionNormalVAOFactory;
-		static PositionNormalTextureVAOFactory sPositionNormalTextureVAOFactory;
 	};
 }
 

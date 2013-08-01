@@ -87,3 +87,7 @@ void DefaultGfxProgramComponent::SetVector2(const Vector2& vec)
 {
 	assert(false && "Invalid component type");
 }
+
+void DefaultGfxProgramComponent::MarkAsDirty()
+{
+}

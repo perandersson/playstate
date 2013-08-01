@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../types.h"
+#include "../linked_list.h"
 #include "../math/matrix4x4.h"
 #include "gfx_program_component.h"
 #include "components/gfx_program_component_not_found.h"
@@ -24,6 +25,9 @@ namespace playstate
 		typedef std::hash_map<std::string, IGfxProgramComponent*> ComponentMap;
 
 	public:
+		LinkedListLink<GfxProgram> Link;
+
+	public:
 		GfxProgram(GLuint programId, GLuint vertexShader, GLuint pixelShader, GLuint geometryShader, RenderSystem& renderSystem,
 			const ScriptCollection& collection);
 		~GfxProgram();
@@ -31,6 +35,11 @@ namespace playstate
 		//
 		// Sets this graphics program as the active one the graphics card.
 		void Apply();
+
+		//
+		// Marks this graphics program as dirty. This is used by the game engine to re-bind all this program's resources and components.
+		// @remark It's not neccessary for you to do this by you're self. This is done by the game engine. This is usually done on a window- resize.
+		void MarkAsDirty();
 
 		//
 		// @return TRUE if this program is the one active on the graphics card; FALSE otherwise.
@@ -100,7 +109,7 @@ namespace playstate
 		//
 		// Sets the color this shader should use then clearing the screen.
 		//
-		// @default
+		// @default [0, 0, 0, 0]
 		// @param color
 		void SetClearColor(const Color& color);
 		

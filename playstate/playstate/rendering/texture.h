@@ -1,7 +1,9 @@
 #pragma once
 #include <gl/glew.h>
+
 #include "../types.h"
 #include "../resources/resource.h"
+#include "../uuid.h"
 
 namespace playstate
 {
@@ -43,12 +45,17 @@ namespace playstate
 	public:
 		virtual ~Texture();
 		
+		//
+		// @return This textures bit format.
 		TextureFormat::Enum GetFormat() const;
-		uint32 GetUniqueId() const;
+
+		//
+		// @return
+		uint32 GetUUID() const;
 
 	protected:
 		GLuint mTextureId;
-		uint32 mUniqueId;
+		uint32 mUUID;
 		TextureFormat::Enum mFormat;
 	};
 

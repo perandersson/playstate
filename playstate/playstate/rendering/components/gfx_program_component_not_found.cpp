@@ -73,3 +73,7 @@ void GfxProgramComponentNotFound::SetVector3(const Vector3& vec)
 void GfxProgramComponentNotFound::SetVector2(const Vector2& vec)
 {
 }
+
+void GfxProgramComponentNotFound::MarkAsDirty()
+{
+}

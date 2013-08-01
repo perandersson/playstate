@@ -13,7 +13,7 @@ namespace playstate
 		enum {
 			TEXTURE_BIT = BIT(1),
 			ACTIVE_TEXTURE_BIT = BIT(2),
-			UNIFORM_BIT = BIT(3),
+			UNIFORM_BIT = BIT(3)
 		};
 
 	public:
@@ -25,6 +25,7 @@ namespace playstate
 	public:
 		virtual void Apply();
 		virtual void SetTexture(Texture2D* texture);
+		virtual void MarkAsDirty();
 
 	private:
 		GfxProgram& mProgram;

@@ -5,12 +5,12 @@
 using namespace playstate;
 
 Texture::Texture()
-	: mTextureId(0), mUniqueId(UUID::To32Bit()), mFormat(TextureFormat::RGB)
+	: mTextureId(0), mUUID(UUID::To32Bit()), mFormat(TextureFormat::RGB)
 {
 }
 
 Texture::Texture(TextureFormat::Enum format)
-	: mTextureId(0), mUniqueId(UUID::To32Bit()), mFormat(format)
+	: mTextureId(0), mUUID(UUID::To32Bit()), mFormat(format)
 {
 }
 
@@ -32,8 +32,8 @@ TextureFormat::Enum Texture::GetFormat() const
 	return mFormat;
 }
 
-uint32 Texture::GetUniqueId() const
+uint32 Texture::GetUUID() const
 {
-	return mUniqueId;
+	return mUUID;
 }
 

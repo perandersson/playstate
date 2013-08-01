@@ -131,15 +131,12 @@ LRESULT CALLBACK Win32Window::HandleEvent(HWND hwnd, UINT message, WPARAM wparam
 	case WM_EXITSIZEMOVE:
 		{
 			RECT rect;
-			if(!GetClientRect(hwnd, &rect))
+			if(!GetClientRect(mWindowHandle, &rect))
 				break;
 
 			int width = rect.right - rect.left;
 			int height = rect.bottom - rect.top;
-
-			if(width == mPrevWidth && height == mPrevHeight)
-				break;
-			
+		
 			// Prevent the width and height to be 0 or smaller.
 			width = width <= 0 ? 1 : width;
 			height = height <= 0 ? 1 : height;
@@ -147,13 +144,8 @@ LRESULT CALLBACK Win32Window::HandleEvent(HWND hwnd, UINT message, WPARAM wparam
 			mWidth = width;
 			mHeight = height;
 
-			WindowResizedListeners::size_type size = mWindowResizeListeners.size();
-			for(WindowResizedListeners::size_type i = 0; i < size; ++i) {
-				mWindowResizeListeners[i]->OnWindowResized(width, height);
-			}
+			break;
 		}
-		
-		break;
     default:
 		return DefWindowProc(hwnd, message, wparam, lparam);
     }
@@ -186,10 +178,8 @@ void Win32Window::HandleEvents()
 	}
 	*/
 
-	if(PeekMessage(&mMessageQueue, NULL, 0, 0, PM_REMOVE))
-	{
-		if(mMessageQueue.message == WM_QUIT)
-		{
+	if(PeekMessage(&mMessageQueue, NULL, 0, 0, PM_REMOVE)) {
+		if(mMessageQueue.message == WM_QUIT) {
 			WindowClosedListeners::size_type size = mWindowClosedListeners.size();
 			for(WindowClosedListeners::size_type i = 0; i < size; ++i) {
 				if(mWindowClosedListeners[i]->OnWindowClosing() == false) {
@@ -201,6 +191,17 @@ void Win32Window::HandleEvents()
             
 		TranslateMessage(&mMessageQueue);
 		DispatchMessage(&mMessageQueue);
+	}
+
+	// Dispatch resize events if a resize has occured.
+	if(mWidth != mPrevWidth || mHeight != mPrevHeight) {
+		mPrevWidth = mWidth;
+		mPrevHeight = mHeight;
+
+		WindowResizedListeners::size_type size = mWindowResizeListeners.size();
+		for(WindowResizedListeners::size_type i = 0; i < size; ++i) {
+			mWindowResizeListeners[i]->OnWindowResized(mWidth, mHeight);
+		}
 	}
 }
 

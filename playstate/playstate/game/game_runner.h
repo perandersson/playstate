@@ -12,8 +12,6 @@
 
 namespace playstate
 {
-	class IInputSystem;
-
 	//
 	// The main application for the game engine
 	class GameRunner : public Singleton<GameRunner>, public IWindowClosedListener
@@ -37,7 +35,9 @@ namespace playstate
 		void StartLevel(const std::string& fileName);
 
 		//
-		//
+		// Defines how the scene should be rendered to the screen using the active camera.
+		// 
+		// @param renderPipeline
 		void SetRenderPipeline(IRenderPipeline* renderPipeline);
 
 		//
@@ -52,6 +52,7 @@ namespace playstate
 
 	private:
 		bool Initialize();
+		void Run();
 		void Release();
 
 	private:

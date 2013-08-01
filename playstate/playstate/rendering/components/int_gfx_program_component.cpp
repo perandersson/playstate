@@ -111,3 +111,11 @@ void IntGfxProgramComponent::SetInt(int32 a, int32 b, int32 c, int32 d)
 	if(mProgram.IsApplied())
 		IntGfxProgramComponent::Apply();
 }
+
+void IntGfxProgramComponent::MarkAsDirty()
+{
+	mValuesSet[0] = INT_MAX;
+	mValuesSet[1] = INT_MAX;
+	mValuesSet[2] = INT_MAX;
+	mValuesSet[3] = INT_MAX;
+}

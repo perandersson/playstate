@@ -44,7 +44,7 @@ void GameRunner::Start()
 	}
 
 	mGame->LoadContent();
-
+	Run();
 	mGame->UnloadContent();
 
 	mGame->Release();
@@ -53,12 +53,14 @@ void GameRunner::Start()
 
 void GameRunner::StartLevel(const std::string& level)
 {
+	SceneGroup* group = LoadLevel(level);
+	if(group != NULL)
+		mScene.AddSceneGroup(group);	
+}
+
+void GameRunner::Run()
+{
 	ScriptSystem& scriptSystem = ScriptSystem::Get();
-
-	std::auto_ptr<Script> script = scriptSystem.CompileFile(level);
-	SceneGroup* group = script->ReadInstance<SceneGroup>();
-	mScene.AddSceneGroup(group);
-
 	IKernel& kernel = IKernel::Get();
 	IWindow& window = IWindow::Get();
 	IRenderContext* screenRenderContext = IGraphicsDriver::Get().GetScreenRenderContext();
@@ -88,8 +90,9 @@ SceneGroup* GameRunner::LoadLevel(const std::string& fileName)
 		SceneGroup* grp = script->ReadInstance<SceneGroup>();
 		return grp;
 	} catch(ScriptException e) {
-		// TODO: Add logging
+		ILogger::Get().Error("Could not load level: '%s'. Reason: '%s'", fileName.c_str(), e.GetMessage().c_str());
 	}
+
 	return NULL;
 }
 
@@ -110,7 +113,7 @@ bool GameRunner::Initialize()
 
 	// Register resource types
 	resourceManager.RegisterResourceType(new Texture2DResourceLoader(renderSystem, fileSystem), ".png");
-	resourceManager.RegisterResourceType(new WavefrontResourceLoader(resourceManager, fileSystem), ".obj");
+	resourceManager.RegisterResourceType(new WavefrontResourceLoader(resourceManager, fileSystem, renderSystem), ".obj");
 
 	int32 width = mConfiguration->FindInt("window.width");
 	int32 height = mConfiguration->FindInt("window.height");
