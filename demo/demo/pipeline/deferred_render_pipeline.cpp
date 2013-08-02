@@ -68,6 +68,21 @@ void DeferredRenderPipeline::Render(const Scene& scene, const Camera& camera)
 	DrawGeometry(scene, camera);
 }
 
+void DeferredRenderPipeline::Render(const Canvas& canvas)
+{
+	/*struct CanvasRenderBlock
+	{
+		uint32 Id;
+		VertexBuffer* VertexBuffer;
+		Font* TextFont;
+	};
+	*/
+	// Draw gui
+	//if(canvas.Find(&mGuiBlocksResultSet)) {
+
+	//}
+}
+
 void DeferredRenderPipeline::DrawGeometry(const Scene& scene, const Camera& camera)
 {
 	FindQuery query;
@@ -201,10 +216,18 @@ void DeferredRenderPipeline::OnWindowResized(uint32 width, uint32 height)
 	mTexturedShader->FindComponent("LightTexture")->SetTexture(mLightRenderTarget);
 }
 
+class ScriptableDeferredRenderPipeline : public DeferredRenderPipeline, public Scriptable
+{
+public:
+	ScriptableDeferredRenderPipeline(RenderSystem& renderSystem, IWindow& window, ResourceManager& resourceManager) 
+		: DeferredRenderPipeline(renderSystem, window, resourceManager) {
+	}
+};
+
 int DeferredRenderPipeline_Factory(lua_State* L)
 {
 	int top1 = lua_gettop(L);
-	DeferredRenderPipeline* pipeline = new DeferredRenderPipeline(RenderSystem::Get(), IWindow::Get(), ResourceManager::Get());
+	ScriptableDeferredRenderPipeline* pipeline = new ScriptableDeferredRenderPipeline(RenderSystem::Get(), IWindow::Get(), ResourceManager::Get());
 	int top2 = lua_gettop(L);
 	luaM_pushobject(L, "DeferredRenderPipeline", pipeline);
 	int top3 = lua_gettop(L);

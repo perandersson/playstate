@@ -105,6 +105,9 @@
     <Filter Include="Source Files\logging\console">
       <UniqueIdentifier>{d54d3169-177e-44cf-8e9e-d64ebd42748b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\gui">
+      <UniqueIdentifier>{dec908d7-8dbd-43b8-879b-0630f8a49c09}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\playstate\playstate\camera\camera.cpp">
@@ -346,6 +349,15 @@
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\thread\thread_factory.cpp">
       <Filter>Source Files\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\gui\canvas.cpp">
+      <Filter>Source Files\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\gui\canvas_group.cpp">
+      <Filter>Source Files\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\gui\gui_control.cpp">
+      <Filter>Source Files\gui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -687,6 +699,15 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\filesystem\file_system.h">
       <Filter>Source Files\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\gui\canvas.h">
+      <Filter>Source Files\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\gui\gui_control.h">
+      <Filter>Source Files\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\gui\canvas_group.h">
+      <Filter>Source Files\gui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -20,7 +20,9 @@ namespace playstate
 
 	private:
 		void Render() const;
-		void Bind() const;
+		void Render(uint32 firstElement) const;
+		void Render(uint32 firstElement, uint32 numElements) const;
+		void Bind();
 
 	private:
 		GLuint mIndexBufferId;

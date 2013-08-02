@@ -36,22 +36,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 		Win32DefaultKernel kernel(GetModuleHandle(NULL), "data");
 		kernel.Initialize();
 
+		// Register game specific scripts.
 		ScriptSystem& ss = ScriptSystem::Get();
-		ss.RegisterType("Window", IWindow_Methods);
-		ss.RegisterType("IWindowClosedListener", IWindowClosedListener_Methods);
-		ss.RegisterType("IGame", IGame_Methods);
-		ss.RegisterType("Game", Game_Methods);
-		ss.RegisterType("Keys", IInputSystem_Keys_Methods);
-		ss.RegisterType("Mouse", IInputSystem_Mouse_Methods);
-		ss.RegisterType("Scene", Scene_Methods);
-		ss.RegisterType("SceneGroup", SceneGroup_Methods);
-		ss.RegisterType("SceneNode", SceneNode_Methods);
-		ss.RegisterType("Component", Component_Methods);
-		ss.RegisterType("Model", Model_Methods);
-		ss.RegisterType("RenderStaticModel", RenderStaticModel_Methods);
-		ss.RegisterType("ActiveCamera", ActiveCamera_Methods);
 		ss.RegisterType("DeferredRenderPipeline", DeferredRenderPipeline_Methods);
-		ss.RegisterType("PointLight", PointLight_Methods);
 
 		// Initialize the scripting engine and start the application
 		ss.CompileFile("/main.lua")->Execute("main()");

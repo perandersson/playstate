@@ -4,7 +4,7 @@
 using namespace playstate;
 
 SceneNode::SceneNode(SceneGroup* group)
-	: mSceneGroup(group), mTypeMask(0xffffffff), mParent(NULL)
+	: mSceneGroup(group), mTypeMask(BIT_ALL), mParent(NULL)
 {
 	assert_not_null(group);
 	group->AddSceneNode(this);
@@ -183,12 +183,17 @@ void SceneNode::RemoveFromScene()
 
 namespace playstate
 {
-	
 	int SceneNode_Factory(lua_State* L)
 	{
+		int params = lua_gettop(L);
+		type_mask typeMask = BIT_ALL;
+		if(params == 3) {
+			typeMask = (type_mask)lua_tonumber(L, -1); lua_pop(L, 1);
+		}
+
 		SceneGroup* group = luaM_popobject<SceneGroup>(L);
 		if(group != NULL) {
-			SceneNode* node = new SceneNode(group);
+			SceneNode* node = new SceneNode(group, typeMask);
 			luaM_pushobject(L, "SceneNode", node);
 		} else {
 			lua_pushnil(L);

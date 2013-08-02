@@ -41,3 +41,7 @@ type_mask Component::GetTypeMask() const
 	return mTypeMask;
 }
 
+void Component::SetTypeMask(type_mask typeMask)
+{
+	mTypeMask = typeMask;
+}

@@ -50,12 +50,14 @@ namespace playstate
 		friend class GfxProgram;
 		
 	public:
-		VertexBuffer(GLenum vertexType, IVertexArrayObjectFactory& factory, GLuint bufferID, int numElements);
+		VertexBuffer(GLenum vertexType, IVertexArrayObjectFactory& factory, GLuint bufferID, uint32 numElements);
 		~VertexBuffer();
 
 	private:
 		void Bind();
 		void Render() const;
+		void Render(uint32 firstElement) const;
+		void Render(uint32 firstElement, uint32 numElements) const;
 
 	private:
 		GLenum mVertexType;

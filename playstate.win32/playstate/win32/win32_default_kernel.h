@@ -38,6 +38,7 @@ namespace playstate
 			virtual void Initialize();
 			virtual void Release();
 			virtual void Process();
+			virtual void RegisterScript();
 
 		private:
 			HINSTANCE mAppInstance;

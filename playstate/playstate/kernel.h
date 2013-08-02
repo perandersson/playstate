@@ -20,5 +20,9 @@ namespace playstate
 		//
 		// Process the kernels internal data
 		virtual void Process() = 0;
+
+		//
+		// Method called during the script registration process
+		virtual void RegisterScript() = 0;
 	};
 }

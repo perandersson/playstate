@@ -22,7 +22,7 @@ namespace playstate
 
 		//
 		// Constructor
-		// @param type The component type. 
+		// @param typeMask The component type. 
 		//		If you want to be able to retireve a component from another component then you have to
 		//		supply a component type ID here. Any value larger then 0 is fine.
 		Component(type_mask typeMask);
@@ -43,6 +43,10 @@ namespace playstate
 		//
 		// @return This componenents type mask.
 		type_mask GetTypeMask() const;
+
+		//
+		// Sets the component type.
+		void SetTypeMask(type_mask typeMask);
 
 	protected:		
 		//

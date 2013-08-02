@@ -19,6 +19,7 @@ public:
 // IRenderPipeline
 public:
 	virtual void Render(const Scene& scene, const Camera& camera);
+	virtual void Render(const Canvas& canvas);
 
 // IWindowResizeListener
 public:

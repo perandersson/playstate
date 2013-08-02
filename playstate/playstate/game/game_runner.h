@@ -3,6 +3,7 @@
 #include "../singleton.h"
 #include "game.h"
 #include "../scene/scene.h"
+#include "../gui/canvas.h"
 #include "../window/window.h"
 #include "../script/script_system.h"
 #include "../filesystem/file_system.h"
@@ -46,6 +47,9 @@ namespace playstate
 		Scene& GetScene();
 		const Scene& GetScene() const;
 
+		Canvas& GetCanvas();
+		const Canvas& GetCanvas() const;
+
 	// IWindowClosedListener
 	public:
 		virtual bool OnWindowClosing();
@@ -60,6 +64,7 @@ namespace playstate
 		IConfiguration* mConfiguration;
 		IRenderPipeline* mRenderPipeline;
 		Scene mScene;
+		Canvas mCanvas;
 		bool mRunning;
 	};
 

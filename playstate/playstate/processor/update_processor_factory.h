@@ -14,8 +14,21 @@ namespace playstate
 		virtual ~IUpdateProcessor() {}
 
 	public:
+		//
+		// Attaches an updatable object to this processor. This enables it to receive update events during this
+		//	applications execution time.
+		//
+		// @param updatable
 		virtual void AttachUpdatable(IUpdatable* updatable) = 0;
+
+		//
+		// Detaches this updatable object from this processor. This disables it from receiving update events.
+		//
+		// @param updatable
 		virtual void DetachUpdatable(IUpdatable* updatable) = 0;
+
+		//
+		// Updates this processor.
 		virtual void Update() = 0;
 	};
 

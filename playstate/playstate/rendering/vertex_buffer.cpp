@@ -21,9 +21,10 @@ using namespace playstate;
 
 #define OFFSET(x) ((char *)NULL + x)
 
-VertexBuffer::VertexBuffer(GLenum vertexType, IVertexArrayObjectFactory& factory, GLuint bufferID, int numElements) 
+VertexBuffer::VertexBuffer(GLenum vertexType, IVertexArrayObjectFactory& factory, GLuint bufferID, uint32 numElements) 
 	: mVertexType(vertexType), mVertexArrayID(0), mFactory(factory), mBufferID(bufferID), mNumElements(numElements)
 {
+	assert(mVertexType == GL_TRIANGLES && "If this changes then we have to update the render method for vertex buffers");
 }
 
 VertexBuffer::~VertexBuffer()
@@ -54,10 +55,16 @@ void VertexBuffer::Bind()
 
 void VertexBuffer::Render() const
 {
-	glDrawArrays(mVertexType, 0, mNumElements);
-	
-	GLenum error = glGetError();
-	if(error != GL_NO_ERROR) {
-		THROW_EXCEPTION(RenderingException, "Could not draw vertex buffer. Reason: %d", error);
-	}
+	Render(0);
+}
+
+void VertexBuffer::Render(uint32 firstElement) const
+{
+	Render(firstElement, mNumElements);
+}
+
+void VertexBuffer::Render(uint32 firstElement, uint32 numElements) const
+{
+	// So far only the GL_TRIANGLES is used as a vertex buffer
+	glDrawArrays(mVertexType, firstElement * 3, numElements);
 }

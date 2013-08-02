@@ -1,5 +1,10 @@
 #include <playstate/memory/memory.h>
 #include "win32_default_kernel.h"
+#include <playstate/game/game_runner.h>
+#include <playstate/component/scriptable_component.h>
+#include <playstate/model/model.h>
+#include <playstate/component/renderable/render_static_model.h>
+#include <playstate/component/lightsources/point_light.h>
 
 using namespace playstate;
 using namespace playstate::win32;
@@ -44,12 +49,11 @@ Win32DefaultKernel::~Win32DefaultKernel()
 
 void Win32DefaultKernel::Initialize()
 {
-	//Window = new Win32Window();
+	RegisterScript();
 }
 
 void Win32DefaultKernel::Release()
 {
-	//delete Window;
 }
 
 void Win32DefaultKernel::Process()
@@ -58,4 +62,25 @@ void Win32DefaultKernel::Process()
 	mInputSystem->Poll();
 	mResourceManager->Poll();
 	mScriptSystem->HandleGC();
+}
+
+void Win32DefaultKernel::RegisterScript()
+{
+	// Move this into the kernel
+	ScriptSystem& ss = ScriptSystem::Get();
+	ss.RegisterType("Window", IWindow_Methods);
+	ss.RegisterType("IWindowClosedListener", IWindowClosedListener_Methods);
+	ss.RegisterType("IGame", IGame_Methods);
+	ss.RegisterType("Game", Game_Methods);
+	ss.RegisterType("Keys", IInputSystem_Keys_Methods);
+	ss.RegisterType("Mouse", IInputSystem_Mouse_Methods);
+	ss.RegisterType("Scene", Scene_Methods);
+	ss.RegisterType("SceneGroup", SceneGroup_Methods);
+	ss.RegisterType("SceneNode", SceneNode_Methods);
+	ss.RegisterType("Component", Component_Methods);
+	ss.RegisterType("Model", Model_Methods);
+	ss.RegisterType("RenderStaticModel", RenderStaticModel_Methods);
+	ss.RegisterType("ActiveCamera", ActiveCamera_Methods);
+	ss.RegisterType("PointLight", PointLight_Methods);
+	ss.RegisterType("Canvas", Canvas_Methods);
 }

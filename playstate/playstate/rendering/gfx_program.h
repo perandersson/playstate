@@ -71,6 +71,23 @@ namespace playstate
 		// @param buffer
 		// @param indexBuffer
 		void Render(VertexBuffer* buffer, IndexBuffer* indexBuffer);
+		
+		//
+		// Draw the supplied buffer object using the supplied index buffer using this graphics program.
+		//
+		// @param buffer The vertex buffer we want to draw. Cannot be {@code NULL}.
+		// @param indexBuffer The indices of the supplied buffer we want to draw. Can be {@code NULL}
+		// @param startElement The first element we want to draw
+		void Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint32 startElement);
+		
+		//
+		// Draw the supplied buffer object using the supplied index buffer using this graphics program.
+		//
+		// @param buffer The vertex buffer we want to draw. Cannot be {@code NULL}.
+		// @param indexBuffer The indices of the supplied buffer we want to draw. Can be {@code NULL}
+		// @param startElement The first element we want to draw
+		// @param numElements how many elements we want to draw
+		void Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint32 startElement, uint32 numElements);
 
 		//
 		// Flags if this program should enable or disable Z-writing.
@@ -126,6 +143,7 @@ namespace playstate
 
 	private:
 		void ApplyComponents();
+		void ApplyBuffers(VertexBuffer* buffer, IndexBuffer* indexBuffer);
 		void Prepare(const ScriptCollection& collection);
 
 	private:

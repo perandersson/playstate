@@ -64,12 +64,12 @@ namespace playstate
 	int Component_Init(lua_State* L)
 	{
 		int params = lua_gettop(L);
-		uint32 type = 0;
+		type_mask typeMask = BIT_ALL;
 		if(params == 2) {
-			type = (uint32)lua_tonumber(L, -1); lua_pop(L, 1);
+			typeMask = (type_mask)lua_tonumber(L, -1); lua_pop(L, 1);
 		}
 
-		ScriptableComponent* node = new ScriptableComponent(type);
+		ScriptableComponent* node = new ScriptableComponent(typeMask);
 		luaM_setinstance(L, node);
 		
 		const int ref = luaL_ref(L, LUA_REGISTRYINDEX);
@@ -135,6 +135,6 @@ namespace playstate
 		}
 		
 		return 3;
-	}	
+	}
 }
 

@@ -74,7 +74,12 @@ void GameRunner::Run()
 
 		mScene.Update();
 		mGame->Update();
-		mRenderPipeline->Render(mScene, mScene.GetActiveCamera());
+
+		if(mRenderPipeline != NULL) {
+			mRenderPipeline->Render(mScene, mScene.GetActiveCamera());
+			mRenderPipeline->Render(mCanvas);
+		}
+
 		mGame->Render();
 		
 		screenRenderContext->SwapBuffers();
@@ -98,9 +103,9 @@ SceneGroup* GameRunner::LoadLevel(const std::string& fileName)
 
 void GameRunner::SetRenderPipeline(IRenderPipeline* renderPipeline)
 {
-	if(mRenderPipeline != NULL) {
+	if(mRenderPipeline != NULL)
 		delete mRenderPipeline;
-	}
+	
 	mRenderPipeline = renderPipeline;
 }
 
@@ -146,6 +151,16 @@ const Scene& GameRunner::GetScene() const
 Scene& GameRunner::GetScene()
 {
 	return mScene;
+}
+
+Canvas& GameRunner::GetCanvas()
+{
+	return mCanvas;
+}
+
+const Canvas& GameRunner::GetCanvas() const
+{
+	return mCanvas;
 }
 
 //

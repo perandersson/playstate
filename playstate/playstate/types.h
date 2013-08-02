@@ -64,6 +64,10 @@ namespace playstate
 #define BIT_SET(a, b) (a |= (b))
 #endif
 
+#ifndef BIT_ALL
+#define BIT_ALL UINT_MAX
+#endif
+
 /* Constants rounded for 21 decimals. */
 #ifndef M_E
 #define M_E 2.71828182845904523536

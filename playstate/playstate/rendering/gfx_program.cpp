@@ -207,13 +207,46 @@ IGfxProgramComponent* GfxProgram::FindComponent(const std::string& name)
 
 void GfxProgram::Render(VertexBuffer* buffer)
 {
-	Render(buffer, NULL);
+	Render(buffer, NULL, 0);
 }
 
 void GfxProgram::Render(VertexBuffer* buffer, IndexBuffer* indexBuffer)
 {
-	assert(_current_program == this && "You are trying to render a vertex and/or index buffer on a non-bound gfx program");
+	Render(buffer, indexBuffer, 0);
+}
 
+void GfxProgram::Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint32 startElement)
+{
+	assert(_current_program == this && "You are trying to render a vertex and/or index buffer on a non-bound gfx program");
+	assert_not_null(buffer);
+
+	ApplyBuffers(buffer, indexBuffer);
+		
+	if(indexBuffer != NULL)
+		indexBuffer->Render(startElement);
+	else
+		buffer->Render(startElement);
+
+	CHECK_GL_ERROR();
+}
+
+void GfxProgram::Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint32 startElement, uint32 numElements)
+{
+	assert(_current_program == this && "You are trying to render a vertex and/or index buffer on a non-bound gfx program");
+	assert_not_null(buffer);
+
+	ApplyBuffers(buffer, indexBuffer);
+		
+	if(indexBuffer != NULL)
+		indexBuffer->Render(startElement, numElements);
+	else
+		buffer->Render(startElement, numElements);
+
+	CHECK_GL_ERROR();
+}
+
+void GfxProgram::ApplyBuffers(VertexBuffer* buffer, IndexBuffer* indexBuffer)
+{
 	if(mApplyRenderTarget) {
 		mApplyRenderTarget = false;
 		mRenderSystem.ApplyRenderTargets();
@@ -229,13 +262,6 @@ void GfxProgram::Render(VertexBuffer* buffer, IndexBuffer* indexBuffer)
 		_current_indexBuffer = indexBuffer;
 		indexBuffer->Bind();
 	}
-		
-	if(indexBuffer != NULL)
-		indexBuffer->Render();
-	else
-		buffer->Render();
-
-	CHECK_GL_ERROR();
 }
 
 void GfxProgram::EnableDepthTest(bool enable)

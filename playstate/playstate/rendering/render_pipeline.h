@@ -1,16 +1,18 @@
 #pragma once
 
-#include "../script/scriptable.h"
+#include "../scene/scene.h"
+#include "../camera/camera.h"
+#include "../gui/canvas.h"
 
 namespace playstate
 {
-	class Scene;
-	class Camera;
-
 	//
 	// An interface which defines how a scene should be rendered on the screen. 
-	class IRenderPipeline : public Scriptable
+	class IRenderPipeline
 	{
+	public:
+		virtual ~IRenderPipeline() {}
+
 	public:
 		//
 		// Method called when the the supplied scene should be drawn.
@@ -18,6 +20,12 @@ namespace playstate
 		// @param scene 
 		// @param camera
 		virtual void Render(const Scene& scene, const Camera& camera) = 0;
+
+		//
+		// Method called when the supplied canvas should be drawn.
+		//
+		// @param canvas
+		virtual void Render(const Canvas& canvas) = 0;
 	};
 }
 

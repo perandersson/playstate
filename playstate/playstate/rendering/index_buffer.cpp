@@ -17,10 +17,21 @@ IndexBuffer::~IndexBuffer()
 
 void IndexBuffer::Render() const
 {
-	glDrawElements(mIndexBufferId, mNumElements, GL_UNSIGNED_INT, NULL);
+	Render(0);
 }
 
-void IndexBuffer::Bind() const
+void IndexBuffer::Render(uint32 firstElement) const
+{
+	Render(firstElement, mNumElements);
+}
+
+void IndexBuffer::Render(uint32 firstElement, uint32 numElements) const
+{
+	// So far only the uint32 indice type is usable
+	glDrawElements(mIndexBufferId, numElements, GL_UNSIGNED_INT, (void*)(firstElement * sizeof(uint32)));
+}
+
+void IndexBuffer::Bind()
 {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIndexBufferId);
 }
