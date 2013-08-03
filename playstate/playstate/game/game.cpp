@@ -74,24 +74,12 @@ void ScriptableGame::Update()
 	}
 }
 
-void ScriptableGame::Render()
-{
-	if(mRenderFunc != 0 && PrepareMethod(mRenderFunc)) {
-		if(lua_pcall(mCurrentState, 1, 0, NULL) == 0) {
-		} else {
-			const char* err = lua_tostring(mCurrentState, -1);
-			lua_pop(mCurrentState, 1);
-		}
-	}
-}
-
 void ScriptableGame::OnRegistered()
 {
 	mLoadContentFunc = GetMethodID("LoadContent");
 	mUnloadContentFunc = GetMethodID("UnloadContent");
 	mInitializeFunc = GetMethodID("Initialize");
 	mReleaseFunc = GetMethodID("Release");
-	mRenderFunc = GetMethodID("Render");
 	mUpdateFunc = GetMethodID("Update");
 }
 

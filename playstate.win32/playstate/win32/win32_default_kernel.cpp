@@ -82,6 +82,4 @@ void Win32DefaultKernel::RegisterScript()
 	ss.RegisterType("RenderStaticModel", RenderStaticModel_Methods);
 	ss.RegisterType("ActiveCamera", ActiveCamera_Methods);
 	ss.RegisterType("PointLight", PointLight_Methods);
-	ss.RegisterType("Canvas", Canvas_Methods);
-	ss.RegisterType("CanvasGroup", CanvasGroup_Methods);
 }

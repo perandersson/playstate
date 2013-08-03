@@ -47,13 +47,19 @@ SceneGroup::~SceneGroup()
 void SceneGroup::AddSceneNode(SceneNode* node)
 {
 	assert_not_null(node);
+	
+	// TODO This is not supported, and it won't be in the future. But it should be possible to move a scene node
+	// from one group to another. Each group has it's own processors, so a move should make sure that
+	// the nodes components are re-added to the new scene group's processors and removed from this one.
+	assert(node->GetGroup() == NULL && "You are trying to add a scene node to more than one group");
+
 	mSceneNodes.AddLast(node);
 }
 
 void SceneGroup::RemoveSceneNode(SceneNode* node)
 {
 	assert_not_null(node);
-	delete node;
+	mSceneNodes.Remove(node);
 }
 
 void SceneGroup::Update()
@@ -138,7 +144,10 @@ namespace playstate
 			ScriptSystem& scriptSystem = ScriptSystem::Get();
 			std::auto_ptr<Script> script = scriptSystem.CompileFile(fileName);
 			SceneGroup* group = script->ReadInstance<SceneGroup>();
-			luaM_pushobject(L, "SceneGroup", group);
+			if(group == NULL)
+				lua_pushnil(L);
+			else
+				luaM_pushobject(L, "SceneGroup", group);
 			return 1;
 		} catch(ScriptException e) {
 			ILogger::Get().Error("Could not load scene group: '%s'. Reason: '%s'", fileName.c_str(), e.GetMessage().c_str());

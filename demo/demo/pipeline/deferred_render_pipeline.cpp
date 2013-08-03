@@ -40,6 +40,9 @@ DeferredRenderPipeline::DeferredRenderPipeline(RenderSystem& renderSystem, IWind
 	mTexturedShader->FindComponent("PositionsTexture")->SetTexture(mPositionsRenderTarget);
 	mTexturedShader->FindComponent("NormalsTexture")->SetTexture(mNormalsRenderTarget);
 	mTexturedShader->FindComponent("LightTexture")->SetTexture(mLightRenderTarget);
+
+	mUserInterfaceShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(std::string("/demo/effects/gui/gui.lua")));
+	mWhiteTexture = resourceManager.GetResource<Texture2D>("/engine/textures/white.png");
 }
 
 DeferredRenderPipeline::~DeferredRenderPipeline()
@@ -66,11 +69,40 @@ void DeferredRenderPipeline::Render(const Scene& scene, const Camera& camera)
 {
 	// Draw geometry
 	DrawGeometry(scene, camera);
+
+	// Draw GUI
+	DrawUserInterface(scene);
 }
 
-void DeferredRenderPipeline::Render(const Canvas& canvas)
+void DeferredRenderPipeline::DrawUserInterface(const Scene& scene)
 {
-	if(canvas.Find(&mGuiBlockResultSet)) {
+	FindQuery query;
+	query.Camera = NULL;
+	query.Filter = RenderStateFilter::USER_INTERFACE;
+	if(scene.Find(query, &mRenderBlockResultSet)) {
+		mUserInterfaceShader->Apply();
+
+		// Set the cameras projection- and view matrix
+		mDeferredShader->FindComponent("ProjectionMatrix")->SetMatrix(Matrix4x4::Identity);
+		mDeferredShader->FindComponent("ViewMatrix")->SetMatrix(Matrix4x4::Identity);
+
+		IGfxProgramComponent* texture = mUserInterfaceShader->FindComponent("UserInterfaceTexture");
+		IGfxProgramComponent* color = mUserInterfaceShader->FindComponent("Color");
+		IGfxProgramComponent* modelMatrix = mUserInterfaceShader->FindComponent("ModelMatrix");
+
+		texture->SetTexture(mWhiteTexture);
+		color->SetColorRGBA(Color::White);
+
+		GfxProgram* userInterfaceShader = mUserInterfaceShader.get();
+		uint32 size = mRenderBlockResultSet.GetSize();
+		RenderBlock** blocks = mRenderBlockResultSet.GetSortedRenderBlocks();
+		for(uint32 index = 0; index < size; ++index) {
+			RenderBlock* block = blocks[index];
+			texture->SetTexture(block->DiffuseTexture);
+			color->SetColorRGB(block->DiffuseColor);
+			modelMatrix->SetMatrix(block->ModelMatrix);
+			userInterfaceShader->Render(block->VertexBuffer, block->IndexBuffer);
+		}
 	}
 }
 

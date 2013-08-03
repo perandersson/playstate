@@ -25,7 +25,8 @@ SceneNode::~SceneNode()
 	ChildNodes::iterator it = mChildren.begin();
 	while(it != mChildren.end()) {
 		SceneNode* node = *it;
-		it = it++;
+		it++;
+		node->mParent = NULL;
 		delete node;
 	}
 
@@ -73,6 +74,9 @@ void SceneNode::AddChildNode(SceneNode* node)
 	mChildren.push_back(node);
 	node->mParent = this;
 
+	// Remove this nodes link from the scene to prevent the LinkedList implementation from removing the "List->Next" element
+	node->RemoveFromScene();
+
 	node->UpdatePosition();
 	node->UpdateRotation();
 }
@@ -87,6 +91,7 @@ void SceneNode::RemoveChildNode(SceneNode* node)
 		mChildren.erase(it);
 		node->mParent = NULL;
 	}
+
 }
 
 void SceneNode::SetPosition(const Vector3& position)

@@ -44,7 +44,7 @@ public:
 public:
 	virtual void Visit(OctreeNode* item)
 	{
-		static_cast<Renderable*>(item)->CollectBuildingBlocks(*mResultSetTarget, mRenderState);
+		static_cast<Renderable*>(item)->Collect(mRenderState, mResultSetTarget);
 	}
 
 private:
@@ -54,6 +54,10 @@ private:
 
 bool OctreeRenderProcessor::Find(const FindQuery& query, RenderBlockResultSet* target) const
 {
+	// The octree does not contain user interface blocks
+	if(BIT_ISSET(query.Filter, RenderStateFilter::USER_INTERFACE))
+		return false;
+
 	RenderState state;
 	state.Camera = query.Camera;
 	state.Filter = query.Filter;

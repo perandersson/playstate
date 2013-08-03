@@ -6,7 +6,6 @@
 #include <playstate/rendering/gfx_program.h>
 #include <playstate/search/render_block_result_set.h>
 #include <playstate/search/light_source_result_set.h>
-#include <playstate/gui/gui_block_result_set.h>
 using namespace playstate;
 
 //
@@ -20,7 +19,6 @@ public:
 // IRenderPipeline
 public:
 	virtual void Render(const Scene& scene, const Camera& camera);
-	virtual void Render(const Canvas& canvas);
 
 // IWindowResizeListener
 public:
@@ -30,6 +28,7 @@ private:
 	void DrawGeometry(const Scene& scene, const Camera& camera);
 	void DrawLighting(const Scene& scene, const Camera& camera);
 	void DrawFinalResultToScreen(const Scene& scene, const Camera& camera);
+	void DrawUserInterface(const Scene& scene);
 
 	Matrix4x4 CalculateBillboardModelMatrix(const Vector3& position, const Camera& camera);
 		
@@ -40,7 +39,9 @@ private:
 	std::auto_ptr<GfxProgram> mDeferredShader;
 	std::auto_ptr<GfxProgram> mTexturedShader;
 	std::auto_ptr<GfxProgram> mPointLightShader;
+	std::auto_ptr<GfxProgram> mUserInterfaceShader;
 	Resource<Texture2D> mPointLightTexture;
+	Resource<Texture2D> mWhiteTexture;
 
 	RenderTarget2D* mDiffuseRenderTarget;
 	RenderTarget2D* mPositionsRenderTarget;
@@ -50,7 +51,6 @@ private:
 	RenderTarget2D* mLightRenderTarget;
 	RenderBlockResultSet mRenderBlockResultSet;
 	LightSourceResultSet mLightSourceResultSet;
-	GuiBlockResultSet mGuiBlockResultSet;
 };
 
 

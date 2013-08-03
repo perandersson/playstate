@@ -35,8 +35,8 @@ namespace playstate
 		// Collects all the building blocks for this object. Then it's the pipelines responsibility
 		// to draw those items onto the screen.
 		//
-		// @param builder
 		// @param state
-		virtual void CollectBuildingBlocks(RenderBlockResultSet& resultSet, const RenderState& state) = 0;
+		// @param builder
+		virtual void Collect(const RenderState& state, RenderBlockResultSet* resultSet) = 0;
 	};
 }

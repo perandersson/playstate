@@ -36,13 +36,13 @@ void RenderStaticModel::OnUnloading(ResourceObject* object)
 	SetBoundingBox(mModel->GetBoundingBox(), GetNode()->GetAbsolutePosition());
 }
 
-void RenderStaticModel::CollectBuildingBlocks(RenderBlockResultSet& resultSet, const RenderState& state)
+void RenderStaticModel::Collect(const RenderState& state, RenderBlockResultSet* resultSet)
 {
 	uint32 size = mModel->GetNumMeshes();
 	ModelMesh* meshes = mModel->GetMeshes();
 	for(uint32 i = 0; i < size; ++i) {
 		ModelMesh& mesh = meshes[i];
-		RenderBlock* block = resultSet.Create(mesh.Id);
+		RenderBlock* block = resultSet->Create(mesh.Id);
 		block->ModelMatrix = GetNode()->GetModelMatrix();
 		if(BIT_ISSET(state.Filter, RenderStateFilter::GEOMETRY)) {
 			block->VertexBuffer = mesh.Vertices;

@@ -34,10 +34,6 @@ namespace playstate
 		//
 		// Updates the game
 		virtual void Update() = 0;
-
-		//
-		// Renders the game
-		virtual void Render() = 0;
 	};
 
 	//
@@ -55,7 +51,6 @@ namespace playstate
 		virtual void LoadContent();
 		virtual void UnloadContent();
 		virtual void Update();
-		virtual void Render();
 
 	// Scriptable
 	public:
@@ -66,7 +61,6 @@ namespace playstate
 		uint32 mUnloadContentFunc;
 		uint32 mInitializeFunc;
 		uint32 mReleaseFunc;
-		uint32 mRenderFunc;
 		uint32 mUpdateFunc;
 	};
 

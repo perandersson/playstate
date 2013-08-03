@@ -76,6 +76,20 @@ namespace playstate
 			return static_cast<const T*>(mData->Resource);
 		}
 
+		bool operator == (const ResourceObject* obj) const {
+			if(IsNull())
+				return false;
+
+			return mData->Resource == obj;
+		}
+
+		bool operator != (const ResourceObject* obj) const {
+			if(IsNull())
+				return false;
+
+			return mData->Resource != obj;
+		}
+
 		bool IsLoaded() const
 		{
 			return mData != 0 && !mData->Unloaded && !mData->Loading;

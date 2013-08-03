@@ -23,13 +23,17 @@ namespace playstate
 		virtual ~SceneGroup();
 
 		//
+		// Adds the supplied scene node to this scene group instance
 		// 
+		// @param node The node we want to add
 		void AddSceneNode(SceneNode* node);
 
 		//
+		// Removes the supplied scene node from this scene group instance
 		//
+		// @param node The node we want to remove
 		void RemoveSceneNode(SceneNode* node);
-		
+
 	// IUpdateProcessor
 	public:
 		virtual void AttachUpdatable(IUpdatable* updatable);

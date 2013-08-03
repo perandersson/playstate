@@ -19,9 +19,9 @@ namespace playstate
 		T* Head;
 		T* Tail;
 
-	public:
-		// How many elements are added to this list
-		const uint32& Size;
+		//
+		// @return The number of elements located in this list
+		uint32 GetSize() const;
 
 	protected:
 		uint32 mSize;
@@ -101,13 +101,19 @@ namespace playstate
 	///////////////////////////////////
 
 	template<class T>
-	LinkedListBase<T>::LinkedListBase() : Head(NULL), Tail(NULL), mSize(0), Size(mSize)
+	LinkedListBase<T>::LinkedListBase() : Head(NULL), Tail(NULL), mSize(0)
 	{
 	}
 
 	template<class T>
 	LinkedListBase<T>::~LinkedListBase()
 	{
+	}
+	
+	template<class T>
+	uint32 LinkedListBase<T>::GetSize() const
+	{
+		return mSize;
 	}
 
 	/////////////////////////////////

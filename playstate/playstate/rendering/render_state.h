@@ -11,10 +11,11 @@ namespace playstate
 		enum Enum {
 			GEOMETRY = BIT(0),
 			TEXTURES = BIT(1),
-			ALL = GEOMETRY | TEXTURES
+			USER_INTERFACE = BIT(2),
+			DEFAULT_ENUM = GEOMETRY | TEXTURES
 		};
 
-		static const Enum Default = ALL;
+		static const Enum Default = DEFAULT_ENUM;
 	};
 
 	//
