@@ -70,23 +70,16 @@ void DeferredRenderPipeline::Render(const Scene& scene, const Camera& camera)
 
 void DeferredRenderPipeline::Render(const Canvas& canvas)
 {
-	/*struct CanvasRenderBlock
-	{
-		uint32 Id;
-		VertexBuffer* VertexBuffer;
-		Font* TextFont;
-	};
-	*/
-	// Draw gui
-	//if(canvas.Find(&mGuiBlocksResultSet)) {
-
-	//}
+	if(canvas.Find(&mGuiBlockResultSet)) {
+	}
 }
 
 void DeferredRenderPipeline::DrawGeometry(const Scene& scene, const Camera& camera)
 {
 	FindQuery query;
 	query.Camera = &camera;
+	query.Filter = RenderStateFilter::Default;
+
 	if(scene.Find(query, &mRenderBlockResultSet)) {
 		mDeferredShader->Apply();
 		mDeferredShader->Clear(ClearTypes::COLOR | ClearTypes::DEPTH);

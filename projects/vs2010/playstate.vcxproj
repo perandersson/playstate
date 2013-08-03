@@ -26,6 +26,7 @@
     <ClCompile Include="..\..\playstate\playstate\game\scripted_configuration.cpp" />
     <ClCompile Include="..\..\playstate\playstate\gui\canvas.cpp" />
     <ClCompile Include="..\..\playstate\playstate\gui\canvas_group.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\gui\gui_block_result_set.cpp" />
     <ClCompile Include="..\..\playstate\playstate\gui\gui_control.cpp" />
     <ClCompile Include="..\..\playstate\playstate\input\input_system.cpp" />
     <ClCompile Include="..\..\playstate\playstate\kernel.cpp" />
@@ -116,6 +117,8 @@
     <ClInclude Include="..\..\playstate\playstate\game\scripted_configuration.h" />
     <ClInclude Include="..\..\playstate\playstate\gui\canvas.h" />
     <ClInclude Include="..\..\playstate\playstate\gui\canvas_group.h" />
+    <ClInclude Include="..\..\playstate\playstate\gui\gui_render_block.h" />
+    <ClInclude Include="..\..\playstate\playstate\gui\gui_block_result_set.h" />
     <ClInclude Include="..\..\playstate\playstate\gui\gui_control.h" />
     <ClInclude Include="..\..\playstate\playstate\input\input_state.h" />
     <ClInclude Include="..\..\playstate\playstate\input\input_system.h" />

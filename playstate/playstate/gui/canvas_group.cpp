@@ -52,3 +52,28 @@ void CanvasGroup::Update()
 {
 	mUpdateProcessor->Update();
 }
+
+namespace playstate
+{
+	int CanvasGroup_Factory(lua_State* L)
+	{
+		CanvasGroup* group = new CanvasGroup();
+		luaM_pushobject(L, "CanvasGroup", group);
+		return 1;
+	}
+
+	int CanvasGroup_Init(lua_State* L)
+	{
+		if(lua_istable(L, -1) == 0) {
+			lua_pop(L, 1);
+			return 0;
+		}
+
+		CanvasGroup* group = new CanvasGroup();
+		luaM_setinstance(L, group);
+		
+		const int ref = luaL_ref(L, LUA_REGISTRYINDEX);
+		group->RegisterObject(L, ref);
+		return 0;
+	}
+}

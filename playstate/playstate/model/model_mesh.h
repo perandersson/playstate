@@ -16,7 +16,7 @@ namespace playstate
 		Resource<Texture2D> SpecularTexture;
 		Resource<Texture2D> SpecularHighlightTexture;
 		Resource<Texture2D> AlphaTexture;
-		Resource<Texture2D> BumpMap;
+		Resource<Texture2D> BumpMapTexture;
 		Resource<Texture2D> DisplacementTexture;
 		Color AmbientColor;
 		Color DiffuseColor;

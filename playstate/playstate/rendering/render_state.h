@@ -10,8 +10,8 @@ namespace playstate
 	public:
 		enum Enum {
 			GEOMETRY = BIT(0),
-			DIFFUSE_TEXTURE = BIT(1),
-			ALL = GEOMETRY | DIFFUSE_TEXTURE
+			TEXTURES = BIT(1),
+			ALL = GEOMETRY | TEXTURES
 		};
 
 		static const Enum Default = ALL;
@@ -21,10 +21,12 @@ namespace playstate
 	// The current state for the rendering engine.
 	struct RenderState
 	{
-		// The camera
+		//
+		// Search for items from the supplied cameras perspective
 		const Camera* Camera;
 
+		//
 		// Filter
-		uint32 Filter;
+		type_mask Filter;
 	};
 }

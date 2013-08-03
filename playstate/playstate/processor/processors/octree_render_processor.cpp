@@ -56,6 +56,7 @@ bool OctreeRenderProcessor::Find(const FindQuery& query, RenderBlockResultSet* t
 {
 	RenderState state;
 	state.Camera = query.Camera;
+	state.Filter = query.Filter;
 
 	RenderableEventHandlerVisitor visitor(state, target);
 	mOctree.FindItems(state.Camera->GetViewFrustum(), &visitor);

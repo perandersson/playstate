@@ -44,5 +44,13 @@ namespace playstate
 	private:
 		LinkedList<GuiControl, &GuiControl::GuiControlLink> mControls;
 	};
+	
+	extern int CanvasGroup_Factory(lua_State* L);
+	extern int CanvasGroup_Init(lua_State* L);
+	static luaL_Reg CanvasGroup_Methods[] = {
+		{ LUA_CONSTRUCTOR, CanvasGroup_Factory },
+		{ LUA_INHERIT_CONSTRUCTOR, CanvasGroup_Init },
+		{ NULL, NULL }
+	};
 }
 

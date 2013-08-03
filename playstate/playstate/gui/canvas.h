@@ -1,6 +1,7 @@
 #pragma once
 
 #include "canvas_group.h"
+#include "gui_block_result_set.h"
 
 namespace playstate
 {
@@ -24,7 +25,13 @@ namespace playstate
 		// Update the canvas groups
 		void Update();
 
-		//void Find(
+		//
+		// Queries this canvas for gui blocks
+		bool Find(GuiBlockResultSet* target) const;
+
+		//
+		// Queries this canvas for gui blocks and sort then using the supplied sorter.
+		bool Find(GuiBlockResultSet* target, IArraySorter<GuiRenderBlock*>* sorter) const;
 
 	private:
 		LinkedList<CanvasGroup, &CanvasGroup::CanvasGroupLink> mGroups;

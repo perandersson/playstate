@@ -25,6 +25,21 @@ void Canvas::RemoveCanvasGroup(CanvasGroup* group)
 	delete group;
 }
 
+bool Canvas::Find(GuiBlockResultSet* target) const
+{
+
+
+	return false;
+}
+
+bool Canvas::Find(GuiBlockResultSet* target, IArraySorter<GuiRenderBlock*>* sorter) const
+{
+
+
+	target->Sort(sorter);
+	return false;
+}
+
 // Script
 
 namespace playstate

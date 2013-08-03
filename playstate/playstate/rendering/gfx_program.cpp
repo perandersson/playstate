@@ -234,6 +234,7 @@ void GfxProgram::Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint32 s
 {
 	assert(_current_program == this && "You are trying to render a vertex and/or index buffer on a non-bound gfx program");
 	assert_not_null(buffer);
+	assert(numElements > 0 && "You cannot draw 0 elements");
 
 	ApplyBuffers(buffer, indexBuffer);
 		

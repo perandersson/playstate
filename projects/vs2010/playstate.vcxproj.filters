@@ -359,6 +359,9 @@
     <ClCompile Include="..\..\playstate\playstate\gui\gui_control.cpp">
       <Filter>Source Files\gui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\gui\gui_block_result_set.cpp">
+      <Filter>Source Files\gui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\playstate\playstate\camera\camera.h">
@@ -707,6 +710,12 @@
       <Filter>Source Files\gui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\gui\canvas_group.h">
+      <Filter>Source Files\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\gui\gui_block_result_set.h">
+      <Filter>Source Files\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\gui\gui_render_block.h">
       <Filter>Source Files\gui</Filter>
     </ClInclude>
   </ItemGroup>

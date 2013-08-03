@@ -17,7 +17,7 @@ namespace playstate
 	{
 	public:
 		RenderBlockResultSet();
-		~RenderBlockResultSet();
+		virtual ~RenderBlockResultSet();
 
 		//
 		// Creates a new render block instance and returns the reference to it 

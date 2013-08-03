@@ -108,7 +108,7 @@ TEST_SUITE(Scene)
 			Renderable::Detach();
 		}
 
-		virtual void CollectBuildingBlocks(RenderBlockResultSet& builder, RenderState& state)
+		virtual void CollectBuildingBlocks(RenderBlockResultSet& builder, const RenderState& state)
 		{
 		}
 	};

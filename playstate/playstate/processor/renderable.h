@@ -37,6 +37,6 @@ namespace playstate
 		//
 		// @param builder
 		// @param state
-		virtual void CollectBuildingBlocks(RenderBlockResultSet& resultSet, RenderState& state) = 0;
+		virtual void CollectBuildingBlocks(RenderBlockResultSet& resultSet, const RenderState& state) = 0;
 	};
 }

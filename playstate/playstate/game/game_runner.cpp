@@ -101,6 +101,20 @@ SceneGroup* GameRunner::LoadLevel(const std::string& fileName)
 	return NULL;
 }
 
+CanvasGroup* GameRunner::LoadUserInterface(const std::string& fileName)
+{
+	try {
+		ScriptSystem& scriptSystem = ScriptSystem::Get();
+		std::auto_ptr<Script> script = scriptSystem.CompileFile(fileName);
+		CanvasGroup* grp = script->ReadInstance<CanvasGroup>();
+		return grp;
+	} catch(ScriptException e) {
+		ILogger::Get().Error("Could not load user interface: '%s'. Reason: '%s'", fileName.c_str(), e.GetMessage().c_str());
+	}
+
+	return NULL;
+}
+
 void GameRunner::SetRenderPipeline(IRenderPipeline* renderPipeline)
 {
 	if(mRenderPipeline != NULL)
@@ -215,5 +229,17 @@ namespace playstate
 		}
 
 		return 0;
+	}
+
+	int Game_LoadUserInterface(lua_State* L)
+	{
+		const std::string levelFileName = lua_tostring(L, -1); lua_pop(L, 1);
+		CanvasGroup* group = GameRunner::Get().LoadUserInterface(levelFileName);
+		if(group != NULL) {
+			luaM_pushobject(L, "CanvasGroup", group);
+		} else {
+			lua_pushnil(L);
+		}
+		return 1;
 	}
 }

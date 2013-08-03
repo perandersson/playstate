@@ -36,7 +36,7 @@ void RenderStaticModel::OnUnloading(ResourceObject* object)
 	SetBoundingBox(mModel->GetBoundingBox(), GetNode()->GetAbsolutePosition());
 }
 
-void RenderStaticModel::CollectBuildingBlocks(RenderBlockResultSet& resultSet, RenderState& state)
+void RenderStaticModel::CollectBuildingBlocks(RenderBlockResultSet& resultSet, const RenderState& state)
 {
 	uint32 size = mModel->GetNumMeshes();
 	ModelMesh* meshes = mModel->GetMeshes();
@@ -44,13 +44,19 @@ void RenderStaticModel::CollectBuildingBlocks(RenderBlockResultSet& resultSet, R
 		ModelMesh& mesh = meshes[i];
 		RenderBlock* block = resultSet.Create(mesh.Id);
 		block->ModelMatrix = GetNode()->GetModelMatrix();
-		//if(BIT_ISSET(state.Filter, RenderStateFilter::GEOMETRY)) {
+		if(BIT_ISSET(state.Filter, RenderStateFilter::GEOMETRY)) {
 			block->VertexBuffer = mesh.Vertices;
 			block->IndexBuffer = mesh.Indices;
-		//}
-		//if(BIT_ISSET(state.Filter, RenderStateFilter::DIFFUSE_TEXTURE)) {
+		}
+		if(BIT_ISSET(state.Filter, RenderStateFilter::TEXTURES)) {
 			block->DiffuseTexture = mesh.DiffuseTexture.Get();
-		//}
+			block->AmbientTexture = mesh.AmbientTexture.Get();
+			block->SpecularTexture = mesh.SpecularTexture.Get();
+			block->SpecularHighlightTexture = mesh.SpecularHighlightTexture.Get();
+			block->AlphaTexture = mesh.AlphaTexture.Get();
+			block->BumpMapTexture = mesh.BumpMapTexture.Get();
+			block->DisplacementTexture = mesh.DisplacementTexture.Get();
+		}
 		block->DiffuseColor = mesh.DiffuseColor;
 	}
 }
