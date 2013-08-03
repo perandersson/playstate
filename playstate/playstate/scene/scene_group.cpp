@@ -1,5 +1,6 @@
 #include "../memory/memory.h"
 #include "scene_group.h"
+#include "../script/script_system.h"
 using namespace playstate;
 
 SceneGroup::SceneGroup()
@@ -130,13 +131,20 @@ namespace playstate
 		return 0;
 	}
 
-	int SceneGroup_GetID(lua_State* L)
+	int SceneGroup_Load(lua_State* L)
 	{
-		SceneGroup* sceneGroup = luaM_popobject<SceneGroup>(L);
-		if(sceneGroup != NULL) 
-			lua_pushnumber(L, sceneGroup->GetID());
-		else
-			lua_pushnumber(L, LUA_NOREF);
+		const std::string fileName = lua_tostring(L, -1); lua_pop(L, 1);
+		try {
+			ScriptSystem& scriptSystem = ScriptSystem::Get();
+			std::auto_ptr<Script> script = scriptSystem.CompileFile(fileName);
+			SceneGroup* group = script->ReadInstance<SceneGroup>();
+			luaM_pushobject(L, "SceneGroup", group);
+			return 1;
+		} catch(ScriptException e) {
+			ILogger::Get().Error("Could not load level: '%s'. Reason: '%s'", fileName.c_str(), e.GetMessage().c_str());
+		}
+		
+		lua_pushnil(L);
 		return 1;
 	}
 }

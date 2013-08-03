@@ -61,12 +61,11 @@ namespace playstate
 
 	extern int SceneGroup_Factory(lua_State* L);
 	extern int SceneGroup_Init(lua_State* L);
-	extern int SceneGroup_GetID(lua_State* L);
+	extern int SceneGroup_Load(lua_State* L);
 	static luaL_Reg SceneGroup_Methods[] = {
 		{ LUA_CONSTRUCTOR, SceneGroup_Factory },
 		{ LUA_INHERIT_CONSTRUCTOR, SceneGroup_Init },
-		{ LUA_TOSTRING, SceneGroup_GetID },
-		{ "GetID", SceneGroup_GetID },
+		{ "Load", SceneGroup_Load },
 		{ NULL, NULL }
 	};
 }

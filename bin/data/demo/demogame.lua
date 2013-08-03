@@ -25,7 +25,8 @@ function DemoGame:LoadContent()
 	Scene.SetAmbientLight({0.1, 0.1, 0.1})
 	
 	-- Start the first level
-	Game.StartLevel("/demo/levels/level1.lua")
+	level1 = SceneGroup.Load("/demo/levels/level1.lua")
+	Scene.AddSceneGroup(level1)
 end
 
 function DemoGame:Update()

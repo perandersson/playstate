@@ -51,13 +51,6 @@ void GameRunner::Start()
 	Release();
 }
 
-void GameRunner::StartLevel(const std::string& level)
-{
-	SceneGroup* group = LoadLevel(level);
-	if(group != NULL)
-		mScene.AddSceneGroup(group);	
-}
-
 void GameRunner::Run()
 {
 	ScriptSystem& scriptSystem = ScriptSystem::Get();
@@ -85,20 +78,6 @@ void GameRunner::Run()
 		screenRenderContext->SwapBuffers();
 		kernel.Process();
 	}
-}
-
-SceneGroup* GameRunner::LoadLevel(const std::string& fileName)
-{
-	try {
-		ScriptSystem& scriptSystem = ScriptSystem::Get();
-		std::auto_ptr<Script> script = scriptSystem.CompileFile(fileName);
-		SceneGroup* grp = script->ReadInstance<SceneGroup>();
-		return grp;
-	} catch(ScriptException e) {
-		ILogger::Get().Error("Could not load level: '%s'. Reason: '%s'", fileName.c_str(), e.GetMessage().c_str());
-	}
-
-	return NULL;
 }
 
 CanvasGroup* GameRunner::LoadUserInterface(const std::string& fileName)
@@ -197,25 +176,6 @@ namespace playstate
 			delete configuration;
 		}
 
-		return 0;
-	}
-
-	int Game_LoadLevel(lua_State* L)
-	{
-		const std::string levelFileName = lua_tostring(L, -1); lua_pop(L, 1);
-		SceneGroup* group = GameRunner::Get().LoadLevel(levelFileName);
-		if(group != NULL) {
-			luaM_pushobject(L, "SceneGroup", group);
-		} else {
-			lua_pushnil(L);
-		}
-		return 1;
-	}
-
-	int Game_StartLevel(lua_State* L)
-	{
-		const std::string levelFileName = lua_tostring(L, -1); lua_pop(L, 1);
-		GameRunner::Get().StartLevel(levelFileName);
 		return 0;
 	}
 

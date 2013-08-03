@@ -12,7 +12,7 @@ function AddMoreSceneGroupsOnTime:Update()
 		print("Loading new level")
 		-- Try to load a non-existing level. This is to see that
 		-- the game doesn't crash if this fail.
-		local group = Game.LoadLevel("/demo/levels/level2.lua")
+		local group = SceneGroup.Load("/demo/levels/level2.lua")
 		Scene.AddSceneGroup(group)
 		Delete(self)
 	end
