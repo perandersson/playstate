@@ -93,9 +93,10 @@ namespace playstate
 	int Scene_AddSceneGroup(lua_State* L)
 	{
 		SceneGroup* sceneGroup = luaM_popobject<SceneGroup>(L);
-		if(sceneGroup != NULL) {
+		if(sceneGroup != NULL)
 			GameRunner::Get().GetScene().AddSceneGroup(sceneGroup);
-		}
+		else
+			ILogger::Get().Error("Cannot add a SceneGroup that's nil");
 
 		return 0;
 	}
@@ -103,9 +104,10 @@ namespace playstate
 	int Scene_RemoveSceneGroup(lua_State* L)
 	{
 		SceneGroup* sceneGroup = luaM_popobject<SceneGroup>(L);
-		if(sceneGroup != NULL) {
+		if(sceneGroup != NULL)
 			GameRunner::Get().GetScene().RemoveSceneGroup(sceneGroup);
-		}
+		else
+			ILogger::Get().Error("Cannot remove a SceneGroup that's nil");
 
 		return 0;
 	}
