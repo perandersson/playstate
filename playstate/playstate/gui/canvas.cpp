@@ -49,6 +49,8 @@ namespace playstate
 		CanvasGroup* group = luaM_popobject<CanvasGroup>(L);
 		if(group != NULL)
 			GameRunner::Get().GetCanvas().AddCanvasGroup(group);
+		else
+			ILogger::Get().Error("Cannot add a CanvasGroup that's nil");
 
 		return 0;
 	}
@@ -58,6 +60,8 @@ namespace playstate
 		CanvasGroup* group = luaM_popobject<CanvasGroup>(L);
 		if(group != NULL)
 			GameRunner::Get().GetCanvas().RemoveCanvasGroup(group);
+		else
+			ILogger::Get().Error("Cannot remove a CanvasGroup that's nil");
 
 		return 0;
 	}

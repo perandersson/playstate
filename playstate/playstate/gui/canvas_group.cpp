@@ -1,5 +1,6 @@
 #include "../memory/memory.h"
 #include "canvas_group.h"
+#include "../script/script_system.h"
 using namespace playstate;
 
 CanvasGroup::CanvasGroup()
@@ -75,5 +76,22 @@ namespace playstate
 		const int ref = luaL_ref(L, LUA_REGISTRYINDEX);
 		group->RegisterObject(L, ref);
 		return 0;
+	}
+
+	int CanvasGroup_Load(lua_State* L)
+	{
+		const std::string fileName = lua_tostring(L, -1); lua_pop(L, 1);
+		try {
+			ScriptSystem& scriptSystem = ScriptSystem::Get();
+			std::auto_ptr<Script> script = scriptSystem.CompileFile(fileName);
+			CanvasGroup* group = script->ReadInstance<CanvasGroup>();
+			luaM_pushobject(L, "CanvasGroup", group);
+			return 1;
+		} catch(ScriptException e) {
+			ILogger::Get().Error("Could not load canvas group: '%s'. Reason: '%s'", fileName.c_str(), e.GetMessage().c_str());
+		}
+		
+		lua_pushnil(L);
+		return 1;
 	}
 }

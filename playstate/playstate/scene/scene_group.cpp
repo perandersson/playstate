@@ -141,7 +141,7 @@ namespace playstate
 			luaM_pushobject(L, "SceneGroup", group);
 			return 1;
 		} catch(ScriptException e) {
-			ILogger::Get().Error("Could not load level: '%s'. Reason: '%s'", fileName.c_str(), e.GetMessage().c_str());
+			ILogger::Get().Error("Could not load scene group: '%s'. Reason: '%s'", fileName.c_str(), e.GetMessage().c_str());
 		}
 		
 		lua_pushnil(L);

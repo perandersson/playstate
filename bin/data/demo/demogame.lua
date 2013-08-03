@@ -25,8 +25,10 @@ function DemoGame:LoadContent()
 	Scene.SetAmbientLight({0.1, 0.1, 0.1})
 	
 	-- Start the first level
-	level1 = SceneGroup.Load("/demo/levels/level1.lua")
-	Scene.AddSceneGroup(level1)
+	--level1 = SceneGroup.Load("/demo/levels/level1.lua")
+	--Scene.AddSceneGroup(level1)
+	local mainMenu = CanvasGroup.Load("/demo/menu/mainmenu.lua")
+	Canvas.AddCanvasGroup(mainMenu)
 end
 
 function DemoGame:Update()

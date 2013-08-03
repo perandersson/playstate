@@ -26,11 +26,6 @@ namespace playstate
 		void Start();
 
 		//
-		// Loads the supplied interface and returns it as a canvas group.
-		// @param fileName
-		CanvasGroup* LoadUserInterface(const std::string& fileName);
-
-		//
 		// Defines how the scene should be rendered to the screen using the active camera.
 		// 
 		// @param renderPipeline
@@ -70,11 +65,9 @@ namespace playstate
 	
 	extern int Game_Start(lua_State* L);
 	extern int Game_SetRenderPipeline(lua_State* L);
-	extern int Game_LoadUserInterface(lua_State* L);
 	static luaL_Reg Game_Methods[] = {
 		{ "Start", Game_Start },
 		{ "SetRenderPipeline", Game_SetRenderPipeline },
-		{ "LoadUserInterface", Game_LoadUserInterface },
 		{ NULL, NULL }
 	};
 }
