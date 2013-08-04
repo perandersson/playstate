@@ -68,10 +68,8 @@ namespace playstate
 	// Script integration
 	//
 
-	extern int IGame_Factory(lua_State* L);
 	extern int IGame_Init(lua_State* L);
 	static luaL_Reg IGame_Methods[] = {
-		{ LUA_CONSTRUCTOR, IGame_Factory },
 		{ LUA_INHERIT_CONSTRUCTOR, IGame_Init },
 		{ NULL, NULL }
 	};

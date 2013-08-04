@@ -1,4 +1,4 @@
-#include "../../memory/memory.h"
+﻿#include "../../memory/memory.h"
 #include "gfx_program_factory.h"
 #include "../gfx_program.h"
 #include "../exception/gfx_program_exception.h"
@@ -85,6 +85,14 @@ GfxProgram* GfxProgramFactory::Create(const std::string& fileName)
 	glAttachShader(program, fs);
 
 	glLinkProgram(program);
+
+	// Detach the shaders when done
+	// @see http://www.opengl.org/wiki/GLSL_Object
+	glDetachShader(program, fs);
+	glDetachShader(program, vs);
+	if(gs != 0)
+		glDetachShader(program, gs);
+
 	glGetProgramiv(program, GL_LINK_STATUS, &status);
 	if(!status) {
 		GLchar infoLogg[2048];

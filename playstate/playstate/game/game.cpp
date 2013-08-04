@@ -89,13 +89,6 @@ void ScriptableGame::OnRegistered()
 
 namespace playstate
 {
-	int IGame_Factory(lua_State* L)
-	{
-		ScriptableGame* game = new ScriptableGame();
-		luaM_pushobject(L, "IGame", game);
-		return 1;
-	}
-	
 	int IGame_Init(lua_State* L)
 	{
 		if(lua_istable(L, -1) == 0) {

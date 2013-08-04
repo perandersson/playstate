@@ -58,19 +58,16 @@ GfxProgram::~GfxProgram()
 	mComponents.clear();
 
 	if(mPixelShader != 0) {
-		glDetachShader(mProgramId, mPixelShader);
 		glDeleteShader(mPixelShader);
 		mPixelShader = 0;
 	}
 
 	if(mVertexShader != 0) {
-		glDetachShader(mProgramId, mVertexShader);
 		glDeleteShader(mVertexShader);
 		mVertexShader = 0;
 	}
 
 	if(mGeometryShader != 0) {
-		glDetachShader(mProgramId, mGeometryShader);
 		glDeleteShader(mGeometryShader);
 		mGeometryShader = 0;
 	}
@@ -79,6 +76,9 @@ GfxProgram::~GfxProgram()
 		glDeleteProgram(mProgramId);
 		mProgramId = 0;
 	}
+
+	if(_current_program == this)
+		_current_program = NULL;
 }
 
 void GfxProgram::Apply()

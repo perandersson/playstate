@@ -144,8 +144,10 @@ namespace playstate
 			ScriptSystem& scriptSystem = ScriptSystem::Get();
 			std::auto_ptr<Script> script = scriptSystem.CompileFile(fileName);
 			SceneGroup* group = script->ReadInstance<SceneGroup>();
-			if(group == NULL)
+			if(group == NULL) {
+				ILogger::Get().Error("The file: '%s' did not return a scene group.", fileName.c_str());
 				lua_pushnil(L);
+			}
 			else
 				luaM_pushobject(L, "SceneGroup", group);
 			return 1;

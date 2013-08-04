@@ -14,12 +14,18 @@ namespace playstate
 	{
 		struct Win32FileListener	
 		{
+			Win32FileListener() {}
+			~Win32FileListener() {}
+
 			IFileChangedListener* Callback;
 			std::string FileName;
 		};
 
 		struct Win32FileEvent
 		{
+			Win32FileEvent() {}
+			~Win32FileEvent() {}
+
 			IFileChangedListener* Callback;
 			std::string FileName;
 			FileChangeAction::Enum Action;
