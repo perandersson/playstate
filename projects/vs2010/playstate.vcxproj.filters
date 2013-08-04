@@ -108,6 +108,9 @@
     <Filter Include="Source Files\gui">
       <UniqueIdentifier>{5eef217b-1569-4a41-b3fa-fad05755411e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\gui\components">
+      <UniqueIdentifier>{095e0fc6-0e2a-41d8-b5a8-1522e6085981}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\playstate\playstate\camera\camera.cpp">
@@ -349,6 +352,9 @@
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\thread\thread_factory.cpp">
       <Filter>Source Files\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\gui\components\gui_frame_component.cpp">
+      <Filter>Source Files\gui\components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -690,6 +696,9 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\filesystem\file_system.h">
       <Filter>Source Files\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\gui\components\gui_frame_component.h">
+      <Filter>Source Files\gui\components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

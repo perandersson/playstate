@@ -51,7 +51,7 @@ void SceneGroup::AddSceneNode(SceneNode* node)
 	// TODO This is not supported, and it won't be in the future. But it should be possible to move a scene node
 	// from one group to another. Each group has it's own processors, so a move should make sure that
 	// the nodes components are re-added to the new scene group's processors and removed from this one.
-	assert(node->GetGroup() == NULL && "You are trying to add a scene node to more than one group");
+	//assert(node->GetGroup() == NULL && "You are trying to add a scene node to more than one group");
 
 	mSceneNodes.AddLast(node);
 }
