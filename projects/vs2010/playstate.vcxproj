@@ -106,6 +106,7 @@
     <ClInclude Include="..\..\playstate\playstate\exception.h" />
     <ClInclude Include="..\..\playstate\playstate\filesystem\directory.h" />
     <ClInclude Include="..\..\playstate\playstate\filesystem\file.h" />
+    <ClInclude Include="..\..\playstate\playstate\filesystem\file_changed_listener.h" />
     <ClInclude Include="..\..\playstate\playstate\filesystem\file_system.h" />
     <ClInclude Include="..\..\playstate\playstate\functions.h" />
     <ClInclude Include="..\..\playstate\playstate\game\configuration.h" />
@@ -252,7 +253,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;lua_assert=assert;LUA_USER_H=&lt;cassert&gt;;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>../../libraries/lua-5.2.1;../../libraries/glew-1.9.0/include;../../libraries/FreeImage</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4227</DisableSpecificWarnings>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>

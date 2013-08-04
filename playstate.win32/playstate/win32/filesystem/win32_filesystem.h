@@ -1,10 +1,13 @@
 #pragma once
 
 #include <playstate/filesystem/file_system.h>
+#include <playstate/types.h>
 #include <vector>
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+
+#include "win32_file_watcher.h"
 
 namespace playstate
 {
@@ -32,6 +35,10 @@ namespace playstate
 			// @param path
 			HANDLE GetHighestPriorityPathHandle(const std::string& path) const;
 
+			//
+			// Poll this implementation for file changes
+			void Poll();
+
 		// IFileSystem
 		public:
 			virtual std::auto_ptr<IFile> OpenFile(const std::string& path) const;
@@ -39,9 +46,12 @@ namespace playstate
 			virtual std::auto_ptr<IDirectory> OpenDirectory(const std::string& path) const;
 			virtual void AddLookupDirectory(const std::string& directory);
 			virtual void RemoveLookupDirectory(const std::string& directory);
+			virtual void AddFileChangedListener(const std::string& path, IFileChangedListener* listener);
+			virtual void RemoveFileChangedListener(IFileChangedListener* listener);
 
 		private:
 			Paths mPaths;
+			Win32FileWatcher mFileWatcher;
 		};
 	}
 }

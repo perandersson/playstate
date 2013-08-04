@@ -6,14 +6,15 @@
 #include <playstate/rendering/gfx_program.h>
 #include <playstate/search/render_block_result_set.h>
 #include <playstate/search/light_source_result_set.h>
+#include <playstate/filesystem/file_changed_listener.h>
 using namespace playstate;
 
 //
 // Renders the supplied scene using a deferred render pipeline
-class DeferredRenderPipeline : public IRenderPipeline, public IWindowResizedListener
+class DeferredRenderPipeline : public IRenderPipeline, public IWindowResizedListener, public IFileChangedListener
 {
 public:
-	DeferredRenderPipeline(RenderSystem& renderSystem, IWindow& window, ResourceManager& resourceManager);
+	DeferredRenderPipeline(RenderSystem& renderSystem, IWindow& window, ResourceManager& resourceManager, IFileSystem& fileSystem);
 	virtual ~DeferredRenderPipeline();
 
 // IRenderPipeline
@@ -23,6 +24,10 @@ public:
 // IWindowResizeListener
 public:
 	virtual void OnWindowResized(uint32 width, uint32 height);
+
+// IFileChangedListener
+public:
+	virtual void FileChanged(const IFile& file, FileChangeAction::Enum action);
 		
 private:
 	void DrawGeometry(const Scene& scene, const Camera& camera);
@@ -35,6 +40,7 @@ private:
 private:
 	RenderSystem& mRenderSystem;
 	IWindow& mWindow;
+	IFileSystem& mFileSystem;
 
 	std::auto_ptr<GfxProgram> mDeferredShader;
 	std::auto_ptr<GfxProgram> mTexturedShader;

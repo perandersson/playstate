@@ -3,6 +3,7 @@
 #include "../singleton.h"
 #include "file.h"
 #include "directory.h"
+#include "file_changed_listener.h"
 
 #include <memory>
 
@@ -36,5 +37,18 @@ namespace playstate
 		// Removes a directory where the filesystem looks for files
 		// @param directory
 		virtual void RemoveLookupDirectory(const std::string& directory) = 0;
+
+		//
+		// Adds a event listener for when a specific file is changed
+		//
+		// @param path
+		// @param listener
+		virtual void AddFileChangedListener(const std::string& path, IFileChangedListener* listener) = 0;
+		
+		//
+		// Removes an event listener for when a specific file is changed
+		//
+		// @param listener
+		virtual void RemoveFileChangedListener(IFileChangedListener* listener) = 0;
 	};
 }

@@ -39,6 +39,11 @@ Win32Thread::~Win32Thread()
 	}
 }
 
+HANDLE Win32Thread::GetHandle() const
+{
+	return mThreadHandle;
+}
+
 ThreadState Win32Thread::GetState() const
 {
 	return mThreadState;

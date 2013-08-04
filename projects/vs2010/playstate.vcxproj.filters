@@ -21,9 +21,6 @@
     <Filter Include="Source Files\component\renderable">
       <UniqueIdentifier>{815cdbbe-3097-4f5d-ae55-f3b8428c5b32}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\filesystem">
-      <UniqueIdentifier>{05107f29-e498-4c1a-acaf-8dd7cbab59c1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\game">
       <UniqueIdentifier>{df6b26da-6979-443d-8a2c-c930954f2e92}</UniqueIdentifier>
     </Filter>
@@ -110,6 +107,9 @@
     </Filter>
     <Filter Include="Source Files\gui\components">
       <UniqueIdentifier>{095e0fc6-0e2a-41d8-b5a8-1522e6085981}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\filesystem">
+      <UniqueIdentifier>{05107f29-e498-4c1a-acaf-8dd7cbab59c1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -699,6 +699,9 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\gui\components\gui_frame_component.h">
       <Filter>Source Files\gui\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\filesystem\file_changed_listener.h">
+      <Filter>Source Files\filesystem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

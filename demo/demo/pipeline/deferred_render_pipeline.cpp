@@ -6,8 +6,8 @@
 #include <playstate/window/window.h>
 #include <playstate/component/lightsources/point_light.h>
 
-DeferredRenderPipeline::DeferredRenderPipeline(RenderSystem& renderSystem, IWindow& window, ResourceManager& resourceManager)
-	: mRenderSystem(renderSystem), mWindow(window), 
+DeferredRenderPipeline::DeferredRenderPipeline(RenderSystem& renderSystem, IWindow& window, ResourceManager& resourceManager, IFileSystem& fileSystem)
+	: mRenderSystem(renderSystem), mWindow(window), mFileSystem(fileSystem),
 	mDiffuseRenderTarget(NULL), mPositionsRenderTarget(NULL), mNormalsRenderTarget(NULL), mDepthRenderTarget(NULL),
 	mLightRenderTarget(NULL)
 {
@@ -34,7 +34,7 @@ DeferredRenderPipeline::DeferredRenderPipeline(RenderSystem& renderSystem, IWind
 	mPointLightShader->FindComponent("PositionsTexture")->SetTexture(mPositionsRenderTarget);
 	mPointLightShader->FindComponent("NormalsTexture")->SetTexture(mNormalsRenderTarget);
 	mPointLightShader->SetRenderTarget(mLightRenderTarget, 0);
-
+	
 	mTexturedShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(std::string("/demo/effects/deferred/deferred_result.lua")));
 	mTexturedShader->FindComponent("DiffuseTexture")->SetTexture(mDiffuseRenderTarget);
 	mTexturedShader->FindComponent("PositionsTexture")->SetTexture(mPositionsRenderTarget);
@@ -43,6 +43,11 @@ DeferredRenderPipeline::DeferredRenderPipeline(RenderSystem& renderSystem, IWind
 
 	mUserInterfaceShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(std::string("/demo/effects/gui/gui.lua")));
 	mWhiteTexture = resourceManager.GetResource<Texture2D>("/engine/textures/white.png");
+
+	mFileSystem.AddFileChangedListener(std::string("/demo/effects/deferred/deferred.lua"), this);
+	mFileSystem.AddFileChangedListener(std::string("/demo/effects/deferred/deferred_point_light.lua"), this);
+	mFileSystem.AddFileChangedListener(std::string("/demo/effects/deferred/deferred_result.lua"), this);
+	mFileSystem.AddFileChangedListener(std::string("/demo/effects/deferred/gui.lua"), this);
 }
 
 DeferredRenderPipeline::~DeferredRenderPipeline()
@@ -63,6 +68,7 @@ DeferredRenderPipeline::~DeferredRenderPipeline()
 	mLightRenderTarget = NULL;
 
 	mWindow.RemoveWindowResizedListener(this);
+	mFileSystem.RemoveFileChangedListener(this);
 }
 	
 void DeferredRenderPipeline::Render(const Scene& scene, const Camera& camera)
@@ -241,18 +247,50 @@ void DeferredRenderPipeline::OnWindowResized(uint32 width, uint32 height)
 	mTexturedShader->FindComponent("LightTexture")->SetTexture(mLightRenderTarget);
 }
 
+void DeferredRenderPipeline::FileChanged(const IFile& file, FileChangeAction::Enum action)
+{
+	const std::string deferred = "/demo/effects/deferred/deferred.lua";
+	const std::string deferred_point_light = "/demo/effects/deferred/deferred_point_light.lua";
+	const std::string deferred_result = "/demo/effects/deferred/deferred_result.lua";
+	const std::string gui = "/demo/effects/deferred/gui.lua";
+
+	// Update shaders when changing file
+
+	if(file.GetPath() == deferred) {
+		mDeferredShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(deferred));
+		mDeferredShader->SetRenderTarget(mDiffuseRenderTarget, 0);
+		mDeferredShader->SetRenderTarget(mPositionsRenderTarget, 1);
+		mDeferredShader->SetRenderTarget(mNormalsRenderTarget, 2);
+		mDeferredShader->SetDepthRenderTarget(mDepthRenderTarget);
+	} else if(file.GetPath() == deferred_point_light) {
+		mPointLightShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(deferred_point_light));
+		mPointLightShader->FindComponent("DiffuseTexture")->SetTexture(mDiffuseRenderTarget);
+		mPointLightShader->FindComponent("PositionsTexture")->SetTexture(mPositionsRenderTarget);
+		mPointLightShader->FindComponent("NormalsTexture")->SetTexture(mNormalsRenderTarget);
+		mPointLightShader->SetRenderTarget(mLightRenderTarget, 0);
+	} else if(file.GetPath() == deferred_result) {
+		mTexturedShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(deferred_result));
+		mTexturedShader->FindComponent("DiffuseTexture")->SetTexture(mDiffuseRenderTarget);
+		mTexturedShader->FindComponent("PositionsTexture")->SetTexture(mPositionsRenderTarget);
+		mTexturedShader->FindComponent("NormalsTexture")->SetTexture(mNormalsRenderTarget);
+		mTexturedShader->FindComponent("LightTexture")->SetTexture(mLightRenderTarget);
+	} else if(file.GetPath() == gui) {
+		mUserInterfaceShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(gui));
+	}
+}
+
 class ScriptableDeferredRenderPipeline : public DeferredRenderPipeline, public Scriptable
 {
 public:
-	ScriptableDeferredRenderPipeline(RenderSystem& renderSystem, IWindow& window, ResourceManager& resourceManager) 
-		: DeferredRenderPipeline(renderSystem, window, resourceManager) {
+	ScriptableDeferredRenderPipeline(RenderSystem& renderSystem, IWindow& window, ResourceManager& resourceManager, IFileSystem& fileSystem) 
+		: DeferredRenderPipeline(renderSystem, window, resourceManager, fileSystem) {
 	}
 };
 
 int DeferredRenderPipeline_Factory(lua_State* L)
 {
 	int top1 = lua_gettop(L);
-	ScriptableDeferredRenderPipeline* pipeline = new ScriptableDeferredRenderPipeline(RenderSystem::Get(), IWindow::Get(), ResourceManager::Get());
+	ScriptableDeferredRenderPipeline* pipeline = new ScriptableDeferredRenderPipeline(RenderSystem::Get(), IWindow::Get(), ResourceManager::Get(), IFileSystem::Get());
 	int top2 = lua_gettop(L);
 	luaM_pushobject(L, "DeferredRenderPipeline", pipeline);
 	int top3 = lua_gettop(L);

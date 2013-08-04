@@ -95,7 +95,14 @@ bool RenderSystem::IsValidVersion() const
 
 GfxProgram* RenderSystem::LoadGfxProgram(const std::string& fileName)
 {
-	GfxProgram* program = mProgramFactory->Create(fileName);
+	GfxProgram* program = NULL;
+	try {
+		program = mProgramFactory->Create(fileName);
+	} catch(Exception& e) {
+		ILogger::Get().Error("Could not compile graphics program: '%s'. Reason: '%s'", fileName.c_str(), e.GetMessage().c_str());
+		program = new GfxProgram(*this);
+	}
+	
 	mGfxPrograms.AddLast(program);
 	return program;
 }

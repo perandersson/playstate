@@ -68,6 +68,9 @@
     <ClInclude Include="..\..\playstate.win32\playstate\win32\thread\win32_thread_factory.h">
       <Filter>Source Files\win32\thread</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\playstate.win32\playstate\win32\filesystem\win32_file_watcher.h">
+      <Filter>Source Files\win32\filesystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\playstate.win32\playstate\win32\filesystem\win32_directory.cpp">
@@ -108,6 +111,9 @@
     </ClCompile>
     <ClCompile Include="..\..\playstate.win32\playstate\win32\thread\win32_thread_factory.cpp">
       <Filter>Source Files\win32\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate.win32\playstate\win32\filesystem\win32_file_watcher.cpp">
+      <Filter>Source Files\win32\filesystem</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -47,7 +47,7 @@ ScriptCollection Script::ReadCollection()
 		THROW_EXCEPTION(ScriptException, "The script file didn't return any valid results");
 
 	if(!lua_istable(mLuaState, -1)) {
-		lua_pop(mLuaState, -1);
+		lua_pop(mLuaState, 1);
 	}
 	mNumResults--;
 

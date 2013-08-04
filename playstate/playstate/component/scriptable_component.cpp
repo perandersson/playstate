@@ -74,7 +74,7 @@ namespace playstate
 		
 		const int ref = luaL_ref(L, LUA_REGISTRYINDEX);
 		node->RegisterObject(L, ref);
-		return 1;
+		return 0;
 	}
 	
 	int Component_GetNode(lua_State* L)

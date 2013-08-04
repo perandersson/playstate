@@ -24,6 +24,16 @@ namespace {
 	GfxProgram* _current_program = 0;
 }
 
+GfxProgram::GfxProgram(RenderSystem& renderSystem)
+	: mProgramId(0), mVertexShader(0), mPixelShader(0), mGeometryShader(0), mApplied(false),
+	mDepthTest(true), mDepthFunc(DepthFunc::Default),
+	mBlend(false), mSrcFunc(SrcBlend::Default), mDestFunc(DestBlend::Default), 
+	mClearColor(Color::Nothing), mClearDepth(1.0f), mCullFaces(CullFaces::Default),
+	mRenderSystem(renderSystem), mDepthRenderTarget(NULL), mApplyRenderTarget(false)
+{
+	memset(mRenderTargets, 0, sizeof(mRenderTargets));
+}
+
 GfxProgram::GfxProgram(GLuint programId, GLuint vertexShader, GLuint pixelShader, 
 	GLuint geometryShader, RenderSystem& renderSystem, const ScriptCollection& collection) 
 	:  mProgramId(programId), mVertexShader(vertexShader), 

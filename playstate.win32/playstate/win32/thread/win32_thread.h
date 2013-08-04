@@ -16,6 +16,8 @@ namespace playstate
 			Win32Thread(IRunnable* runnable);
 			virtual ~Win32Thread();
 
+			HANDLE GetHandle() const;
+
 		// IThread
 		public:
 			virtual ThreadState GetState() const;

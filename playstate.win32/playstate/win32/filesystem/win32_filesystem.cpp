@@ -8,13 +8,13 @@ using namespace playstate;
 using namespace playstate::win32;
 
 Win32FileSystem::Win32FileSystem(const std::string& path)
-	: mPaths()
+	: mPaths(), mFileWatcher(path)
 {
 	mPaths.push_back(path);
 }
 
 Win32FileSystem::Win32FileSystem(const std::vector<std::string>& paths)
-	: mPaths(paths)
+	: mPaths(paths), mFileWatcher(paths[0])
 {
 }
 
@@ -95,4 +95,19 @@ void Win32FileSystem::RemoveLookupDirectory(const std::string& path)
 	Paths::iterator it = std::find(mPaths.begin(), mPaths.end(), path);
 	if(it != mPaths.end())
 		mPaths.erase(it);
+}
+
+void Win32FileSystem::Poll()
+{
+	mFileWatcher.LookForChanges();
+}
+
+void Win32FileSystem::AddFileChangedListener(const std::string& path, IFileChangedListener* listener)
+{
+	mFileWatcher.AddListener(path, listener);
+}
+
+void Win32FileSystem::RemoveFileChangedListener(IFileChangedListener* listener)
+{
+	mFileWatcher.RemoveListener(listener);
 }

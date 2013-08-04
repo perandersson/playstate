@@ -59,6 +59,7 @@ void Win32DefaultKernel::Release()
 void Win32DefaultKernel::Process()
 {
 	mWindow->HandleEvents();
+	mFileSystem->Poll();
 	mInputSystem->Poll();
 	mResourceManager->Poll();
 	mScriptSystem->HandleGC();

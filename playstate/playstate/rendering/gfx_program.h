@@ -28,6 +28,7 @@ namespace playstate
 		LinkedListLink<GfxProgram> Link;
 
 	public:
+		GfxProgram(RenderSystem& renderSystem);
 		GfxProgram(GLuint programId, GLuint vertexShader, GLuint pixelShader, GLuint geometryShader, RenderSystem& renderSystem,
 			const ScriptCollection& collection);
 		~GfxProgram();

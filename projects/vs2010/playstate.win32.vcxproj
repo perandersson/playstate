@@ -14,6 +14,7 @@
     <ClInclude Include="..\..\playstate.win32\playstate\win32\filesystem\win32_directory.h" />
     <ClInclude Include="..\..\playstate.win32\playstate\win32\filesystem\win32_file.h" />
     <ClInclude Include="..\..\playstate.win32\playstate\win32\filesystem\win32_filesystem.h" />
+    <ClInclude Include="..\..\playstate.win32\playstate\win32\filesystem\win32_file_watcher.h" />
     <ClInclude Include="..\..\playstate.win32\playstate\win32\input\win32_input_state.h" />
     <ClInclude Include="..\..\playstate.win32\playstate\win32\input\win32_input_system.h" />
     <ClInclude Include="..\..\playstate.win32\playstate\win32\rendering\win32_graphics_driver.h" />
@@ -29,6 +30,7 @@
     <ClCompile Include="..\..\playstate.win32\playstate\win32\filesystem\win32_directory.cpp" />
     <ClCompile Include="..\..\playstate.win32\playstate\win32\filesystem\win32_file.cpp" />
     <ClCompile Include="..\..\playstate.win32\playstate\win32\filesystem\win32_filesystem.cpp" />
+    <ClCompile Include="..\..\playstate.win32\playstate\win32\filesystem\win32_file_watcher.cpp" />
     <ClCompile Include="..\..\playstate.win32\playstate\win32\input\win32_input_state.cpp" />
     <ClCompile Include="..\..\playstate.win32\playstate\win32\input\win32_input_system.cpp" />
     <ClCompile Include="..\..\playstate.win32\playstate\win32\rendering\win32_graphics_driver.cpp" />
@@ -80,7 +82,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;lua_assert=assert;LUA_USER_H=&lt;cassert&gt;;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)../../playstate;$(SolutionDir)../../libraries/lua-5.2.1;$(SolutionDir)../../libraries/glew-1.9.0/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
