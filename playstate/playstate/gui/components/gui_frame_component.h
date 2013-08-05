@@ -5,7 +5,7 @@
 
 namespace playstate
 {
-	class GuiFrameComponent : public Component, public Renderable
+	class GuiFrameComponent : public Component, public Renderable, public Scriptable
 	{
 	public:
 		GuiFrameComponent(const std::string& title, uint32 width, uint32 height);
@@ -33,5 +33,10 @@ namespace playstate
 		std::string mTitle;
 		uint32 mWidth;
 		uint32 mHeight;
+	};
+
+	extern int GuiFrameComponent_Factory(lua_State* L);
+	static luaL_Reg GuiFrameComponent_Methods[] = {
+		{ LUA_CONSTRUCTOR, GuiFrameComponent_Factory }
 	};
 }

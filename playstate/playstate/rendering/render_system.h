@@ -14,7 +14,7 @@
 #include "window_render_context.h"
 #include "../window/window.h"
 #include "factories/gfx_program_factory.h"
-#include "factories/vertex_array_object_factories.h"
+#include "datatypes/standard_vertex_buffer_types.h"
 
 #include <gl/glew.h>
 
@@ -117,12 +117,5 @@ namespace playstate
 		GLuint mFrameBufferId;
 		RenderTarget2D* mRenderTargets[MaxDrawBuffers];
 		RenderTarget2D* mDepthRenderTarget;
-
-		PositionVAOFactory mPositionVAOFactory;
-		PositionTexCoordVAOFactory mPositionTexCoordVAOFactory;
-		PositionTexCoordColorVAOFactory mPositionTexCoordColorVAOFactory;
-		PositionNormalVAOFactory mPositionNormalVAOFactory;
-		PositionColorVAOFactory mPositionColorVAOFactory;
-		PositionNormalTextureVAOFactory mPositionNormalTextureVAOFactory;
 	};
 }

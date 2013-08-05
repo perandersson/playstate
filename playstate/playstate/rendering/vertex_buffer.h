@@ -12,50 +12,6 @@ namespace playstate
 {
 	class GfxProgram;
 
-	const uint32 PositionAttribLocation = 0;
-	const uint32 NormalAttribLocation = 1;
-	const uint32 TexCoordAttribLocation = 2;
-	const uint32 ColorAttribLocation = 3;
-
-	struct PositionData
-	{
-		Vector3 Position; // always at location = 0
-	};
-
-	struct PositionTexCoordData
-	{
-		Vector3 Position; // always at location = 0
-		Vector2 TexCoord; // always at location = 2
-	};
-
-	struct PositionTexCoordColorData
-	{
-		Vector3 Position; // always at location = 0
-		Vector2 TexCoord; // always at location = 2
-		Color Color; // always at location = 3
-	};
-
-	struct PositionNormalData
-	{
-		Vector3 Position; // always at location = 0
-		Vector3 Normal; // always at location = 1
-	};
-
-	struct PositionNormalTextureData
-	{
-		Vector3 Position; // always at location = 0
-		Vector3 Normal;  // always at location = 1
-		Vector2 TexCoord; // always at location = 2
-	};
-
-	struct PositionColorData
-	{
-		Vector3 Position; // always at location = 0
-		Color Color; // always at location = 3
-	};
-
-	// TODO Add struct for color as well - color location = 3.
-
 	//
 	// Container for a vertex buffer.
 	class VertexBuffer

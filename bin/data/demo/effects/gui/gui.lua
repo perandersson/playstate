@@ -12,15 +12,15 @@ return {
 		uniform mat4 ViewMatrix;
 		
 		layout(location = 0) in vec3 position;
-		layout(location = 2) in vec2 texcoord;
-
-		out vec2 uvCoords;
+		layout(location = 1) in uint paletteIndex;
+		
+		out uint palette;
 
 		void main()
 		{
 			mat4 modelView = ViewMatrix * ModelMatrix;
 			gl_Position = ProjectionMatrix * modelView * vec4(position, 1.0);
-			uvCoords = texcoord;
+			palette = paletteIndex;
 		}
 	]],
 	UserInterfaceTexture = {
@@ -34,15 +34,15 @@ return {
 	FragmentShader = [[
 		#version 330
 
-		uniform sampler2D UserInterfaceTexture;
+		//uniform sampler2D UserInterfaceTexture;
 		uniform vec4 Color;
 
-		in vec2 uvCoords;
+		in uint palette;
 
 		void main()
 		{
-			vec4 image = texture2D(UserInterfaceTexture, uvCoords);
-			gl_FragColor = image * Color;
+			//vec4 image = texture2D(UserInterfaceTexture, uvCoords);
+			gl_FragColor = Color;
 		}
 	]]
 }

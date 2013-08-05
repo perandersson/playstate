@@ -286,32 +286,32 @@ IndexBuffer* RenderSystem::CreateStaticBuffer(const uint32* indices, uint32 numI
 
 VertexBuffer* RenderSystem::CreateStaticBuffer(const PositionData* elements, uint32 numElements)
 {
-	return CreateStaticBuffer(elements, sizeof(PositionData), mPositionVAOFactory, numElements);
+	return CreateStaticBuffer(elements, sizeof(PositionData), PositionDataVAOFactory, numElements);
 }
 
 VertexBuffer* RenderSystem::CreateStaticBuffer(const PositionTexCoordData* elements, uint32 numElements)
 {
-	return CreateStaticBuffer(elements, sizeof(PositionTexCoordData), mPositionTexCoordVAOFactory, numElements);
+	return CreateStaticBuffer(elements, sizeof(PositionTexCoordData), PositionTexCoordDataVAOFactory, numElements);
 }
 
 VertexBuffer* RenderSystem::CreateStaticBuffer(const PositionTexCoordColorData* elements, uint32 numElements)
 {
-	return CreateStaticBuffer(elements, sizeof(PositionTexCoordColorData), mPositionTexCoordColorVAOFactory, numElements);
+	return CreateStaticBuffer(elements, sizeof(PositionTexCoordColorData), PositionTexCoordColorDataVAOFactory, numElements);
 }
 
 VertexBuffer* RenderSystem::CreateStaticBuffer(const PositionNormalData* elements, uint32 numElements)
 {
-	return CreateStaticBuffer(elements, sizeof(PositionNormalData), mPositionNormalVAOFactory, numElements);
+	return CreateStaticBuffer(elements, sizeof(PositionNormalData), PositionNormalDataVAOFactory, numElements);
 }
 
 VertexBuffer* RenderSystem::CreateStaticBuffer(const PositionColorData* elements, uint32 numElements)
 {
-	return CreateStaticBuffer(elements, sizeof(PositionColorData), mPositionColorVAOFactory, numElements);
+	return CreateStaticBuffer(elements, sizeof(PositionColorData), PositionColorDataVAOFactory, numElements);
 }
 
 VertexBuffer* RenderSystem::CreateStaticBuffer(const PositionNormalTextureData* elements, uint32 numElements)
 {
-	return CreateStaticBuffer(elements, sizeof(PositionNormalTextureData), mPositionNormalTextureVAOFactory, numElements);
+	return CreateStaticBuffer(elements, sizeof(PositionNormalTextureData), PositionNormalTextureDataVAOFactory, numElements);
 }
 
 VertexBuffer* RenderSystem::CreateStaticBuffer(const void* data, uint32 dataTypeSize, const IVertexArrayObjectFactory& arrayFactory, uint32 numElements)

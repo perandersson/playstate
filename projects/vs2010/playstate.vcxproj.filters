@@ -111,6 +111,9 @@
     <Filter Include="Source Files\filesystem">
       <UniqueIdentifier>{05107f29-e498-4c1a-acaf-8dd7cbab59c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\rendering\datatypes">
+      <UniqueIdentifier>{1fa3e6f0-5867-4bd3-aade-3f0e2e17d6c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\playstate\playstate\camera\camera.cpp">
@@ -207,9 +210,6 @@
       <Filter>Source Files\rendering\state</Filter>
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\rendering\factories\gfx_program_factory.cpp">
-      <Filter>Source Files\rendering\factories</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\rendering\factories\vertex_array_object_factories.cpp">
       <Filter>Source Files\rendering\factories</Filter>
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\rendering\exception\gfx_program_exception.cpp">
@@ -356,6 +356,15 @@
     <ClCompile Include="..\..\playstate\playstate\gui\components\gui_frame_component.cpp">
       <Filter>Source Files\gui\components</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\math\rect.cpp">
+      <Filter>Source Files\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\gui\gui_geometry_builder.cpp">
+      <Filter>Source Files\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\rendering\vertex_declaration.cpp">
+      <Filter>Source Files\rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\playstate\playstate\camera\camera.h">
@@ -491,9 +500,6 @@
       <Filter>Source Files\rendering\state</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\rendering\factories\gfx_program_factory.h">
-      <Filter>Source Files\rendering\factories</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\rendering\factories\vertex_array_object_factories.h">
       <Filter>Source Files\rendering\factories</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\rendering\exception\gfx_program_exception.h">
@@ -702,6 +708,18 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\filesystem\file_changed_listener.h">
       <Filter>Source Files\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\math\rect.h">
+      <Filter>Source Files\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\gui\gui_geometry_builder.h">
+      <Filter>Source Files\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\vertex_declaration.h">
+      <Filter>Source Files\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\datatypes\standard_vertex_buffer_types.h">
+      <Filter>Source Files\rendering\datatypes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

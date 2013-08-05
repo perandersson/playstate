@@ -116,7 +116,7 @@ void DeferredRenderPipeline::DrawGeometry(const Scene& scene, const Camera& came
 {
 	FindQuery query;
 	query.Camera = &camera;
-	query.Filter = RenderStateFilter::Default;
+	query.Filter = RenderStateFilter::GEOMETRY | RenderStateFilter::TEXTURES;
 
 	if(scene.Find(query, &mRenderBlockResultSet)) {
 		mDeferredShader->Apply();

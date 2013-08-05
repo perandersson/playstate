@@ -94,15 +94,19 @@ GfxProgram* GfxProgramFactory::Create(const std::string& fileName)
 		glDetachShader(program, gs);
 
 	glGetProgramiv(program, GL_LINK_STATUS, &status);
+	GLchar infoLogg[2048];
+	glGetProgramInfoLog(program, 2048, NULL, infoLogg);
 	if(!status) {
-		GLchar infoLogg[2048];
-		glGetProgramInfoLog(program, 2048, NULL, infoLogg);
 		glDeleteShader(vs);
 		glDeleteShader(fs);
 		glDeleteProgram(program);
 
 		THROW_EXCEPTION(GfxProgramException, "Could not link the shaders programs for resource: '%s'. Reason: %s", 
 			fileName.c_str(), infoLogg);
+	}
+
+	if(infoLogg != NULL && strlen(infoLogg) > 0) {
+		ILogger::Get().Debug("Shader program was linked, and is working, but had build messages: '%s'", infoLogg);
 	}
 
 	// Load all attributes

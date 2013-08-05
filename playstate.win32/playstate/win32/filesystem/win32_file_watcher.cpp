@@ -98,8 +98,8 @@ void Win32FileWatcher::Run(IThread& thread)
 	BYTE bytes[32 * 1024];
 	DWORD bytesret;
 	TCHAR szFile[MAX_PATH];
-
-	while(ReadDirectoryChangesW(mRootDirHandle, bytes, sizeof(bytes), TRUE, FILE_NOTIFY_CHANGE_SIZE, &bytesret, NULL, NULL) == TRUE
+	
+	while(ReadDirectoryChangesW(mRootDirHandle, bytes, sizeof(bytes), TRUE, FILE_NOTIFY_CHANGE_LAST_WRITE, &bytesret, NULL, NULL) == TRUE
 		&& mRootDirHandle != INVALID_HANDLE_VALUE) {
 
 		PFILE_NOTIFY_INFORMATION pNotify;
@@ -121,7 +121,7 @@ void Win32FileWatcher::Run(IThread& thread)
 			std::string fileName = "/";
 			fileName += szFile;
 			std::replace(fileName.begin(), fileName.end(), '\\', '/');
-
+			
 			FileChangedListeners::iterator it = mFileChangedListeners.begin();
 			FileChangedListeners::iterator end = mFileChangedListeners.end();
 			for(;it != end; ++it) {
@@ -136,6 +136,6 @@ void Win32FileWatcher::Run(IThread& thread)
 				}
 			}
 		} while(pNotify->NextEntryOffset != 0);
-		thread.Wait(500);
+		thread.Wait(800);
 	}
 }
