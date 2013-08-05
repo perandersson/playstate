@@ -26,12 +26,17 @@ void GuiFrameComponent::OnComponentAdded()
 	// 1. Create quad based on width and height
 	// 2. Create vertices block for title text if neccessary.
 
-	// 0x0 (top)
 	const uint32 ShadowColorIndex = 0;
 	const uint32 BackgroundColorIndex = 1;
+	const uint32 FrontfaceColorIndex = 1;
+
+	const uint32 ShadowOffset = 3;
+	const uint32 TitleSize = 10;
+
 	GuiGeometryBuilder ggb(RenderSystem::Get());
-	ggb.AddQuad(Rect(0, 0, mWidth + 6, mHeight + 6), ShadowColorIndex);
-	ggb.AddQuad(Rect(3, 3, mWidth, mHeight), BackgroundColorIndex);
+	ggb.AddQuad(Rect(0, 0, mWidth + ShadowOffset*2, mHeight + ShadowOffset*2), ShadowColorIndex);
+	ggb.AddQuad(Rect(ShadowOffset, ShadowOffset, mWidth, mHeight), BackgroundColorIndex);
+	ggb.AddQuad(Rect(ShadowOffset, ShadowOffset + TitleSize, mWidth, mHeight - TitleSize), FrontfaceColorIndex);
 	mVertexBuffer = ggb.Build();
 
 	Renderable::Attach(GetNode()->GetGroup());

@@ -2,28 +2,6 @@
 #include "gui_geometry_builder.h"
 using namespace playstate;
 
-GLuint GuiGeometryDataVAOFactory::CreateVertexArray(GLuint bufferId) const
-{
-	GLuint vertexArrayID = 0;
-	glGenVertexArrays(1, &vertexArrayID);
-	glBindVertexArray(vertexArrayID);
-
-	glBindBuffer(GL_ARRAY_BUFFER, bufferId);
-
-	const uint32 stride = sizeof(GuiGeometryData);
-	
-	glEnableVertexAttribArray(PositionAttribLocation);
-	glVertexAttribPointer(PositionAttribLocation, 3, GL_FLOAT, GL_FALSE, stride, 0);
-	
-	glEnableVertexAttribArray(PaletteIndexAttribLocation);
-	glVertexAttribPointer(PaletteIndexAttribLocation, 1, GL_UNSIGNED_INT, GL_FALSE, stride, OFFSET(sizeof(Vector3)));
-	
-	glBindVertexArray(0);
-	return vertexArrayID;
-}
-
-////
-
 GuiGeometryBuilder::GuiGeometryBuilder(RenderSystem& renderSystem)
 	: mRenderSystem(renderSystem)
 {
@@ -34,6 +12,11 @@ GuiGeometryBuilder::~GuiGeometryBuilder()
 	mData.clear();
 }
 
+void GuiGeometryBuilder::AddQuad(const Rect& rect)
+{
+	AddQuad(rect, 0);
+}
+
 void GuiGeometryBuilder::AddQuad(const Rect& rect, uint32 paletteIndex)
 {
 	/*
@@ -41,7 +24,6 @@ void GuiGeometryBuilder::AddQuad(const Rect& rect, uint32 paletteIndex)
 		|       |
 		p2------p3
 	*/
-
 
 	GuiGeometryData elements[6];
 	elements[0].Position.Set(rect.X, rect.Y, 0.0f); //p0
@@ -68,5 +50,5 @@ void GuiGeometryBuilder::AddQuad(const Rect& rect, uint32 paletteIndex)
 
 VertexBuffer* GuiGeometryBuilder::Build()
 {
-	return mRenderSystem.CreateStaticBuffer(&mData[0], sizeof(GuiGeometryData), mGuiGeometryDataVAOFactory, mData.size());
+	return mRenderSystem.CreateStaticBuffer(&mData[0], sizeof(GuiGeometryData), GuiGeometryDataVAOFactory, mData.size());
 }

@@ -365,6 +365,9 @@
     <ClCompile Include="..\..\playstate\playstate\rendering\vertex_declaration.cpp">
       <Filter>Source Files\rendering</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\gui\gui_render_processor.cpp">
+      <Filter>Source Files\gui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\playstate\playstate\camera\camera.h">
@@ -720,6 +723,9 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\rendering\datatypes\standard_vertex_buffer_types.h">
       <Filter>Source Files\rendering\datatypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\gui\gui_render_processor.h">
+      <Filter>Source Files\gui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -38,5 +38,8 @@ namespace playstate
 		// @param state
 		// @param builder
 		virtual void Collect(const RenderState& state, RenderBlockResultSet* resultSet) = 0;
+
+	private:
+		IRenderProcessor* mAttachedToProcessor;
 	};
 }

@@ -41,6 +41,9 @@ namespace playstate
 		// Detaches this instance from it's attached update processor. This can be done to prevent
 		// this item from receiving any update events.
 		void Detach();
+
+	private:
+		IUpdateProcessor* mAttachedToProcessor;
 	};
 
 	//

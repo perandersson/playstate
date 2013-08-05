@@ -11,16 +11,15 @@ namespace playstate
 		Vector3 Position;
 		uint32 PaletteIndex;
 	};
-
-	class GuiGeometryDataVAOFactory : public IVertexArrayObjectFactory
-	{
-		static const uint32 PositionAttribLocation = 0;
-		static const uint32 PaletteIndexAttribLocation = 1;
-
-	// IVertexArrayObjectFactory
-	public:
-		virtual GLuint CreateVertexArray(GLuint bufferId) const;
+	
+	static VertexDeclaration GuiGeometryDataVertexDeclaration = {
+		{ 
+			{ 0, sizeof(Vector3), 3, GL_FLOAT, false }, 
+			{ 1, sizeof(uint32), 1, GL_UNSIGNED_INT, false }, 
+			0 
+		}
 	};
+	static VertexDeclarationArrayObjectFactory GuiGeometryDataVAOFactory(GuiGeometryDataVertexDeclaration);
 
 	class GuiGeometryBuilder
 	{
@@ -42,7 +41,6 @@ namespace playstate
 	private:
 		RenderSystem& mRenderSystem;
 		GuiGeometryDatas mData;
-		GuiGeometryDataVAOFactory mGuiGeometryDataVAOFactory;
 	};
 
 }
