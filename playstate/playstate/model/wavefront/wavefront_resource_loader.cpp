@@ -263,7 +263,7 @@ void WavefrontResourceLoader::LoadMesh(std::istringstream& stream, std::vector<W
 			if(currentMaterial.length() > 0) {
 				WavefrontMesh* mesh = new WavefrontMesh();
 				mesh->Material = currentMaterial;
-				mesh->Vertices = mRenderSystem.CreateStatic(data, numVertices);
+				mesh->Vertices = mRenderSystem.CreateStaticBuffer(data, numVertices);
 				meshes.push_back(mesh);
 				
 				numVertices = 0;
@@ -312,7 +312,7 @@ void WavefrontResourceLoader::LoadMesh(std::istringstream& stream, std::vector<W
 	if(currentMaterial.length() > 0) {
 		WavefrontMesh* mesh = new WavefrontMesh();
 		mesh->Material = currentMaterial;
-		mesh->Vertices = mRenderSystem.CreateStatic(data, numVertices);
+		mesh->Vertices = mRenderSystem.CreateStaticBuffer(data, numVertices);
 		meshes.push_back(mesh);
 	}
 

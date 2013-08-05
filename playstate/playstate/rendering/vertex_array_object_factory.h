@@ -10,6 +10,6 @@ namespace playstate
 		virtual ~IVertexArrayObjectFactory() {}
 
 	public:
-		virtual GLuint CreateVertexArray(GLuint bufferId) = 0;
+		virtual GLuint CreateVertexArray(GLuint bufferId) const = 0;
 	};
 }

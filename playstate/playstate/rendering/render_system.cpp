@@ -64,7 +64,7 @@ RenderSystem::RenderSystem(IWindow& window, ScriptSystem& scriptSystem) : mWindo
 	elements[5].Position.Set(1.0f, -1.0f, 0.0f);
 	elements[5].TexCoord.Set(1.0f, 0.0f);
 
-	mUniformVertexBuffer = CreateStatic(elements, 6);
+	mUniformVertexBuffer = CreateStaticBuffer(elements, 6);
 }
 
 RenderSystem::~RenderSystem()
@@ -267,7 +267,7 @@ VertexBuffer* RenderSystem::GetUniformVertexBuffer() const
 	return mUniformVertexBuffer;
 }
 
-IndexBuffer* RenderSystem::CreateStatic(uint32* indices, uint32 numIndices)
+IndexBuffer* RenderSystem::CreateStaticBuffer(const uint32* indices, uint32 numIndices)
 {
 	GLuint indexBuffer;
 	glGenBuffers(1, &indexBuffer);
@@ -284,64 +284,43 @@ IndexBuffer* RenderSystem::CreateStatic(uint32* indices, uint32 numIndices)
 }
 
 
-VertexBuffer* RenderSystem::CreateStatic(PositionData* elements, uint32 numElements)
+VertexBuffer* RenderSystem::CreateStaticBuffer(const PositionData* elements, uint32 numElements)
 {
-	GLuint bufferID;
-	glGenBuffers(1, &bufferID);
-
-	glBindBuffer(GL_ARRAY_BUFFER, bufferID);
-	glBufferData(GL_ARRAY_BUFFER, numElements * sizeof(PositionData), elements, GL_STATIC_DRAW);
-	glFlush();
-
-	GLenum status = glGetError();
-	if(status != GL_NO_ERROR) {
-		THROW_EXCEPTION(RenderingException, "Could not create vertex buffer. Reason: %d", status);
-	}
-	
-	return new VertexBuffer(GL_TRIANGLES, mPositionVAOFactory, bufferID, numElements);
+	return CreateStaticBuffer(elements, sizeof(PositionData), mPositionVAOFactory, numElements);
 }
 
-VertexBuffer* RenderSystem::CreateStatic(PositionTexCoordData* elements, uint32 numElements)
+VertexBuffer* RenderSystem::CreateStaticBuffer(const PositionTexCoordData* elements, uint32 numElements)
 {
-	GLuint bufferID;
-	glGenBuffers(1, &bufferID);
-
-	glBindBuffer(GL_ARRAY_BUFFER, bufferID);
-	glBufferData(GL_ARRAY_BUFFER, numElements * sizeof(PositionTexCoordData), elements, GL_STATIC_DRAW);
-	glFlush();
-
-	GLenum status = glGetError();
-	if(status != GL_NO_ERROR) {
-		THROW_EXCEPTION(RenderingException, "Could not create vertex buffer. Reason: %d", status);
-	}
-
-	return new VertexBuffer(GL_TRIANGLES, mPositionTexCoordVAOFactory, bufferID, numElements);
+	return CreateStaticBuffer(elements, sizeof(PositionTexCoordData), mPositionTexCoordVAOFactory, numElements);
 }
 
-VertexBuffer* RenderSystem::CreateStatic(PositionNormalData* elements, uint32 numElements)
+VertexBuffer* RenderSystem::CreateStaticBuffer(const PositionTexCoordColorData* elements, uint32 numElements)
 {
-	GLuint bufferID;
-	glGenBuffers(1, &bufferID);
-
-	glBindBuffer(GL_ARRAY_BUFFER, bufferID);
-	glBufferData(GL_ARRAY_BUFFER, numElements * sizeof(PositionNormalData), elements, GL_STATIC_DRAW);
-	glFlush();
-
-	GLenum status = glGetError();
-	if(status != GL_NO_ERROR) {
-		THROW_EXCEPTION(RenderingException, "Could not create vertex buffer. Reason: %d", status);
-	}
-	
-	return new VertexBuffer(GL_TRIANGLES, mPositionNormalVAOFactory, bufferID, numElements);
+	return CreateStaticBuffer(elements, sizeof(PositionTexCoordColorData), mPositionTexCoordColorVAOFactory, numElements);
 }
 
-VertexBuffer* RenderSystem::CreateStatic(PositionNormalTextureData* elements, uint32 numElements)
+VertexBuffer* RenderSystem::CreateStaticBuffer(const PositionNormalData* elements, uint32 numElements)
+{
+	return CreateStaticBuffer(elements, sizeof(PositionNormalData), mPositionNormalVAOFactory, numElements);
+}
+
+VertexBuffer* RenderSystem::CreateStaticBuffer(const PositionColorData* elements, uint32 numElements)
+{
+	return CreateStaticBuffer(elements, sizeof(PositionColorData), mPositionColorVAOFactory, numElements);
+}
+
+VertexBuffer* RenderSystem::CreateStaticBuffer(const PositionNormalTextureData* elements, uint32 numElements)
+{
+	return CreateStaticBuffer(elements, sizeof(PositionNormalTextureData), mPositionNormalTextureVAOFactory, numElements);
+}
+
+VertexBuffer* RenderSystem::CreateStaticBuffer(const void* data, uint32 dataTypeSize, const IVertexArrayObjectFactory& arrayFactory, uint32 numElements)
 {
 	GLuint bufferID;
 	glGenBuffers(1, &bufferID);
 
 	glBindBuffer(GL_ARRAY_BUFFER, bufferID);
-	glBufferData(GL_ARRAY_BUFFER, numElements * sizeof(PositionNormalTextureData), elements, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, numElements * dataTypeSize, data, GL_STATIC_DRAW);
 	glFlush();
 
 	GLenum status = glGetError();
@@ -349,7 +328,7 @@ VertexBuffer* RenderSystem::CreateStatic(PositionNormalTextureData* elements, ui
 		THROW_EXCEPTION(RenderingException, "Could not create vertex buffer. Reason: %d", status);
 	}
 
-	return new VertexBuffer(GL_TRIANGLES, mPositionNormalTextureVAOFactory, bufferID, numElements);
+	return new VertexBuffer(GL_TRIANGLES, arrayFactory, bufferID, numElements);
 }
 
 RenderTarget2D* RenderSystem::CreateRenderTarget2D(uint32 width, uint32 height, TextureFormat::Enum format)

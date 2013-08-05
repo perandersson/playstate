@@ -28,6 +28,13 @@ namespace playstate
 		Vector2 TexCoord; // always at location = 2
 	};
 
+	struct PositionTexCoordColorData
+	{
+		Vector3 Position; // always at location = 0
+		Vector2 TexCoord; // always at location = 2
+		Color Color; // always at location = 3
+	};
+
 	struct PositionNormalData
 	{
 		Vector3 Position; // always at location = 0
@@ -41,6 +48,12 @@ namespace playstate
 		Vector2 TexCoord; // always at location = 2
 	};
 
+	struct PositionColorData
+	{
+		Vector3 Position; // always at location = 0
+		Color Color; // always at location = 3
+	};
+
 	// TODO Add struct for color as well - color location = 3.
 
 	//
@@ -50,7 +63,7 @@ namespace playstate
 		friend class GfxProgram;
 		
 	public:
-		VertexBuffer(GLenum vertexType, IVertexArrayObjectFactory& factory, GLuint bufferID, uint32 numElements);
+		VertexBuffer(GLenum vertexType, const IVertexArrayObjectFactory& factory, GLuint bufferID, uint32 numElements);
 		~VertexBuffer();
 
 	private:
@@ -64,7 +77,7 @@ namespace playstate
 		GLuint mVertexArrayID;
 		GLuint mBufferID;
 		uint32 mNumElements;
-		IVertexArrayObjectFactory& mFactory;
+		const IVertexArrayObjectFactory& mFactory;
 	};
 }
 

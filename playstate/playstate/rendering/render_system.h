@@ -48,13 +48,24 @@ namespace playstate
 		// Creates an index buffer based on a supplied of indices
 		// @return A bindable and renderable index buffer
 		// @throws RenderingException
-		IndexBuffer* CreateStatic(uint32* indices, uint32 numIndices);
+		IndexBuffer* CreateStaticBuffer(const uint32* indices, uint32 numIndices);
 
 		
-		VertexBuffer* CreateStatic(PositionData* elements, uint32 numElements);
-		VertexBuffer* CreateStatic(PositionTexCoordData* elements, uint32 numElements);
-		VertexBuffer* CreateStatic(PositionNormalData* elements, uint32 numElements);
-		VertexBuffer* CreateStatic(PositionNormalTextureData* elements, uint32 numElements);
+		VertexBuffer* CreateStaticBuffer(const PositionData* elements, uint32 numElements);
+		VertexBuffer* CreateStaticBuffer(const PositionTexCoordData* elements, uint32 numElements);
+		VertexBuffer* CreateStaticBuffer(const PositionTexCoordColorData* elements, uint32 numElements);
+		VertexBuffer* CreateStaticBuffer(const PositionNormalData* elements, uint32 numElements);
+		VertexBuffer* CreateStaticBuffer(const PositionColorData* elements, uint32 numElements);
+		VertexBuffer* CreateStaticBuffer(const PositionNormalTextureData* elements, uint32 numElements);
+
+		//
+		// Creates a static (non-updatable) buffer based on a supplied data stream
+		//
+		// @param data
+		// @param dataTypeSize The size of one data element. {@code sizeof(PositionData)} is one such size
+		// @param arrayFactory
+		// @param numElements
+		VertexBuffer* CreateStaticBuffer(const void* data, uint32 dataTypeSize, const IVertexArrayObjectFactory& arrayFactory, uint32 numElements);
 		
 		//
 		// Creates a new render target based on the supplied width, height and format.
@@ -109,7 +120,9 @@ namespace playstate
 
 		PositionVAOFactory mPositionVAOFactory;
 		PositionTexCoordVAOFactory mPositionTexCoordVAOFactory;
+		PositionTexCoordColorVAOFactory mPositionTexCoordColorVAOFactory;
 		PositionNormalVAOFactory mPositionNormalVAOFactory;
+		PositionColorVAOFactory mPositionColorVAOFactory;
 		PositionNormalTextureVAOFactory mPositionNormalTextureVAOFactory;
 	};
 }

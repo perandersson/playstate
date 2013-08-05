@@ -21,7 +21,7 @@ using namespace playstate;
 
 #define OFFSET(x) ((char *)NULL + x)
 
-VertexBuffer::VertexBuffer(GLenum vertexType, IVertexArrayObjectFactory& factory, GLuint bufferID, uint32 numElements) 
+VertexBuffer::VertexBuffer(GLenum vertexType, const IVertexArrayObjectFactory& factory, GLuint bufferID, uint32 numElements) 
 	: mVertexType(vertexType), mVertexArrayID(0), mFactory(factory), mBufferID(bufferID), mNumElements(numElements)
 {
 	assert(mVertexType == GL_TRIANGLES && "If this changes then we have to update the render method for vertex buffers");

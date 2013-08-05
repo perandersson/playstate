@@ -3,7 +3,7 @@
 #include "../render_system.h"
 using namespace playstate;
 
-GLuint PositionVAOFactory::CreateVertexArray(GLuint bufferID)
+GLuint PositionVAOFactory::CreateVertexArray(GLuint bufferID) const
 {
 	GLuint vertexArrayID = 0;
 	glGenVertexArrays(1, &vertexArrayID);
@@ -20,7 +20,7 @@ GLuint PositionVAOFactory::CreateVertexArray(GLuint bufferID)
 	return vertexArrayID;
 }
 
-GLuint PositionTexCoordVAOFactory::CreateVertexArray(GLuint bufferID)
+GLuint PositionTexCoordVAOFactory::CreateVertexArray(GLuint bufferID) const
 {
 	GLuint vertexArrayID = 0;
 	glGenVertexArrays(1, &vertexArrayID);
@@ -40,7 +40,30 @@ GLuint PositionTexCoordVAOFactory::CreateVertexArray(GLuint bufferID)
 	return vertexArrayID;
 }
 
-GLuint PositionNormalVAOFactory::CreateVertexArray(GLuint bufferID)
+GLuint PositionTexCoordColorVAOFactory::CreateVertexArray(GLuint bufferID) const
+{
+	GLuint vertexArrayID = 0;
+	glGenVertexArrays(1, &vertexArrayID);
+	glBindVertexArray(vertexArrayID);
+
+	glBindBuffer(GL_ARRAY_BUFFER, bufferID);
+
+	const uint32 stride = sizeof(PositionTexCoordColorData);
+	
+	glEnableVertexAttribArray(PositionAttribLocation);
+	glVertexAttribPointer(PositionAttribLocation, 3, GL_FLOAT, GL_FALSE, stride, 0);
+	
+	glEnableVertexAttribArray(TexCoordAttribLocation);
+	glVertexAttribPointer(TexCoordAttribLocation, 2, GL_FLOAT, GL_FALSE, stride, OFFSET(sizeof(Vector3)));
+	
+	glEnableVertexAttribArray(ColorAttribLocation);
+	glVertexAttribPointer(ColorAttribLocation, 4, GL_FLOAT, GL_FALSE, stride, OFFSET(sizeof(Vector3) + sizeof(Vector2)));
+
+	glBindVertexArray(0);
+	return vertexArrayID;
+}
+
+GLuint PositionNormalVAOFactory::CreateVertexArray(GLuint bufferID) const
 {
 	GLuint vertexArrayID = 0;
 	glGenVertexArrays(1, &vertexArrayID);
@@ -60,7 +83,28 @@ GLuint PositionNormalVAOFactory::CreateVertexArray(GLuint bufferID)
 	return vertexArrayID;
 }
 
-GLuint PositionNormalTextureVAOFactory::CreateVertexArray(GLuint bufferID)
+
+GLuint PositionColorVAOFactory::CreateVertexArray(GLuint bufferID) const
+{
+	GLuint vertexArrayID = 0;
+	glGenVertexArrays(1, &vertexArrayID);
+	glBindVertexArray(vertexArrayID);
+
+	glBindBuffer(GL_ARRAY_BUFFER, bufferID);
+
+	const uint32 stride = sizeof(PositionColorData);
+	
+	glEnableVertexAttribArray(PositionAttribLocation);
+	glVertexAttribPointer(PositionAttribLocation, 3, GL_FLOAT, GL_FALSE, stride, 0);
+
+	glEnableVertexAttribArray(ColorAttribLocation);
+	glVertexAttribPointer(ColorAttribLocation, 4, GL_FLOAT, GL_FALSE, stride, OFFSET(sizeof(Vector3)));
+	
+	glBindVertexArray(0);
+	return vertexArrayID;
+}
+
+GLuint PositionNormalTextureVAOFactory::CreateVertexArray(GLuint bufferID) const
 {
 	GLuint vertexArrayID = 0;
 	glGenVertexArrays(1, &vertexArrayID);
