@@ -63,13 +63,13 @@ void Win32FileWatcher::GetAndClearEvents(FileEvents& events)
 	mFileEvents.clear();
 }
 
-void Win32FileWatcher::AddListener(const std::string& fileName, IFileChangedListener* listener)
+void Win32FileWatcher::AddListener(const std::regex& regex, IFileChangedListener* listener)
 {
 	ScopedLock s(mListenersLock);
 
 	Win32FileListener* fileListener = new Win32FileListener();
 	fileListener->Callback = listener;
-	fileListener->FileName = fileName;
+	fileListener->Regex = regex;
 	mFileChangedListeners.push_back(fileListener);
 }
 
@@ -126,16 +126,17 @@ void Win32FileWatcher::Run(IThread& thread)
 			FileChangedListeners::iterator end = mFileChangedListeners.end();
 			for(;it != end; ++it) {
 				Win32FileListener* listener = *it;
-				if(listener->FileName == fileName) {
+
+				if(std::regex_match(fileName, listener->Regex)) {
 					ScopedLock sl(mFileEventsLock);
 					Win32FileEvent* fileEvent = new Win32FileEvent();
 					fileEvent->Action = action;
 					fileEvent->Callback = listener->Callback;
-					fileEvent->FileName = listener->FileName;
+					fileEvent->FileName = fileName;
 					mFileEvents.push_back(fileEvent);
 				}
 			}
 		} while(pNotify->NextEntryOffset != 0);
-		thread.Wait(800);
+		thread.Wait(1000);
 	}
 }

@@ -2,6 +2,7 @@
 #include "win32_file.h"
 #include "win32_directory.h"
 #include "win32_filesystem.h"
+#include <playstate/functions.h>
 #include <algorithm>
 
 using namespace playstate;
@@ -102,9 +103,17 @@ void Win32FileSystem::Poll()
 	mFileWatcher.LookForChanges();
 }
 
+void Win32FileSystem::AddFileChangedListener(const std::regex& regex, IFileChangedListener* listener)
+{
+	mFileWatcher.AddListener(regex, listener);
+}
+
 void Win32FileSystem::AddFileChangedListener(const std::string& path, IFileChangedListener* listener)
 {
-	mFileWatcher.AddListener(path, listener);
+	std::string dotsSlash = ReplaceString(path, '.', std::string("\\."));
+	std::string end("$");
+	std::regex r(dotsSlash + end);
+	mFileWatcher.AddListener(r, listener);
 }
 
 void Win32FileSystem::RemoveFileChangedListener(IFileChangedListener* listener)

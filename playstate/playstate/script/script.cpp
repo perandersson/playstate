@@ -32,7 +32,8 @@ void Script::Evaluate(const char* fml, ...)
 
 void Script::Execute(const char* expression)
 {
-	if(luaL_dostring(mLuaState, expression) != 0) 
+	int result = luaL_dostring(mLuaState, expression);
+	if(result != 0) 
 	{
 		// Might be error? or result? Assume error for now!
 		std::string err = lua_tostring(mLuaState, -1);

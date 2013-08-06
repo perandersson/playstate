@@ -7,6 +7,8 @@ extern "C"
    #include <lualib.h>
 }
 
+#include "../types.h"
+
 namespace playstate
 {
 	class Scriptable;
@@ -70,11 +72,15 @@ namespace playstate
 	//
 	//
 	extern void luaM_pushcolor(lua_State* L, const Color& color);
-	
+
 	//
 	// Pops the color from the top of the stack and returns the result. 
 	// How the table converts to a Color object works the same way as how the constructors work for the Color object.
 	extern Color luaM_popcolor(lua_State* L);
+
+	//
+	// Print an lua error like message without shutting down the script execution
+	extern void luaM_printerror(lua_State* L, const char* msg);
 	
 	//
 	// Pops an object parameter from the stack and returns the result

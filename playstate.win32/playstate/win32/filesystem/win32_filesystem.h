@@ -46,6 +46,7 @@ namespace playstate
 			virtual std::auto_ptr<IDirectory> OpenDirectory(const std::string& path) const;
 			virtual void AddLookupDirectory(const std::string& directory);
 			virtual void RemoveLookupDirectory(const std::string& directory);
+			virtual void AddFileChangedListener(const std::regex& regex, IFileChangedListener* listener);
 			virtual void AddFileChangedListener(const std::string& path, IFileChangedListener* listener);
 			virtual void RemoveFileChangedListener(IFileChangedListener* listener);
 

@@ -6,6 +6,7 @@
 #include "file_changed_listener.h"
 
 #include <memory>
+#include <regex>
 
 namespace playstate
 {
@@ -39,9 +40,16 @@ namespace playstate
 		virtual void RemoveLookupDirectory(const std::string& directory) = 0;
 
 		//
+		// Adds a event listener for when a specific file within a regular expression file is is changed
+		//
+		// @param regex A regular expression of the file we want to listen to
+		// @param listener
+		virtual void AddFileChangedListener(const std::regex& regex, IFileChangedListener* listener) = 0;
+		
+		//
 		// Adds a event listener for when a specific file is changed
 		//
-		// @param path
+		// @param path The path to the file we want to listen for
 		// @param listener
 		virtual void AddFileChangedListener(const std::string& path, IFileChangedListener* listener) = 0;
 		

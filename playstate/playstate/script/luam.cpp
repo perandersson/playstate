@@ -5,6 +5,7 @@
 #include "../math/vector2.h"
 #include "../math/point.h"
 #include "../math/color.h"
+#include "../logging/logger.h"
 
 namespace playstate
 {
@@ -194,5 +195,13 @@ namespace playstate
 		}	
 
 		return Color::Nothing;
+	}
+
+	void luaM_printerror(lua_State* L, const char* msg)
+	{
+		lua_Debug ar;
+		lua_getstack(L, 1, &ar);
+		lua_getinfo(L, "lS", &ar);
+		ILogger::Get().Error("%s:%d: %s", ar.short_src, ar.currentline, msg);
 	}
 }

@@ -79,6 +79,12 @@ namespace playstate
 	
 	int Component_GetNode(lua_State* L)
 	{
+		if(lua_gettop(L) < 1) {
+			luaM_printerror(L, "Expected: self<Component>:GetNode()");
+			lua_pushnil(L);
+			return 1;
+		}
+		
 		ScriptableComponent* component = luaM_popobject<ScriptableComponent>(L);
 		if(component != NULL) {
 			luaM_pushobject(L, "SceneNode", component->GetNode());
@@ -115,6 +121,12 @@ namespace playstate
 
 	int Component_SetNodeRotation(lua_State* L)
 	{
+		if(lua_gettop(L) < 2) {
+			luaM_printerror(L, "Expected: self<Component>:SetNodeRotation({x, y, z})");
+			luaM_pushvector3(L, Vector3::Zero);
+			return 1;
+		}
+
 		Vector3 vec = luaM_popvector3(L);
 		ScriptableComponent* component = luaM_popobject<ScriptableComponent>(L);
 		if(component != NULL) {
@@ -127,6 +139,12 @@ namespace playstate
 	
 	int Component_GetNodePosition(lua_State* L)
 	{
+		if(lua_gettop(L) < 1) {
+			luaM_printerror(L, "Expected: self<Component>:GetNodePosition()");
+			luaM_pushvector3(L, Vector3::Zero);
+			return 1;
+		}
+		
 		ScriptableComponent* component = luaM_popobject<ScriptableComponent>(L);
 		if(component != NULL) {
 			luaM_pushvector3(L, component->GetNode()->GetPosition());
