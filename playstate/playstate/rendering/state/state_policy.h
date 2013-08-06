@@ -149,7 +149,7 @@ namespace playstate
 		static void BindTexture(GLenum type, GLuint texture);
 
 		static void Viewport(GLint x, GLint y, GLsizei width, GLsizei height);
-
+		
 		//
 		// Mark all states as dirty.
 		static void MarkAsDirty();

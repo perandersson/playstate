@@ -8,7 +8,7 @@
 using namespace playstate;
 
 namespace {
-	int32 _current_textureIndex = 1; 
+	int32 _current_textureIndex = 0; 
 }
 
 Sampler2DGfxProgramComponent::Sampler2DGfxProgramComponent(GfxProgram& program, GLint componentId, MinFilter::Enum minFilter, MagFilter::Enum magFilter,
@@ -31,8 +31,7 @@ void Sampler2DGfxProgramComponent::Apply()
 	}
 
 	if(BIT_ISSET(mDirty, TEXTURE_BIT)) {
-		StatePolicy::SetActiveTexture(mActiveTexture);
-		mTexture->Bind(mMinFilter, mMagFilter, mWS, mWT);
+		mTexture->Bind(mActiveTexture, mMinFilter, mMagFilter, mWS, mWT);
 	}
 
 	if(BIT_ISSET(mDirty, UNIFORM_BIT)) {

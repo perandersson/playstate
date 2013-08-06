@@ -2,56 +2,28 @@
 
 #include "../singleton.h"
 #include "resource.h"
-#include "resource_changed_listener.h"
 #include "resource_loader.h"
-#include "exception/load_resource_exception.h"
-#include "../thread/thread_factory.h"
-
-#include <string>
-#include <memory>
 
 namespace playstate
 {
-	class RenderSystem;
-	class IFileSystem;
-
 	//
-	// Base class for resource management.
-	// TODO Make sure that the resource manager can take an IFile.
-	class ResourceManager : public Singleton<ResourceManager>, public IRunnable
+	// Service for managing resource loading- and unloading. 
+	class IResourceManager : public Singleton<IResourceManager>
 	{
-		struct LoadRequestResponse
-		{
-			std::string Name;
-			IResourceLoader* Loader;
-			ResourceData* Data;
-			ResourceObject* LoadedResource;
-		};
-
-		typedef std::hash_map<std::string, IResourceLoader*> Loaders;
-		typedef std::hash_map<std::string, ResourceData*> LoadedResources;
-		typedef std::vector<LoadRequestResponse*> LoadRequests;
-		typedef std::vector<LoadRequestResponse*> LoadResponses;
-
 	public:
-		ResourceManager(RenderSystem& renderSystem, IFileSystem& fileSystem);
-		~ResourceManager();
-
 		//
 		// Method for retrieving a resource at the supplied path. 
 		//
-		// @throws LoadResourceException thrown if the supplied resource needed to be loaded in this thread but the
-		//		load procedure failed.
-		// @throws ResourceException
+		// @return A smart resource container. If the supplied path is not found then a resource wrapper containing the default resource
+		//	will be returned instead.
 		template<class T>
 		Resource<T> GetResource(const char* path);
 
 		//
 		// Method for retrieving a resource at the supplied path. 
 		//
-		// @throws LoadResourceException thrown if the supplied resource needed to be loaded in this thread but the
-		//		load procedure failed.
-		// @throws ResourceException
+		// @return A smart resource container. If the supplied path is not found then a resource wrapper containing the default resource
+		//	will be returned instead.
 		template<class T>
 		Resource<T> GetResource(const std::string& path);
 
@@ -69,22 +41,15 @@ namespace playstate
 		//
 		// @param resourceLoader
 		// @param suffix
-		void RegisterResourceType(IResourceLoader*, const std::string& suffix);
+		virtual void RegisterResourceType(IResourceLoader*, const std::string& suffix) = 0;
 
-		//
-		// Polls the resource manager for loaded resources.
-		void Poll();
-
-	// IRunnable
-	public:
-		virtual void Run(IThread& thread);
-
-	private:
+	protected:
 		//
 		// Non-public method for actually retrieving the raw resource data.
+		//
 		// @param path The resource path
 		// @return An resource data object. This method always returns a valid, usable instance.
-		ResourceData* GetResourceData(const std::string& path);
+		virtual ResourceData* GetResourceData(const std::string& path) = 0;
 
 		//
 		// Non-public method for unloading a resource data object.
@@ -92,44 +57,22 @@ namespace playstate
 		// default instance until it's loaded again.
 		//
 		// @param data The object we want to remove.
-		void UnloadResourceData(ResourceData* data);
-		
-		IResourceLoader* GetLoaderFromSuffix(const std::string& suffix) const;
-		std::string GetSuffixFromName(const std::string& name) const;
-		void AddLoadRequest(const std::string& name, IResourceLoader* loader, ResourceData* data);
-		ResourceData* LoadResourceAndWait(const std::string& name, IResourceLoader* loader);
-		void GetAndClearLoadRequests(LoadRequests& target);
-		void GetAndClearLoadResponses(LoadResponses& target);
-
-	private:
-		RenderSystem& mRenderSystem;
-		IFileSystem& mFileSystem;
-
-	private:
-		RenderAwareThread* mThread;
-
-		SimpleLock* mLoadResponseLock;
-		SimpleLock* mLoadRequestLock;
-
-		LoadRequests mRequests;
-		LoadResponses mResponses;
-
-		Loaders mLoaders;
-		LoadedResources mLoadedResources;
+		virtual void UnloadResourceData(ResourceData* data) = 0;
 	};
-	
+
 	template<class T>
-	Resource<T> ResourceManager::GetResource(const char* path) {
+	Resource<T> IResourceManager::GetResource(const char* path) {
 		return Resource<T>(GetResourceData(std::string(path)));
 	}
 
 	template<class T>
-	Resource<T> ResourceManager::GetResource(const std::string& path) {
+	Resource<T> IResourceManager::GetResource(const std::string& path) {
 		return Resource<T>(GetResourceData(path));
 	}
 
 	template<class T>
-	void ResourceManager::UnloadResource(Resource<T>& resource) {
+	void IResourceManager::UnloadResource(Resource<T>& resource) {
 		UnloadResourceData(resource.GetResourceData());
 	}
+
 }

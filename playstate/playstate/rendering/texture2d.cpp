@@ -16,9 +16,9 @@ Texture2D::~Texture2D()
 {
 }
 
-void Texture2D::Bind(MinFilter::Enum minFilter, MagFilter::Enum magFilter, TextureWrap::Enum ws, TextureWrap::Enum wt)
+void Texture2D::Bind(uint32 activeTexture, MinFilter::Enum minFilter, MagFilter::Enum magFilter, TextureWrap::Enum ws, TextureWrap::Enum wt)
 {
-	Texture::BindToActiveTexture(GL_TEXTURE_2D);
+	Texture::BindToActiveTexture(activeTexture, GL_TEXTURE_2D);
 	if(mMinFilter != minFilter) {
 		mMinFilter = minFilter;
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, mMinFilter);

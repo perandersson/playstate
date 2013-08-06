@@ -6,7 +6,7 @@
 #include <playstate/window/window.h>
 #include <playstate/component/lightsources/point_light.h>
 
-DeferredRenderPipeline::DeferredRenderPipeline(RenderSystem& renderSystem, IWindow& window, ResourceManager& resourceManager, IFileSystem& fileSystem)
+DeferredRenderPipeline::DeferredRenderPipeline(RenderSystem& renderSystem, IWindow& window, IResourceManager& resourceManager, IFileSystem& fileSystem)
 	: mRenderSystem(renderSystem), mWindow(window), mFileSystem(fileSystem),
 	mDiffuseRenderTarget(NULL), mPositionsRenderTarget(NULL), mNormalsRenderTarget(NULL), mDepthRenderTarget(NULL),
 	mLightRenderTarget(NULL)
@@ -282,7 +282,7 @@ void DeferredRenderPipeline::FileChanged(const IFile& file, FileChangeAction::En
 class ScriptableDeferredRenderPipeline : public DeferredRenderPipeline, public Scriptable
 {
 public:
-	ScriptableDeferredRenderPipeline(RenderSystem& renderSystem, IWindow& window, ResourceManager& resourceManager, IFileSystem& fileSystem) 
+	ScriptableDeferredRenderPipeline(RenderSystem& renderSystem, IWindow& window, IResourceManager& resourceManager, IFileSystem& fileSystem) 
 		: DeferredRenderPipeline(renderSystem, window, resourceManager, fileSystem) {
 	}
 };
@@ -290,7 +290,7 @@ public:
 int DeferredRenderPipeline_Factory(lua_State* L)
 {
 	int top1 = lua_gettop(L);
-	ScriptableDeferredRenderPipeline* pipeline = new ScriptableDeferredRenderPipeline(RenderSystem::Get(), IWindow::Get(), ResourceManager::Get(), IFileSystem::Get());
+	ScriptableDeferredRenderPipeline* pipeline = new ScriptableDeferredRenderPipeline(RenderSystem::Get(), IWindow::Get(), IResourceManager::Get(), IFileSystem::Get());
 	int top2 = lua_gettop(L);
 	luaM_pushobject(L, "DeferredRenderPipeline", pipeline);
 	int top3 = lua_gettop(L);

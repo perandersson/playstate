@@ -42,6 +42,8 @@ VertexBuffer::~VertexBuffer()
 
 void VertexBuffer::Bind()
 {
+	// This has to be done during bind time on the main render thread. That's because
+	// VertexArrayObjects are not shared between render contexts. (SERIOUSLY DUDES!!!!)
 	if(mVertexArrayID == 0)
 		mVertexArrayID = mFactory.CreateVertexArray(mBufferID);
 

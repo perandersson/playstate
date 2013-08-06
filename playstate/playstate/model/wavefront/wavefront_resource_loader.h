@@ -38,7 +38,7 @@ namespace playstate
 		typedef std::hash_map<std::string, WavefrontMaterial*> Materials;
 
 	public:
-		WavefrontResourceLoader(ResourceManager& resourceManager, IFileSystem& fileSystem, RenderSystem& renderSystem);
+		WavefrontResourceLoader(IResourceManager& resourceManager, IFileSystem& fileSystem, RenderSystem& renderSystem);
 		~WavefrontResourceLoader();
 
 	// IResourceLoader
@@ -59,7 +59,7 @@ namespace playstate
 		void LoadMesh(std::istringstream& stream, std::vector<WavefrontMesh*>& meshes, AABB& boundingBox) const;
 
 	private:
-		ResourceManager& mResourceManager;
+		IResourceManager& mResourceManager;
 		IFileSystem& mFileSystem;
 		RenderSystem& mRenderSystem;
 

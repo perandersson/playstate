@@ -86,7 +86,7 @@ void GameRunner::SetRenderPipeline(IRenderPipeline* renderPipeline)
 
 bool GameRunner::Initialize()
 {
-	ResourceManager& resourceManager = ResourceManager::Get();
+	IResourceManager& resourceManager = IResourceManager::Get();
 	IFileSystem& fileSystem = IFileSystem::Get();
 	RenderSystem& renderSystem = RenderSystem::Get();
 	IWindow& window = IWindow::Get();

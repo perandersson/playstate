@@ -11,7 +11,7 @@
 #include <playstate/processor/processors/octree_render_processor.h>
 
 // TODO: Interface these services
-#include <playstate/resources/resource_manager.h>
+#include <playstate/resources/threaded/threaded_resource_manager.h>
 #include <playstate/script/script_system.h>
 #include <playstate/rendering/render_system.h>
 
@@ -52,7 +52,7 @@ namespace playstate
 			Win32GraphicsDriver* mGraphicsDriver;
 			RenderSystem* mRenderSystem;
 			Win32ThreadFactory* mThreadFactory;
-			ResourceManager* mResourceManager;
+			ThreadedResourceManager* mThreadedResourceManager;
 			Win32FileSystem* mFileSystem;
 			ScriptSystem* mScriptSystem;
 		};

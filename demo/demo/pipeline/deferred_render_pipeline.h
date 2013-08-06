@@ -14,7 +14,7 @@ using namespace playstate;
 class DeferredRenderPipeline : public IRenderPipeline, public IWindowResizedListener, public IFileChangedListener
 {
 public:
-	DeferredRenderPipeline(RenderSystem& renderSystem, IWindow& window, ResourceManager& resourceManager, IFileSystem& fileSystem);
+	DeferredRenderPipeline(RenderSystem& renderSystem, IWindow& window, IResourceManager& resourceManager, IFileSystem& fileSystem);
 	virtual ~DeferredRenderPipeline();
 
 // IRenderPipeline

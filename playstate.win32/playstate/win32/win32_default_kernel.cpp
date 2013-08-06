@@ -27,12 +27,12 @@ Win32DefaultKernel::Win32DefaultKernel(HINSTANCE app, const std::string& fileSys
 	mGraphicsDriver = new Win32GraphicsDriver(*mWindow);
 	mThreadFactory = new Win32ThreadFactory();
 	mRenderSystem = new RenderSystem(*mWindow, *mScriptSystem);
-	mResourceManager = new ResourceManager(*mRenderSystem, *mFileSystem);
+	mThreadedResourceManager = new ThreadedResourceManager(*mRenderSystem, *mFileSystem);
 }
 
 Win32DefaultKernel::~Win32DefaultKernel()
 {
-	delete mResourceManager;
+	delete mThreadedResourceManager;
 	delete mRenderSystem;
 	delete mThreadFactory;
 	delete mGraphicsDriver;
@@ -63,7 +63,7 @@ void Win32DefaultKernel::Process()
 	mWindow->HandleEvents();
 	mFileSystem->Poll();
 	mInputSystem->Poll();
-	mResourceManager->Poll();
+	mThreadedResourceManager->Poll();
 	mScriptSystem->HandleGC();
 }
 

@@ -4,11 +4,6 @@
 #include "../uuid.h"
 using namespace playstate;
 
-Texture::Texture()
-	: mTextureId(0), mUUID(UUID::To32Bit()), mFormat(TextureFormat::RGB)
-{
-}
-
 Texture::Texture(TextureFormat::Enum format)
 	: mTextureId(0), mUUID(UUID::To32Bit()), mFormat(format)
 {
@@ -22,8 +17,9 @@ Texture::~Texture()
 	}
 }
 
-void Texture::BindToActiveTexture(GLenum type)
+void Texture::BindToActiveTexture(GLuint activeTexture, GLenum type)
 {
+	StatePolicy::SetActiveTexture(activeTexture);
 	StatePolicy::BindTexture(type, mTextureId);
 }
 

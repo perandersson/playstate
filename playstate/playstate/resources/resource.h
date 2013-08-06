@@ -8,12 +8,12 @@
 
 namespace playstate
 {
-	class ResourceManager;
+	class IResourceManager;
 
 	template<class T>
 	class Resource
 	{
-		friend class ResourceManager;
+		friend class IResourceManager;
 
 	public:
 		Resource() : mData(0)

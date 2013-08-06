@@ -11,3 +11,5 @@
 #elif MACOSX
 #endif
 #endif
+
+#include <cassert>

@@ -17,7 +17,7 @@ namespace playstate
 		Texture2D(GLuint textureId, uint32 width, uint32 height, TextureFormat::Enum format);
 		virtual ~Texture2D();
 		
-		void Bind(MinFilter::Enum minFilter, MagFilter::Enum magFilter, TextureWrap::Enum ws, TextureWrap::Enum wt);
+		void Bind(uint32 activeTexture, MinFilter::Enum minFilter, MagFilter::Enum magFilter, TextureWrap::Enum ws, TextureWrap::Enum wt);
 
 		uint32 GetWidth() const;
 		uint32 GetHeight() const;

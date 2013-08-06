@@ -114,6 +114,9 @@
     <Filter Include="Source Files\rendering\datatypes">
       <UniqueIdentifier>{1fa3e6f0-5867-4bd3-aade-3f0e2e17d6c7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\resources\threaded">
+      <UniqueIdentifier>{ed0c42e2-1fe9-4222-b832-239d54153b8c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\playstate\playstate\camera\camera.cpp">
@@ -237,9 +240,6 @@
       <Filter>Source Files\rendering\components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\resources\resource_data.cpp">
-      <Filter>Source Files\resources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\resources\resource_manager.cpp">
       <Filter>Source Files\resources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\resources\exception\load_resource_exception.cpp">
@@ -367,6 +367,12 @@
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\gui\gui_render_processor.cpp">
       <Filter>Source Files\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\resources\threaded\threaded_resource_manager.cpp">
+      <Filter>Source Files\resources\threaded</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\resources\resource_manager.cpp">
+      <Filter>Source Files\resources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -539,9 +545,6 @@
       <Filter>Source Files\resources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\resources\resource_loader.h">
-      <Filter>Source Files\resources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\resources\resource_manager.h">
       <Filter>Source Files\resources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\resources\resource_object.h">
@@ -726,6 +729,12 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\gui\gui_render_processor.h">
       <Filter>Source Files\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\resources\threaded\threaded_resource_manager.h">
+      <Filter>Source Files\resources\threaded</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\resources\resource_manager.h">
+      <Filter>Source Files\resources</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -50,12 +50,12 @@ void RenderStaticModel::Collect(const RenderState& state, RenderBlockResultSet* 
 		}
 		if(BIT_ISSET(state.Filter, RenderStateFilter::TEXTURES)) {
 			block->DiffuseTexture = mesh.DiffuseTexture.Get();
-			block->AmbientTexture = mesh.AmbientTexture.Get();
-			block->SpecularTexture = mesh.SpecularTexture.Get();
-			block->SpecularHighlightTexture = mesh.SpecularHighlightTexture.Get();
-			block->AlphaTexture = mesh.AlphaTexture.Get();
-			block->BumpMapTexture = mesh.BumpMapTexture.Get();
-			block->DisplacementTexture = mesh.DisplacementTexture.Get();
+			//block->AmbientTexture = mesh.AmbientTexture.Get();
+			//block->SpecularTexture = mesh.SpecularTexture.Get();
+			//block->SpecularHighlightTexture = mesh.SpecularHighlightTexture.Get();
+			//block->AlphaTexture = mesh.AlphaTexture.Get();
+			//block->BumpMapTexture = mesh.BumpMapTexture.Get();
+			//block->DisplacementTexture = mesh.DisplacementTexture.Get();
 		}
 		block->DiffuseColor = mesh.DiffuseColor;
 	}
