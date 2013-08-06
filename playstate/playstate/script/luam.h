@@ -16,6 +16,8 @@ namespace playstate
 	struct Point;
 	struct Color;
 
+	struct ResourceData;
+
 	//
 	// Sets/Replaces the supplied data value as the native instance for the table at the top of the stack
 	// @param L
@@ -38,6 +40,14 @@ namespace playstate
 	// Pushes the supplied object to the top of the stack. If the object isn't bound/registered to LUA
 	// then it will create a script representation of the class for you.
 	extern void luaM_pushobject(lua_State* L, const char* className, Scriptable* object);
+
+	//
+	// Pushes resource data onto the lua stack
+	extern void luaM_pushresource(lua_State* L, ResourceData* resourceData);
+
+	//
+	// Pops the resource from the top of the stack
+	extern ResourceData* luaM_popresource(lua_State* L);
 
 	//
 	// Converts a lua number array into a Vector3 structure usable by the game engine.

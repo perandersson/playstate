@@ -77,7 +77,7 @@ namespace playstate
 
 	int RenderStaticModel_Factory(lua_State* L)
 	{
-		ResourceData* resourceData = luaM_popobject<ResourceData>(L);
+		ResourceData* resourceData = luaM_popresource(L);
 		Resource<Model> model(resourceData);
 		if(resourceData != NULL) {
 			ScriptedRenderStaticModel* renderStaticModel = new ScriptedRenderStaticModel(model);

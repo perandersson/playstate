@@ -78,6 +78,27 @@ namespace playstate
 		}
 	}
 
+	void luaM_pushresource(lua_State* L, ResourceData* resourceData)
+	{
+		assert_not_null(L);
+		assert_not_null(resourceData);
+		ResourceData** container = (ResourceData**)lua_newuserdata(L, sizeof(ResourceData**));
+		*container = resourceData;
+	}
+
+	ResourceData* luaM_popresource(lua_State* L)
+	{
+		assert_not_null(L);
+		ResourceData* result = NULL;
+		if(lua_isuserdata(L, -1)) {
+			ResourceData** container = (ResourceData**)lua_touserdata(L, -1);
+			result = *container;
+		}
+		
+		lua_pop(L, 1);
+		return result;
+	}
+
 	Vector3 luaM_popvector3(lua_State* L)
 	{
 		assert_not_null(L);

@@ -55,7 +55,7 @@ namespace playstate
 	{
 		std::string path = lua_tostring(L, -1); lua_pop(L, 1);
 		Resource<Model> model = IResourceManager::Get().GetResource<Model>(path);
-		luaM_pushobject(L, "Model", model.GetResourceData());
+		luaM_pushresource(L, model.GetResourceData());
 		return 1;
 	}
 }

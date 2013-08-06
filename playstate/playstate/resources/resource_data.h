@@ -27,12 +27,8 @@ namespace playstate
 		std::list<IResourceChangedListener*> mListeners;
 	};
 	
-	class ResourceData : public Scriptable
+	struct ResourceData
 	{
-	public:
-		ResourceData() {}
-		~ResourceData() {}
-
 		ResourceObject* Resource;
 		ResourceObject* DefaultResource;
 		bool Loading;
