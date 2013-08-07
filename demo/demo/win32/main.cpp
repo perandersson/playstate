@@ -63,11 +63,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 	_CrtSetDbgFlag(tmpFlag);
 #endif
 
+	Win32DefaultKernel kernel(GetModuleHandle(NULL), "data");
+	kernel.Initialize();
+
 	try
 	{
-		Win32DefaultKernel kernel(GetModuleHandle(NULL), "data");
-		kernel.Initialize();
-
 		// Register game specific scripts.
 		ScriptSystem& ss = ScriptSystem::Get();
 		ss.RegisterType("DeferredRenderPipeline", DeferredRenderPipeline_Methods);

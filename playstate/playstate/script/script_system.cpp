@@ -113,7 +113,7 @@ void ScriptSystem::RegisterType(const char* className, luaL_Reg* methods)
 	assert_not_null(methods);
 
 	const std::string name(className);
-	const std::string metaName = "playstate." + name;
+	const std::string metaName = name + "_mt";
 
 	luaL_newmetatable(mLuaState, metaName.c_str());
 	lua_pushvalue(mLuaState, -1);

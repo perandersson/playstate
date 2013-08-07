@@ -51,7 +51,7 @@ namespace playstate
 		assert_not_null(L);
 		assert_not_null(className);
 
-		const std::string metaName = std::string("playstate.") + className;
+		const std::string metaName = std::string(className) + "_mt";
 
 		lua_newtable(L);
 

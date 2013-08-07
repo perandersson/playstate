@@ -101,7 +101,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)libraries/FreeImage/;$(SolutionDir)libraries/glew-1.9.0/lib/;$(SolutionDir)libraries/lua-5.2.1/;$(SolutionDir)../../bin/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>playstate.lib;lua.lib;glew32.lib;FreeImage.lib;OpenGL32.lib;GLU32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>playstate.lib;lua.lib;glew32.lib;FreeImage.lib;OpenGL32.lib;GLU32.lib;playstate.win32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>

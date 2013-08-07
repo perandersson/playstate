@@ -37,6 +37,7 @@ namespace playstate
 
 	extern int GuiFrameComponent_Factory(lua_State* L);
 	static luaL_Reg GuiFrameComponent_Methods[] = {
-		{ LUA_CONSTRUCTOR, GuiFrameComponent_Factory }
+		{ LUA_CONSTRUCTOR, GuiFrameComponent_Factory },
+		{ NULL, NULL }
 	};
 }
