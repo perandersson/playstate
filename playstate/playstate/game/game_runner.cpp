@@ -103,19 +103,11 @@ bool GameRunner::Initialize()
 	window.SetTitle(title);
 	window.AddWindowClosedListener(this);
 	
-#ifdef _DEBUG
-	std::regex scriptFiles("[^\\s]+\\.lua$");
-	fileSystem.AddFileChangedListener(scriptFiles, this);
-#endif
-
 	return true;
 }
 
 void GameRunner::Release()
 {
-#ifdef _DEBUG
-	IFileSystem::Get().RemoveFileChangedListener(this);
-#endif
 	IWindow::Get().RemoveWindowClosedListener(this);
 }
 
@@ -123,21 +115,6 @@ bool GameRunner::OnWindowClosing()
 {
 	mRunning = false;
 	return true;
-}
-
-void GameRunner::FileChanged(const IFile& file, FileChangeAction::Enum action)
-{
-	try {
-		std::auto_ptr<Script> script = ScriptSystem::Get().CompileFile(file.GetPath());
-		if(action == FileChangeAction::MODIFIED) {
-			ILogger::Get().Debug("Updated script file: '%s'", file.GetPath().c_str());
-			// Update all table functions associated with the files classes!
-		} else if(action == FileChangeAction::ADDED) {
-			ILogger::Get().Debug("Added script file: '%s'", file.GetPath().c_str());
-		}
-	} catch(ScriptException e) {
-		ILogger::Get().Error("Could not update script file: '%s'. Reason: '%s'", file.GetPath().c_str(), e.GetMessage().c_str());
-	}
 }
 
 const Scene& GameRunner::GetScene() const

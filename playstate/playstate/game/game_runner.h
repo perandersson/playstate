@@ -14,7 +14,7 @@ namespace playstate
 {
 	//
 	// The main application for the game engine
-	class GameRunner : public Singleton<GameRunner>, public IWindowClosedListener, public IFileChangedListener
+	class GameRunner : public Singleton<GameRunner>, public IWindowClosedListener
 	{
 	public:
 		GameRunner(IGame* game, IConfiguration* configuration);
@@ -39,10 +39,6 @@ namespace playstate
 	// IWindowClosedListener
 	public:
 		virtual bool OnWindowClosing();
-
-	// IFileChangedListener
-	public:
-		virtual void FileChanged(const IFile& file, FileChangeAction::Enum action);
 
 	private:
 		bool Initialize();

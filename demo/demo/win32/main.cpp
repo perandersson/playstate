@@ -18,6 +18,38 @@ unsigned int fp_control_state = _controlfp(_EM_INEXACT | _EM_INVALID | _EM_UNDER
 using namespace playstate;
 using namespace playstate::win32;
 
+#ifdef WIN32
+#undef GetMessage
+#endif
+
+class LuaSuffixFileListener : public IFileChangedListener
+{
+public:
+	LuaSuffixFileListener(IFileSystem& fs)
+	{
+		// Listen for files that ends with .lua
+		fs.AddFileChangedListener(std::regex("[^\\s]+\\.lua$"), this);
+	}
+
+
+// IFileChangedListener
+public:
+	virtual void FileChanged(const IFile& file, FileChangeAction::Enum action)
+	{
+		try {
+			std::auto_ptr<Script> script = ScriptSystem::Get().CompileFile(file.GetPath());
+			if(action == FileChangeAction::MODIFIED) {
+				ILogger::Get().Debug("Updated script file: '%s'", file.GetPath().c_str());
+				// Update all table functions associated with the files classes!
+			} else if(action == FileChangeAction::ADDED) {
+				ILogger::Get().Debug("Added script file: '%s'", file.GetPath().c_str());
+			}
+		} catch(ScriptException e) {
+			ILogger::Get().Error("Could not update script file: '%s'. Reason: '%s'", file.GetPath().c_str(), e.GetMessage().c_str());
+		}
+	}
+};
+
 #ifdef _DEBUG
 int main(int argc, char** argv)
 #else
@@ -39,6 +71,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 		// Register game specific scripts.
 		ScriptSystem& ss = ScriptSystem::Get();
 		ss.RegisterType("DeferredRenderPipeline", DeferredRenderPipeline_Methods);
+
+		// Attach a file change listener for .lua files
+		LuaSuffixFileListener luaSuffixFileListener(IFileSystem::Get());
 
 		// Initialize the scripting engine and start the application
 		ss.CompileFile("/main.lua")->Execute("main()");

@@ -34,6 +34,13 @@ Win32FileWatcher::~Win32FileWatcher()
 	delete mThread;
 	delete mFileEventsLock;
 	delete mListenersLock;
+
+	FileChangedListeners::iterator it = mFileChangedListeners.begin();
+	FileChangedListeners::iterator end = mFileChangedListeners.end();
+	for(; it != end; ++it) {
+		delete *it;
+	}
+	mFileChangedListeners.clear();
 }
 
 void Win32FileWatcher::LookForChanges()
@@ -98,10 +105,14 @@ void Win32FileWatcher::Run(IThread& thread)
 	BYTE bytes[32 * 1024];
 	DWORD bytesret;
 	TCHAR szFile[MAX_PATH];
-	
-	while(ReadDirectoryChangesW(mRootDirHandle, bytes, sizeof(bytes), TRUE, FILE_NOTIFY_CHANGE_LAST_WRITE, &bytesret, NULL, NULL) == TRUE
-		&& mRootDirHandle != INVALID_HANDLE_VALUE) {
 
+	std::string prevFile;
+	uint32 timestamp = GetTickCount();
+	
+	while(ReadDirectoryChangesW(mRootDirHandle, bytes, sizeof(bytes), TRUE, FILE_NOTIFY_CHANGE_LAST_WRITE, &bytesret, NULL, NULL) == TRUE && 
+		mRootDirHandle != INVALID_HANDLE_VALUE) {
+
+		thread.Wait(1000);
 		PFILE_NOTIFY_INFORMATION pNotify;
 		DWORD offset = 0;
 		do {
@@ -121,7 +132,20 @@ void Win32FileWatcher::Run(IThread& thread)
 			std::string fileName = "/";
 			fileName += szFile;
 			std::replace(fileName.begin(), fileName.end(), '\\', '/');
+
+			// Add code to prevent the same file from being notified multiple times.
+			uint32 now = GetTickCount();
+			if(prevFile == fileName) {
+				if(timestamp + 1000 > now) {
+					continue;
+				}
+			}
+
+			timestamp = now;
+			prevFile = fileName;
 			
+			ScopedLock fsl(mListenersLock);
+
 			FileChangedListeners::iterator it = mFileChangedListeners.begin();
 			FileChangedListeners::iterator end = mFileChangedListeners.end();
 			for(;it != end; ++it) {
@@ -137,6 +161,5 @@ void Win32FileWatcher::Run(IThread& thread)
 				}
 			}
 		} while(pNotify->NextEntryOffset != 0);
-		thread.Wait(1000);
 	}
 }
