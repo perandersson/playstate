@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\glmock\command.h" />
+    <ClInclude Include="..\..\glmock\defines.h" />
+    <ClInclude Include="..\..\glmock\exception.h" />
+    <ClInclude Include="..\..\glmock\framework.h" />
+    <ClInclude Include="..\..\glmock\glmock.h" />
+    <ClInclude Include="..\..\glmock\impl\command\glBindTexture.h" />
+    <ClInclude Include="..\..\glmock\impl\command\glBlendFunc.h" />
+    <ClInclude Include="..\..\glmock\impl\command\glDeleteTextures.h" />
+    <ClInclude Include="..\..\glmock\impl\command\glew\glUseProgram.h" />
+    <ClInclude Include="..\..\glmock\impl\command\glFlush.h" />
+    <ClInclude Include="..\..\glmock\impl\command\glGenTextures.h" />
+    <ClInclude Include="..\..\glmock\impl\command\glGetError.h" />
+    <ClInclude Include="..\..\glmock\impl\command\glGetIntegerv.h" />
+    <ClInclude Include="..\..\glmock\impl\command\glTexImage2D.h" />
+    <ClInclude Include="..\..\glmock\impl\gl_command.h" />
+    <ClInclude Include="..\..\glmock\impl\gl_framework.h" />
+    <ClInclude Include="..\..\glmock\impl\gl_strings.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\glmock\exception.cpp" />
+    <ClCompile Include="..\..\glmock\framework.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glBindTexture.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glBlendFunc.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glClear.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glClearColor.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glClearDepth.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glCullFace.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glDeleteTextures.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glDepthFunc.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glDisable.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glDrawArrays.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glDrawElements.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glEnable.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glActiveTexture.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glAttachShader.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glBindBuffer.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glBindFramebuffer.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glBindVertexArray.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glBufferData.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glCheckFramebufferStatus.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glCompileShader.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glCreateProgram.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glCreateShader.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glDeleteBuffers.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glDeleteFramebuffers.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glDeleteProgram.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glDeleteShader.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glDeleteVertexArrays.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glDetachShader.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glDrawBuffers.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glEnableVertexAttribArray.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glewInit.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glFramebufferTexture2D.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glGenBuffers.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glGenFramebuffers.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glGenVertexArrays.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glGetActiveUniform.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glGetProgramInfoLog.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glGetProgramiv.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glGetShaderInfoLog.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glGetShaderiv.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glGetUniformLocation.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glLinkProgram.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glShaderSource.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glUniform1fv.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glUniform1i.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glUniform2fv.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glUniform3fv.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glUniform3iv.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glUniform4fv.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glUniformMatrix4fv.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glUseProgram.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glew\glVertexAttribPointer.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glFlush.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glFrontFace.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glGenTextures.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glGetError.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glGetIntegerv.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glGetString.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glTexImage2D.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glTexParameteri.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\glViewport.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\wglCreateContext.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\wglDeleteContext.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\wglew\wglCreateContextAttribsARB.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\wglew\wglewIsSupported.cpp" />
+    <ClCompile Include="..\..\glmock\impl\command\wglMakeCurrent.cpp" />
+    <ClCompile Include="..\..\glmock\impl\gl_command.cpp" />
+    <ClCompile Include="..\..\glmock\impl\gl_framework.cpp" />
+    <ClCompile Include="..\..\glmock\impl\gl_strings.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{C5C88D14-117C-4B4C-8721-F0720DC6BF75}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>glmock</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)../../bin/</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IntDir>$(SolutionDir)../../bin/$(Configuration)/$(ProjectName)/intermediate/</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <TargetName>$(ProjectName)_d</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)../../bin/</OutDir>
+    <IntDir>$(SolutionDir)../../bin/$(Configuration)/$(ProjectName)/intermediate/</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_DLL;EXPORT_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4227;4996</DisableSpecificWarnings>
+      <AdditionalIncludeDirectories>../../libraries/glew-1.9.0/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_DLL;EXPORT_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4227;4996</DisableSpecificWarnings>
+      <AdditionalIncludeDirectories>../../libraries/glew-1.9.0/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+    </Lib>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

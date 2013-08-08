@@ -10,6 +10,8 @@ bin/*.exe
 bin/*.ilk
 bin/*.pdb
 bin/*.lib
+bin/glmock*.dll
+bin/*.exp
 projects/vs2010/bin/*
 projects/vs2010/*.vsp
 bin/log.txt
