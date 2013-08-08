@@ -1,10 +1,11 @@
 local MovePlayerBehaviour = require "demo.behaviours.moveplayerbehaviour"
 local FollowCameraBehaviour = require "demo.behaviours.followcamerabehaviour"
 
-AddMoreSceneGroupsOnTime = class(Component, function(self, totalTime)
+AddMoreSceneGroupsOnTime = class("AddMoreSceneGroupsOnTime", "Component")
+function AddMoreSceneGroupsOnTime:__init(totalTime)
 	Component.__init(self)
 	self.timeLeft = totalTime
-end)
+end
 
 function AddMoreSceneGroupsOnTime:Update()
 	self.timeLeft = self.timeLeft - GameDeltaTime
@@ -18,10 +19,12 @@ function AddMoreSceneGroupsOnTime:Update()
 	end
 end
 
-TestMoveLight = class(Component, function(self, speed)
+
+TestMoveLight = class("TestMoveLight", "Component")
+function TestMoveLight:__init(speed)
 	Component.__init(self)
 	self.speed = speed
-end)
+end
 
 function TestMoveLight:Update()
 	local x, y, z = self:GetNodePosition()

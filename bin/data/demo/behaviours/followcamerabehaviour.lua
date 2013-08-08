@@ -2,9 +2,11 @@ local class = require "engine.class"
 local vector3 = require "engine.core.math.vector3"
 local config = require "config"
 
-FollowCameraBehaviour = class(Component, function(self)
+FollowCameraBehaviour = class("FollowCameraBehaviour", "Component")
+
+function FollowCameraBehaviour:__init()
 	Component.__init(self)
-end)
+end
 
 function FollowCameraBehaviour:Update()
 	local x, y, z = self:GetNodePosition()

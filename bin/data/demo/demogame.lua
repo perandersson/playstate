@@ -1,11 +1,14 @@
 local class = require "engine.class"
 local config = require "config"
 
-DemoGame = class(IGame, function(self) 
+DemoGame = class("DemoGame", "IGame")
+
+function DemoGame:__init()
 	IGame.__init(self)
+	
 	self.numFrames = 0
 	self.totalTime = 0
-end)
+end
 
 function DemoGame:Initialize()
 	print("Initializes DemoGame")

@@ -1,46 +1,47 @@
--- class.lua
--- Compatible with Lua 5.1 (not 5.0).
-function class(base, init)
-   local c = {}    -- a new class instance
-   if not init and type(base) == 'function' then
-      init = base
-      base = nil
-   elseif type(base) == 'table' then
-    -- our new class is a shallow copy of the base class!
-      for i,v in pairs(base) do
-         c[i] = v
-      end
-      c._base = base
-   end
-   -- the class will be the metatable for all its objects,
-   -- and they will look up their methods in it.
-   c.__index = c
+-- Function for generating a class and class metatable based on the supplied parameters
 
-   -- expose a constructor which can be called by <classname>(<args>)
-   local mt = {}
-   mt.__call = function(class_tbl, ...)
-	   local obj = {}
-	   setmetatable(obj,c)
-	   if init then
-		  init(obj,...)
-	   else 
-		  -- make sure that any stuff from the base class is initialized!
-		  if base and base.__init then
-		  base.__init(obj, ...)
-		  end
-	   end
-	   return obj
-   end
-   c.__init = init
-   c.is_a = function(self, klass)
-      local m = getmetatable(self)
-      while m do 
-         if m == klass then return true end
-         m = m._base
-      end
-      return false
-   end
-   setmetatable(c, mt)
-   return c
+-- Usage: MyClass = class("MyClass", "ParentClass")
+-- The reason for using strings as in-parameters is because we MUST NOT create a new table for a class
+-- when the file is reloaded. This will prevent us from altering existing functions in runtime.
+function class(className, inheritsClassName)
+	-- If the class definition already exists.
+	local c = _G[className]
+	if c then
+		print("Found metatable for class " .. className)
+		return c
+	end
+	
+	c = {}
+	
+	-- Inherit class if needed
+	local inheritsClass = _G[inheritsClassName]
+	if inheritsClass then
+		for i, v in pairs(inheritsClass) do
+			c[i] = v
+		end
+		c.__base = inheritsClass
+	end
+	
+	-- the class will be the metatable for all its objects,
+	-- and they will look up their methods in it.
+	c.__index = c
+	
+	-- Expose a constructor which can be called by <classname>(<args>) 
+	local mt = {}
+	mt.__call = function(class_tbl, ...)
+		local new_instance = {}
+		setmetatable(new_instance, c)
+		if c.__init then
+			c.__init(new_instance, ...)
+		elseif c.__base and c.__base.__init then
+			print("calling base constructor")
+			c.__base.__init(new_instance, ...)
+		end		
+		return new_instance
+	end
+	setmetatable(c, mt)
+	_G[className] = c
+	return c
 end
+
 return class

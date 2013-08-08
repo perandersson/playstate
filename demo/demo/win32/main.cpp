@@ -40,9 +40,10 @@ public:
 			std::auto_ptr<Script> script = ScriptSystem::Get().CompileFile(file.GetPath());
 			if(action == FileChangeAction::MODIFIED) {
 				ILogger::Get().Debug("Updated script file: '%s'", file.GetPath().c_str());
-				// Update all table functions associated with the files classes!
 			} else if(action == FileChangeAction::ADDED) {
 				ILogger::Get().Debug("Added script file: '%s'", file.GetPath().c_str());
+			} else if(action == FileChangeAction::DELETED) {
+				ILogger::Get().Debug("Deleted script file: '%s'", file.GetPath().c_str());
 			}
 		} catch(ScriptException e) {
 			ILogger::Get().Error("Could not update script file: '%s'. Reason: '%s'", file.GetPath().c_str(), e.GetMessage().c_str());

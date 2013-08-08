@@ -14,10 +14,15 @@ namespace playstate
 	enum KeyboardKeys 
 	{
 		KS_SPACE = 0x20,
-		KS_W = (int)('W'),
-		KS_S = (int)('S'),
 		KS_A = (int)('A'),
-		KS_D = (int)('D')
+		KS_B = (int)('B'),
+		KS_C = (int)('C'),
+		KS_D = (int)('D'),
+
+		KS_S = (int)('S'),
+		KS_T = (int)('T'),
+
+		KS_W = (int)('W')
 	};
 
 	enum MouseKeys

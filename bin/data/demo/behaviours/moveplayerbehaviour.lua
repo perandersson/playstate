@@ -1,12 +1,13 @@
 local class = require "engine.class"
 local KeyboardKeys = require "engine.core.keyboardkeys"
 
-MovePlayerBehaviour = class(Component, function(self, speed)
+MovePlayerBehaviour = class("MovePlayerBehaviour", "Component")
+function MovePlayerBehaviour:__init(speed)
 	Component.__init(self)
 	self.speed = speed
 	self.prevMouseX = 0
 	self.prevMouseY = 0
-end)
+end
 
 function MovePlayerBehaviour:Update()
 	self:RotateThis()
