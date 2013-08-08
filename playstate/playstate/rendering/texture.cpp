@@ -12,12 +12,13 @@ Texture::Texture(TextureFormat::Enum format)
 Texture::~Texture()
 {
 	if(mTextureId != 0) {
+		StatePolicy::InvalidateTexture(mTextureId);
 		glDeleteTextures(1, &mTextureId);
 		mTextureId = 0;
 	}
 }
 
-void Texture::BindToActiveTexture(GLuint activeTexture, GLenum type)
+void Texture::BindToActiveTexture(uint32 activeTexture, GLenum type)
 {
 	StatePolicy::SetActiveTexture(activeTexture);
 	StatePolicy::BindTexture(type, mTextureId);

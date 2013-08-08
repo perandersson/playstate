@@ -9,13 +9,14 @@ namespace playstate
 	struct VertexElementDeclaration
 	{
 		// The location specifies in what field the specific 
-		// element is put when drawing the geometry in the graphics program
+		// element is put when drawing the geometry in the graphics program.
+		// This is mapped to the layout location in the vertex shader, for example: {@code layout(location = 0) in vec3 position}
 		uint32 Location;
 
-		// The size of the current buffer field type. Use {@code sizeof(FieldType)}, for example: {@code sizeof(Vector2)}
+		// The size of the current buffer field type. Use {@code sizeof(Type)}, for example: {@code sizeof(Vector2)}
 		uint32 FieldSize;
 
-		// The number of elements in this field. For example a Vector2 contains 2 elements.
+		// The number of elements in this field. For example a Vector2 contains 2 elements (X and Y).
 		uint32 NumElementsInField;
 
 		// What datatype should the element be handled as in the shader. the Vector3 type has float values, which means
@@ -52,7 +53,7 @@ namespace playstate
 	//			0 
 	//		}
 	//	};
-	//	static VertexDeclarationArrayObjectFactory PositionTexCoordDataVAOFactory(PositionTexCoordDataVertexDeclaration);
+	//	static const VertexDeclarationArrayObjectFactory PositionTexCoordDataVAOFactory(PositionTexCoordDataVertexDeclaration);
 	// }
 	class VertexDeclarationArrayObjectFactory : public IVertexArrayObjectFactory
 	{

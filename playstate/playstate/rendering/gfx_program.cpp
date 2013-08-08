@@ -77,8 +77,10 @@ GfxProgram::~GfxProgram()
 		mProgramId = 0;
 	}
 
-	if(_current_program == this)
+	if(_current_program == this) {
+		StatePolicy::UseProgram(0);
 		_current_program = NULL;
+	}
 }
 
 void GfxProgram::Apply()

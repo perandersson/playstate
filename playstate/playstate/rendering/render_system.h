@@ -8,6 +8,7 @@
 #include "../math/vector3.h"
 #include "../math/vector2.h"
 #include "../math/color.h"
+#include "../math/rect.h"
 #include "exception/rendering_exception.h"
 #include "../version.h"
 #include "../window/window_resized_listener.h"
@@ -102,18 +103,16 @@ namespace playstate
 		void ApplyRenderTargets();
 
 		//
-		// @return TRUE if the current computer maches the minimal requirements for this engine to work. (3.1)
-		bool IsValidVersion() const;
+		// @return The version of the type specified by the name parameter
+		Version getVersion(GLenum name) const;
 
 	private:
 		IWindow& mWindow;
 
 		VertexBuffer* mUniformVertexBuffer;
-
+		Version mVersion;
 		Version mShaderVersion;
-
-		uint32 mScreenWidth;
-		uint32 mScreenHeight;
+		Rect mScreenViewport;
 
 		GfxProgramFactory* mProgramFactory;
 		LinkedList<GfxProgram, &GfxProgram::Link> mGfxPrograms;

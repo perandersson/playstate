@@ -26,7 +26,7 @@ namespace playstate
 			0 
 		}
 	};
-	static VertexDeclarationArrayObjectFactory PositionDataVAOFactory(PositionDataVertexDeclaration);
+	static const VertexDeclarationArrayObjectFactory PositionDataVAOFactory(PositionDataVertexDeclaration);
 
 	//////////////////////////////////////////////////////////
 
@@ -43,7 +43,7 @@ namespace playstate
 			0 
 		}
 	};
-	static VertexDeclarationArrayObjectFactory PositionTexCoordDataVAOFactory(PositionTexCoordDataVertexDeclaration);
+	static const VertexDeclarationArrayObjectFactory PositionTexCoordDataVAOFactory(PositionTexCoordDataVertexDeclaration);
 	
 	//////////////////////////////////////////////////////////
 
@@ -62,7 +62,7 @@ namespace playstate
 			0 
 		}
 	};
-	static VertexDeclarationArrayObjectFactory PositionTexCoordColorDataVAOFactory(PositionTexCoordColorDataVertexDeclaration);
+	static const VertexDeclarationArrayObjectFactory PositionTexCoordColorDataVAOFactory(PositionTexCoordColorDataVertexDeclaration);
 	
 	//////////////////////////////////////////////////////////
 
@@ -79,7 +79,7 @@ namespace playstate
 			0 
 		}
 	};
-	static VertexDeclarationArrayObjectFactory PositionNormalDataVAOFactory(PositionNormalDataVertexDeclaration);
+	static const VertexDeclarationArrayObjectFactory PositionNormalDataVAOFactory(PositionNormalDataVertexDeclaration);
 		
 	//////////////////////////////////////////////////////////
 
@@ -98,7 +98,7 @@ namespace playstate
 			0 
 		}
 	};
-	static VertexDeclarationArrayObjectFactory PositionNormalTextureDataVAOFactory(PositionNormalTextureDataVertexDeclaration);
+	static const VertexDeclarationArrayObjectFactory PositionNormalTextureDataVAOFactory(PositionNormalTextureDataVertexDeclaration);
 	
 	//////////////////////////////////////////////////////////
 
@@ -115,6 +115,6 @@ namespace playstate
 			0 
 		}
 	};
-	static VertexDeclarationArrayObjectFactory PositionColorDataVAOFactory(PositionColorDataVertexDeclaration);
+	static const VertexDeclarationArrayObjectFactory PositionColorDataVAOFactory(PositionColorDataVertexDeclaration);
 
 }

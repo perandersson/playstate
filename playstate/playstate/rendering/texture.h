@@ -20,7 +20,6 @@ namespace playstate
 			RGBA16F,
 			DEPTH24,
 			DEPTH24_STENCIL8,
-			UNKOWN_TEXTURE_FORMAT,
 		};
 	};
 
@@ -38,7 +37,7 @@ namespace playstate
 		//
 		// @param activeTexture The texture index where we want this texture to be bound.
 		// @param type The type of texture this is, for example: GL_TEXTURE_2D
-		void BindToActiveTexture(GLuint activeTexture, GLenum type);
+		void BindToActiveTexture(uint32 activeTexture, GLenum type);
 
 	public:
 		virtual ~Texture();

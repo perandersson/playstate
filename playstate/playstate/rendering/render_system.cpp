@@ -13,21 +13,18 @@ namespace {
 
 RenderSystem::RenderSystem(IWindow& window, ScriptSystem& scriptSystem) : mWindow(window), mProgramFactory(NULL), 
 	mUniformVertexBuffer(NULL), 
-	mFrameBufferId(0), mDepthRenderTarget(NULL), mScreenWidth(window.GetWidth()), mScreenHeight(window.GetHeight())
+	mFrameBufferId(0), mDepthRenderTarget(NULL)
 {
 	memset(mRenderTargets, 0, sizeof(mRenderTargets));
-	mWindow.AddWindowResizedListener(this);
 	mProgramFactory = new GfxProgramFactory(*this, scriptSystem);
+	mWindow.AddWindowResizedListener(this);
 
-	if(!IsValidVersion())
+	mVersion = getVersion(GL_VERSION);
+	mShaderVersion = getVersion(GL_SHADING_LANGUAGE_VERSION);
+
+	if(!mVersion.HigherOrEqual(Version(3, 3)))
 		THROW_EXCEPTION(RenderingException, "You'r graphics card does not support OpenGL 3.3");
 
-	const GLubyte* str = glGetString(GL_SHADING_LANGUAGE_VERSION);
-	int major = 0;
-	int minor = 0;
-	sscanf((const char*)str, "%d.%d", &major, &minor);
-	mShaderVersion = Version(major, minor);
-	
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClearDepth(1.0f);
 	glEnable(GL_DEPTH_TEST);
@@ -86,12 +83,13 @@ RenderSystem::~RenderSystem()
 	mGfxPrograms.DeleteAll();
 }
 
-bool RenderSystem::IsValidVersion() const
+Version RenderSystem::getVersion(GLenum name) const
 {
-	const GLubyte* str = glGetString(GL_VERSION);
-	double version = 0.0;
-	sscanf((const char*)str, "%lf", &version);
-	return version >= 3.3; 
+	int major = 0;
+	int minor = 0;
+	const GLubyte* str = glGetString(name);
+	sscanf((const char*)str, "%d.%d", &major, &minor);
+	return Version(major, minor);
 }
 
 GfxProgram* RenderSystem::LoadGfxProgram(const std::string& fileName)
@@ -115,8 +113,8 @@ GfxProgram* RenderSystem::LoadGfxProgram(const std::string& fileName)
 
 void RenderSystem::OnWindowResized(uint32 width, uint32 height)
 {
-	mScreenWidth = width;
-	mScreenHeight = height;
+	mScreenViewport.Width = width;
+	mScreenViewport.Height = height;
 
 	// Mark system as dirty
 	StatePolicy::MarkAsDirty();
@@ -159,7 +157,7 @@ void RenderSystem::ApplyRenderTargets()
 	if(disableFBO) {
 		if(_current_frameBufferObject != 0) {
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
-			StatePolicy::Viewport(0, 0, mScreenWidth, mScreenHeight);
+			StatePolicy::Viewport(mScreenViewport);
 			_current_frameBufferObject = 0;
 		}
 		
@@ -214,8 +212,6 @@ void RenderSystem::ApplyRenderTargets()
 	}
 	glDrawBuffers(numDrawBuffers, drawBuffers);
 
-	StatePolicy::Viewport(0, 0, width, height);
-
 	// Check for any GL errors
 	GLenum status = glGetError();
 	if(status != GL_NO_ERROR) {
@@ -261,6 +257,8 @@ void RenderSystem::ApplyRenderTargets()
 		THROW_EXCEPTION(RenderingException, "Unknow error");
         break;
     }
+	
+	StatePolicy::Viewport(Rect(0, 0, width, height));
 }
 
 const Version& RenderSystem::GetShaderVersion() const

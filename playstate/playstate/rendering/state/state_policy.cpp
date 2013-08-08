@@ -20,10 +20,7 @@ namespace {
 	uint32 _activeTexture = 0;
 	uint32 _bindTextures[MaxActiveTextures] = {0};
 
-	GLint _viewport_x = 0;
-	GLint _viewport_y = 0;
-	GLsizei _viewport_width = 0;
-	GLsizei _viewport_height = 0;
+	Rect _viewport;
 }
 
 void StatePolicy::UseProgram(GLuint programID)
@@ -151,16 +148,21 @@ void StatePolicy::BindTexture(GLenum type, GLuint texture)
 	_bindTextures[_activeTexture] = texture;
 }
 
-void StatePolicy::Viewport(GLint x, GLint y, GLsizei width, GLsizei height)
+void StatePolicy::InvalidateTexture(GLuint texture)
 {
-	if(_viewport_x == x && _viewport_y == y && _viewport_width == width && _viewport_height == height)
+	for(uint32 i = 0; i < MaxActiveTextures; ++i) {
+		if(_bindTextures[i] == texture)
+			_bindTextures[i] = 0;
+	}
+}
+
+void StatePolicy::Viewport(const Rect& viewport)
+{
+	if(_viewport == viewport)
 		return;
 
-	glViewport(x, y, width, height);
-	_viewport_x = x;
-	_viewport_y = y;
-	_viewport_width = width;
-	_viewport_height = height;
+	glViewport(viewport.X, viewport.Y, viewport.Width, viewport.Height);
+	_viewport = viewport;
 }
 
 void StatePolicy::MarkAsDirty()
@@ -183,8 +185,5 @@ void StatePolicy::MarkAsDirty()
 		_bindTextures[i] = 0;
 	}
 	
-	_viewport_x = 0;
-	_viewport_y = 0;
-	_viewport_width = 0;
-	_viewport_height = 0;
+	_viewport = Rect();
 }

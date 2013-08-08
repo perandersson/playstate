@@ -2,6 +2,7 @@
 
 #include "../../types.h"
 #include "../../math/color.h"
+#include "../../math/rect.h"
 
 #include <gl/glew.h>
 
@@ -147,8 +148,9 @@ namespace playstate
 
 		static void SetActiveTexture(uint32 id);
 		static void BindTexture(GLenum type, GLuint texture);
+		static void InvalidateTexture(GLuint texture);
 
-		static void Viewport(GLint x, GLint y, GLsizei width, GLsizei height);
+		static void Viewport(const Rect& viewport);
 		
 		//
 		// Mark all states as dirty.
