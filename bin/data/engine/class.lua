@@ -2,7 +2,7 @@
 
 -- Usage: MyClass = class("MyClass", "ParentClass")
 -- The reason for using strings as in-parameters is because we MUST NOT create a new table for a class
--- when the file is reloaded. This will prevent us from altering existing functions in runtime.
+-- when the file is reloaded. This will enable us to alter existing classes in runtime.
 function class(className, inheritsClassName)
 	-- If the class definition already exists.
 	local c = _G[className]

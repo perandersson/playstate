@@ -103,8 +103,8 @@ namespace playstate
 	Vector3 luaM_popvector3(lua_State* L)
 	{
 		assert_not_null(L);
+		Vector3 vec;
 		if(lua_istable(L, -1)) {
-			Vector3 vec;
 			float* ptr = vec.Points;
 			lua_pushnil(L);
 
@@ -122,9 +122,15 @@ namespace playstate
 
 			lua_pop(L, 1);
 			return vec;
-		}	
+		} else if(lua_isnumber(L, -1) && lua_isnumber(L, -2) && lua_isnumber(L, -2)) {
+			float* ptr = &vec.Z;
+			*ptr-- = lua_tonumber(L, -1); 
+			*ptr-- = lua_tonumber(L, -2); 
+			*ptr = lua_tonumber(L, -3); 
+			lua_pop(L, 3);
+		}
 
-		return Vector3::Zero;
+		return vec;
 	}
 
 	void luaM_pushvector3(lua_State* L, const Vector3& vec)
@@ -169,10 +175,10 @@ namespace playstate
 	Color luaM_popcolor(lua_State* L)
 	{
 		assert_not_null(L);
+		Color color;
+		int numElements = 0;
 		if(lua_istable(L, -1)) {
-			Color color;
 			float* colors = color.Colors;
-			int numElements = 0;
 			lua_pushnil(L);
 			while(lua_next(L, -2)) {
 				if(numElements > 4) {
@@ -184,15 +190,27 @@ namespace playstate
 				lua_pop(L, 1);
 			}
 
-			if(numElements == 1) {
-				color.Green = color.Blue = color.Alpha = color.Red;
-			} else if(numElements == 3) {
-				color.Alpha = 1.0f;
-			}
-			
 			lua_pop(L, 1);
 			return color;
-		}	
+		} else if(lua_isnumber(L, -1)) {
+			float* colors = color.Colors;
+			*colors++ = lua_tonumber(L, -1); lua_pop(L, 1);
+			if(lua_isnumber(L, -1)) {
+				*colors++ = lua_tonumber(L, -1); lua_pop(L, 1);
+			}
+			if(lua_isnumber(L, -1)) {
+				*colors++ = lua_tonumber(L, -1); lua_pop(L, 1);
+			}
+			if(lua_isnumber(L, -1)) {
+				*colors++ = lua_tonumber(L, -1); lua_pop(L, 1);
+			}
+		}
+
+		if(numElements == 1) {
+			color.Green = color.Blue = color.Alpha = color.Red;
+		} else if(numElements == 3) {
+			color.Alpha = 1.0f;
+		}
 
 		return Color::Nothing;
 	}

@@ -54,10 +54,6 @@ private:
 
 bool OctreeRenderProcessor::Find(const FindQuery& query, RenderBlockResultSet* target) const
 {
-	// The octree does not contain user interface blocks
-	if(BIT_ISSET(query.Filter, RenderStateFilter::USER_INTERFACE))
-		return false;
-
 	RenderState state;
 	state.Camera = query.Camera;
 	state.Filter = query.Filter;

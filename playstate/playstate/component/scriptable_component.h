@@ -19,13 +19,6 @@ namespace playstate
 	// Updatable
 	public:
 		virtual void Update();
-
-	// Scriptable
-	protected:
-		virtual void OnRegistered();
-
-	private:
-		uint32 mUpdateFunc;
 	};
 	
 	extern int Component_Init(lua_State* L);

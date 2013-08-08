@@ -82,7 +82,7 @@ void DeferredRenderPipeline::Render(const Scene& scene, const Camera& camera)
 
 void DeferredRenderPipeline::DrawUserInterface(const Scene& scene)
 {
-	FindQuery query;
+	/*FindQuery query;
 	query.Camera = NULL;
 	query.Filter = RenderStateFilter::USER_INTERFACE;
 	if(scene.Find(query, &mRenderBlockResultSet)) {
@@ -109,7 +109,7 @@ void DeferredRenderPipeline::DrawUserInterface(const Scene& scene)
 			modelMatrix->SetMatrix(block->ModelMatrix);
 			userInterfaceShader->Render(block->VertexBuffer, block->IndexBuffer);
 		}
-	}
+	}*/
 }
 
 void DeferredRenderPipeline::DrawGeometry(const Scene& scene, const Camera& camera)

@@ -23,7 +23,7 @@ function MovePlayerBehaviour:RotateThis()
 	x, y = self:GetArcballVector(mouseX, mouseY)
 	local angle = math.atan2(x, y)
 		
-	self:SetNodeRotation({0, angle, 0})
+	self:SetNodeRotation(0, angle, 0)
 	
 	self.prevMouseX = mouseX
 	self.prevMouseY = mouseY
@@ -42,31 +42,32 @@ function MovePlayerBehaviour:GetArcballVector(x, y)
 end
 
 function MovePlayerBehaviour:TranslateThis()
-	local velocity = {0, 0, 0}
+	local x = 0
+	local z = 0
 	local move = false
 		
 	if Keys.IsKeyDown(KeyboardKeys.W) then
-		velocity[3] = velocity[3] - self.speed * GameDeltaTime
+		z = z - self.speed * GameDeltaTime
 		move = true
 	end
 	
 	if Keys.IsKeyDown(KeyboardKeys.S) then
-		velocity[3] = velocity[3] + self.speed * GameDeltaTime
+		z = z + self.speed * GameDeltaTime
 		move = true
 	end
 	
 	if Keys.IsKeyDown(KeyboardKeys.A) then
-		velocity[1] = velocity[1] - self.speed * GameDeltaTime
+		x = x - self.speed * GameDeltaTime
 		move = true
 	end
 	
 	if Keys.IsKeyDown(KeyboardKeys.D) then
-		velocity[1] = velocity[1] + self.speed * GameDeltaTime
+		x = x + self.speed * GameDeltaTime
 		move = true
 	end
 	
 	if move then
-		self:TranslateNode(velocity)
+		self:TranslateNode(x, 0, z)
 	end
 end
 

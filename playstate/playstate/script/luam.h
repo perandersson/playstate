@@ -52,13 +52,13 @@ namespace playstate
 	extern ResourceData* luaM_popresource(lua_State* L);
 
 	//
-	// Converts a lua number array into a Vector3 structure usable by the game engine.
-	// It can convert userdata (i.e. if the user uses Vector3 in script) or a {x, y, z} array.
-	// @return A three-dimensional vector. The 
+	// Pops a Vector3 from the Lua stack.
+	// A Vector3 can be represented as either a Lua table or as multiple parameters.
+	// @return A three-dimensional vector. Vector3::Zero if the value in on the stack is invalid.
 	extern Vector3 luaM_popvector3(lua_State* L);
 
 	//
-	// 
+	//
 	extern void luaM_pushvector3(lua_State* L, const Vector3& vec);
 	
 	//

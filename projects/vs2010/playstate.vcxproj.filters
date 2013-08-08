@@ -105,9 +105,6 @@
     <Filter Include="Source Files\gui">
       <UniqueIdentifier>{5eef217b-1569-4a41-b3fa-fad05755411e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\gui\components">
-      <UniqueIdentifier>{095e0fc6-0e2a-41d8-b5a8-1522e6085981}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\filesystem">
       <UniqueIdentifier>{05107f29-e498-4c1a-acaf-8dd7cbab59c1}</UniqueIdentifier>
     </Filter>
@@ -352,9 +349,6 @@
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\thread\thread_factory.cpp">
       <Filter>Source Files\thread</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\gui\components\gui_frame_component.cpp">
-      <Filter>Source Files\gui\components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\math\rect.cpp">
       <Filter>Source Files\math</Filter>
@@ -709,9 +703,6 @@
     <ClInclude Include="..\..\playstate\playstate\filesystem\file_system.h">
       <Filter>Source Files\filesystem</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\gui\components\gui_frame_component.h">
-      <Filter>Source Files\gui\components</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\filesystem\file_changed_listener.h">
       <Filter>Source Files\filesystem</Filter>
     </ClInclude>
@@ -735,6 +726,9 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\resources\resource_manager.h">
       <Filter>Source Files\resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\gui\canvas.h">
+      <Filter>Source Files\gui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -61,6 +61,34 @@ bool Scriptable::PrepareMethod(const char* method)
 	return false;
 }
 
+bool Scriptable::HasMethod(const char* method)
+{
+	assert_not_null(method);
+	assert(mScriptRef != 0 && "This object is not bound to script.");
+
+#ifdef _DEBUG
+	int top1 = lua_gettop(mCurrentState);
+#endif
+
+	bool hasMethod = false;
+	lua_rawgeti(mCurrentState, LUA_REGISTRYINDEX, mScriptRef);
+	if(lua_istable(mCurrentState, -1)) {
+		lua_getfield(mCurrentState, -1, method);
+		if(lua_isfunction(mCurrentState, -1)) {
+			hasMethod = true;
+		}
+		lua_pop(mCurrentState, 1);
+	}
+	lua_pop(mCurrentState, 1);
+
+#ifdef _DEBUG
+	int top2 = lua_gettop(mCurrentState);
+	assert(top1 == top2 && "Lua stack was incorrectly popped");
+#endif
+
+	return hasMethod;
+}
+
 bool Scriptable::PrepareMethod(uint32 methodID)
 {
 	assert(methodID != 0 && "Invalid methodID");

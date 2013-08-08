@@ -5,7 +5,7 @@
 using namespace playstate;
 
 ScriptableComponent::ScriptableComponent(uint32 type)
-	: Component(type), mUpdateFunc(0)
+	: Component(type)
 {
 }
 
@@ -15,10 +15,10 @@ ScriptableComponent::~ScriptableComponent()
 
 void ScriptableComponent::OnComponentAdded()
 {
-	if(mUpdateFunc != 0) {
+	if(HasMethod("Update")) {
 		Updatable::Attach(GetNode()->GetGroup());
 	}
-	
+		
 	if(PrepareMethod("OnComponentAdded")) {
 		if(lua_pcall(mCurrentState, 1, 0, NULL) == 0) {
 		} else {
@@ -30,10 +30,6 @@ void ScriptableComponent::OnComponentAdded()
 
 void ScriptableComponent::OnComponentRemoved()
 {
-	if(mUpdateFunc != 0) {
-		Updatable::Detach();
-	}
-
 	if(PrepareMethod("OnComponentRemoved")) {
 		if(lua_pcall(mCurrentState, 1, 0, NULL) == 0) {
 		} else {
@@ -43,14 +39,9 @@ void ScriptableComponent::OnComponentRemoved()
 	}
 }
 
-void ScriptableComponent::OnRegistered()
-{
-	mUpdateFunc = GetMethodID("Update");
-}
-
 void ScriptableComponent::Update()
 {
-	if(mUpdateFunc != 0 && PrepareMethod(mUpdateFunc)) {
+	if(PrepareMethod("Update")) {
 		if(lua_pcall(mCurrentState, 1, 0, NULL) == 0) {
 		} else {
 			const char* err = lua_tostring(mCurrentState, -1);

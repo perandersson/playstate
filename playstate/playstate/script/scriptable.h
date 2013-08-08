@@ -31,6 +31,13 @@ namespace playstate
 		bool PrepareMethod(const char* method);
 
 		//
+		// Checks if this instance has the method with the supplied name
+		// 
+		// @param method The method
+		// @return 
+		bool HasMethod(const char* method);
+
+		//
 		// Finds and pushes the supplied method and the "self" parameter to the lua stack.
 		bool PrepareMethod(uint32 methodID);
 

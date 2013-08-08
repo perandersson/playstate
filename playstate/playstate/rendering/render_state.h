@@ -10,8 +10,7 @@ namespace playstate
 	public:
 		enum Enum {
 			GEOMETRY = BIT(0),
-			TEXTURES = BIT(1),
-			USER_INTERFACE = BIT(2)
+			TEXTURES = BIT(1)
 		};
 	};
 
