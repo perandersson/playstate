@@ -14,4 +14,8 @@ config.camera.eye = {0, 50.0, 50.0}
 config.camera.center = {0, 0, 0}
 config.camera.up = {0, 1, 0}
 
+-- Development mode (will prevent crashes on bad shader code)
+config.graphics = {}
+config.graphics.developmentmode = true
+
 return config

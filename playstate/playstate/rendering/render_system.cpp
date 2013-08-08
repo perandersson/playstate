@@ -1,4 +1,5 @@
 #include "../memory/memory.h"
+#include "../game/configuration.h"
 #include "render_system.h"
 using namespace playstate;
 
@@ -99,8 +100,13 @@ GfxProgram* RenderSystem::LoadGfxProgram(const std::string& fileName)
 	try {
 		program = mProgramFactory->Create(fileName);
 	} catch(Exception& e) {
-		ILogger::Get().Error("Could not compile graphics program: '%s'. Reason: '%s'", fileName.c_str(), e.GetMessage().c_str());
-		program = new GfxProgram(*this);
+		bool developmentMode = IConfiguration::Get().FindBool("graphics.developmentmode", true);
+		if(developmentMode) {
+			ILogger::Get().Error("Could not compile graphics program: '%s'. Reason: '%s'", fileName.c_str(), e.GetMessage().c_str());
+			program = new GfxProgram(*this);
+		} else {
+			throw e;
+		}
 	}
 	
 	mGfxPrograms.AddLast(program);

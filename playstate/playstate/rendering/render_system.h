@@ -32,7 +32,11 @@ namespace playstate
 
 		//
 		// Loads a gfx program and returns the result. 
+		//
 		// @param fileName
+		// @throw playstate::GfxProgramException Exception thrown if the supplied gfx program could not load correctly.
+		//		If the configuration flag: "graphics.developmentmode" = true then this method will 
+		//		return a default instance instead. (So that you can, while running the game, fix the problems with the shaders)
 		// @return
 		GfxProgram* LoadGfxProgram(const std::string& fileName);
 
