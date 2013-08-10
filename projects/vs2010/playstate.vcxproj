@@ -47,6 +47,7 @@
     <ClCompile Include="..\..\playstate\playstate\processor\processors\octree_light_source_processor.cpp" />
     <ClCompile Include="..\..\playstate\playstate\processor\renderable.cpp" />
     <ClCompile Include="..\..\playstate\playstate\processor\render_processor_factory.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\processor\tickable.cpp" />
     <ClCompile Include="..\..\playstate\playstate\processor\updatable.cpp" />
     <ClCompile Include="..\..\playstate\playstate\processor\update_processor_factory.cpp" />
     <ClCompile Include="..\..\playstate\playstate\rendering\components\default_gfx_program_component.cpp" />
@@ -145,6 +146,7 @@
     <ClInclude Include="..\..\playstate\playstate\processor\processors\octree_light_source_processor.h" />
     <ClInclude Include="..\..\playstate\playstate\processor\renderable.h" />
     <ClInclude Include="..\..\playstate\playstate\processor\render_processor_factory.h" />
+    <ClInclude Include="..\..\playstate\playstate\processor\tickable.h" />
     <ClInclude Include="..\..\playstate\playstate\processor\updatable.h" />
     <ClInclude Include="..\..\playstate\playstate\processor\update_processor_factory.h" />
     <ClInclude Include="..\..\playstate\playstate\rendering\components\default_gfx_program_component.h" />

@@ -64,6 +64,7 @@ void GameRunner::Run()
 
 		scriptSystem.SetGlobalVar("GameDeltaTime", GameDeltaTime);
 		scriptSystem.SetGlobalVar("GameTotalTime", GameTotalTime);
+		scriptSystem.SetGlobalVar("SecondsPerTick", SecondsPerTick);
 
 		mScene.Update();
 		mGame->Update();

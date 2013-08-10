@@ -38,6 +38,8 @@ namespace playstate
 	public:
 		virtual void AttachUpdatable(IUpdatable* updatable);
 		virtual void DetachUpdatable(IUpdatable* updatable);
+		virtual void AttachTickable(ITickable* tickable);
+		virtual void DetachTickable(ITickable* tickable);
 		virtual void Update();
 
 	// IRenderProcessor

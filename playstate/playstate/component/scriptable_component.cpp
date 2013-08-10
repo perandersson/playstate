@@ -5,7 +5,7 @@
 using namespace playstate;
 
 ScriptableComponent::ScriptableComponent(uint32 type)
-	: Component(type)
+	: Component(type), Updatable(), Renderable(), Tickable(), Scriptable()
 {
 }
 
@@ -17,6 +17,14 @@ void ScriptableComponent::OnComponentAdded()
 {
 	if(HasMethod("Update")) {
 		Updatable::Attach(GetNode()->GetGroup());
+	}
+
+	if(HasMethod("Collect")) {
+		Renderable::Attach(GetNode()->GetGroup());
+	}
+
+	if(HasMethod("Tick")) {
+		Tickable::Attach(GetNode()->GetGroup());
 	}
 		
 	if(PrepareMethod("OnComponentAdded")) {
@@ -39,9 +47,41 @@ void ScriptableComponent::OnComponentRemoved()
 	}
 }
 
+void ScriptableComponent::Show()
+{
+	Renderable::Attach(GetNode()->GetGroup());
+}
+
+void ScriptableComponent::Hide()
+{
+	Renderable::Detach();
+}
+
+void ScriptableComponent::Collect(const RenderState& state, RenderBlockResultSet* resultSet)
+{
+	/*if(PrepareMethod("Collect")) {
+		if(lua_pcall(mCurrentState, 1, 0, NULL) == 0) {
+		} else {
+			const char* err = lua_tostring(mCurrentState, -1);
+			lua_pop(mCurrentState, 1);
+		}
+	}*/
+}
+
 void ScriptableComponent::Update()
 {
 	if(PrepareMethod("Update")) {
+		if(lua_pcall(mCurrentState, 1, 0, NULL) == 0) {
+		} else {
+			const char* err = lua_tostring(mCurrentState, -1);
+			lua_pop(mCurrentState, 1);
+		}
+	}
+}
+
+void ScriptableComponent::Tick()
+{
+	if(PrepareMethod("Tick")) {
 		if(lua_pcall(mCurrentState, 1, 0, NULL) == 0) {
 		} else {
 			const char* err = lua_tostring(mCurrentState, -1);
@@ -113,7 +153,7 @@ namespace playstate
 	int Component_SetNodeRotation(lua_State* L)
 	{
 		if(lua_gettop(L) < 2) {
-			luaM_printerror(L, "Expected: self<Component>:SetNodeRotation({x, y, z})");
+			luaM_printerror(L, "Expected: self<Component>:SetNodeRotation(Vector3)");
 			luaM_pushvector3(L, Vector3::Zero);
 			return 1;
 		}
@@ -144,6 +184,26 @@ namespace playstate
 		}
 		
 		return 3;
+	}
+
+	int Component_Show(lua_State* L)
+	{
+		if(lua_gettop(L) < 1) {
+			luaM_printerror(L, "Expected: self<Component>:Show()");
+			return 0;
+		}
+
+		ScriptableComponent* component = luaM_popobject<ScriptableComponent>(L);
+		if(component != NULL) {
+			component->Hide();
+		}
+
+		return 0;
+	}
+
+	int Component_Hide(lua_State* L)
+	{
+		return 0;
 	}
 }
 

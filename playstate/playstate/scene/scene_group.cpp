@@ -79,6 +79,18 @@ void SceneGroup::DetachUpdatable(IUpdatable* updatable)
 	mUpdateProcessor->DetachUpdatable(updatable);
 }
 
+void SceneGroup::AttachTickable(ITickable* tickable)
+{
+	assert_not_null(tickable);
+	mUpdateProcessor->AttachTickable(tickable);
+}
+
+void SceneGroup::DetachTickable(ITickable* tickable)
+{
+	assert_not_null(tickable);
+	mUpdateProcessor->AttachTickable(tickable);
+}
+
 void SceneGroup::AttachRenderable(Renderable* renderable)
 {
 	assert_not_null(renderable);

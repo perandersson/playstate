@@ -1,11 +1,10 @@
 #pragma once
 #include "../singleton.h"
 #include "updatable.h"
+#include "tickable.h"
 
 namespace playstate
 {
-	const float SecondsPerTick = 1.0f / 32.0f;
-
 	//
 	// Interface that defines how updatable instances registers itself as update notification receivers.
 	class IUpdateProcessor
@@ -26,6 +25,19 @@ namespace playstate
 		//
 		// @param updatable
 		virtual void DetachUpdatable(IUpdatable* updatable) = 0;
+
+		//
+		// Attaches an tickable object to this processor. This enables it to receive tick events during this
+		//	applications execution time.
+		//
+		// @param tickable
+		virtual void AttachTickable(ITickable* tickable) = 0;
+
+		//
+		// Detaches this tickable object from this processor. This disables it from receiving tick events.
+		//
+		// @param tickable
+		virtual void DetachTickable(ITickable* tickable) = 0;
 
 		//
 		// Updates this processor.

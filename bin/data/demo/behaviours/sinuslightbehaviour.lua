@@ -6,7 +6,7 @@ function SinusLightBehaviour:__init(speed)
 	self.speed = speed
 end
 
-function SinusLightBehaviour:Update()
+function SinusLightBehaviour:Tick()
 	local x, y, z = self:GetNodePosition()
 	y = math.abs(math.sin(GameTotalTime * self.speed) * 5.0);
 	self:SetNodePosition(x, y, z)

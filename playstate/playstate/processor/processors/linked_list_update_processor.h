@@ -20,6 +20,9 @@ namespace playstate
 	public:
 		virtual void AttachUpdatable(IUpdatable* updatable);
 		virtual void DetachUpdatable(IUpdatable* updatable);
+		virtual void AttachTickable(ITickable* updatable);
+		virtual void DetachTickable(ITickable* updatable);
+		
 		
 	// IUpdatable
 	public:
@@ -27,6 +30,7 @@ namespace playstate
 
 	private:		
 		LinkedList<IUpdatable, &IUpdatable::UpdatableLink> mUpdatables;
+		LinkedList<ITickable, &ITickable::TickableLink> mTickables;
 		float32 mTimeSinceLastTick;
 	};
 

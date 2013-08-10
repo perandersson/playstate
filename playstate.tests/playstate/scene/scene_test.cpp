@@ -47,6 +47,14 @@ TEST_SUITE(Scene)
 		{
 		}
 
+		virtual void AttachTickable(ITickable* tickable)
+		{
+		}
+
+		virtual void DetachTickable(ITickable* tickable)
+		{
+		}
+
 		virtual void Update()
 		{
 		}
