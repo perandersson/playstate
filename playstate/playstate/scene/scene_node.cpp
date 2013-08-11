@@ -3,8 +3,13 @@
 #include "scene_group.h"
 using namespace playstate;
 
+SceneNode::SceneNode()
+	: mSceneGroup(NULL), mTypeMask(BIT_ALL), mParent(NULL)
+{
+}
+
 SceneNode::SceneNode(SceneGroup* group)
-	: mSceneGroup(group), mTypeMask(BIT_ALL), mParent(NULL)
+	: mSceneGroup(NULL), mTypeMask(BIT_ALL), mParent(NULL)
 {
 	assert_not_null(group);
 	group->AddSceneNode(this);
@@ -12,7 +17,7 @@ SceneNode::SceneNode(SceneGroup* group)
 
 
 SceneNode::SceneNode(SceneGroup* group, type_mask typeMask)
-	: mSceneGroup(group), mTypeMask(typeMask), mParent(NULL)
+	: mSceneGroup(NULL), mTypeMask(typeMask), mParent(NULL)
 {
 	assert_not_null(group);
 	group->AddSceneNode(this);
@@ -43,7 +48,8 @@ void SceneNode::AddComponent(Component* component)
 	assert(component->GetNode() == NULL && "You are not allowed to add a component on multiple scene nodes");
 	
 	mComponents.AddLast(component);
-	component->OnAddedToSceneNode(this);
+	if(IsAttachedToSceneGroup())
+		component->OnAttachedToScene(this);
 }
 
 void SceneNode::RemoveComponent(Component* component)
@@ -184,6 +190,42 @@ void SceneNode::RemoveFromScene()
 {
 	assert(mSceneGroup != NULL && "You cannot remove a scene node that isn't owned by a scene");
 	mSceneGroup->RemoveSceneNode(this);
+}
+
+void SceneNode::NodeAttachedToSceneGroup(SceneGroup* group)
+{
+	if(IsAttachedToSceneGroup())
+		DetachingNodeFromSceneGroup(group);
+
+	mSceneGroup = group;
+	
+	// Nofiy the components that they are attached to the scene via a scene group
+	Component* component = mComponents.First();
+	while(component != NULL) {
+		Component* next = component->ComponentLink.Tail;
+		component->OnAttachedToScene(this);
+		component = next;
+	}
+}
+
+void SceneNode::DetachingNodeFromSceneGroup(SceneGroup* group)
+{
+	assert(mSceneGroup == group && "Why are you trying to notify this node that it's being detached from someone elses group?");
+	
+	// Nofiy the components that they are being detached from the scene
+	Component* component = mComponents.First();
+	while(component != NULL) {
+		Component* next = component->ComponentLink.Tail;
+		component->OnDetachingFromScene(this);
+		component = next;
+	}
+
+	mSceneGroup = NULL;
+}
+
+bool SceneNode::IsAttachedToSceneGroup() const
+{
+	return mSceneGroup != NULL;
 }
 
 namespace playstate

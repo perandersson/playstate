@@ -38,6 +38,10 @@ void ScriptableComponent::OnComponentAdded()
 
 void ScriptableComponent::OnComponentRemoved()
 {
+	Updatable::Detach();
+	Renderable::Detach();
+	Tickable::Detach();
+
 	if(PrepareMethod("OnComponentRemoved")) {
 		if(lua_pcall(mCurrentState, 1, 0, NULL) == 0) {
 		} else {

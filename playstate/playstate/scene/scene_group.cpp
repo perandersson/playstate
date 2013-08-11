@@ -6,7 +6,7 @@ using namespace playstate;
 SceneGroup::SceneGroup()
 	: mUpdateProcessor(IUpdateProcessorFactory::Get().Create()),
 	mRenderProcessor(IRenderProcessorFactory::Get().Create()),
-	mLightSourceProcessor(ILightSourceProcessorFactory::Get().Create())
+	mLightSourceProcessor(ILightSourceProcessorFactory::Get().Create()), mUpdating(false)
 {
 	assert(mUpdateProcessor != NULL && "IUpdateProcessorFactory did not create a valid update processor");
 	assert(mRenderProcessor != NULL && "IRenderProcessorFactory did not create a valid render processor");
@@ -17,7 +17,7 @@ SceneGroup::SceneGroup(IUpdateProcessorFactory& updateProcessFactory, IRenderPro
 	ILightSourceProcessorFactory& lightSourceProcessorFactory)
 	: mUpdateProcessor(updateProcessFactory.Create()),
 	mRenderProcessor(renderProcessFactory.Create()),
-	mLightSourceProcessor(lightSourceProcessorFactory.Create())
+	mLightSourceProcessor(lightSourceProcessorFactory.Create()), mUpdating(false)
 {
 	assert(mUpdateProcessor != NULL && "IUpdateProcessorFactory did not create a valid update processor");
 	assert(mRenderProcessor != NULL && "IRenderProcessorFactory did not create a valid render processor");
@@ -26,6 +26,8 @@ SceneGroup::SceneGroup(IUpdateProcessorFactory& updateProcessFactory, IRenderPro
 
 SceneGroup::~SceneGroup()
 {
+	assert(mUpdating == false && "ISSUE #9: You are not allowed to delete this scene group from a Tickable component at the moment");
+
 	mSceneNodes.DeleteAll();
 
 	if(mUpdateProcessor != NULL) {
@@ -47,24 +49,22 @@ SceneGroup::~SceneGroup()
 void SceneGroup::AddSceneNode(SceneNode* node)
 {
 	assert_not_null(node);
-	
-	// TODO This is not supported, and it won't be in the future. But it should be possible to move a scene node
-	// from one group to another. Each group has it's own processors, so a move should make sure that
-	// the nodes components are re-added to the new scene group's processors and removed from this one.
-	//assert(node->GetGroup() == NULL && "You are trying to add a scene node to more than one group");
-
 	mSceneNodes.AddLast(node);
+	node->NodeAttachedToSceneGroup(this);
 }
 
 void SceneGroup::RemoveSceneNode(SceneNode* node)
 {
 	assert_not_null(node);
+	node->DetachingNodeFromSceneGroup(this);
 	mSceneNodes.Remove(node);
 }
 
 void SceneGroup::Update()
 {
+	mUpdating = true;
 	mUpdateProcessor->Update();
+	mUpdating = false;
 }
 
 void SceneGroup::AttachUpdatable(IUpdatable* updatable)

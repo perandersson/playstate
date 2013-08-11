@@ -34,7 +34,11 @@ namespace playstate
 	public:
 		//
 		// 
-		void OnAddedToSceneNode(SceneNode* node);
+		void OnAttachedToScene(SceneNode* node);
+
+		//
+		//
+		void OnDetachingFromScene(SceneNode* node);
 
 		//
 		// @return The owner scene node for this component

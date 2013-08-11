@@ -59,6 +59,9 @@ namespace playstate
 		IUpdateProcessor* mUpdateProcessor;
 		IRenderProcessor* mRenderProcessor;
 		ILightSourceProcessor* mLightSourceProcessor;
+
+		// Use this to prevent compontent from deleting this group
+		bool mUpdating;
 	};
 	
 	//

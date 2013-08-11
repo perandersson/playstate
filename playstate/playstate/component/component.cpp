@@ -17,10 +17,15 @@ Component::~Component()
 	this->OnComponentRemoved();
 }
 
-void Component::OnAddedToSceneNode(SceneNode* node)
+void Component::OnAttachedToScene(SceneNode* node)
 {
 	mNode = node;
 	this->OnComponentAdded();
+}
+
+void Component::OnDetachingFromScene(SceneNode* node)
+{
+	this->OnComponentRemoved();
 }
 
 void Component::OnComponentAdded()

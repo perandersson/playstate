@@ -18,6 +18,10 @@ namespace playstate
 
 	public:
 		//
+		// Default constructor
+		SceneNode();
+
+		//
 		// Constructor
 		// @param group The group where this node is to be placed. This will add the current
 		//	instance to the group automatically.
@@ -85,6 +89,25 @@ namespace playstate
 		//
 		// 
 		void RemoveChildNode(SceneNode* node);
+
+		//
+		// Notifies this node that it's been attached to the supplied scene group
+		// 
+		// This method might be called while it's already attached to a group. This
+		//	means that this node will be moved from one group to the next.
+		//
+		// @param group
+		void NodeAttachedToSceneGroup(SceneGroup* group);
+
+		//
+		// Notifies this node that it's being detached from the supplied scene group
+		void DetachingNodeFromSceneGroup(SceneGroup* group);
+
+		//
+		// Checks if this node is being attached to a scene group
+		//
+		// @return
+		bool IsAttachedToSceneGroup() const;
 		
 	protected:
 		//

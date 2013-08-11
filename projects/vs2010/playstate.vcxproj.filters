@@ -371,6 +371,15 @@
     <ClCompile Include="..\..\playstate\playstate\processor\tickable.cpp">
       <Filter>Source Files\processor</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\gui\canvas.cpp">
+      <Filter>Source Files\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\gui\canvas_group.cpp">
+      <Filter>Source Files\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\gui\canvas_node.cpp">
+      <Filter>Source Files\gui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\playstate\playstate\camera\camera.h">
@@ -735,6 +744,12 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\processor\tickable.h">
       <Filter>Source Files\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\gui\canvas_group.h">
+      <Filter>Source Files\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\gui\canvas_node.h">
+      <Filter>Source Files\gui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
