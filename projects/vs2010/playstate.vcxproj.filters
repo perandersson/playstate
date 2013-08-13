@@ -117,6 +117,9 @@
     <Filter Include="Source Files\gui\events">
       <UniqueIdentifier>{b558da70-1c55-482a-ba4a-2bca3f5961c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\gui\widgets">
+      <UniqueIdentifier>{5d70a75f-dfd6-4a44-9dca-aae5e241da20}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\playstate\playstate\camera\camera.cpp">
@@ -756,6 +759,9 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\gui\events\mouse_event.h">
       <Filter>Source Files\gui\events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\gui\widget\gui_button_widget.h">
+      <Filter>Source Files\gui\widgets</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
