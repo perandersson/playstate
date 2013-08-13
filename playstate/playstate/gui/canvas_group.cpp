@@ -59,3 +59,13 @@ void CanvasGroup::RemoveWidget(GuiWidget* widget)
 	assert_not_null(widget);
 	nWidgets.Remove(widget);
 }
+
+const Vector2& CanvasGroup::GetPosition() const
+{
+	return mPosition;
+}
+
+const Vector2& CanvasGroup::GetSize() const
+{
+	return mSize;
+}

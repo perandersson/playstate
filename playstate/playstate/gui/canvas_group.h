@@ -3,6 +3,7 @@
 #include "../linked_list.h"
 #include "../processor/update_processor_factory.h"
 #include "gui_widget.h"
+#include "../math/vector2.h"
 
 namespace playstate
 {
@@ -26,6 +27,12 @@ namespace playstate
 		//
 		// Removes this node from the canvas group
 		void RemoveWidget(GuiWidget* widget);
+		
+		//
+		const Vector2& GetPosition() const;
+
+		//
+		const Vector2& GetSize() const;
 
 	// IUpdateProcessor
 	public:
@@ -38,5 +45,9 @@ namespace playstate
 	private:
 		LinkedList<GuiWidget, &GuiWidget::GuiWidgetLink> nWidgets;
 		IUpdateProcessor* mUpdateProcessor;
+
+	private:
+		Vector2 mPosition;
+		Vector2 mSize;
 	};		
 }

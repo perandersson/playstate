@@ -2,6 +2,7 @@
 #include "../linked_list.h"
 #include "../script/scriptable.h"
 #include "gui_event.h"
+#include "../math/vector2.h"
 
 namespace playstate
 {
@@ -54,8 +55,18 @@ namespace playstate
 		// @return TRUE if this widget control is attached to a canvas group.
 		bool IsAttachedToCanvasGroup() const;
 
+		//
+		const Vector2& GetPosition() const;
+
+		//
+		const Vector2& GetSize() const;
+
 	private:
 		CanvasGroup* mCanvasGroup;
 		LinkedList<GuiEvent, &GuiEvent::EventLink> mEvents;
+
+	protected:
+		Vector2 mPosition;
+		Vector2 mSize;
 	};
 }

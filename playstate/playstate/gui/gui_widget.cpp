@@ -77,3 +77,13 @@ bool GuiWidget::IsAttachedToCanvasGroup() const
 {
 	return mCanvasGroup != NULL;
 }
+
+const Vector2& GuiWidget::GetPosition() const
+{
+	return mPosition;
+}
+
+const Vector2& GuiWidget::GetSize() const
+{
+	return mSize;
+}
