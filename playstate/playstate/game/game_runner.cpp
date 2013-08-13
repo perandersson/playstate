@@ -67,6 +67,7 @@ void GameRunner::Run()
 		scriptSystem.SetGlobalVar("SecondsPerTick", SecondsPerTick);
 
 		mScene.Update();
+		mCanvas.Update();
 		mGame->Update();
 
 		if(mRenderPipeline != NULL)
