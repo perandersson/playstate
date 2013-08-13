@@ -3,7 +3,7 @@
 using namespace playstate;
 
 Component::Component()
-	: mNode(NULL), mTypeMask(0xffffffff)
+	: mNode(NULL), mTypeMask(BIT_ALL)
 {
 }
 
@@ -26,6 +26,7 @@ void Component::OnAttachedToScene(SceneNode* node)
 void Component::OnDetachingFromScene(SceneNode* node)
 {
 	this->OnComponentRemoved();
+	mNode = NULL;
 }
 
 void Component::OnComponentAdded()

@@ -71,16 +71,16 @@ DeferredRenderPipeline::~DeferredRenderPipeline()
 	mFileSystem.RemoveFileChangedListener(this);
 }
 	
-void DeferredRenderPipeline::Render(const Scene& scene, const Camera& camera)
+void DeferredRenderPipeline::Render(const Scene& scene, const Canvas& canvas, const Camera& camera)
 {
 	// Draw geometry
 	DrawGeometry(scene, camera);
 
 	// Draw GUI
-	DrawUserInterface(scene);
+	DrawUserInterface(canvas);
 }
 
-void DeferredRenderPipeline::DrawUserInterface(const Scene& scene)
+void DeferredRenderPipeline::DrawUserInterface(const Canvas& canvas)
 {
 	/*FindQuery query;
 	query.Camera = NULL;

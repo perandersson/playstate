@@ -16,7 +16,7 @@ CanvasGroup::CanvasGroup(IUpdateProcessorFactory& updateProcessorFactory)
 
 CanvasGroup::~CanvasGroup()
 {
-	mNodes.DeleteAll();
+	nWidgets.DeleteAll();
 }
 
 void CanvasGroup::AttachUpdatable(IUpdatable* updatable)
@@ -48,14 +48,14 @@ void CanvasGroup::Update()
 	mUpdateProcessor->Update();
 }
 
-void CanvasGroup::AddCanvasNode(CanvasNode* node)
+void CanvasGroup::AddWidget(GuiWidget* widget)
 {
-	assert_not_null(node);
-	mNodes.AddLast(node);
+	assert_not_null(widget);
+	nWidgets.AddLast(widget);
 }
 
-void CanvasGroup::RemoveCanvasNode(CanvasNode* node)
+void CanvasGroup::RemoveWidget(GuiWidget* widget)
 {
-	assert_not_null(node);
-	mNodes.Remove(node);
+	assert_not_null(widget);
+	nWidgets.Remove(widget);
 }

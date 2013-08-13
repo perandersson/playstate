@@ -188,8 +188,8 @@ SceneGroup* SceneNode::GetGroup()
 
 void SceneNode::RemoveFromScene()
 {
-	assert(mSceneGroup != NULL && "You cannot remove a scene node that isn't owned by a scene");
-	mSceneGroup->RemoveSceneNode(this);
+	if(mSceneGroup != NULL)
+		mSceneGroup->RemoveSceneNode(this);
 }
 
 void SceneNode::NodeAttachedToSceneGroup(SceneGroup* group)

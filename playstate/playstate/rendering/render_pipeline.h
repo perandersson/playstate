@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../scene/scene.h"
+#include "../gui/canvas.h"
 #include "../camera/camera.h"
 
 namespace playstate
@@ -17,8 +18,9 @@ namespace playstate
 		// Method called when the the supplied scene should be drawn.
 		//
 		// @param scene 
+		// @param canvas
 		// @param camera
-		virtual void Render(const Scene& scene, const Camera& camera) = 0;
+		virtual void Render(const Scene& scene, const Canvas& canvas, const Camera& camera) = 0;
 	};
 }
 

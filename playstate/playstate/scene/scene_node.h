@@ -91,7 +91,7 @@ namespace playstate
 		void RemoveChildNode(SceneNode* node);
 
 		//
-		// Notifies this node that it's been attached to the supplied scene group
+		// Notifies this node that it's been attached to the supplied group
 		// 
 		// This method might be called while it's already attached to a group. This
 		//	means that this node will be moved from one group to the next.
@@ -100,7 +100,7 @@ namespace playstate
 		void NodeAttachedToSceneGroup(SceneGroup* group);
 
 		//
-		// Notifies this node that it's being detached from the supplied scene group
+		// Notifies this node that it's being detached from the supplied group
 		void DetachingNodeFromSceneGroup(SceneGroup* group);
 
 		//

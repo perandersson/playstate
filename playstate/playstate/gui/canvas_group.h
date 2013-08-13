@@ -2,7 +2,7 @@
 
 #include "../linked_list.h"
 #include "../processor/update_processor_factory.h"
-#include "canvas_node.h"
+#include "gui_widget.h"
 
 namespace playstate
 {
@@ -21,11 +21,11 @@ namespace playstate
 
 		//
 		// Adds the supplied node to this canvas group
-		void AddCanvasNode(CanvasNode* node);
+		void AddWidget(GuiWidget* widget);
 
 		//
 		// Removes this node from the canvas group
-		void RemoveCanvasNode(CanvasNode* node);
+		void RemoveWidget(GuiWidget* widget);
 
 	// IUpdateProcessor
 	public:
@@ -36,7 +36,7 @@ namespace playstate
 		virtual void Update();
 
 	private:
-		LinkedList<CanvasNode, &CanvasNode::CanvasNodeLink> mNodes;
+		LinkedList<GuiWidget, &GuiWidget::GuiWidgetLink> nWidgets;
 		IUpdateProcessor* mUpdateProcessor;
 	};		
 }

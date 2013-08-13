@@ -70,7 +70,7 @@ void GameRunner::Run()
 		mGame->Update();
 
 		if(mRenderPipeline != NULL)
-			mRenderPipeline->Render(mScene, mScene.GetActiveCamera());
+			mRenderPipeline->Render(mScene, mCanvas, mScene.GetActiveCamera());
 
 		screenRenderContext->SwapBuffers();
 		kernel.Process();
@@ -128,6 +128,15 @@ Scene& GameRunner::GetScene()
 	return mScene;
 }
 
+Canvas& GameRunner::GetCanvas()
+{
+	return mCanvas;
+}
+
+const Canvas& GameRunner::GetCanvas() const
+{
+	return mCanvas;
+}
 //
 // Script integration
 //
