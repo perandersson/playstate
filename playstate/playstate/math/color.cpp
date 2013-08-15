@@ -3,9 +3,9 @@
 
 using namespace playstate;
 
-const Color Color::White(1, 1, 1, 1);
-const Color Color::Black(0, 0, 0, 1);
-const Color Color::Nothing(0, 0, 0, 0);
+const Color Color::White(1.0f, 1.0f, 1.0f, 1.0f);
+const Color Color::Black(0.0f, 0.0f, 0.0f, 1.0f);
+const Color Color::Nothing(0.0f, 0.0f, 0.0f, 0.0f);
 
 Color::Color() : Red(0), Green(0), Blue(0), Alpha(0)
 {
@@ -57,4 +57,30 @@ void Color::operator = (const Color &c)
 	Green = c.Green;
 	Blue = c.Blue;
 	Alpha = c.Alpha;
+}
+
+Color Color::HexToRGB(const char* hex)
+{
+	assert_not_null(hex);
+	std::string value;
+	if(hex[0] == '#')
+		value += &hex[1];
+	else
+		value += hex;
+
+	if(value.length() == 2) {
+		std::string replicateValue = value;
+		value += replicateValue;
+		value += replicateValue;
+		value += replicateValue;
+	}
+
+	value = std::string("0x") + value;
+	int32 hexbits = 0;
+	sscanf(value.c_str(), "%x", &hexbits);
+	return Color(
+		((hexbits >> 16) & 0xFF) / 255.f,
+		((hexbits >> 8) & 0xFF) / 255.f,
+		((hexbits >> 0) & 0xFF) / 255.f
+	);
 }

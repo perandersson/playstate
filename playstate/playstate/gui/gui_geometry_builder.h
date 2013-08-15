@@ -10,14 +10,14 @@ namespace playstate
 	{
 		Vector2 Position;
 		Vector2 TexCoord;
-		uint32 PaletteIndex;
+		Color Color;
 	};
 
 	static const VertexDeclaration GuiGeometryDataVertexDeclaration = {
 		{ 
 			{ 0, sizeof(Vector2), 2, GL_FLOAT, false },
 			{ 1, sizeof(Vector2), 2, GL_FLOAT, false },
-			{ 2, sizeof(uint32), 1, GL_UNSIGNED_INT, false }, 
+			{ 2, sizeof(Color), 4, GL_FLOAT, false }, 
 			0 
 		}
 	};
@@ -32,9 +32,10 @@ namespace playstate
 		~GuiGeometryBuilder();
 
 		void AddQuad(const Vector2& position, const Vector2& size);
-		void AddQuad(const Vector2& position, const Vector2& size, uint32 paletteIndex);
-		void AddGradientQuad(const Vector2& position, const Vector2& size, uint32 topLeftPaletteIndex, uint32 topRightPaletteIndex,
-			uint32 bottomLeftPaletteIndex, uint32 bottomRightPaletteIndex);
+		void AddQuad(const Vector2& position, const Vector2& size, const Color& color);
+		void AddGradientQuad(const Vector2& position, const Vector2& size, const Color& topColor, const Color& bottomColor);
+		void AddGradientQuad(const Vector2& position, const Vector2& size, const Color& topLeftColor, const Color& topRightColor,
+			const Color& bottomLeftColor, const Color& bottomRightColor);
 
 		//
 		// @return The build vertex buffer

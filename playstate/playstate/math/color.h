@@ -16,6 +16,14 @@ namespace playstate
 				float32 Alpha;
 			};
 
+			struct
+			{
+				float32 R;
+				float32 G;
+				float32 B;
+				float32 A;
+			};
+
 			float32 Colors[4];
 		};
 
@@ -34,5 +42,12 @@ namespace playstate
 		static const Color White;
 		static const Color Black;
 		static const Color Nothing;
+
+		//
+		// Converts a supplied hex value into a color usable by the game engine
+		//
+		// @param hex The hex decimal html color value. It can take the following combinations: "FF", "#FF", "AABBCC", "#AABBCC"
+		// @return 
+		static Color HexToRGB(const char* hex);
 	};
 }
