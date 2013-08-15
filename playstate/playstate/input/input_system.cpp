@@ -9,7 +9,7 @@ namespace playstate
 	{
 		int key = (int)lua_tonumber(L, -1); lua_pop(L, 1);
 		IKeyboardState& state = IInputSystem::Get().GetKeyboardState();
-		lua_pushboolean(L, state.IsDown((KeyboardKeys)key) ? 1 : 0);
+		lua_pushboolean(L, state.IsDown((KeyboardKeys::Enum)key) ? 1 : 0);
 		return 1;
 	}
 	
@@ -17,7 +17,7 @@ namespace playstate
 	{
 		int key = (int)lua_tonumber(L, -1); lua_pop(L, 1);
 		IKeyboardState& state = IInputSystem::Get().GetKeyboardState();
-		lua_pushboolean(L, state.IsUp((KeyboardKeys)key) ? 1 : 0);
+		lua_pushboolean(L, state.IsUp((KeyboardKeys::Enum)key) ? 1 : 0);
 		return 1;
 	}
 

@@ -5,6 +5,7 @@ local MagFilter = require "engine.core.magfilter"
 local TextureWrap = require "engine.core.texturewrap"
 
 return {
+	DepthTest = true,
 	CullFaces = CullFaces.CCW,
 	DepthFunc = DepthFunc.LESS,
 	VertexShader = [[

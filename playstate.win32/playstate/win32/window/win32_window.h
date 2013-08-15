@@ -60,6 +60,9 @@ namespace playstate
 			float32 mTimeSinceLastUpdate;
 			LONGLONG mLastTime;
 			float64 mFrequency;
+
+			DWORD mStyle;
+			DWORD mExStyle;
 		};
 	}
 }

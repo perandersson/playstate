@@ -18,9 +18,6 @@
 using namespace playstate;
 
 namespace {
-	const VertexBuffer* _current_vertexBuffer = 0;
-	const IndexBuffer* _current_indexBuffer = 0;
-
 	GfxProgram* _current_program = 0;
 }
 
@@ -93,10 +90,10 @@ void GfxProgram::Apply()
 
 	StatePolicy::UseProgram(mProgramId);
 	StatePolicy::EnableBlend(mBlend);
+	StatePolicy::SetCullFaces(mCullFaces);
+	StatePolicy::EnableDepthTest(mDepthTest);
 	if(mBlend)
 		StatePolicy::SetBlendFunc(mSrcFunc, mDestFunc);
-	StatePolicy::EnableDepthTest(mDepthTest);
-	StatePolicy::SetCullFaces(mCullFaces);
 	StatePolicy::SetDepthFunc(mDepthFunc);
 	
 	for(int i = 0; i < MaxDrawBuffers; ++i) {
@@ -266,15 +263,8 @@ void GfxProgram::ApplyBuffers(VertexBuffer* buffer, IndexBuffer* indexBuffer)
 		CHECK_GL_ERROR();
 	}
 
-	if(_current_vertexBuffer != buffer) {
-		_current_vertexBuffer = buffer;
-		buffer->Bind();
-	}
-
-	if(_current_indexBuffer != indexBuffer) {
-		_current_indexBuffer = indexBuffer;
-		indexBuffer->Bind();
-	}
+	StatePolicy::BindVertexBuffer(buffer);
+	StatePolicy::BindIndexBuffer(indexBuffer);
 }
 
 void GfxProgram::EnableDepthTest(bool enable)

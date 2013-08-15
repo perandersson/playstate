@@ -6,12 +6,14 @@
 
 namespace playstate
 {
+	class StatePolicy;
 	class GfxProgram;
 
 	//
 	// 
 	class IndexBuffer
 	{
+		friend class StatePolicy;
 		friend class GfxProgram;
 
 	public:

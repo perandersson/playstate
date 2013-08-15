@@ -32,13 +32,13 @@ Win32Window::Win32Window(HINSTANCE hInstance) : mAppInstance(hInstance),
 	windowProperties.hCursor = (HCURSOR)LoadImage(NULL, MAKEINTRESOURCE(IDC_ARROW), IMAGE_CURSOR, 0, 0, LR_SHARED);
 	RegisterClassEx(&windowProperties);
 
-	DWORD winStyleEx = WS_EX_CLIENTEDGE;
-	DWORD winStyle = WS_CAPTION | WS_SYSMENU | WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_OVERLAPPEDWINDOW;
+	mExStyle = WS_EX_CLIENTEDGE;
+	mStyle = WS_CAPTION | WS_SYSMENU | WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_OVERLAPPEDWINDOW;
 
 	RECT windowSize = {0, 0, mWidth, mHeight};
-	AdjustWindowRectEx(&windowSize, winStyle, false, winStyleEx);
+	AdjustWindowRectEx(&windowSize, mStyle, false, mExStyle);
 
-	mWindowHandle = CreateWindowEx(winStyleEx, "playstate.Game", mWindowTitle.c_str(), winStyle, CW_USEDEFAULT, CW_USEDEFAULT,
+	mWindowHandle = CreateWindowEx(mExStyle, "playstate.Game", mWindowTitle.c_str(), mStyle, CW_USEDEFAULT, CW_USEDEFAULT,
 		windowSize.right - windowSize.left, windowSize.bottom - windowSize.top,
 		NULL, NULL, mAppInstance, NULL);
 	
@@ -82,12 +82,10 @@ void Win32Window::Resize(uint32 width, uint32 height)
 	mWidth = width > 0 ? width : 1;
 	mHeight = height > 0 ? height : 1;
 
-	RECT rcClient;
-	SetWindowPos(mWindowHandle, NULL, 0, 0, width, height, SWP_NOMOVE);
-	GetClientRect(mWindowHandle, &rcClient);
+	RECT windowRect = {0, 0, mWidth, mHeight};
+	AdjustWindowRectEx(&windowRect, mStyle, FALSE, mExStyle);
 
-	mWidth = rcClient.right - rcClient.left;
-	mHeight = rcClient.bottom - rcClient.top;
+	SetWindowPos(mWindowHandle, NULL, 0, 0, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, SWP_NOMOVE);
 
 	WindowResizedListeners::size_type size = mWindowResizeListeners.size();
 	for(WindowResizedListeners::size_type i = 0; i < size; ++i) {

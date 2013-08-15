@@ -3,6 +3,7 @@
 #include "../script/scriptable.h"
 #include "gui_event.h"
 #include "../math/vector2.h"
+#include "gui_geometry_builder.h"
 
 namespace playstate
 {
@@ -56,10 +57,16 @@ namespace playstate
 		bool IsAttachedToCanvasGroup() const;
 
 		//
+		// @return The top-left uniform position for this widget.
 		const Vector2& GetPosition() const;
 
 		//
+		// @return The uniform size of this widget
 		const Vector2& GetSize() const;
+
+		//
+		// Builds this GUI widgets geometry in preperation for drawing it onto the screen.
+		virtual const void BuildWidgetGeometry(GuiGeometryBuilder& builder) const;
 
 	private:
 		CanvasGroup* mCanvasGroup;

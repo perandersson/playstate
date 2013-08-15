@@ -133,6 +133,34 @@ namespace playstate
 		return vec;
 	}
 
+	Vector2 luaM_popvector2(lua_State* L)
+	{
+		assert_not_null(L);
+		Vector2 vec;
+		if(lua_istable(L, -1)) {
+			float* ptr = vec.Points;
+			lua_pushnil(L);
+
+			lua_next(L, -2);
+			*ptr++ = lua_tonumber(L, -1);
+			lua_pop(L, 1);
+
+			bool rest = lua_next(L, -2) != 0;
+			*ptr++ = lua_tonumber(L, -1);
+			lua_pop(L, rest ? 2 : 1);
+
+			lua_pop(L, 1);
+			return vec;
+		} else if(lua_isnumber(L, -1) && lua_isnumber(L, -2)) {
+			float* ptr = &vec.Y;
+			*ptr-- = lua_tonumber(L, -1); 
+			*ptr = lua_tonumber(L, -2); 
+			lua_pop(L, 2);
+		}
+
+		return vec;
+	}
+
 	void luaM_pushvector3(lua_State* L, const Vector3& vec)
 	{
 		assert_not_null(L);

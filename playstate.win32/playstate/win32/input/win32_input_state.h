@@ -24,8 +24,8 @@ namespace playstate
 			Win32KeyboardState();
 			virtual ~Win32KeyboardState();
 
-			virtual bool IsDown(KeyboardKeys key);
-			virtual bool IsUp(KeyboardKeys key);
+			virtual bool IsDown(KeyboardKeys::Enum key);
+			virtual bool IsUp(KeyboardKeys::Enum key);
 		};
 
 		class Win32MouseState : public IMouseState
@@ -34,8 +34,8 @@ namespace playstate
 			Win32MouseState();
 			virtual ~Win32MouseState();
 
-			virtual bool IsDown(MouseKeys key);
-			virtual bool IsUp(MouseKeys key);
+			virtual bool IsDown(MouseButtons::Enum button);
+			virtual bool IsUp(MouseButtons::Enum button);
 			virtual Point GetPosition();
 
 			void SetPosition(const Point& pt);

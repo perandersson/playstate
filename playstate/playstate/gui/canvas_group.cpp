@@ -16,7 +16,7 @@ CanvasGroup::CanvasGroup(IUpdateProcessorFactory& updateProcessorFactory)
 
 CanvasGroup::~CanvasGroup()
 {
-	nWidgets.DeleteAll();
+	mWidgets.DeleteAll();
 }
 
 void CanvasGroup::AttachUpdatable(IUpdatable* updatable)
@@ -51,13 +51,13 @@ void CanvasGroup::Update()
 void CanvasGroup::AddWidget(GuiWidget* widget)
 {
 	assert_not_null(widget);
-	nWidgets.AddLast(widget);
+	mWidgets.AddLast(widget);
 }
 
 void CanvasGroup::RemoveWidget(GuiWidget* widget)
 {
 	assert_not_null(widget);
-	nWidgets.Remove(widget);
+	mWidgets.Remove(widget);
 }
 
 const Vector2& CanvasGroup::GetPosition() const
@@ -68,4 +68,43 @@ const Vector2& CanvasGroup::GetPosition() const
 const Vector2& CanvasGroup::GetSize() const
 {
 	return mSize;
+}
+
+const bool CanvasGroup::BuildWidgetGeometry(GuiGeometryBuilder& builder) const
+{
+	GuiWidget* widget = mWidgets.First();
+	while(widget != NULL) {
+		widget->BuildWidgetGeometry(builder);
+		widget = widget->GuiWidgetLink.Tail;
+	}
+	return true;
+}
+
+int playstate::CanvasGroup_Factory(lua_State* L)
+{
+	CanvasGroup* group = new CanvasGroup();
+	luaM_pushobject(L, "CanvasGroup", group);
+	return 1;
+}
+
+int playstate::CanvasGroup_Load(lua_State* L)
+{
+	const std::string fileName = lua_tostring(L, -1); lua_pop(L, 1);
+	try {
+		ScriptSystem& scriptSystem = ScriptSystem::Get();
+		std::auto_ptr<Script> script = scriptSystem.CompileFile(fileName);
+		CanvasGroup* group = script->ReadInstance<CanvasGroup>();
+		if(group == NULL) {
+			ILogger::Get().Error("The file: '%s' did not return a canvas group.", fileName.c_str());
+			lua_pushnil(L);
+		}
+		else
+			luaM_pushobject(L, "CanvasGroup", group);
+		return 1;
+	} catch(ScriptException e) {
+		ILogger::Get().Error("Could not load canvas group: '%s'. Reason: '%s'", fileName.c_str(), e.GetMessage().c_str());
+	}
+		
+	lua_pushnil(L);
+	return 1;
 }

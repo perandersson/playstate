@@ -43,6 +43,16 @@ void Camera::SetPerspective(float32 nearPlane, float32 farPlane, float32 fov, fl
 
 void Camera::SetOrtho2D(float32 left, float32 right, float32 bottom, float32 top)
 {
+	mProjectionMatrix = GetOrtho2D(left, right, bottom, top);
+}
+
+void Camera::Move(const Vector3& direction)
+{
+	LookAt(mPosition + direction, mCenter + direction, mUp);
+}
+
+Matrix4x4 Camera::GetOrtho2D(float32 left, float32 right, float32 bottom, float32 top)
+{
 	float32 near = -1;
 	float32 far = 1;
 	
@@ -50,22 +60,17 @@ void Camera::SetOrtho2D(float32 left, float32 right, float32 bottom, float32 top
 	float32 ty = -((top + bottom) / (top - bottom));
 	float32 tz = -((far + near) / (far - near));
 
-	mProjectionMatrix = Matrix4x4::Zero;
-
-	mProjectionMatrix._11 = 2.0f / (right - left);
-	mProjectionMatrix._14 = tx;
-	mProjectionMatrix._22 = 2.0f / (top - bottom);
-	mProjectionMatrix._24 = ty;
-	mProjectionMatrix._33 = -2.0f / (far - near);
-	mProjectionMatrix._34 = tz;
-	mProjectionMatrix._44 = 1.0f;
+	Matrix4x4 projection;
+	projection._11 = 2.0f / (right - left);
+	projection._14 = tx;
+	projection._22 = 2.0f / (top - bottom);
+	projection._24 = ty;
+	projection._33 = -2.0f / (far - near);
+	projection._34 = tz;
+	projection._44 = 1.0f;
 	// TODO: Seriously - need to fix so that matrices doesn't need to be transposed!!!
-	mProjectionMatrix.Transpose();
-}
-
-void Camera::Move(const Vector3& direction)
-{
-	LookAt(mPosition + direction, mCenter + direction, mUp);
+	projection.Transpose();
+	return projection;
 }
 
 void Camera::LookAt(const Vector3& eye, const Vector3& center, const Vector3& up)

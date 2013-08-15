@@ -87,3 +87,8 @@ const Vector2& GuiWidget::GetSize() const
 {
 	return mSize;
 }
+
+const void GuiWidget::BuildWidgetGeometry(GuiGeometryBuilder& builder) const
+{
+
+}

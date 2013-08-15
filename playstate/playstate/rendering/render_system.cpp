@@ -30,7 +30,7 @@ RenderSystem::RenderSystem(IWindow& window, ScriptSystem& scriptSystem) : mWindo
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
 	glDisable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glBlendFunc(GL_ONE, GL_ZERO);
 
 	glActiveTexture(GL_TEXTURE0);
 
@@ -320,6 +320,8 @@ VertexBuffer* RenderSystem::CreateStaticBuffer(const PositionNormalTextureData* 
 
 VertexBuffer* RenderSystem::CreateStaticBuffer(const void* data, uint32 dataTypeSize, const IVertexArrayObjectFactory& arrayFactory, uint32 numElements)
 {
+	assert(numElements > 0 && "There is no point in creating a static buffer with 0 elements");
+
 	GLuint bufferID;
 	glGenBuffers(1, &bufferID);
 
@@ -332,7 +334,25 @@ VertexBuffer* RenderSystem::CreateStaticBuffer(const void* data, uint32 dataType
 		THROW_EXCEPTION(RenderingException, "Could not create vertex buffer. Reason: %d", status);
 	}
 
-	return new VertexBuffer(GL_TRIANGLES, arrayFactory, bufferID, numElements);
+	return new VertexBuffer(GL_TRIANGLES, arrayFactory, bufferID, numElements, dataTypeSize);
+}
+
+VertexBuffer* RenderSystem::CreateDynamicBuffer(const void* data, uint32 dataTypeSize, const IVertexArrayObjectFactory& arrayFactory, uint32 numElements)
+{
+	GLuint bufferID;
+	glGenBuffers(1, &bufferID);
+
+	glBindBuffer(GL_ARRAY_BUFFER, bufferID);
+	if(numElements > 0)
+		glBufferData(GL_ARRAY_BUFFER, numElements * dataTypeSize, data, GL_DYNAMIC_DRAW);
+	glFlush();
+
+	GLenum status = glGetError();
+	if(status != GL_NO_ERROR) {
+		THROW_EXCEPTION(RenderingException, "Could not create vertex buffer. Reason: %d", status);
+	}
+
+	return new VertexBuffer(GL_TRIANGLES, arrayFactory, bufferID, numElements, dataTypeSize);
 }
 
 RenderTarget2D* RenderSystem::CreateRenderTarget2D(uint32 width, uint32 height, TextureFormat::Enum format)

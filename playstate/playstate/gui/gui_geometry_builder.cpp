@@ -5,6 +5,7 @@ using namespace playstate;
 GuiGeometryBuilder::GuiGeometryBuilder(RenderSystem& renderSystem)
 	: mRenderSystem(renderSystem)
 {
+	mVertexBuffer = mRenderSystem.CreateDynamicBuffer(NULL, sizeof(GuiGeometryData), GuiGeometryDataVAOFactory, 0);
 }
 
 GuiGeometryBuilder::~GuiGeometryBuilder()
@@ -12,12 +13,12 @@ GuiGeometryBuilder::~GuiGeometryBuilder()
 	mData.clear();
 }
 
-void GuiGeometryBuilder::AddQuad(const Rect& rect)
+void GuiGeometryBuilder::AddQuad(const Vector2& position, const Vector2& size)
 {
-	AddQuad(rect, 0);
+	AddQuad(position, size, 0);
 }
 
-void GuiGeometryBuilder::AddQuad(const Rect& rect, uint32 paletteIndex)
+void GuiGeometryBuilder::AddQuad(const Vector2& position, const Vector2& size, uint32 paletteIndex)
 {
 	/*
 		p0 ---- p1
@@ -26,18 +27,18 @@ void GuiGeometryBuilder::AddQuad(const Rect& rect, uint32 paletteIndex)
 	*/
 
 	GuiGeometryData elements[6];
-	elements[0].Position.Set(rect.X, rect.Y, 0.0f); //p0
+	elements[0].Position.Set(position.X, position.Y); //p0
 	elements[0].PaletteIndex = paletteIndex;
-	elements[1].Position.Set(rect.X + rect.Width, rect.Y, 0.0f); //p1
+	elements[1].Position.Set(position.X + size.X, position.Y); //p1
 	elements[1].PaletteIndex = paletteIndex;
-	elements[2].Position.Set(rect.X, rect.Y + rect.Height, 0.0f); //p2
+	elements[2].Position.Set(position.X, position.Y + size.Y); //p2
 	elements[2].PaletteIndex = paletteIndex;
 
-	elements[3].Position.Set(rect.X, rect.Y + rect.Height, 0.0f); //p2
+	elements[3].Position.Set(position.X, position.Y + size.Y); //p2
 	elements[3].PaletteIndex = paletteIndex;
-	elements[4].Position.Set(rect.X + rect.Width, rect.Y, 0.0f); //p1
+	elements[4].Position.Set(position.X + size.X, position.Y); //p1
 	elements[4].PaletteIndex = paletteIndex;
-	elements[5].Position.Set(rect.X + rect.Width, rect.Y + rect.Height, 0.0f); //p3
+	elements[5].Position.Set(position.X + size.X, position.Y + size.Y); //p3
 	elements[5].PaletteIndex = paletteIndex;
 
 	mData.push_back(elements[0]);
@@ -48,7 +49,12 @@ void GuiGeometryBuilder::AddQuad(const Rect& rect, uint32 paletteIndex)
 	mData.push_back(elements[5]);
 }
 
-VertexBuffer* GuiGeometryBuilder::Build()
+VertexBuffer* GuiGeometryBuilder::GetVertexBuffer()
 {
-	return mRenderSystem.CreateStaticBuffer(&mData[0], sizeof(GuiGeometryData), GuiGeometryDataVAOFactory, mData.size());
+	if(!mData.empty()) {
+		mVertexBuffer->Update(&mData[0], mData.size());
+		mData.clear();
+	}
+
+	return mVertexBuffer;
 }

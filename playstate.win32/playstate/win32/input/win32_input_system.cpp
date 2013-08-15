@@ -21,7 +21,7 @@ void Win32InputSystem::Poll()
 	POINT p;
 	if(GetCursorPos(&p)) {
 		if (ScreenToClient(mWindow.GetWindowHandle(), &p)) {
-			if(p.x > 0 && p.y > 0 &&
+			if(p.x >= 0 && p.y >= 0 &&
 				p.x <= mWindow.GetWidth() && p.y <= mWindow.GetHeight()) {
 					mMouseState.SetPosition(Point(p.x, p.y));
 			}

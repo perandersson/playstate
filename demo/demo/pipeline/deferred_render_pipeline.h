@@ -7,6 +7,7 @@
 #include <playstate/search/render_block_result_set.h>
 #include <playstate/search/light_source_result_set.h>
 #include <playstate/filesystem/file_changed_listener.h>
+#include <playstate/gui/gui_geometry_builder.h>
 using namespace playstate;
 
 //
@@ -57,6 +58,8 @@ private:
 	RenderTarget2D* mLightRenderTarget;
 	RenderBlockResultSet mRenderBlockResultSet;
 	LightSourceResultSet mLightSourceResultSet;
+
+	GuiGeometryBuilder mGeometryBuilder;
 };
 
 

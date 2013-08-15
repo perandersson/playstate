@@ -14,6 +14,12 @@ namespace playstate
 				float32 Y;
 			};
 
+			struct
+			{
+				float32 S;
+				float32 T;
+			};
+
 			float32 Points[2];
 		};
 

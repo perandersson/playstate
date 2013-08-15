@@ -5,6 +5,7 @@
 #include <playstate/model/model.h>
 #include <playstate/component/renderable/render_static_model.h>
 #include <playstate/component/lightsources/point_light.h>
+#include <playstate/gui/widgets/gui_frame_widget.h>
 
 using namespace playstate;
 using namespace playstate::win32;
@@ -83,4 +84,7 @@ void Win32DefaultKernel::RegisterScript()
 	ss.RegisterType("RenderStaticModel", RenderStaticModel_Methods);
 	ss.RegisterType("ActiveCamera", ActiveCamera_Methods);
 	ss.RegisterType("PointLight", PointLight_Methods);
+	ss.RegisterType("Canvas", Canvas_Methods);
+	ss.RegisterType("CanvasGroup", CanvasGroup_Methods);
+	ss.RegisterType("GuiFrameWidget", GuiFrameWidget_Methods);
 }

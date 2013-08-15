@@ -13,6 +13,10 @@ end
 function DemoGame:Initialize()
 	print("Initializes DemoGame")
 	Game.SetRenderPipeline(DeferredRenderPipeline())
+	
+	-- Set the canvas size. This is needed so that the attached widgets get
+	-- the correct uniform size
+	Canvas.SetSize(1024, 768)
 	return true
 end
 
@@ -30,9 +34,10 @@ function DemoGame:LoadContent()
 	-- Start the first level
 	local level1 = SceneGroup.Load("/demo/levels/level1.lua")
 	Scene.AddSceneGroup(level1)
-	
---	local mainMenu = SceneGroup.Load("/demo/menu/mainmenu.lua")
-	--Scene.AddSceneGroup(mainMenu)
+
+	-- Load the main menu (this will start the first level later)
+	local mainMenu = CanvasGroup.Load("/demo/menu/mainmenu.lua")
+	Canvas.AddCanvasGroup(mainMenu)	
 end
 
 function DemoGame:Update()
@@ -43,6 +48,9 @@ function DemoGame:Update()
 		self.totalTime = 1.0 - self.totalTime
 		self.numFrames = 0
 	end
+	
+	--local x,y = Mouse.GetPosition()
+	--print("x,y = " .. x .. "," .. y)
 end
 
 function DemoGame:UnloadContent()

@@ -3,6 +3,8 @@
 #include "../../types.h"
 #include "../../math/color.h"
 #include "../../math/rect.h"
+#include "../index_buffer.h"
+#include "../vertex_buffer.h"
 
 #include <gl/glew.h>
 
@@ -27,11 +29,13 @@ namespace playstate
 	public:
 		enum Enum {
 			SRC_ALPHA = GL_SRC_ALPHA,
+			SRC_COLOR = GL_SRC_COLOR,
+			ONE_MINUS_SRC_ALPHA = GL_ONE_MINUS_SRC_ALPHA,
 			ONE = GL_ONE,
 			ZERO = GL_ZERO,
 		};
 
-		static const Enum Default = SRC_ALPHA;
+		static const Enum Default = ONE;
 	};
 
 	class DestBlend
@@ -39,10 +43,15 @@ namespace playstate
 	public:
 		enum Enum {
 			ONE_MINUS_DST_ALPHA = GL_ONE_MINUS_DST_ALPHA,
-			ONE = GL_ONE
+			DST_ALPHA = GL_DST_ALPHA,
+			DST_COLOR = GL_DST_COLOR,
+			ONE_MINUS_DST_COLOR = GL_ONE_MINUS_DST_COLOR,
+			ONE_MINUS_SRC_ALPHA = GL_ONE_MINUS_SRC_ALPHA,
+			ONE = GL_ONE,
+			ZERO = GL_ZERO
 		};
 
-		static const Enum Default = ONE_MINUS_DST_ALPHA;
+		static const Enum Default = ZERO;
 	};
 
 	class CullFaces
@@ -151,7 +160,10 @@ namespace playstate
 		static void InvalidateTexture(GLuint texture);
 
 		static void Viewport(const Rect& viewport);
-		
+	
+		static void BindVertexBuffer(VertexBuffer* vertexBuffer);
+		static void BindIndexBuffer(IndexBuffer* indexBuffer);
+	
 		//
 		// Mark all states as dirty.
 		static void MarkAsDirty();

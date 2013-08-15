@@ -71,6 +71,15 @@ namespace playstate
 		// @param arrayFactory
 		// @param numElements
 		VertexBuffer* CreateStaticBuffer(const void* data, uint32 dataTypeSize, const IVertexArrayObjectFactory& arrayFactory, uint32 numElements);
+
+		//
+		// Creates a dynamic buffer based on the supplied data stream
+		//
+		// @param data
+		// @param dataTypeSize The size of one data element. {@code sizeof(PositionData)} is one such size
+		// @param arrayFactory
+		// @param numElements
+		VertexBuffer* CreateDynamicBuffer(const void* data, uint32 dataTypeSize, const IVertexArrayObjectFactory& arrayFactory, uint32 numElements);
 		
 		//
 		// Creates a new render target based on the supplied width, height and format.

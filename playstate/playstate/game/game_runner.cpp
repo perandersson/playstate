@@ -16,7 +16,8 @@ namespace playstate
 template<> playstate::GameRunner* playstate::Singleton<playstate::GameRunner>::gSingleton = NULL;
 
 GameRunner::GameRunner(IGame* game, IConfiguration* configuration) 
-	: mGame(game), mConfiguration(configuration), mRenderPipeline(NULL), mRunning(true)
+	: mGame(game), mConfiguration(configuration), mRenderPipeline(NULL), mRunning(true),
+	mCanvas(IWindow::Get(), IInputSystem::Get())
 {
 	assert_not_null(game);
 	assert_not_null(configuration);

@@ -34,6 +34,13 @@ namespace playstate
 		const Vector3& GetUp() const;
 		const Vector3& GetCenter() const;
 
+	public:
+		//
+		// Generate a orthographic projection matrix and returns the result
+		//
+		// @return
+		static Matrix4x4 GetOrtho2D(float32 left, float32 right, float32 bottom, float32 top);
+
 	private:
 		void CalculateLookAt(const Vector3& eye, const Vector3& center, const Vector3& up);
 		

@@ -57,6 +57,8 @@ namespace playstate
 	// @return A three-dimensional vector. Vector3::Zero if the value in on the stack is invalid.
 	extern Vector3 luaM_popvector3(lua_State* L);
 
+	extern Vector2 luaM_popvector2(lua_State* L);
+
 	//
 	//
 	extern void luaM_pushvector3(lua_State* L, const Vector3& vec);

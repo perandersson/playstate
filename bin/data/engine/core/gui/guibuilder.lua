@@ -3,7 +3,8 @@ local GuiBuilder = {}
 GuiBuilder.Build = function(properties)
 	print("Building GUI")
 	
-	local group = SceneGroup()
+	local group = CanvasGroup()
+	
 	for key,value in pairs(properties) do
 		if key == "Frame" then
 			GuiBuilder.AddFrame(group, value)
@@ -16,8 +17,7 @@ end
 GuiBuilder.AddFrame = function(group, frame)
 	print("Adding frame: " .. frame.Title .. " with width " .. frame.Width .. " and height " .. frame.Height )
 	
-	local frameNode = SceneNode(group)
-	frameNode:AddComponent(GuiFrameComponent(frame.Title, frame.Width, frame.Height))
+	local frameNode = GuiFrameWidget(group, frame.Title, frame.Width, frame.Height)
 	
 	for key, value in pairs(frame.Body) do
 		GuiBuilder.AddBodyRow(group, frameNode, value)
@@ -27,8 +27,8 @@ end
 GuiBuilder.AddBodyRow = function(group, frameNode, bodyItem)
 	print("Adding body row item to frame")
 	
-	local rowNode = SceneNode(group)
-	frameNode:AddChildNode(rowNode)
+	--local rowNode = SceneNode(group)
+	--frameNode:AddChildNode(rowNode)
 	local numColumns = 0
 	for key, value in pairs(bodyItem) do
 		if type(value) == "string" then
@@ -53,32 +53,32 @@ end
 
 GuiBuilder.AddLabelColumn = function(group, rowNode, label)
 	print("Adding label column with value: " .. label)
-	local column = SceneNode(group)
+	--local column = GuiLabelWidget(group)
 	--column:AddComponent(GuiLabelComponent(label))
-	rowNode:AddChildNode(column)
+	--rowNode:AddChildNode(column)
 end
 
 GuiBuilder.AddComplexColumn = function(group, rowNode, complexType, value)
 	if complexType == "field" then
 		print("Adding field column")
-		local field = SceneNode(group)
+		--local field = GuiFieldWidget(group)
 		-- field:AddComponent(GuiFieldComponent(value.Value, value.Hint))
-		rowNode:AddChildNode(field)
+		--rowNode:AddChildNode(field)
 	elseif complexType == "slider" then
 		print("Adding slider column")
-		local slider = SceneNode(group)
+		--local slider = SceneNode(group)
 		-- slider:AddComponent(GuiSliderComponent(value.Min, value.Max, value.Steps, value.Default))
-		rowNode:AddChildNode(slider)
+		--rowNode:AddChildNode(slider)
 	elseif complexType == "checkbox" then
 		print("Adding checkbox column")
-		local checkbox = SceneNode(group)
+		--local checkbox = SceneNode(group)
 		-- checkbox:AddComponent(GuiCheckboxComponent(value.Default))
-		rowNode:AddChildNode(checkbox)
+		--rowNode:AddChildNode(checkbox)
 	elseif complexType == "button" then
 		print("Adding button column")
-		local button = SceneNode(group)
+		--local button = SceneNode(group)
 		-- button:AddComponent(GuiButtonComponent(value.Text, value.Action))
-		rowNode:AddChildNode(button)
+		--rowNode:AddChildNode(button)
 	else
 		print("Adding complex column")
 	end

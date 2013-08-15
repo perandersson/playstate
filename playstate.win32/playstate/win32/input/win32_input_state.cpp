@@ -43,13 +43,13 @@ Win32KeyboardState::~Win32KeyboardState()
 {
 }
 
-bool Win32KeyboardState::IsDown(KeyboardKeys key)
+bool Win32KeyboardState::IsDown(KeyboardKeys::Enum key)
 {
 	bool res = (GetKeyState((int)key) & 0x80) != 0;
 	return res;
 }
 
-bool Win32KeyboardState::IsUp(KeyboardKeys key)
+bool Win32KeyboardState::IsUp(KeyboardKeys::Enum key)
 {
 	return (GetKeyState((int)key) & 0x80) == 0;
 }
@@ -63,30 +63,30 @@ Win32MouseState::~Win32MouseState()
 {
 }
 
-bool Win32MouseState::IsDown(MouseKeys key)
+bool Win32MouseState::IsDown(MouseButtons::Enum button)
 {
-	switch(key)
+	switch(button)
 	{
-	case MK_LEFT:
+	case MouseButtons::MK_LEFT:
 		return (GetKeyState(VK_LBUTTON) & 0x80) != 0;
-	case MK_MIDDLE:
+	case MouseButtons::MK_MIDDLE:
 		return (GetKeyState(VK_MBUTTON) & 0x80) != 0;
-	case MK_RIGHT:
+	case MouseButtons::MK_RIGHT:
 		return (GetKeyState(VK_RBUTTON) & 0x80) != 0;
 	default:
 		return false;
 	}
 }
 
-bool Win32MouseState::IsUp(MouseKeys key)
+bool Win32MouseState::IsUp(MouseButtons::Enum button)
 {
-	switch(key)
+	switch(button)
 	{
-	case MK_LEFT:
+	case MouseButtons::MK_LEFT:
 		return (GetKeyState(VK_LBUTTON) & 0x80) == 0;
-	case MK_MIDDLE:
+	case MouseButtons::MK_MIDDLE:
 		return (GetKeyState(VK_MBUTTON) & 0x80) == 0;
-	case MK_RIGHT:
+	case MouseButtons::MK_RIGHT:
 		return (GetKeyState(VK_RBUTTON) & 0x80) == 0;
 	default:
 		return true;

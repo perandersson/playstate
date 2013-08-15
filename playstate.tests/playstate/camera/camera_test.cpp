@@ -24,4 +24,13 @@ TEST_SUITE(Camera)
 
 		ASSERT_EQUALS(camera.GetPosition(), direction * 2);
 	}
+
+	UNIT_TEST(OrthographicView)
+	{
+		const Matrix4x4 mat = Camera::GetOrtho2D(0.0f, 1024.0f, 768.0f, 0.0f);
+		const Vector3 pos = Vector3(300.0f, 300.0f, 0.0f);
+
+		Vector3 result = mat * pos;
+		ASSERT_TRUE(result.Z == 0.0f);
+	}
 }

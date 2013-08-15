@@ -20,6 +20,9 @@ namespace {
 	uint32 _activeTexture = 0;
 	uint32 _bindTextures[MaxActiveTextures] = {0};
 
+	const VertexBuffer* _vertexBuffer = 0;
+	const IndexBuffer* _indexBuffer = 0;
+
 	Rect _viewport;
 }
 
@@ -165,6 +168,26 @@ void StatePolicy::Viewport(const Rect& viewport)
 	_viewport = viewport;
 }
 
+void StatePolicy::BindVertexBuffer(VertexBuffer* vertexBuffer)
+{
+	if(_vertexBuffer != vertexBuffer) {
+		_vertexBuffer = vertexBuffer;
+		vertexBuffer->Bind();
+	}
+}
+
+void StatePolicy::BindIndexBuffer(IndexBuffer* indexBuffer)
+{
+	if(_indexBuffer != indexBuffer) {
+		if(indexBuffer == NULL) {
+			//_indexBuffer->Unbind();
+		} else {
+			indexBuffer->Bind();
+		}
+		_indexBuffer = indexBuffer;
+	}
+}
+
 void StatePolicy::MarkAsDirty()
 {
 	UseProgram(0);
@@ -186,4 +209,7 @@ void StatePolicy::MarkAsDirty()
 	}
 	
 	_viewport = Rect();
+
+	_vertexBuffer = 0;
+	_indexBuffer = 0;
 }

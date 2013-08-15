@@ -8,14 +8,14 @@ namespace playstate
 {
 	struct GuiGeometryData
 	{
-		Vector3 Position;
+		Vector2 Position;
 		uint32 PaletteIndex;
 	};
-	
+
 	static VertexDeclaration GuiGeometryDataVertexDeclaration = {
 		{ 
-			{ 0, sizeof(Vector3), 3, GL_FLOAT, false }, 
-			{ 1, sizeof(uint32), 1, GL_UNSIGNED_INT, false }, 
+			{ 0, sizeof(Vector2), 2, GL_FLOAT, false }, 
+			{ 1, sizeof(uint32), 1, GL_INT, false }, 
 			0 
 		}
 	};
@@ -29,17 +29,16 @@ namespace playstate
 		GuiGeometryBuilder(RenderSystem& renderSystem);
 		~GuiGeometryBuilder();
 
-		void AddQuad(const Rect& rect);
-		void AddQuad(const Rect& rect, uint32 paletteIndex);
+		void AddQuad(const Vector2& position, const Vector2& size);
+		void AddQuad(const Vector2& position, const Vector2& size, uint32 paletteIndex);
 
 		//
-		// Creates a vertex buffer based on the supplied geometry
-		// 
-		// @return 
-		VertexBuffer* Build();
+		// @return The build vertex buffer
+		VertexBuffer* GetVertexBuffer();
 
 	private:
 		RenderSystem& mRenderSystem;
+		VertexBuffer* mVertexBuffer;
 		GuiGeometryDatas mData;
 	};
 

@@ -39,7 +39,17 @@ namespace playstate
 		// @param builder
 		virtual void Collect(const RenderState& state, RenderBlockResultSet* resultSet) = 0;
 
+		//
+		// Hides this renderable item.
+		void Hide();
+
+		//
+		// Shows this renderable item in the scene.
+		// @remark This method can only be called on an attached renderable object.
+		void Show();
+
 	private:
 		IRenderProcessor* mAttachedToProcessor;
+		bool mVisible;
 	};
 }

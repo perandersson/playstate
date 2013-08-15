@@ -10,29 +10,36 @@
 
 namespace playstate
 {
+	class StatePolicy;
 	class GfxProgram;
 
 	//
 	// Container for a vertex buffer.
 	class VertexBuffer
 	{
+		friend class StatePolicy;
 		friend class GfxProgram;
-		
+
 	public:
-		VertexBuffer(GLenum vertexType, const IVertexArrayObjectFactory& factory, GLuint bufferID, uint32 numElements);
+		VertexBuffer(GLenum vertexType, const IVertexArrayObjectFactory& factory, GLuint bufferID, uint32 numIndices, uint32 elementSize);
 		~VertexBuffer();
+
+		//
+		// Updates this vertex buffer with new data
+		void Update(const void* data, uint32 numIndices);
 
 	private:
 		void Bind();
 		void Render() const;
 		void Render(uint32 firstElement) const;
-		void Render(uint32 firstElement, uint32 numElements) const;
+		void Render(uint32 firstElement, uint32 numIndices) const;
 
 	private:
 		GLenum mVertexType;
 		GLuint mVertexArrayID;
 		GLuint mBufferID;
-		uint32 mNumElements;
+		uint32 mNumIndices;
+		uint32 mElementSize;
 		const IVertexArrayObjectFactory& mFactory;
 	};
 }

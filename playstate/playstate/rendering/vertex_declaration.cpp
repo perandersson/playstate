@@ -7,7 +7,7 @@ VertexDeclarationArrayObjectFactory::VertexDeclarationArrayObjectFactory(const V
 {
 	for(uint32 i = 0; i < 8; ++i) {
 		const VertexElementDeclaration& elementDecl = declaration.Elements[i];
-		if(elementDecl.Type == 0)
+		if(elementDecl.FieldSize == 0)
 			break;
 
 		mStride += elementDecl.FieldSize;

@@ -9,7 +9,7 @@
 DeferredRenderPipeline::DeferredRenderPipeline(RenderSystem& renderSystem, IWindow& window, IResourceManager& resourceManager, IFileSystem& fileSystem)
 	: mRenderSystem(renderSystem), mWindow(window), mFileSystem(fileSystem),
 	mDiffuseRenderTarget(NULL), mPositionsRenderTarget(NULL), mNormalsRenderTarget(NULL), mDepthRenderTarget(NULL),
-	mLightRenderTarget(NULL)
+	mLightRenderTarget(NULL), mGeometryBuilder(renderSystem)
 {
 	mWindow.AddWindowResizedListener(this);
 	
@@ -47,7 +47,7 @@ DeferredRenderPipeline::DeferredRenderPipeline(RenderSystem& renderSystem, IWind
 	mFileSystem.AddFileChangedListener(std::string("/demo/effects/deferred/deferred.lua"), this);
 	mFileSystem.AddFileChangedListener(std::string("/demo/effects/deferred/deferred_point_light.lua"), this);
 	mFileSystem.AddFileChangedListener(std::string("/demo/effects/deferred/deferred_result.lua"), this);
-	mFileSystem.AddFileChangedListener(std::string("/demo/effects/deferred/gui.lua"), this);
+	mFileSystem.AddFileChangedListener(std::string("/demo/effects/gui/gui.lua"), this);
 }
 
 DeferredRenderPipeline::~DeferredRenderPipeline()
@@ -82,34 +82,13 @@ void DeferredRenderPipeline::Render(const Scene& scene, const Canvas& canvas, co
 
 void DeferredRenderPipeline::DrawUserInterface(const Canvas& canvas)
 {
-	/*FindQuery query;
-	query.Camera = NULL;
-	query.Filter = RenderStateFilter::USER_INTERFACE;
-	if(scene.Find(query, &mRenderBlockResultSet)) {
+	if(canvas.BuildWidgetGeometry(mGeometryBuilder)) {
 		mUserInterfaceShader->Apply();
+		mUserInterfaceShader->FindComponent("ProjectionMatrix")->SetMatrix(canvas.GetProjectionMatrix());
 
-		// Set the cameras projection- and view matrix
-		mDeferredShader->FindComponent("ProjectionMatrix")->SetMatrix(Matrix4x4::Identity);
-		mDeferredShader->FindComponent("ViewMatrix")->SetMatrix(Matrix4x4::Identity);
-
-		IGfxProgramComponent* texture = mUserInterfaceShader->FindComponent("UserInterfaceTexture");
-		IGfxProgramComponent* color = mUserInterfaceShader->FindComponent("Color");
-		IGfxProgramComponent* modelMatrix = mUserInterfaceShader->FindComponent("ModelMatrix");
-
-		texture->SetTexture(mWhiteTexture);
-		color->SetColorRGBA(Color::White);
-
-		GfxProgram* userInterfaceShader = mUserInterfaceShader.get();
-		uint32 size = mRenderBlockResultSet.GetSize();
-		RenderBlock** blocks = mRenderBlockResultSet.GetSortedRenderBlocks();
-		for(uint32 index = 0; index < size; ++index) {
-			RenderBlock* block = blocks[index];
-			texture->SetTexture(block->DiffuseTexture);
-			color->SetColorRGB(block->DiffuseColor);
-			modelMatrix->SetMatrix(block->ModelMatrix);
-			userInterfaceShader->Render(block->VertexBuffer, block->IndexBuffer);
-		}
-	}*/
+		VertexBuffer* buffer = mGeometryBuilder.GetVertexBuffer();
+		mUserInterfaceShader->Render(buffer);
+	}
 }
 
 void DeferredRenderPipeline::DrawGeometry(const Scene& scene, const Camera& camera)
@@ -212,8 +191,9 @@ Matrix4x4 DeferredRenderPipeline::CalculateBillboardModelMatrix(const Vector3& p
 void DeferredRenderPipeline::DrawFinalResultToScreen(const Scene& scene, const Camera& camera)
 {
 	mTexturedShader->Apply();
-	mTexturedShader->Clear(ClearTypes::COLOR);
+	mTexturedShader->Clear(ClearTypes::COLOR | ClearTypes::DEPTH);
 	mTexturedShader->FindComponent("AmbientColor")->SetColorRGB(scene.GetAmbientLight());
+	mTexturedShader->FindComponent("ProjectionMatrix")->SetMatrix(Camera::GetOrtho2D(-1.0f, 1.0f, -1.0f, 1.0f));
 	mTexturedShader->Render(mRenderSystem.GetUniformVertexBuffer());
 }
 
@@ -252,7 +232,7 @@ void DeferredRenderPipeline::FileChanged(const IFile& file, FileChangeAction::En
 	const std::string deferred = "/demo/effects/deferred/deferred.lua";
 	const std::string deferred_point_light = "/demo/effects/deferred/deferred_point_light.lua";
 	const std::string deferred_result = "/demo/effects/deferred/deferred_result.lua";
-	const std::string gui = "/demo/effects/deferred/gui.lua";
+	const std::string gui = "/demo/effects/gui/gui.lua";
 
 	// Update shaders when changing file
 
