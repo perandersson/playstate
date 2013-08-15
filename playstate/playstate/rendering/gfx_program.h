@@ -112,10 +112,10 @@ namespace playstate
 		// Glags that this program should use the supplied source blend function while render.
 		// If the program isnt used then you notify it to use it the next time it's applied
 		//
-		// @default SrcBlend::SOURCE_SRC_ALPHA, DestBlend::ONE_MINUS_DST_ALPHA
-		// @param srcFunc
-		// @param destFunc.
-		void SetBlendFunc(SrcBlend::Enum srcFunc, DestBlend::Enum destFunc);
+		// @default SrcFactor::ONE, DestFactor::ZERO
+		// @param sfactor
+		// @param dfactor.
+		void SetBlendFunc(SrcFactor::Enum sfactor, DestFactor::Enum dfactor);
 
 		//
 		// Enable and set cull faces for the geometry drawn by this shader.
@@ -165,8 +165,8 @@ namespace playstate
 		DepthFunc::Enum mDepthFunc;
 
 		bool mBlend;
-		SrcBlend::Enum mSrcFunc; 
-		DestBlend::Enum mDestFunc;
+		SrcFactor::Enum mSrcFactor; 
+		DestFactor::Enum mDestFactor;
 
 		Color mClearColor;
 		float32 mClearDepth;

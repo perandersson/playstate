@@ -1,15 +1,15 @@
 local CullFaces = require "engine.core.cullfaces"
 local DepthFunc = require "engine.core.depthfunc"
-local SrcBlend = require "engine.core.srcblend"
-local DestBlend = require "engine.core.destblend"
+local SrcFactor = require "engine.core.srcfactor"
+local DestFactor = require "engine.core.destfactor"
 local MinFilter = require "engine.core.minfilter"
 local MagFilter = require "engine.core.magfilter"
 local TextureWrap = require "engine.core.texturewrap"
 
 return {
 	Blend = true,
-	SrcBlend = SrcBlend.ONE,
-	DestBlend = DestBlend.ONE,
+	SrcFactor = SrcFactor.ONE,
+	DestFactor = DestFactor.ONE,
 	DepthTest = false,
 	
 	VertexShader = [[

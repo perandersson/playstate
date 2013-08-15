@@ -9,8 +9,8 @@ namespace {
 	DepthFunc::Enum _depthFunc = DepthFunc::LEQUAL;
 
 	bool _blend = false;
-	SrcBlend::Enum _srcFunc = SrcBlend::SRC_ALPHA;
-	DestBlend::Enum _destFunc = DestBlend::ONE_MINUS_DST_ALPHA;
+	SrcFactor::Enum _srcFunc = SrcFactor::ONE;
+	DestFactor::Enum _destFunc = DestFactor::ZERO;
 
 	CullFaces::Enum _cullFaces = CullFaces::CCW;
 
@@ -76,14 +76,14 @@ void StatePolicy::EnableBlend(bool enable)
 	CHECK_GL_ERROR();
 }
 
-void StatePolicy::SetBlendFunc(SrcBlend::Enum srcFunc, DestBlend::Enum destFunc)
+void StatePolicy::SetBlendFunc(SrcFactor::Enum sfactor, DestFactor::Enum dfactor)
 {
-	if(_srcFunc == srcFunc && _destFunc == destFunc)
+	if(_srcFunc == sfactor && _destFunc == dfactor)
 		return;
 
-	_srcFunc = srcFunc;
-	_destFunc = destFunc;
-	glBlendFunc((GLenum)srcFunc, (GLenum)destFunc);
+	_srcFunc = sfactor;
+	_destFunc = dfactor;
+	glBlendFunc((GLenum)sfactor, (GLenum)dfactor);
 
 	CHECK_GL_ERROR();
 }
@@ -193,12 +193,12 @@ void StatePolicy::MarkAsDirty()
 	UseProgram(0);
 	
 	EnableDepthTest(true);
-	SetDepthFunc(DepthFunc::LEQUAL);
+	SetDepthFunc(DepthFunc::Default);
 
 	EnableBlend(false);
-	SetBlendFunc(SrcBlend::SRC_ALPHA, DestBlend::ONE_MINUS_DST_ALPHA);
+	SetBlendFunc(SrcFactor::Default, DestFactor::Default);
 
-	SetCullFaces(CullFaces::CCW);
+	SetCullFaces(CullFaces::Default);
 
 	SetClearColor(Color::Nothing);
 	SetClearDepth(1.0f);

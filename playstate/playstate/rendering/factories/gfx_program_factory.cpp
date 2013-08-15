@@ -117,14 +117,14 @@ GfxProgram* GfxProgramFactory::Create(const std::string& fileName)
 	bool depthTest = c.FindBool("DepthTest", true);
 	CullFaces::Enum cullFaces = (CullFaces::Enum)c.FindInt("CullFaces", CullFaces::Default);
 	DepthFunc::Enum depthFunc = (DepthFunc::Enum)c.FindInt("DepthFunc", DepthFunc::Default);
-	SrcBlend::Enum sourceBlend = (SrcBlend::Enum)c.FindInt("SrcBlend", SrcBlend::Default);
-	DestBlend::Enum destBlend = (DestBlend::Enum)c.FindInt("DestBlend", DestBlend::Default);
+	SrcFactor::Enum srcFactor = (SrcFactor::Enum)c.FindInt("SrcFactor", SrcFactor::Default);
+	DestFactor::Enum destFactor = (DestFactor::Enum)c.FindInt("DestFactor", DestFactor::Default);
 
 	g->EnableBlend(blend);
 	g->EnableDepthTest(depthTest);
 	g->SetCullFaces(cullFaces);
 	g->SetDepthFunc(depthFunc);
-	g->SetBlendFunc(sourceBlend, destBlend);
+	g->SetBlendFunc(srcFactor, destFactor);
 
 	return g;
 }

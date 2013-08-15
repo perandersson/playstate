@@ -24,7 +24,7 @@ namespace {
 GfxProgram::GfxProgram(RenderSystem& renderSystem)
 	: mProgramId(0), mVertexShader(0), mPixelShader(0), mGeometryShader(0), mApplied(false),
 	mDepthTest(true), mDepthFunc(DepthFunc::Default),
-	mBlend(false), mSrcFunc(SrcBlend::Default), mDestFunc(DestBlend::Default), 
+	mBlend(false), mSrcFactor(SrcFactor::Default), mDestFactor(DestFactor::Default), 
 	mClearColor(Color::Nothing), mClearDepth(1.0f), mCullFaces(CullFaces::Default),
 	mRenderSystem(renderSystem), mDepthRenderTarget(NULL), mApplyRenderTarget(false)
 {
@@ -36,7 +36,7 @@ GfxProgram::GfxProgram(GLuint programId, GLuint vertexShader, GLuint pixelShader
 	:  mProgramId(programId), mVertexShader(vertexShader), 
 	mPixelShader(pixelShader), mGeometryShader(geometryShader), mApplied(false),
 	mDepthTest(true), mDepthFunc(DepthFunc::Default),
-	mBlend(false), mSrcFunc(SrcBlend::Default), mDestFunc(DestBlend::Default), 
+	mBlend(false), mSrcFactor(SrcFactor::Default), mDestFactor(DestFactor::Default), 
 	mClearColor(Color::Nothing), mClearDepth(1.0f), mCullFaces(CullFaces::Default),
 	mRenderSystem(renderSystem), mDepthRenderTarget(NULL), mApplyRenderTarget(false)
 {
@@ -93,7 +93,7 @@ void GfxProgram::Apply()
 	StatePolicy::SetCullFaces(mCullFaces);
 	StatePolicy::EnableDepthTest(mDepthTest);
 	if(mBlend)
-		StatePolicy::SetBlendFunc(mSrcFunc, mDestFunc);
+		StatePolicy::SetBlendFunc(mSrcFactor, mDestFactor);
 	StatePolicy::SetDepthFunc(mDepthFunc);
 	
 	for(int i = 0; i < MaxDrawBuffers; ++i) {
@@ -288,13 +288,13 @@ void GfxProgram::EnableBlend(bool enable)
 		StatePolicy::EnableBlend(enable);
 }
 
-void GfxProgram::SetBlendFunc(SrcBlend::Enum srcFunc, DestBlend::Enum destFunc)
+void GfxProgram::SetBlendFunc(SrcFactor::Enum sfactor, DestFactor::Enum dfactor)
 {
-	mSrcFunc = srcFunc;
-	mDestFunc = destFunc;
+	mSrcFactor = sfactor;
+	mDestFactor = dfactor;
 
 	if(mApplied)
-		StatePolicy::SetBlendFunc(srcFunc, destFunc);
+		StatePolicy::SetBlendFunc(sfactor, dfactor);
 }
 
 void GfxProgram::SetClearColor(const Color& color)

@@ -1,14 +1,14 @@
 local MinFilter = require "engine.core.minfilter"
 local MagFilter = require "engine.core.magfilter"
 local TextureWrap = require "engine.core.texturewrap"
-local DestBlend = require "engine.core.destblend"
-local SrcBlend = require "engine.core.srcblend"
+local DestFactor = require "engine.core.destfactor"
+local SrcFactor = require "engine.core.srcfactor"
 
 return {
 	DepthTest = true,
 	Blend = true,
-	SrcBlend = SrcBlend.SRC_ALPHA,
-	DestBlend = DestBlend.ONE_MINUS_SRC_ALPHA,
+	SrcFactor = SrcFactor.SRC_ALPHA,
+	DestFactor = DestFactor.ONE_MINUS_SRC_ALPHA,
 	VertexShader = [[
 		#version 330
 
@@ -28,7 +28,7 @@ return {
 		void main()
 		{
 			gl_Position = ProjectionMatrix * vec4(position.x, position.y, 0.0, 1.0);
-			color = colors[paletteIndex % 3];
+			color = colors[paletteIndex];
 			//color = vec4(1.0, 1.0, 1.0, 0.1);
 		}
 	]],

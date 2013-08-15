@@ -24,31 +24,53 @@
 
 namespace playstate
 {
-	class SrcBlend
+	//
+	// Source factor used by blending
+	// @see http://www.opengl.org/sdk/docs/man3/xhtml/glBlendFunc.xml
+	class SrcFactor
 	{
 	public:
 		enum Enum {
-			SRC_ALPHA = GL_SRC_ALPHA,
-			SRC_COLOR = GL_SRC_COLOR,
-			ONE_MINUS_SRC_ALPHA = GL_ONE_MINUS_SRC_ALPHA,
-			ONE = GL_ONE,
 			ZERO = GL_ZERO,
+			ONE = GL_ONE,
+			SRC_COLOR = GL_SRC_COLOR,
+			ONE_MINUS_SRC_COLOR = GL_ONE_MINUS_SRC_COLOR,
+			SRC_ALPHA = GL_SRC_ALPHA,
+			ONE_MINUS_SRC_ALPHA = GL_ONE_MINUS_SRC_ALPHA,
+			DST_ALPHA = GL_DST_ALPHA,
+			ONE_MINUS_DST_ALPHA = GL_ONE_MINUS_DST_ALPHA,
+			DST_COLOR = GL_DST_COLOR,
+			ONE_MINUS_DST_COLOR = GL_ONE_MINUS_DST_COLOR,
+			CONSTANT_COLOR = GL_CONSTANT_COLOR,
+			ONE_MINUS_CONSTANT_COLOR = GL_ONE_MINUS_CONSTANT_COLOR,
+			CONSTANT_ALPHA = GL_CONSTANT_ALPHA,
+			ONE_MINUS_CONSTANT_ALPHA = GL_ONE_MINUS_CONSTANT_ALPHA
 		};
 
 		static const Enum Default = ONE;
 	};
 
-	class DestBlend
+	//
+	// Destination factor used by blending
+	// @see http://www.opengl.org/sdk/docs/man3/xhtml/glBlendFunc.xml
+	class DestFactor
 	{
 	public:
 		enum Enum {
-			ONE_MINUS_DST_ALPHA = GL_ONE_MINUS_DST_ALPHA,
+			ZERO = GL_ZERO,
+			ONE = GL_ONE,
+			SRC_COLOR = GL_SRC_COLOR,
+			ONE_MINUS_SRC_COLOR = GL_ONE_MINUS_SRC_COLOR,
+			SRC_ALPHA = GL_SRC_ALPHA,
+			ONE_MINUS_SRC_ALPHA = GL_ONE_MINUS_SRC_ALPHA,
 			DST_ALPHA = GL_DST_ALPHA,
+			ONE_MINUS_DST_ALPHA = GL_ONE_MINUS_DST_ALPHA,
 			DST_COLOR = GL_DST_COLOR,
 			ONE_MINUS_DST_COLOR = GL_ONE_MINUS_DST_COLOR,
-			ONE_MINUS_SRC_ALPHA = GL_ONE_MINUS_SRC_ALPHA,
-			ONE = GL_ONE,
-			ZERO = GL_ZERO
+			CONSTANT_COLOR = GL_CONSTANT_COLOR,
+			ONE_MINUS_CONSTANT_COLOR = GL_ONE_MINUS_CONSTANT_COLOR,
+			CONSTANT_ALPHA = GL_CONSTANT_ALPHA,
+			ONE_MINUS_CONSTANT_ALPHA = GL_ONE_MINUS_CONSTANT_ALPHA
 		};
 
 		static const Enum Default = ZERO;
@@ -148,7 +170,7 @@ namespace playstate
 		static void SetDepthFunc(DepthFunc::Enum depthFunc);
 
 		static void EnableBlend(bool enable);
-		static void SetBlendFunc(SrcBlend::Enum srcFunc, DestBlend::Enum destFunc);
+		static void SetBlendFunc(SrcFactor::Enum sfactor, DestFactor::Enum dfactor);
 
 		static void SetCullFaces(CullFaces::Enum cullFaces);
 
