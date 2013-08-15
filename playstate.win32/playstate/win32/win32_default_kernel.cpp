@@ -86,5 +86,7 @@ void Win32DefaultKernel::RegisterScript()
 	ss.RegisterType("PointLight", PointLight_Methods);
 	ss.RegisterType("Canvas", Canvas_Methods);
 	ss.RegisterType("CanvasGroup", CanvasGroup_Methods);
+
+	ss.RegisterType("GuiFrameWidget", GuiWidget_Methods);
 	ss.RegisterType("GuiFrameWidget", GuiFrameWidget_Methods);
 }

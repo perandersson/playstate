@@ -18,6 +18,7 @@ GuiBuilder.AddFrame = function(group, frame)
 	print("Adding frame: " .. frame.Title .. " with width " .. frame.Width .. " and height " .. frame.Height )
 	
 	local frameNode = GuiFrameWidget(group, frame.Title, frame.Width, frame.Height)
+	frameNode:SetPosition(frame.Position[1], frame.Position[2])
 	
 	for key, value in pairs(frame.Body) do
 		GuiBuilder.AddBodyRow(group, frameNode, value)

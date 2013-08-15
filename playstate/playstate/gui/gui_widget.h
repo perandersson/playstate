@@ -61,6 +61,10 @@ namespace playstate
 		const Vector2& GetPosition() const;
 
 		//
+		// Sets this gui widgets position.
+		void SetPosition(const Vector2& position);
+
+		//
 		// @return The uniform size of this widget
 		const Vector2& GetSize() const;
 
@@ -75,5 +79,13 @@ namespace playstate
 	protected:
 		Vector2 mPosition;
 		Vector2 mSize;
+	};
+	
+	// Script integration
+
+	extern int GuiWidget_SetPosition(lua_State* L);
+	static luaL_Reg GuiWidget_Methods[] = {
+		{ "SetPosition", GuiWidget_SetPosition },
+		{ NULL, NULL }
 	};
 }

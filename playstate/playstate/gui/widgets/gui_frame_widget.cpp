@@ -33,12 +33,15 @@ const void GuiFrameWidget::BuildWidgetGeometry(GuiGeometryBuilder& builder) cons
 		GetSize() + Vector2(shadowOffset * 2, shadowOffset * 2), shadowPaletteIndex);
 
 	// Add title
-	builder.AddQuad(GetPosition(), Vector2(0.0f, titleHeight), titlePaletteIndex);
+	builder.AddQuad(GetPosition(), Vector2(GetSize().X, titleHeight), titlePaletteIndex);
 
 	// Add body
 	builder.AddQuad(GetPosition() + Vector2(0.0f, titleHeight), GetSize() - Vector2(0.0f, titleHeight), bodyPaletteIndex);
 
 	// Add text?
+
+	// Add child controls
+	//for
 }
 
 int playstate::GuiFrameWidget_Factory(lua_State* L)

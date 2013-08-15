@@ -15,7 +15,8 @@ return {
 		uniform mat4 ProjectionMatrix;
 		
 		layout(location = 0) in vec2 position;
-		layout(location = 1) in int paletteIndex;
+		layout(location = 1) in vec2 texCoord;
+		layout(location = 2) in uint paletteIndex;
 		
 		const vec4 colors[3] = vec4[](
 			vec4(0.0, 0.0, 0.0, 0.1),

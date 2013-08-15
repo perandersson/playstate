@@ -33,7 +33,11 @@ GLuint VertexDeclarationArrayObjectFactory::CreateVertexArray(GLuint bufferId) c
 			break;
 		
 		glEnableVertexAttribArray(elementDecl.Location);
-		glVertexAttribPointer(elementDecl.Location, elementDecl.NumElementsInField, elementDecl.Type, elementDecl.Normalized ? GL_TRUE : GL_FALSE, mStride, OFFSET(offset));
+		if(elementDecl.Type == GL_UNSIGNED_INT) {
+			glVertexAttribIPointer(elementDecl.Location, elementDecl.NumElementsInField, elementDecl.Type, mStride, OFFSET(offset));
+		} else {
+			glVertexAttribPointer(elementDecl.Location, elementDecl.NumElementsInField, elementDecl.Type, elementDecl.Normalized ? GL_TRUE : GL_FALSE, mStride, OFFSET(offset));
+		}
 		offset += elementDecl.FieldSize;
 	}
 	

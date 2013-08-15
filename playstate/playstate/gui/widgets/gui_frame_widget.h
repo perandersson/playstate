@@ -20,8 +20,6 @@ namespace playstate
 	};
 
 	// Script integration
-	
-	// Script integration
 
 	extern int GuiFrameWidget_Factory(lua_State* L);
 	static luaL_Reg GuiFrameWidget_Methods[] = {
