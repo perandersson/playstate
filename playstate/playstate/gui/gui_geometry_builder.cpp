@@ -23,6 +23,12 @@ void GuiGeometryBuilder::AddQuad(const Vector2& position, const Vector2& size)
 
 void GuiGeometryBuilder::AddQuad(const Vector2& position, const Vector2& size, uint32 paletteIndex)
 {
+	AddGradientQuad(position, size, paletteIndex, paletteIndex, paletteIndex, paletteIndex);
+}
+
+void GuiGeometryBuilder::AddGradientQuad(const Vector2& position, const Vector2& size, uint32 topLeftPaletteIndex, uint32 topRightPaletteIndex,
+	uint32 bottomLeftPaletteIndex, uint32 bottomRightPaletteIndex)
+{
 	/*
 		p0 ---- p1
 		|       |
@@ -31,27 +37,27 @@ void GuiGeometryBuilder::AddQuad(const Vector2& position, const Vector2& size, u
 
 	GuiGeometryData* element = ResultSet<GuiGeometryData>::GetOrCreate();
 	element->Position.Set(position.X, position.Y); //p0
-	element->PaletteIndex = paletteIndex;
+	element->PaletteIndex = topLeftPaletteIndex;
 	
 	element = ResultSet<GuiGeometryData>::GetOrCreate();
 	element->Position.Set(position.X + size.X, position.Y); //p1
-	element->PaletteIndex = paletteIndex;
+	element->PaletteIndex = topRightPaletteIndex;
 
 	element = ResultSet<GuiGeometryData>::GetOrCreate();
 	element->Position.Set(position.X, position.Y + size.Y); //p2
-	element->PaletteIndex = paletteIndex;
+	element->PaletteIndex = bottomLeftPaletteIndex;
 	
 	element = ResultSet<GuiGeometryData>::GetOrCreate();
 	element->Position.Set(position.X, position.Y + size.Y); //p2
-	element->PaletteIndex = paletteIndex;
+	element->PaletteIndex = bottomLeftPaletteIndex;
 
 	element = ResultSet<GuiGeometryData>::GetOrCreate();
 	element->Position.Set(position.X + size.X, position.Y); //p1
-	element->PaletteIndex = paletteIndex;
+	element->PaletteIndex = topRightPaletteIndex;
 
 	element = ResultSet<GuiGeometryData>::GetOrCreate();
 	element->Position.Set(position.X + size.X, position.Y + size.Y); //p3
-	element->PaletteIndex = paletteIndex;
+	element->PaletteIndex = bottomRightPaletteIndex;
 }
 
 VertexBuffer* GuiGeometryBuilder::GetVertexBuffer()

@@ -24,19 +24,23 @@ const void GuiFrameWidget::BuildWidgetGeometry(GuiGeometryBuilder& builder) cons
 	const uint32 shadowPaletteIndex = 0;
 
 	const uint32 titleHeight = 15;
-	const uint32 titlePaletteIndex = 1;
+	const uint32 titleTopPaletteIndex = 1;
+	const uint32 titleBottomPaletteIndex = 2;
 
-	const uint32 bodyPaletteIndex = 2;
+	const uint32 bodyTopPaletteIndex = 3;
+	const uint32 bodyBottomPaletteIndex = 4;
 
 	// Add shadow
 	builder.AddQuad(GetPosition() - Vector2(shadowOffset, shadowOffset),
 		GetSize() + Vector2(shadowOffset * 2, shadowOffset * 2), shadowPaletteIndex);
 
 	// Add title
-	builder.AddQuad(GetPosition(), Vector2(GetSize().X, titleHeight), titlePaletteIndex);
+	builder.AddGradientQuad(GetPosition(), Vector2(GetSize().X, titleHeight), titleTopPaletteIndex, titleTopPaletteIndex,
+		titleBottomPaletteIndex, titleBottomPaletteIndex);
 
 	// Add body
-	builder.AddQuad(GetPosition() + Vector2(0.0f, titleHeight), GetSize() - Vector2(0.0f, titleHeight), bodyPaletteIndex);
+	builder.AddGradientQuad(GetPosition() + Vector2(0.0f, titleHeight), GetSize() - Vector2(0.0f, titleHeight), bodyTopPaletteIndex, bodyTopPaletteIndex,
+		bodyBottomPaletteIndex, bodyBottomPaletteIndex);
 
 	// Add text?
 

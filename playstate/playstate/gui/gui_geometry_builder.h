@@ -33,6 +33,8 @@ namespace playstate
 
 		void AddQuad(const Vector2& position, const Vector2& size);
 		void AddQuad(const Vector2& position, const Vector2& size, uint32 paletteIndex);
+		void AddGradientQuad(const Vector2& position, const Vector2& size, uint32 topLeftPaletteIndex, uint32 topRightPaletteIndex,
+			uint32 bottomLeftPaletteIndex, uint32 bottomRightPaletteIndex);
 
 		//
 		// @return The build vertex buffer

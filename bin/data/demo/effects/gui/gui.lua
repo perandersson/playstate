@@ -18,10 +18,12 @@ return {
 		layout(location = 1) in vec2 texCoord;
 		layout(location = 2) in uint paletteIndex;
 		
-		const vec4 colors[3] = vec4[](
-			vec4(0.0, 0.0, 0.0, 0.1),
-			vec4(1.0, 0, 0, 1),
-			vec4(1.0, 0.7, 0.7, 1)
+		const vec4 colors[5] = vec4[](
+			vec4(0.0, 0.0, 0.0, 0.5),
+			vec4(0.93, 0.93, 0.93, 1),
+			vec4(0.7, 0.7, 0.7, 1),
+			vec4(0.9, 0.9, 0.9, 1),
+			vec4(0.3, 0.3, 0.3, 1)
 		);
 
 		out vec4 color;
@@ -30,7 +32,6 @@ return {
 		{
 			gl_Position = ProjectionMatrix * vec4(position.x, position.y, 0.0, 1.0);
 			color = colors[paletteIndex];
-			//color = vec4(1.0, 1.0, 1.0, 0.1);
 		}
 	]],
 	UserInterfaceTexture = {
