@@ -46,7 +46,7 @@ namespace playstate
 	//		Vector2 TexCoord;
 	//	};
 	//
-	//	static VertexDeclaration PositionTexCoordDataVertexDeclaration = {
+	//	static const VertexDeclaration PositionTexCoordDataVertexDeclaration = {
 	//		{ 
 	//			{ 0, sizeof(Vector3), 3, GL_FLOAT, false }, 
 	//			{ 1, sizeof(Vector2), 2, GL_FLOAT, false },

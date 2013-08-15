@@ -20,7 +20,7 @@ namespace playstate
 		Vector3 Position;
 	};
 	
-	static VertexDeclaration PositionDataVertexDeclaration = {
+	static const VertexDeclaration PositionDataVertexDeclaration = {
 		{ 
 			{ PositionAttribLocation, sizeof(Vector3), 3, GL_FLOAT, false }, 
 			0 
@@ -36,7 +36,7 @@ namespace playstate
 		Vector2 TexCoord;
 	};
 	
-	static VertexDeclaration PositionTexCoordDataVertexDeclaration = {
+	static const VertexDeclaration PositionTexCoordDataVertexDeclaration = {
 		{ 
 			{ PositionAttribLocation, sizeof(Vector3), 3, GL_FLOAT, false }, 
 			{ TexCoordAttribLocation, sizeof(Vector2), 2, GL_FLOAT, false },
@@ -54,7 +54,7 @@ namespace playstate
 		Color Color;
 	};
 	
-	static VertexDeclaration PositionTexCoordColorDataVertexDeclaration = {
+	static const VertexDeclaration PositionTexCoordColorDataVertexDeclaration = {
 		{ 
 			{ PositionAttribLocation, sizeof(Vector3), 3, GL_FLOAT, false }, 
 			{ TexCoordAttribLocation, sizeof(Vector2), 2, GL_FLOAT, false },
@@ -72,7 +72,7 @@ namespace playstate
 		Vector3 Normal;
 	};
 	
-	static VertexDeclaration PositionNormalDataVertexDeclaration = {
+	static const VertexDeclaration PositionNormalDataVertexDeclaration = {
 		{ 
 			{ PositionAttribLocation, sizeof(Vector3), 3, GL_FLOAT, false }, 
 			{ NormalAttribLocation, sizeof(Vector3), 3, GL_FLOAT, true },
@@ -90,7 +90,7 @@ namespace playstate
 		Vector2 TexCoord;
 	};
 
-	static VertexDeclaration PositionNormalTextureDataVertexDeclaration = {
+	static const VertexDeclaration PositionNormalTextureDataVertexDeclaration = {
 		{ 
 			{ PositionAttribLocation, sizeof(Vector3), 3, GL_FLOAT, false }, 
 			{ NormalAttribLocation, sizeof(Vector3), 3, GL_FLOAT, true },
@@ -108,7 +108,7 @@ namespace playstate
 		Color Color;
 	};
 
-	static VertexDeclaration PositionColorDataVertexDeclaration = {
+	static const VertexDeclaration PositionColorDataVertexDeclaration = {
 		{ 
 			{ PositionAttribLocation, sizeof(Vector3), 3, GL_FLOAT, false }, 
 			{ ColorAttribLocation, sizeof(Color), 4, GL_FLOAT, false },

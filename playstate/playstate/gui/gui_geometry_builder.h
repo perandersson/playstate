@@ -13,7 +13,7 @@ namespace playstate
 		uint32 PaletteIndex;
 	};
 
-	static VertexDeclaration GuiGeometryDataVertexDeclaration = {
+	static const VertexDeclaration GuiGeometryDataVertexDeclaration = {
 		{ 
 			{ 0, sizeof(Vector2), 2, GL_FLOAT, false },
 			{ 1, sizeof(Vector2), 2, GL_FLOAT, false },
