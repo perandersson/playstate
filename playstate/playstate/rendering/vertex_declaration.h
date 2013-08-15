@@ -66,6 +66,15 @@ namespace playstate
 		virtual GLuint CreateVertexArray(GLuint bufferId) const;
 
 	private:
+		//
+		// @return TRUE if the supplied type is an integer type (byte, short or integer of any variants)
+		bool IsIntegerType(const VertexElementDeclaration& declaration) const;
+
+		//
+		// @return TRUE if the supplied vertex declaration should be handled as an integer type.
+		bool HandleAsIntegerType(const VertexElementDeclaration& declaration) const;
+
+	private:
 		uint32 mStride;
 		const VertexDeclaration& mDeclaration;
 	};
