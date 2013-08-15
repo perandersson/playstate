@@ -17,6 +17,11 @@ CanvasGroup::CanvasGroup(IUpdateProcessorFactory& updateProcessorFactory)
 CanvasGroup::~CanvasGroup()
 {
 	mWidgets.DeleteAll();
+
+	if(mUpdateProcessor != NULL) {
+		delete mUpdateProcessor;
+		mUpdateProcessor = NULL;
+	}
 }
 
 void CanvasGroup::AttachUpdatable(IUpdatable* updatable)
