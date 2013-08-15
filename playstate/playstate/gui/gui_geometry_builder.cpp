@@ -11,6 +11,11 @@ GuiGeometryBuilder::GuiGeometryBuilder(RenderSystem& renderSystem)
 GuiGeometryBuilder::~GuiGeometryBuilder()
 {
 	mData.clear();
+	
+	if(mVertexBuffer != NULL) {
+		delete mVertexBuffer;
+		mVertexBuffer = NULL;
+	}
 }
 
 void GuiGeometryBuilder::AddQuad(const Vector2& position, const Vector2& size)
