@@ -8,7 +8,6 @@ namespace playstate
 	public:
 		GuiButtonWidget();
 		GuiButtonWidget(CanvasGroup* group);
-		GuiButtonWidget(GuiWidget* widget);
 		virtual ~GuiButtonWidget();
 
 		//

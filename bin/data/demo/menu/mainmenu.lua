@@ -6,6 +6,12 @@ window:SetTitle("Example")
 window:SetSize(200, 768)
 window:SetPosition(1024 - 200, 0)
 
+local btnLoadLevel = GuiButtonWidget(mainMenu)
+btnLoadLevel:SetText("Load Level1.lua")
+btnLoadLevel:SetSize(140, 40)
+btnLoadLevel:SetPosition(0, 20)
+window:AddChildNode(btnLoadLevel)
+
 
 return mainMenu
 --[[

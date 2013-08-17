@@ -12,11 +12,6 @@ GuiButtonWidget::GuiButtonWidget(CanvasGroup* group)
 {
 }
 
-GuiButtonWidget::GuiButtonWidget(GuiWidget* widget)
-	: GuiWidget(widget)
-{
-}
-
 GuiButtonWidget::~GuiButtonWidget()
 {
 }
@@ -36,16 +31,15 @@ const void GuiButtonWidget::BuildWidgetGeometry(GuiGeometryBuilder& builder) con
 	static const Color bodybottom = Color::HexToRGB("#222222");
 
 	// Add shadow
-	builder.AddQuad(GetPosition() - Vector2(shadowOffset, shadowOffset),
+	builder.AddQuad(GetAbsolutePosition() - Vector2(shadowOffset, shadowOffset),
 		GetSize() + Vector2(shadowOffset * 2, shadowOffset * 2), shadowColor);
 
 	// Add body
-	builder.AddGradientQuad(GetPosition(), GetSize(), bodyTop, bodybottom);
+	builder.AddGradientQuad(GetAbsolutePosition(), GetSize(), bodyTop, bodybottom);
 
 	// Add text?
 
-	// Add child controls
-	//for
+	GuiWidget::BuildWidgetGeometry(builder);
 }
 
 int playstate::GuiButtonWidget_Factory(lua_State* L)

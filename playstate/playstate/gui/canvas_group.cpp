@@ -57,11 +57,13 @@ void CanvasGroup::AddWidget(GuiWidget* widget)
 {
 	assert_not_null(widget);
 	mWidgets.AddLast(widget);
+	widget->WidgetAttachedToCanvasGroup(this);
 }
 
 void CanvasGroup::RemoveWidget(GuiWidget* widget)
 {
 	assert_not_null(widget);
+	widget->DetachingWidgetFromCanvasGroup(this);
 	mWidgets.Remove(widget);
 }
 

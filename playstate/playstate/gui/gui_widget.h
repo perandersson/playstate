@@ -4,7 +4,6 @@
 #include "gui_event.h"
 #include "../math/vector2.h"
 #include "gui_geometry_builder.h"
-#include <vector>
 
 namespace playstate
 {
@@ -12,20 +11,19 @@ namespace playstate
 
 	class GuiWidget : public Scriptable
 	{
-		typedef std::vector<GuiWidget*> Children;
-
 	public:
 		LinkedListLink<GuiWidget> GuiWidgetLink;
 
 	public:
 		GuiWidget();
-		GuiWidget(GuiWidget* parent);
 		GuiWidget(CanvasGroup* group);
 		virtual ~GuiWidget();
 
 		//
 		// @return The canvas group this node is attached to
-		CanvasGroup* GetCanvasGroup();
+		inline CanvasGroup* GetGroup() {
+			return mCanvasGroup;
+		}
 
 		//
 		// Adds a new event listener for this widget.
@@ -58,15 +56,21 @@ namespace playstate
 
 		//
 		// @return TRUE if this widget control is attached to a canvas group.
-		bool IsAttachedToCanvasGroup() const;
+		inline bool IsAttachedToGroup() const {
+			return mCanvasGroup != NULL;
+		}
 
 		//
 		// @return The top-left uniform position for this widget.
-		const Vector2& GetPosition() const;
+		inline const Vector2& GetPosition() const {
+			return mPosition;
+		}
 
 		//
 		// @return The top-left 
-		const Vector2& GetAbsolutePosition() const;
+		inline const Vector2& GetAbsolutePosition() const {
+			return mAbsolutePosition;
+		}
 
 		//
 		// Sets this gui widgets position.
@@ -74,7 +78,9 @@ namespace playstate
 
 		//
 		// @return The uniform size of this widget
-		const Vector2& GetSize() const;
+		inline const Vector2& GetSize() const {
+			return mSize;
+		}
 
 		//
 		// Sets this widgets size
@@ -84,9 +90,17 @@ namespace playstate
 		// Builds this GUI widgets geometry in preperation for drawing it onto the screen.
 		virtual const void BuildWidgetGeometry(GuiGeometryBuilder& builder) const;
 
-		void AddWidget(GuiWidget* widget);
+		//
+		// Adds a widget child node
+		//
+		// @param widget
+		void AddChildNode(GuiWidget* widget);
 
-		void RemoveWidget(GuiWidget* widget);
+		//
+		// Removes a widget child node from this instance
+		//
+		// @param widget
+		void RemoveChildNode(GuiWidget* widget);
 
 	protected:
 		//
@@ -96,7 +110,7 @@ namespace playstate
 	private:
 		CanvasGroup* mCanvasGroup;
 		GuiWidget* mParent;
-		Children mChildren;
+		LinkedList<GuiWidget> mChildren;
 		LinkedList<GuiEvent> mEvents;
 
 	protected:
@@ -109,13 +123,13 @@ namespace playstate
 
 	extern int GuiWidget_SetPosition(lua_State* L);
 	extern int GuiWidget_SetSize(lua_State* L);
-	extern int GuiWidget_AddWidget(lua_State* L);
-	extern int GuiWidget_RemoveWidget(lua_State* L);
+	extern int GuiWidget_AddChildNode(lua_State* L);
+	extern int GuiWidget_RemoveChildNode(lua_State* L);
 	static luaL_Reg GuiWidget_Methods[] = {
 		{ "SetPosition", GuiWidget_SetPosition },
 		{ "SetSize", GuiWidget_SetSize },
-		{ "AddWidget", GuiWidget_AddWidget },
-		{ "RemoveWidget", GuiWidget_RemoveWidget },
+		{ "AddChildNode", GuiWidget_AddChildNode },
+		{ "RemoveChildNode", GuiWidget_RemoveChildNode },
 		{ NULL, NULL }
 	};
 }

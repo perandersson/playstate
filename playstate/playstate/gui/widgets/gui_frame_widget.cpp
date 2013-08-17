@@ -35,19 +35,18 @@ const void GuiFrameWidget::BuildWidgetGeometry(GuiGeometryBuilder& builder) cons
 	static const Color bodybottom = Color::HexToRGB("#222222");
 
 	// Add shadow
-	builder.AddQuad(GetPosition() - Vector2(shadowOffset, shadowOffset),
+	builder.AddQuad(GetAbsolutePosition() - Vector2(shadowOffset, shadowOffset),
 		GetSize() + Vector2(shadowOffset * 2, shadowOffset * 2), shadowColor);
 
 	// Add title
-	builder.AddGradientQuad(GetPosition(), Vector2(GetSize().X, titleHeight), titleTop, titleBottom);
+	builder.AddGradientQuad(GetAbsolutePosition(), Vector2(GetSize().X, titleHeight), titleTop, titleBottom);
 
 	// Add body
-	builder.AddGradientQuad(GetPosition() + Vector2(0.0f, titleHeight), GetSize() - Vector2(0.0f, titleHeight), bodyTop, bodybottom);
+	builder.AddGradientQuad(GetAbsolutePosition() + Vector2(0.0f, titleHeight), GetSize() - Vector2(0.0f, titleHeight), bodyTop, bodybottom);
 
 	// Add text?
-
-	// Add child controls
-	//for
+	
+	GuiWidget::BuildWidgetGeometry(builder);
 }
 
 int playstate::GuiFrameWidget_Factory(lua_State* L)
