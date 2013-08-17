@@ -26,7 +26,7 @@ const void GuiFrameWidget::BuildWidgetGeometry(GuiGeometryBuilder& builder) cons
 	const uint32 shadowOffset = 3;
 	const uint32 titleHeight = 15;
 
-	static const Color shadowColor = Color::HexToRGB("#000000");
+	static const Color shadowColor(0, 0, 0, 0.3);
 
 	static const Color titleTop = Color::HexToRGB("#EEEEEE");
 	static const Color titleBottom = Color::HexToRGB("#777777");
