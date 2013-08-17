@@ -4,13 +4,4 @@ using namespace playstate;
 
 TEST_SUITE(SceneNode)
 {
-	UNIT_TEST(AddAndListNode)
-	{
-		ASSERT_TRUE(false);
-	}
-
-	UNIT_TEST(AddComponentsAndRemoveNode)
-	{
-		ASSERT_TRUE(false);
-	}
 }

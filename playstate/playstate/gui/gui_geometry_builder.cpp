@@ -3,7 +3,7 @@
 using namespace playstate;
 
 GuiGeometryBuilder::GuiGeometryBuilder(RenderSystem& renderSystem)
-	: mRenderSystem(renderSystem), ResultSet<GuiGeometryData>(6, 24)
+	: mRenderSystem(renderSystem), mMemoryPool(6, 24)
 {
 	mVertexBuffer = mRenderSystem.CreateDynamicBuffer(NULL, sizeof(GuiGeometryData), GuiGeometryDataVAOFactory, 0);
 }
@@ -40,37 +40,38 @@ void GuiGeometryBuilder::AddGradientQuad(const Vector2& position, const Vector2&
 		p2------p3
 	*/
 
-	GuiGeometryData* element = ResultSet<GuiGeometryData>::GetOrCreate();
+	GuiGeometryData* element = mMemoryPool.Allocate();
 	element->Position.Set(position.X, position.Y); //p0
 	element->Color = topLeftColor;
 	
-	element = ResultSet<GuiGeometryData>::GetOrCreate();
+	element = mMemoryPool.Allocate();
 	element->Position.Set(position.X + size.X, position.Y); //p1
 	element->Color = topRightColor;
 
-	element = ResultSet<GuiGeometryData>::GetOrCreate();
+	element = mMemoryPool.Allocate();
 	element->Position.Set(position.X, position.Y + size.Y); //p2
 	element->Color = bottomLeftColor;
 	
-	element = ResultSet<GuiGeometryData>::GetOrCreate();
+	element = mMemoryPool.Allocate();
 	element->Position.Set(position.X, position.Y + size.Y); //p2
 	element->Color = bottomLeftColor;
 
-	element = ResultSet<GuiGeometryData>::GetOrCreate();
+	element = mMemoryPool.Allocate();
 	element->Position.Set(position.X + size.X, position.Y); //p1
 	element->Color = topRightColor;
 
-	element = ResultSet<GuiGeometryData>::GetOrCreate();
+	element = mMemoryPool.Allocate();
 	element->Position.Set(position.X + size.X, position.Y + size.Y); //p3
 	element->Color = bottomRightColor;
 }
 
 VertexBuffer* GuiGeometryBuilder::GetVertexBuffer()
 {
-	if(ResultSet<GuiGeometryData>::GetSize() > 0) {
-		GuiGeometryData* elements = ResultSet<GuiGeometryData>::GetElements();
-		mVertexBuffer->Update(elements, ResultSet<GuiGeometryData>::GetSize());
-		ResultSet<GuiGeometryData>::Reset();
+	const uint32 size = mMemoryPool.GetSize();
+	if(size > 0) {
+		GuiGeometryData* data = mMemoryPool.GetFirstElement();
+		mVertexBuffer->Update(data, size);
+		mMemoryPool.Reset();
 	}
 
 	return mVertexBuffer;

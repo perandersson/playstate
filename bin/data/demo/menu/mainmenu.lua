@@ -1,5 +1,14 @@
 local GuiBuilder = require "engine.core.gui.guibuilder"
 
+local mainMenu = CanvasGroup(1024, 768)
+local window = GuiFrameWidget(mainMenu)
+window:SetTitle("Example")
+window:SetSize(300, 200)
+window:SetPosition(100, 100)
+
+
+return mainMenu
+--[[
 return GuiBuilder.Build({
 	Frame = {
 		Title = "Example", Width = 300, Height = 200, Position = { 100, 100 },
@@ -14,4 +23,4 @@ return GuiBuilder.Build({
 			end } }
 		}
 	}
-})
+})]]--

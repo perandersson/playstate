@@ -9,7 +9,7 @@ TEST_SUITE(RenderBlockResultSet)
 		RenderBlockResultSet resultSet;
 		
 		ASSERT_EQUALS(resultSet.GetSize(), 0);
-		ASSERT_NOT_NULL(resultSet.GetElements());
+		ASSERT_NOT_NULL(resultSet.GetRenderBlocks());
 	}
 
 	UNIT_TEST(CreateBlockWithUniqueId)
@@ -20,8 +20,8 @@ TEST_SUITE(RenderBlockResultSet)
 		const RenderBlock* block = resultSet.Create(id);
 		
 		ASSERT_EQUALS(resultSet.GetSize(), 1);
-		ASSERT_NOT_NULL(resultSet.GetElements());
-		ASSERT_EQUALS(&resultSet.GetElements()[0], block);
+		ASSERT_NOT_NULL(resultSet.GetRenderBlocks());
+		ASSERT_EQUALS(resultSet.GetRenderBlocks()[0], block);
 
 		ASSERT_EQUALS(block->Id, id);
 	}
@@ -36,9 +36,9 @@ TEST_SUITE(RenderBlockResultSet)
 		const RenderBlock* block2 = resultSet.Create(id2);
 		
 		ASSERT_EQUALS(resultSet.GetSize(), 2);
-		ASSERT_NOT_NULL(resultSet.GetElements());
-		ASSERT_EQUALS(&resultSet.GetElements()[0], block1);
-		ASSERT_EQUALS(&resultSet.GetElements()[1], block2);
+		ASSERT_NOT_NULL(resultSet.GetRenderBlocks());
+		ASSERT_EQUALS(resultSet.GetRenderBlocks()[0], block1);
+		ASSERT_EQUALS(resultSet.GetRenderBlocks()[1], block2);
 
 		ASSERT_EQUALS(block1->Id, id1);
 		ASSERT_EQUALS(block2->Id, id2);

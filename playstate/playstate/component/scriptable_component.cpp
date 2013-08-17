@@ -94,120 +94,116 @@ void ScriptableComponent::Tick()
 	}
 }
 
-namespace playstate
+int playstate::Component_Init(lua_State* L)
 {
-	int Component_Init(lua_State* L)
-	{
-		int params = lua_gettop(L);
-		type_mask typeMask = BIT_ALL;
-		if(params == 2) {
-			typeMask = (type_mask)lua_tonumber(L, -1); lua_pop(L, 1);
-		}
-
-		ScriptableComponent* node = new ScriptableComponent(typeMask);
-		luaM_setinstance(L, node);
-		
-		const int ref = luaL_ref(L, LUA_REGISTRYINDEX);
-		node->RegisterObject(L, ref);
-		return 0;
+	int params = lua_gettop(L);
+	type_mask typeMask = BIT_ALL;
+	if(params == 2) {
+		typeMask = (type_mask)lua_tonumber(L, -1); lua_pop(L, 1);
 	}
-	
-	int Component_GetNode(lua_State* L)
-	{
-		if(lua_gettop(L) < 1) {
-			luaM_printerror(L, "Expected: self<Component>:GetNode()");
-			lua_pushnil(L);
-			return 1;
-		}
-		
-		ScriptableComponent* component = luaM_popobject<ScriptableComponent>(L);
-		if(component != NULL) {
-			luaM_pushobject(L, "SceneNode", component->GetNode());
-		} else {
-			lua_pushnil(L);
-		}
 
+	ScriptableComponent* node = new ScriptableComponent(typeMask);
+	luaM_setinstance(L, node);
+		
+	const int ref = luaL_ref(L, LUA_REGISTRYINDEX);
+	node->RegisterObject(L, ref);
+	return 0;
+}
+	
+int playstate::Component_GetNode(lua_State* L)
+{
+	if(lua_gettop(L) < 1) {
+		luaM_printerror(L, "Expected: self<Component>:GetNode()");
+		lua_pushnil(L);
 		return 1;
 	}
-	
-	int Component_TranslateNode(lua_State* L)
-	{
-		Vector3 vec = luaM_popvector3(L);
-		ScriptableComponent* component = luaM_popobject<ScriptableComponent>(L);
-		if(component != NULL) {
-			SceneNode* owner = component->GetNode();
-			owner->SetPosition(owner->GetPosition() + vec);
-		}
-
-		return 0;
-	}
-
-	int Component_SetNodePosition(lua_State* L)
-	{
-		Vector3 vec = luaM_popvector3(L);
-		ScriptableComponent* component = luaM_popobject<ScriptableComponent>(L);
-		if(component != NULL) {
-			SceneNode* owner = component->GetNode();
-			owner->SetPosition(vec);
-		}
-
-		return 0;
-	}
-
-	int Component_SetNodeRotation(lua_State* L)
-	{
-		if(lua_gettop(L) < 2) {
-			luaM_printerror(L, "Expected: self<Component>:SetNodeRotation(Vector3)");
-			luaM_pushvector3(L, Vector3::Zero);
-			return 1;
-		}
-
-		Vector3 vec = luaM_popvector3(L);
-		ScriptableComponent* component = luaM_popobject<ScriptableComponent>(L);
-		if(component != NULL) {
-			SceneNode* owner = component->GetNode();
-			owner->SetRotation(vec);
-		}
-
-		return 0;
-	}
-	
-	int Component_GetNodePosition(lua_State* L)
-	{
-		if(lua_gettop(L) < 1) {
-			luaM_printerror(L, "Expected: self<Component>:GetNodePosition()");
-			luaM_pushvector3(L, Vector3::Zero);
-			return 1;
-		}
 		
-		ScriptableComponent* component = luaM_popobject<ScriptableComponent>(L);
-		if(component != NULL) {
-			luaM_pushvector3(L, component->GetNode()->GetPosition());
-		} else {
-			luaM_pushvector3(L, Vector3::Zero);
-		}
-		
-		return 3;
+	ScriptableComponent* component = luaM_popobject<ScriptableComponent>(L);
+	if(component != NULL) {
+		luaM_pushobject(L, "SceneNode", component->GetNode());
+	} else {
+		lua_pushnil(L);
 	}
 
-	int Component_Show(lua_State* L)
-	{
-		if(lua_gettop(L) < 1) {
-			luaM_printerror(L, "Expected: self<Component>:Show()");
-			return 0;
-		}
-
-		ScriptableComponent* component = luaM_popobject<ScriptableComponent>(L);
-		if(component != NULL) {
-			component->Hide();
-		}
-
-		return 0;
+	return 1;
+}
+	
+int playstate::Component_TranslateNode(lua_State* L)
+{
+	Vector3 vec = luaM_popvector3(L);
+	ScriptableComponent* component = luaM_popobject<ScriptableComponent>(L);
+	if(component != NULL) {
+		SceneNode* owner = component->GetNode();
+		owner->SetPosition(owner->GetPosition() + vec);
 	}
 
-	int Component_Hide(lua_State* L)
-	{
-		return 0;
-	}
+	return 0;
 }
 
+int playstate::Component_SetNodePosition(lua_State* L)
+{
+	Vector3 vec = luaM_popvector3(L);
+	ScriptableComponent* component = luaM_popobject<ScriptableComponent>(L);
+	if(component != NULL) {
+		SceneNode* owner = component->GetNode();
+		owner->SetPosition(vec);
+	}
+
+	return 0;
+}
+
+int playstate::Component_SetNodeRotation(lua_State* L)
+{
+	if(lua_gettop(L) < 2) {
+		luaM_printerror(L, "Expected: self<Component>:SetNodeRotation(Vector3)");
+		luaM_pushvector3(L, Vector3::Zero);
+		return 1;
+	}
+
+	Vector3 vec = luaM_popvector3(L);
+	ScriptableComponent* component = luaM_popobject<ScriptableComponent>(L);
+	if(component != NULL) {
+		SceneNode* owner = component->GetNode();
+		owner->SetRotation(vec);
+	}
+
+	return 0;
+}
+	
+int playstate::Component_GetNodePosition(lua_State* L)
+{
+	if(lua_gettop(L) < 1) {
+		luaM_printerror(L, "Expected: self<Component>:GetNodePosition()");
+		luaM_pushvector3(L, Vector3::Zero);
+		return 1;
+	}
+		
+	ScriptableComponent* component = luaM_popobject<ScriptableComponent>(L);
+	if(component != NULL) {
+		luaM_pushvector3(L, component->GetNode()->GetPosition());
+	} else {
+		luaM_pushvector3(L, Vector3::Zero);
+	}
+		
+	return 3;
+}
+
+int playstate::Component_Show(lua_State* L)
+{
+	if(lua_gettop(L) < 1) {
+		luaM_printerror(L, "Expected: self<Component>:Show()");
+		return 0;
+	}
+
+	ScriptableComponent* component = luaM_popobject<ScriptableComponent>(L);
+	if(component != NULL) {
+		component->Hide();
+	}
+
+	return 0;
+}
+
+int playstate::Component_Hide(lua_State* L)
+{
+	return 0;
+}

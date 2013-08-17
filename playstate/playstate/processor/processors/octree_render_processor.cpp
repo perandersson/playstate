@@ -31,7 +31,7 @@ class RenderableEventHandlerVisitor : public IOctreeVisitor
 {
 public:
 	RenderableEventHandlerVisitor(RenderState state, RenderBlockResultSet* target)
-		: mRenderState(state), mResultSetTarget(target)
+		: mRenderState(state), mResultSetTarget(target), mFoundResults(false)
 	{
 		assert_not_null(target);
 	}
@@ -39,17 +39,23 @@ public:
 	virtual ~RenderableEventHandlerVisitor()
 	{
 	}
+	
+	bool HasFoundResults() const {
+		return mFoundResults;
+	}
 
 // IOctreeVisitor
 public:
 	virtual void Visit(OctreeNode* item)
 	{
 		static_cast<Renderable*>(item)->Collect(mRenderState, mResultSetTarget);
+		mFoundResults = true;
 	}
 
 private:
 	RenderState mRenderState;
 	RenderBlockResultSet* mResultSetTarget;
+	bool mFoundResults;
 };
 
 bool OctreeRenderProcessor::Find(const FindQuery& query, RenderBlockResultSet* target) const
@@ -60,7 +66,7 @@ bool OctreeRenderProcessor::Find(const FindQuery& query, RenderBlockResultSet* t
 
 	RenderableEventHandlerVisitor visitor(state, target);
 	mOctree.FindItems(state.Camera->GetViewFrustum(), &visitor);
-	return target->GetSize() > 0;
+	return visitor.HasFoundResults();
 }
 
 OctreeRenderProcessorFactory::OctreeRenderProcessorFactory()

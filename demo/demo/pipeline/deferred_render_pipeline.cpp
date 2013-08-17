@@ -112,7 +112,7 @@ void DeferredRenderPipeline::DrawGeometry(const Scene& scene, const Camera& came
 		// Draw scene objects
 		GfxProgram* deferredShader = mDeferredShader.get();
 		uint32 size = mRenderBlockResultSet.GetSize();
-		RenderBlock** blocks = mRenderBlockResultSet.GetSortedRenderBlocks();
+		RenderBlock** blocks = mRenderBlockResultSet.GetRenderBlocks();
 		for(uint32 index = 0; index < size; ++index) {
 			RenderBlock* block = blocks[index];
 			diffuseTexture->SetTexture(block->DiffuseTexture);
@@ -151,8 +151,8 @@ void DeferredRenderPipeline::DrawLighting(const Scene& scene, const Camera& came
 		IGfxProgramComponent* quadraticAttenuation = mPointLightShader->FindComponent("QuadraticAttenuation");
 		IGfxProgramComponent* lightRadius = mPointLightShader->FindComponent("LightRadius");
 
-		uint32 size = mLightSourceResultSet.GetSize();
-		LightSource** lightSources = mLightSourceResultSet.GetElements();
+		uint32 size = mLightSourceResultSet.GetNumLightSources();
+		LightSource** lightSources = mLightSourceResultSet.GetLightSources();
 		for(uint32 index = 0; index < size; ++index) {
 			LightSource* lightSource = lightSources[index];
 			PointLight* pl = dynamic_cast<PointLight*>(lightSource);

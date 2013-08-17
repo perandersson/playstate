@@ -2,20 +2,23 @@
 #include "gui_frame_widget.h"
 using namespace playstate;
 
-GuiFrameWidget::GuiFrameWidget(const std::string& title, float32 width, float32 height)
-	: GuiWidget(), mTitle(title)
+GuiFrameWidget::GuiFrameWidget()
+	: GuiWidget()
 {
-	mSize.Set(width, height);
 }
 
-GuiFrameWidget::GuiFrameWidget(CanvasGroup* group, const std::string& title, float32 width, float32 height)
-	: GuiWidget(group), mTitle(title)
+GuiFrameWidget::GuiFrameWidget(CanvasGroup* group)
+	: GuiWidget(group)
 {
-	mSize.Set(width, height);
 }
 
 GuiFrameWidget::~GuiFrameWidget()
 {
+}
+
+void GuiFrameWidget::SetTitle(const std::string& title)
+{
+	mTitle = title;
 }
 
 const void GuiFrameWidget::BuildWidgetGeometry(GuiGeometryBuilder& builder) const
@@ -49,18 +52,26 @@ const void GuiFrameWidget::BuildWidgetGeometry(GuiGeometryBuilder& builder) cons
 
 int playstate::GuiFrameWidget_Factory(lua_State* L)
 {
-	float32 height = lua_tonumber(L, -1);
-	float32 width = lua_tonumber(L, -2);
-	std::string title = lua_tostring(L, -3);
-	lua_pop(L, 3);
-
 	CanvasGroup* group = luaM_getobject<CanvasGroup>(L);
 	if(group != NULL) {
-		GuiFrameWidget* widget = new GuiFrameWidget(group, title, width, height);
+		GuiFrameWidget* widget = new GuiFrameWidget(group);
 		luaM_pushobject(L, "GuiFrameWidget", widget);
 	} else {
 		lua_pushnil(L);
 	}
 
 	return 1;
+}
+
+int playstate::GuiFrameWidget_SetTitle(lua_State* L)
+{
+	std::string title = lua_tostring(L, -1);
+	lua_pop(L, 1);
+
+	GuiFrameWidget* widget = luaM_popobject<GuiFrameWidget>(L);
+	if(widget != NULL) {
+		widget->SetTitle(title);
+	}
+
+	return 0;
 }

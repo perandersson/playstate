@@ -143,6 +143,7 @@
     <ClInclude Include="..\..\playstate\playstate\math\vector2.h" />
     <ClInclude Include="..\..\playstate\playstate\math\vector3.h" />
     <ClInclude Include="..\..\playstate\playstate\memory\memory.h" />
+    <ClInclude Include="..\..\playstate\playstate\memory\memory_pool.h" />
     <ClInclude Include="..\..\playstate\playstate\model\model.h" />
     <ClInclude Include="..\..\playstate\playstate\model\model_mesh.h" />
     <ClInclude Include="..\..\playstate\playstate\model\wavefront\wavefront_resource_loader.h" />

@@ -8,27 +8,19 @@ TEST_SUITE(LightSourceResultSet)
 	{
 		LightSourceResultSet resultSet;
 		
-		ASSERT_EQUALS(resultSet.GetSize(), 0);
-		ASSERT_NOT_NULL(resultSet.GetElements());
+		ASSERT_EQUALS(resultSet.GetNumLightSources(), 0);
+		ASSERT_NOT_NULL(resultSet.GetLightSources());
 	}
 	
-	UNIT_TEST(CreateBlockFromResultSet)
+	UNIT_TEST(AddLightSourceToResultSet)
 	{
-		LightSourceResultSet resultSet;
-		LightSource** block = resultSet.GetOrCreate();
-
-		ASSERT_NOT_NULL(resultSet.GetElements());
-		ASSERT_EQUALS(&resultSet.GetElements()[0], block);
-	}
-
-	UNIT_TEST(CreateTwoBlocksFromResultSet)
-	{
-		LightSourceResultSet resultSet;
-		LightSource** block1 = resultSet.GetOrCreate();
-		LightSource** block2 = resultSet.GetOrCreate();
-
-		ASSERT_NOT_NULL(resultSet.GetElements());
-		ASSERT_EQUALS(&resultSet.GetElements()[0], block1);
-		ASSERT_EQUALS(&resultSet.GetElements()[1], block2);
+		LightSourceResultSet unitToTest;
+		LightSource lightSource;
+		
+		unitToTest.AddResult(&lightSource);
+		
+		ASSERT_EQUALS(unitToTest.GetNumLightSources(), 1);
+		ASSERT_NOT_NULL(unitToTest.GetLightSources());
+		ASSERT_EQUALS(unitToTest.GetLightSources()[0], &lightSource);
 	}
 }

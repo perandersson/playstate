@@ -289,5 +289,8 @@
     <ClCompile Include="..\..\glmock\impl\command\wglew\wglCreateContextAttribsARB.cpp">
       <Filter>Source Files\impl\command\wglew</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\glmock\impl\command\glew\glVertexAttribIPointer.cpp">
+      <Filter>Source Files\impl\command\glew</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -3,6 +3,7 @@
 #include "../rendering/render_block.h"
 #include "array_sorter.h"
 #include "result_set.h"
+#include "../memory/memory_pool.h"
 
 namespace playstate
 {
@@ -12,8 +13,8 @@ namespace playstate
 	static const uint32 RenderBlocksResizeCount = 100;
 	
 	//
-	// 
-	class RenderBlockResultSet : public ResultSet<RenderBlock>
+	// Specific result-set for render blocks.
+	class RenderBlockResultSet : public IResultSet<RenderBlock*>
 	{
 	public:
 		RenderBlockResultSet();
@@ -24,14 +25,25 @@ namespace playstate
 		RenderBlock* Create(uint32 id);
 		
 		//
-		// Sort this result-set using the supplied array sorter.
-		void Sort(IArraySorter<RenderBlock*>* sorter);
+		// @return 
+		RenderBlock** GetRenderBlocks();
 
 		//
-		// @return 
-		RenderBlock** GetSortedRenderBlocks();
+		// 
+		void Reset();
+
+		//
+		// @return The size of this result set
+		uint32 GetSize() const;
+
+		//
+		// Sorts this resultset using the supplied array sorter
+		//
+		// @param sorter
+		void Sort(IArraySorter<RenderBlock*>* sorter);
 
 	private:
+		MemoryPool<RenderBlock> mMemoryPool;
 		RenderBlock** mSortedRenderBlocks;
 	};
 }

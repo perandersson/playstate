@@ -706,9 +706,6 @@
     <ClInclude Include="..\..\playstate\playstate\processor\processors\octree_light_source_processor.h">
       <Filter>Source Files\processor\processors</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\search\result_set.h">
-      <Filter>Source Files\search</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\search\light_source_result_set.h">
       <Filter>Source Files\search</Filter>
     </ClInclude>
@@ -765,6 +762,12 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\gui\widgets\gui_frame_widget.h">
       <Filter>Source Files\gui\widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\memory\memory_pool.h">
+      <Filter>Source Files\memory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\search\result_set.h">
+      <Filter>Source Files\search</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

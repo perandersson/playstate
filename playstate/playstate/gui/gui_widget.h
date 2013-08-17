@@ -69,6 +69,10 @@ namespace playstate
 		const Vector2& GetSize() const;
 
 		//
+		// Sets this widgets size
+		void SetSize(const Vector2& size);
+
+		//
 		// Builds this GUI widgets geometry in preperation for drawing it onto the screen.
 		virtual const void BuildWidgetGeometry(GuiGeometryBuilder& builder) const;
 
@@ -84,8 +88,10 @@ namespace playstate
 	// Script integration
 
 	extern int GuiWidget_SetPosition(lua_State* L);
+	extern int GuiWidget_SetSize(lua_State* L);
 	static luaL_Reg GuiWidget_Methods[] = {
 		{ "SetPosition", GuiWidget_SetPosition },
+		{ "SetSize", GuiWidget_SetSize },
 		{ NULL, NULL }
 	};
 }

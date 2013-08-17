@@ -7,9 +7,13 @@ namespace playstate
 	class GuiFrameWidget : public GuiWidget
 	{
 	public:
-		GuiFrameWidget(const std::string& title, float32 width, float32 height);
-		GuiFrameWidget(CanvasGroup* group, const std::string& title, float32 width, float32 height);
+		GuiFrameWidget();
+		GuiFrameWidget(CanvasGroup* group);
 		virtual ~GuiFrameWidget();
+
+		//
+		// Sets this widgets title 
+		void SetTitle(const std::string& title);
 
 	// GuiWidget
 	public:
@@ -22,8 +26,10 @@ namespace playstate
 	// Script integration
 
 	extern int GuiFrameWidget_Factory(lua_State* L);
+	extern int GuiFrameWidget_SetTitle(lua_State* L);
 	static luaL_Reg GuiFrameWidget_Methods[] = {
 		{ LUA_CONSTRUCTOR, GuiFrameWidget_Factory },
+		{ "SetTitle", GuiFrameWidget_SetTitle },
 		{ NULL, NULL }
 	};
 }

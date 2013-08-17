@@ -3,7 +3,7 @@
 using namespace playstate;
 
 RenderBlockResultSet::RenderBlockResultSet() 
-	: ResultSet<RenderBlock>(InitialRenderBlocksCount, RenderBlocksResizeCount)
+	: mMemoryPool(InitialRenderBlocksCount, RenderBlocksResizeCount)
 {
 	mSortedRenderBlocks = (RenderBlock**)malloc(InitialRenderBlocksCount * sizeof(RenderBlock**));
 }
@@ -16,22 +16,33 @@ RenderBlockResultSet::~RenderBlockResultSet()
 
 RenderBlock* RenderBlockResultSet::Create(uint32 id)
 {
-	if(mSize >= mNumElements) {
-		mSortedRenderBlocks = (RenderBlock**)realloc(mSortedRenderBlocks, (mNumElements + mBlocksResizeCount) * sizeof(RenderBlock**));
+	if(mMemoryPool.IsResizeRequired()) {
+		mSortedRenderBlocks = (RenderBlock**)realloc(mSortedRenderBlocks, mMemoryPool.GetMemorySize() + (RenderBlocksResizeCount * sizeof(RenderBlock**)));
 	}
 
-	RenderBlock* block = GetOrCreate();
-	mSortedRenderBlocks[mSize - 1] = block;
+	RenderBlock* block = mMemoryPool.Allocate();
+	mSortedRenderBlocks[mMemoryPool.GetSize() - 1] = block;
 	block->Id = id;
 	return block;
 }
 
 void RenderBlockResultSet::Sort(IArraySorter<RenderBlock*>* sorter)
 {
-	sorter->Sort(mSortedRenderBlocks, mSize);
+	sorter->Sort(mSortedRenderBlocks, mMemoryPool.GetSize());
 }
 
-RenderBlock** RenderBlockResultSet::GetSortedRenderBlocks()
+RenderBlock** RenderBlockResultSet::GetRenderBlocks()
 {
 	return mSortedRenderBlocks;
 }
+
+void RenderBlockResultSet::Reset()
+{
+	mMemoryPool.Reset();
+}
+
+uint32 RenderBlockResultSet::GetSize() const
+{
+	return mMemoryPool.GetSize();
+}
+

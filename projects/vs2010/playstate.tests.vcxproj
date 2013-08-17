@@ -189,6 +189,7 @@
     <ClCompile Include="..\..\playstate.tests\playstate\math\matrix4x4_test.cpp" />
     <ClCompile Include="..\..\playstate.tests\playstate\math\vector2_test.cpp" />
     <ClCompile Include="..\..\playstate.tests\playstate\math\vector3_test.cpp" />
+    <ClCompile Include="..\..\playstate.tests\playstate\memory\memory_pool_test.cpp" />
     <ClCompile Include="..\..\playstate.tests\playstate\rendering\render_target_2d_test.cpp" />
     <ClCompile Include="..\..\playstate.tests\playstate\scene\scene_node_test.cpp" />
     <ClCompile Include="..\..\playstate.tests\playstate\scene\scene_test.cpp" />

@@ -36,6 +36,9 @@
     <Filter Include="Source Files\test">
       <UniqueIdentifier>{5404395d-9516-4d28-b7b2-955774f1974d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\memory">
+      <UniqueIdentifier>{b8bcf309-c03d-4739-9ff9-68a67095ee03}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\playstate.tests\playstate\main.cpp">
@@ -97,6 +100,9 @@
     </ClCompile>
     <ClCompile Include="..\..\playstate.tests\playstate\math\color_test.cpp">
       <Filter>Source Files\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate.tests\playstate\memory\memory_pool_test.cpp">
+      <Filter>Source Files\memory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

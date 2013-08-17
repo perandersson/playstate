@@ -93,6 +93,11 @@ void GuiWidget::SetPosition(const Vector2& position)
 	mPosition = position;
 }
 
+void GuiWidget::SetSize(const Vector2& size)
+{
+	mSize = size;
+}
+
 const void GuiWidget::BuildWidgetGeometry(GuiGeometryBuilder& builder) const
 {
 
@@ -104,6 +109,17 @@ int playstate::GuiWidget_SetPosition(lua_State* L)
 	GuiWidget* widget = luaM_popobject<GuiWidget>(L);
 	if(widget) {
 		widget->SetPosition(position);
+	}
+
+	return 0;
+}
+
+int playstate::GuiWidget_SetSize(lua_State* L)
+{
+	Vector2 size = luaM_popvector2(L);
+	GuiWidget* widget = luaM_popobject<GuiWidget>(L);
+	if(widget) {
+		widget->SetSize(size);
 	}
 
 	return 0;
