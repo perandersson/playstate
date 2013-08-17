@@ -81,6 +81,7 @@ void SceneNode::RemoveChildNode(SceneNode* node)
 	assert_not_null(node);
 	assert(node->mParent == this && "You are not allowed to remove another scene objects child node");
 	mChildren.Remove(node);
+	node->mParent = NULL;
 }
 
 void SceneNode::SetPosition(const Vector3& position)
@@ -104,6 +105,12 @@ void SceneNode::UpdatePosition()
 	mAbsolutePosition = mParent->mAbsolutePosition + mPosition;
 
 	UpdateModelMatrix();
+
+	SceneNode* child = mChildren.First();
+	while(child != NULL) {
+		child->UpdatePosition();
+		child = child->NodeLink.Tail;
+	}
 }
 
 void SceneNode::SetRotation(const Vector3& rotation)
@@ -125,7 +132,14 @@ void SceneNode::UpdateRotation()
 {
 	assert(mParent != NULL && "Illegal call when no parent is found for this object");
 	mAbsoluteRotation = mParent->mAbsoluteRotation + mRotation;
+
 	UpdateModelMatrix();
+
+	SceneNode* child = mChildren.First();
+	while(child != NULL) {
+		child->UpdateRotation();
+		child = child->NodeLink.Tail;
+	}
 }
 
 void SceneNode::UpdateModelMatrix()
