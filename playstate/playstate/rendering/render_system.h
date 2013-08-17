@@ -124,7 +124,7 @@ namespace playstate
 		Rect mScreenViewport;
 
 		GfxProgramFactory* mProgramFactory;
-		LinkedList<GfxProgram, &GfxProgram::Link> mGfxPrograms;
+		LinkedList<GfxProgram> mGfxPrograms;
 
 		GLuint mFrameBufferId;
 		RenderTarget2D* mRenderTargets[MaxDrawBuffers];

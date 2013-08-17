@@ -4,7 +4,7 @@
 #include "../search/sorter/render_block_array_sorter.h"
 using namespace playstate;
 
-Scene::Scene()
+Scene::Scene() : mSceneGroups(offsetof(SceneGroup, GroupLink))
 {
 }
 

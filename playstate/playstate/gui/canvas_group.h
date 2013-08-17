@@ -52,7 +52,7 @@ namespace playstate
 		virtual void Update();
 
 	private:
-		LinkedList<GuiWidget, &GuiWidget::GuiWidgetLink> mWidgets;
+		LinkedList<GuiWidget> mWidgets;
 		IUpdateProcessor* mUpdateProcessor;
 
 	private:

@@ -56,7 +56,7 @@ namespace playstate
 		LinkedListBase<T>* List;
 	};
 
-	template<class T, typename LinkedListLink<T> T::*_LinkAddr>
+	template<class T>
 	class LinkedList : public LinkedListBase<T>
 	{
 	public:
@@ -65,7 +65,7 @@ namespace playstate
 	public:
 		//
 		// Constructor
-		LinkedList();
+		LinkedList(size_t offset);
 
 		//
 		// Destructor
@@ -95,7 +95,10 @@ namespace playstate
 	protected:
 		//
 		// Retrieves the link value from the supplied item.
-		Link& GetLink(T* item);
+		Link* GetLink(T* item);
+
+	private:
+		size_t mLinkOffset;
 	};
 
 	///////////////////////////////////
@@ -171,87 +174,88 @@ namespace playstate
 
 	///////////////////////////////////
 
-	template<class T, typename LinkedListLink<T> T::*_LinkAddr>
-	LinkedList<T, _LinkAddr>::LinkedList() : LinkedListBase<T>()
+	template<class T>
+	LinkedList<T>::LinkedList(size_t offset) : LinkedListBase<T>(), mLinkOffset(offset)
 	{
 	}
 
-	template<class T, typename LinkedListLink<T> T::*_LinkAddr>
-	LinkedList<T, _LinkAddr>::~LinkedList()
+	template<class T>
+	LinkedList<T>::~LinkedList()
 	{
 		UnlinkAll();
 	}
 
-	template<class T, typename LinkedListLink<T> T::*_LinkAddr>
-	void LinkedList<T, _LinkAddr>::AddLast(T* item)
+	template<class T>
+	void LinkedList<T>::AddLast(T* item)
 	{
 		// Find the link for the supplied item
-		Link& link = GetLink(item);
+		Link* link = GetLink(item);
 		
 		// Make sure that the items link isn't attached to the list
-		link.Unlink();
+		link->Unlink();
 
 		// Assign the item into the linked list
 		if(Head == NULL) {
 			Head = Tail = item;
  		} else {
 			// Put the item to the end of the list
-			GetLink(Tail).Tail = item;
-			link.Head = Tail;
+			GetLink(Tail)->Tail = item;
+			link->Head = Tail;
 			Tail = item;
 		}
 
 		// Link the item with this list
-		link.Link(item, this);
+		link->Link(item, this);
 		mSize++;
 	}
 
-	template<class T, typename LinkedListLink<T> T::*_LinkAddr>
-	void LinkedList<T, _LinkAddr>::Remove(T* item) 
+	template<class T>
+	void LinkedList<T>::Remove(T* item) 
 	{
 		assert(item != NULL && "You cannot remove a non-existing item");
 
-		Link& link = GetLink(item);
-		if(link.List == NULL)
+		Link* link = GetLink(item);
+		if(link->List == NULL)
 			return;
 
-		assert(link.List == this && "You cannot remove another lists nodes");
+		assert(link->List == this && "You cannot remove another lists nodes");
 
-		link.Unlink();
+		link->Unlink();
 	}
 
-	template<class T, typename LinkedListLink<T> T::*_LinkAddr>
-	typename LinkedList<T, _LinkAddr>::Link& LinkedList<T, _LinkAddr>::GetLink(T* item)
+	template<class T>
+	typename LinkedList<T>::Link* LinkedList<T>::GetLink(T* item)
 	{
-		return (*item).*_LinkAddr;
+		char* mem = reinterpret_cast<char*>(item) + mLinkOffset;
+		return reinterpret_cast<Link*>(mem);
 	}
 
-	template<class T, typename LinkedListLink<T> T::*_LinkAddr>
-	T* LinkedList<T, _LinkAddr>::First() const
+	template<class T>
+	T* LinkedList<T>::First() const
 	{
 		return Head;
 	}
 
-	template<class T, typename LinkedListLink<T> T::*_LinkAddr>
-	void LinkedList<T, _LinkAddr>::UnlinkAll() {
+	template<class T>
+	void LinkedList<T>::UnlinkAll() {
 		T* ptr = Head;
 		while(ptr != NULL) {
-			Link& link = GetLink(ptr);
-			T* next = link.Tail;
-			link.Head = link.Tail = NULL;
-			link.List = NULL;
+			Link* link = GetLink(ptr);
+			T* next = link->Tail;
+			link->Head = link->Tail = NULL;
+			link->List = NULL;
 			ptr = next;
 		}
 		Head = Tail = NULL;
 	}
 
-	template<class T, typename LinkedListLink<T> T::*_LinkAddr>
-	void LinkedList<T, _LinkAddr>::DeleteAll()
+	template<class T>
+	void LinkedList<T>::DeleteAll()
 	{
 		T* ptr = Head;
 		while(ptr != NULL) {
-			Link& link = GetLink(ptr);
-			T* next = link.Tail;
+			Link* link = GetLink(ptr);
+			T* next = link->Tail;
 			delete ptr;
 			ptr = next;
 		}

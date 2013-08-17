@@ -24,7 +24,7 @@ void GuiFrameWidget::SetTitle(const std::string& title)
 const void GuiFrameWidget::BuildWidgetGeometry(GuiGeometryBuilder& builder) const
 {
 	const uint32 shadowOffset = 3;
-	const uint32 titleHeight = 15;
+	const uint32 titleHeight = 25;
 
 	static const Color shadowColor(0, 0, 0, 0.3);
 

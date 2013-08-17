@@ -5,7 +5,7 @@ using namespace playstate;
 float32 playstate::SecondsPerTick = 0.0f;
 
 LinkedListUpdateProcessor::LinkedListUpdateProcessor()
-	: mTimeSinceLastTick(0)
+	: mTimeSinceLastTick(0), mUpdatables(offsetof(Updatable, UpdatableLink)), mTickables(offsetof(Tickable, TickableLink))
 {
 }
 

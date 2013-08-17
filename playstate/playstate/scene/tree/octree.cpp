@@ -3,14 +3,14 @@
 using namespace playstate;
 
 Octree::Octree(const AABB& boundingBox, uint32 level, uint32 maxLevel, Octree* top)
-	: mBoundingBox(boundingBox), mMaxLevel(maxLevel), mLevel(level), mTop(top)
+	: mBoundingBox(boundingBox), mMaxLevel(maxLevel), mLevel(level), mTop(top), mNodes(offsetof(OctreeNode, OctreeLink))
 {
 	assert_not_null(top);
 	Initialize(boundingBox, level, maxLevel);
 }
 
 Octree::Octree(uint32 maxLevel)
-	: mBoundingBox(AABB(Vector3(0, 0, 0), 1000.0f, 1000.0f, 1000.0f)), mMaxLevel(maxLevel), mLevel(0), mTop(0)
+	: mBoundingBox(AABB(Vector3(0, 0, 0), 1000.0f, 1000.0f, 1000.0f)), mMaxLevel(maxLevel), mLevel(0), mTop(0), mNodes(offsetof(OctreeNode, OctreeLink))
 {
 	mTop = this;
 	Initialize(mBoundingBox, mLevel, maxLevel);

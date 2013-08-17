@@ -55,7 +55,7 @@ namespace playstate
 		virtual bool Find(const FindQuery& query, LightSourceResultSet* target) const;
 
 	private:
-		LinkedList<SceneNode, &SceneNode::NodeLink> mSceneNodes;
+		LinkedList<SceneNode> mSceneNodes;
 		IUpdateProcessor* mUpdateProcessor;
 		IRenderProcessor* mRenderProcessor;
 		ILightSourceProcessor* mLightSourceProcessor;

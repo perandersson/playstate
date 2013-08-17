@@ -5,7 +5,7 @@
 using namespace playstate;
 
 Canvas::Canvas(IWindow& window, IInputSystem& inputSystem)
-	: mWindow(window), mInputSystem(inputSystem)
+	: mWindow(window), mInputSystem(inputSystem), mGroups(offsetof(CanvasGroup, CanvasGroupLink))
 {
 }
 

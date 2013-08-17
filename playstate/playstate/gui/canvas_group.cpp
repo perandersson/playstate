@@ -3,13 +3,13 @@
 using namespace playstate;
 
 CanvasGroup::CanvasGroup()
-	: mUpdateProcessor(IUpdateProcessorFactory::Get().Create())
+	: mUpdateProcessor(IUpdateProcessorFactory::Get().Create()), mWidgets(offsetof(GuiWidget, GuiWidgetLink))
 {
 	assert_not_null(mUpdateProcessor);
 }
 
 CanvasGroup::CanvasGroup(IUpdateProcessorFactory& updateProcessorFactory)
-	: mUpdateProcessor(updateProcessorFactory.Create())
+	: mUpdateProcessor(updateProcessorFactory.Create()), mWidgets(offsetof(GuiWidget, GuiWidgetLink))
 {
 	assert_not_null(mUpdateProcessor);
 }

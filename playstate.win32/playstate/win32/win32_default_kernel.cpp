@@ -6,6 +6,7 @@
 #include <playstate/component/renderable/render_static_model.h>
 #include <playstate/component/lightsources/point_light.h>
 #include <playstate/gui/widgets/gui_frame_widget.h>
+#include <playstate/gui/widgets/gui_button_widget.h>
 
 using namespace playstate;
 using namespace playstate::win32;
@@ -89,4 +90,7 @@ void Win32DefaultKernel::RegisterScript()
 
 	ss.RegisterType("GuiFrameWidget", GuiWidget_Methods);
 	ss.RegisterType("GuiFrameWidget", GuiFrameWidget_Methods);
+
+	ss.RegisterType("GuiButtonWidget", GuiWidget_Methods);
+	ss.RegisterType("GuiButtonWidget", GuiButtonWidget_Methods);
 }

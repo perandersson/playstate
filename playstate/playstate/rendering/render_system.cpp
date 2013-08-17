@@ -13,7 +13,7 @@ namespace {
 
 RenderSystem::RenderSystem(IWindow& window, ScriptSystem& scriptSystem) : mWindow(window), mProgramFactory(NULL), 
 	mUniformVertexBuffer(NULL), 
-	mFrameBufferId(0), mDepthRenderTarget(NULL)
+	mFrameBufferId(0), mDepthRenderTarget(NULL), mGfxPrograms(offsetof(GfxProgram, Link))
 {
 	memset(mRenderTargets, 0, sizeof(mRenderTargets));
 	mProgramFactory = new GfxProgramFactory(*this, scriptSystem);

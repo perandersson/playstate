@@ -60,7 +60,7 @@ namespace playstate
 	private:
 		IWindow& mWindow;
 		IInputSystem& mInputSystem;
-		LinkedList<CanvasGroup, &CanvasGroup::CanvasGroupLink> mGroups;
+		LinkedList<CanvasGroup> mGroups;
 		Vector2 mSize;
 		Matrix4x4 mProjectionMatrix;
 	};

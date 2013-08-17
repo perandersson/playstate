@@ -3,7 +3,7 @@
 #include "../../types.h"
 using namespace playstate;
 
-OctreeLightSourceProcessor::OctreeLightSourceProcessor() : mOctree(3)
+OctreeLightSourceProcessor::OctreeLightSourceProcessor() : mOctree(3), mLightSources(offsetof(LightSource, LightSourceLink))
 {
 }
 

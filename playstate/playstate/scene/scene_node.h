@@ -3,7 +3,6 @@
 #include "../linked_list.h"
 #include "../component/component.h"
 #include "../math/matrix4x4.h"
-#include <vector>
 
 namespace playstate
 {
@@ -11,8 +10,6 @@ namespace playstate
 
 	class SceneNode : public Scriptable
 	{
-		typedef std::vector<SceneNode*> ChildNodes;
-
 	public:
 		LinkedListLink<SceneNode> NodeLink;
 
@@ -37,6 +34,7 @@ namespace playstate
 		//
 		//
 		virtual ~SceneNode();
+
 		//
 		// Add the supplied component
 		// @param component
@@ -56,26 +54,52 @@ namespace playstate
 		//
 		// Sets the position of this node.
 		void SetPosition(const Vector3& position);
-		const Vector3& GetPosition() const;
-		const Vector3& GetAbsolutePosition() const;
+
+		//
+		// @return The relative position of this node instance
+		inline const Vector3& GetPosition() const {
+			return mPosition;
+		}
+
+		//
+		// @return The absolute position of this node instance
+		inline const Vector3& GetAbsolutePosition() const {
+			return mAbsolutePosition;
+		}
 
 		//
 		// Sets the rotation of this node. 
 		void SetRotation(const Vector3& rotation);
-		const Vector3& GetRotation() const;
-		const Vector3& GetAbsoluteRotation() const;
+
+		//
+		// @return The relative rotation of this node
+		inline const Vector3& GetRotation() const {
+			return mRotation;
+		}
+
+		//
+		// @return The absolute rotation of this node
+		inline const Vector3& GetAbsoluteRotation() const {
+			return mAbsoluteRotation;
+		}
 
 		//
 		// @return This nodes model matrix
-		const Matrix4x4& GetModelMatrix() const;
+		inline const Matrix4x4& GetModelMatrix() const {
+			return mModelMatrix;
+		}
 
 		//
 		// @return
-		type_mask GetTypeMask() const;
+		inline type_mask GetTypeMask() const {
+			return mTypeMask;
+		}
 
 		//
 		// @return The group where this node is located
-		SceneGroup* GetGroup();
+		inline SceneGroup* GetGroup() {
+			return mSceneGroup;
+		}
 
 		//
 		// Remove this item from the scene. 
@@ -107,7 +131,9 @@ namespace playstate
 		// Checks if this node is being attached to a scene group
 		//
 		// @return
-		bool IsAttachedToSceneGroup() const;
+		inline bool IsAttachedToSceneGroup() const {
+			return mSceneGroup != NULL;
+		}
 		
 	protected:
 		//
@@ -132,9 +158,9 @@ namespace playstate
 
 	private:
 		SceneNode* mParent;
-		ChildNodes mChildren;
 		SceneGroup* mSceneGroup;
-		LinkedList<Component, &Component::ComponentLink> mComponents;
+		LinkedList<Component> mComponents;
+		LinkedList<SceneNode> mChildren;
 	};
 	
 	//

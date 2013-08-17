@@ -13,6 +13,15 @@ TEST_SUITE(LinkedList)
 	class DummyContainer
 	{
 	public:
+		DummyContainer()
+			: mDummies(offsetof(DummyClass, Link))
+		{
+		}
+
+		~DummyContainer()
+		{
+		}
+
 		void Add(DummyClass* dummy)
 		{
 			mDummies.AddLast(dummy);
@@ -30,7 +39,7 @@ TEST_SUITE(LinkedList)
 		}
 
 	private:
-		LinkedList<DummyClass, &DummyClass::Link> mDummies;
+		LinkedList<DummyClass> mDummies;
 	};
 
 	UNIT_TEST(LinkedList_RemoveItemFromListOnDelete)

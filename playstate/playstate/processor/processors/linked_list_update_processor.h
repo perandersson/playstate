@@ -29,8 +29,8 @@ namespace playstate
 		virtual void Update();
 
 	private:		
-		LinkedList<IUpdatable, &IUpdatable::UpdatableLink> mUpdatables;
-		LinkedList<ITickable, &ITickable::TickableLink> mTickables;
+		LinkedList<IUpdatable> mUpdatables;
+		LinkedList<ITickable> mTickables;
 		float32 mTimeSinceLastTick;
 	};
 

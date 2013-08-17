@@ -106,6 +106,6 @@ namespace playstate
 		Octree* mTop;
 
 	private:
-		LinkedList<OctreeNode, &OctreeNode::OctreeLink> mNodes;
+		LinkedList<OctreeNode> mNodes;
 	};
 }

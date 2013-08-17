@@ -13,6 +13,10 @@ player1:AddComponent(FollowCameraBehaviour())
 player1:AddComponent(RenderStaticModel(playerModel))
 player1:SetPosition(0, 0, 10)
 
+local playerColor = SceneNode(level1)
+playerColor:AddComponent(PointLight({0.2, 0.5, 0.7, 1.0}, 10.0, 0.0, 0.0, 0.5))
+player1:AddChildNode(playerColor)
+
 local i = 0
 local j = 0
 

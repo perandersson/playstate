@@ -4,12 +4,14 @@
 using namespace playstate;
 
 SceneNode::SceneNode()
-	: mSceneGroup(NULL), mTypeMask(BIT_ALL), mParent(NULL)
+	: mSceneGroup(NULL), mTypeMask(BIT_ALL), mParent(NULL), 
+	mComponents(offsetof(Component, ComponentLink)), mChildren(offsetof(SceneNode, NodeLink))
 {
 }
 
 SceneNode::SceneNode(SceneGroup* group)
-	: mSceneGroup(NULL), mTypeMask(BIT_ALL), mParent(NULL)
+	: mSceneGroup(NULL), mTypeMask(BIT_ALL), mParent(NULL), 
+	mComponents(offsetof(Component, ComponentLink)), mChildren(offsetof(SceneNode, NodeLink))
 {
 	assert_not_null(group);
 	group->AddSceneNode(this);
@@ -17,7 +19,8 @@ SceneNode::SceneNode(SceneGroup* group)
 
 
 SceneNode::SceneNode(SceneGroup* group, type_mask typeMask)
-	: mSceneGroup(NULL), mTypeMask(typeMask), mParent(NULL)
+	: mSceneGroup(NULL), mTypeMask(typeMask), mParent(NULL), 
+	mComponents(offsetof(Component, ComponentLink)), mChildren(offsetof(SceneNode, NodeLink))
 {
 	assert_not_null(group);
 	group->AddSceneNode(this);
@@ -26,19 +29,8 @@ SceneNode::SceneNode(SceneGroup* group, type_mask typeMask)
 SceneNode::~SceneNode()
 {
 	mComponents.DeleteAll();
-
-	ChildNodes::iterator it = mChildren.begin();
-	while(it != mChildren.end()) {
-		SceneNode* node = *it;
-		it++;
-		node->mParent = NULL;
-		delete node;
-	}
-
-	if(mParent != NULL) {
-		mParent->RemoveChildNode(this);
-	}
-	
+	mChildren.DeleteAll();
+	mParent = NULL;
 	mSceneGroup = NULL;
 }
 
@@ -77,11 +69,8 @@ void SceneNode::AddChildNode(SceneNode* node)
 {
 	assert_not_null(node);
 
-	mChildren.push_back(node);
+	mChildren.AddLast(node);
 	node->mParent = this;
-
-	// Remove this nodes link from the scene to prevent the LinkedList implementation from removing the "List->Next" element
-	node->RemoveFromScene();
 
 	node->UpdatePosition();
 	node->UpdateRotation();
@@ -91,13 +80,7 @@ void SceneNode::RemoveChildNode(SceneNode* node)
 {
 	assert_not_null(node);
 	assert(node->mParent == this && "You are not allowed to remove another scene objects child node");
-
-	ChildNodes::iterator it = std::find(mChildren.begin(), mChildren.end(), node);
-	if(it != mChildren.end()) {
-		mChildren.erase(it);
-		node->mParent = NULL;
-	}
-
+	mChildren.Remove(node);
 }
 
 void SceneNode::SetPosition(const Vector3& position)
@@ -108,20 +91,11 @@ void SceneNode::SetPosition(const Vector3& position)
 
 	UpdateModelMatrix();
 
-	ChildNodes::size_type size = mChildren.size();
-	for(ChildNodes::size_type i = 0; i < size; ++i) {
-		mChildren[i]->UpdatePosition();
+	SceneNode* child = mChildren.First();
+	while(child != NULL) {
+		child->UpdatePosition();
+		child = child->NodeLink.Tail;
 	}
-}
-
-const Vector3& SceneNode::GetPosition() const
-{
-	return mPosition;
-}
-
-const Vector3& SceneNode::GetAbsolutePosition() const
-{
-	return mAbsolutePosition;
 }
 
 void SceneNode::UpdatePosition()
@@ -140,20 +114,11 @@ void SceneNode::SetRotation(const Vector3& rotation)
 	
 	UpdateModelMatrix();
 	
-	ChildNodes::size_type size = mChildren.size();
-	for(ChildNodes::size_type i = 0; i < size; ++i) {
-		mChildren[i]->UpdateRotation();
+	SceneNode* child = mChildren.First();
+	while(child != NULL) {
+		child->UpdateRotation();
+		child = child->NodeLink.Tail;
 	}
-}
-
-const Vector3& SceneNode::GetRotation() const
-{
-	return mRotation;
-}
-
-const Vector3& SceneNode::GetAbsoluteRotation() const
-{
-	return mAbsoluteRotation;
 }
 
 void SceneNode::UpdateRotation()
@@ -169,21 +134,6 @@ void SceneNode::UpdateModelMatrix()
 		mModelMatrix = Matrix4x4::Rotation(mAbsoluteRotation) * Matrix4x4::Translation(mAbsolutePosition);
 	else
 		mModelMatrix = Matrix4x4::Translation(mAbsolutePosition);
-}
-
-const Matrix4x4& SceneNode::GetModelMatrix() const
-{
-	return mModelMatrix;
-}
-
-type_mask SceneNode::GetTypeMask() const
-{
-	return mTypeMask;
-}
-
-SceneGroup* SceneNode::GetGroup()
-{
-	return mSceneGroup;
 }
 
 void SceneNode::RemoveFromScene()
@@ -221,11 +171,6 @@ void SceneNode::DetachingNodeFromSceneGroup(SceneGroup* group)
 	}
 
 	mSceneGroup = NULL;
-}
-
-bool SceneNode::IsAttachedToSceneGroup() const
-{
-	return mSceneGroup != NULL;
 }
 
 namespace playstate

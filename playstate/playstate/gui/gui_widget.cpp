@@ -4,20 +4,44 @@
 using namespace playstate;
 
 GuiWidget::GuiWidget()
-	: mCanvasGroup(NULL)
+	: mCanvasGroup(NULL), mParent(NULL), mEvents(offsetof(GuiEvent, EventLink))
 {
 }
 
 GuiWidget::GuiWidget(CanvasGroup* group)
-	: mCanvasGroup(NULL)
+	: mCanvasGroup(NULL), mParent(NULL), mEvents(offsetof(GuiEvent, EventLink))
 {
 	assert_not_null(group);
 	group->AddWidget(this);
 }
 
+GuiWidget::GuiWidget(GuiWidget* parent)
+	: mCanvasGroup(NULL), mParent(parent), mEvents(offsetof(GuiEvent, EventLink))
+{
+	assert_not_null(parent);
+	if(parent != NULL)
+		mCanvasGroup = parent->GetCanvasGroup();
+
+	if(mCanvasGroup != NULL)
+		mCanvasGroup->AddWidget(this);
+}
+
 GuiWidget::~GuiWidget()
 {
 	mEvents.DeleteAll();
+
+	Children::iterator it = mChildren.begin();
+	while(it != mChildren.end()) {
+		GuiWidget* widget = *it;
+		it++;
+		widget->mParent = NULL;
+		delete widget;
+	}
+
+	if(mParent != NULL) {
+		mParent->RemoveWidget(this);
+	}
+	
 	mCanvasGroup = NULL;
 }
 
@@ -90,7 +114,19 @@ const Vector2& GuiWidget::GetSize() const
 
 void GuiWidget::SetPosition(const Vector2& position)
 {
+	Vector2 diff = position - mPosition;
 	mPosition = position;
+	mAbsolutePosition += diff;
+	
+	Children::size_type size = mChildren.size();
+	for(Children::size_type i = 0; i < size; ++i) {
+		mChildren[i]->UpdatePosition();
+	}
+}
+
+const Vector2& GuiWidget::GetAbsolutePosition() const
+{
+	return mAbsolutePosition;
 }
 
 void GuiWidget::SetSize(const Vector2& size)
@@ -101,6 +137,43 @@ void GuiWidget::SetSize(const Vector2& size)
 const void GuiWidget::BuildWidgetGeometry(GuiGeometryBuilder& builder) const
 {
 
+}
+
+void GuiWidget::AddWidget(GuiWidget* widget)
+{
+	assert_not_null(widget);
+
+	mChildren.push_back(widget);
+	widget->mParent = this;
+
+	// Remove this nodes link from the scene to prevent the LinkedList implementation from removing the "List->Next" element
+	//widget->RemoveFromScene();
+
+	widget->UpdatePosition();
+	//widget->UpdateRotation();
+}
+
+void GuiWidget::RemoveWidget(GuiWidget* widget)
+{
+	assert_not_null(widget);
+	assert(widget->mParent == this && "You are not allowed to remove another scene objects child node");
+
+	Children::iterator it = std::find(mChildren.begin(), mChildren.end(), widget);
+	if(it != mChildren.end()) {
+		mChildren.erase(it);
+		widget->mParent = NULL;
+	}
+}
+
+void GuiWidget::UpdatePosition()
+{
+	assert(mParent != NULL && "Illegal call when no parent is found for this object");
+	mAbsolutePosition = mParent->mAbsolutePosition + mPosition;
+
+	Children::size_type size = mChildren.size();
+	for(Children::size_type i = 0; i < size; ++i) {
+		mChildren[i]->UpdatePosition();
+	}
 }
 
 int playstate::GuiWidget_SetPosition(lua_State* L)
@@ -122,5 +195,25 @@ int playstate::GuiWidget_SetSize(lua_State* L)
 		widget->SetSize(size);
 	}
 
+	return 0;
+}
+
+int playstate::GuiWidget_AddWidget(lua_State* L)
+{
+	GuiWidget* child = luaM_popobject<GuiWidget>(L);
+	GuiWidget* self = luaM_popobject<GuiWidget>(L);
+	if(self != NULL && child != NULL) {
+		self->AddWidget(child);
+	}
+	return 0;
+}
+
+int playstate::GuiWidget_RemoveWidget(lua_State* L)
+{
+	GuiWidget* child = luaM_popobject<GuiWidget>(L);
+	GuiWidget* self = luaM_popobject<GuiWidget>(L);
+	if(self != NULL && child != NULL) {
+		self->RemoveWidget(child);
+	}
 	return 0;
 }

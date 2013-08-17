@@ -6,7 +6,7 @@ using namespace playstate;
 SceneGroup::SceneGroup()
 	: mUpdateProcessor(IUpdateProcessorFactory::Get().Create()),
 	mRenderProcessor(IRenderProcessorFactory::Get().Create()),
-	mLightSourceProcessor(ILightSourceProcessorFactory::Get().Create()), mUpdating(false)
+	mLightSourceProcessor(ILightSourceProcessorFactory::Get().Create()), mUpdating(false), mSceneNodes(offsetof(SceneNode, NodeLink))
 {
 	assert(mUpdateProcessor != NULL && "IUpdateProcessorFactory did not create a valid update processor");
 	assert(mRenderProcessor != NULL && "IRenderProcessorFactory did not create a valid render processor");
@@ -17,7 +17,7 @@ SceneGroup::SceneGroup(IUpdateProcessorFactory& updateProcessFactory, IRenderPro
 	ILightSourceProcessorFactory& lightSourceProcessorFactory)
 	: mUpdateProcessor(updateProcessFactory.Create()),
 	mRenderProcessor(renderProcessFactory.Create()),
-	mLightSourceProcessor(lightSourceProcessorFactory.Create()), mUpdating(false)
+	mLightSourceProcessor(lightSourceProcessorFactory.Create()), mUpdating(false), mSceneNodes(offsetof(SceneNode, NodeLink))
 {
 	assert(mUpdateProcessor != NULL && "IUpdateProcessorFactory did not create a valid update processor");
 	assert(mRenderProcessor != NULL && "IRenderProcessorFactory did not create a valid render processor");

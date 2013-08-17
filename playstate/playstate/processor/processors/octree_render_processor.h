@@ -24,7 +24,7 @@ namespace playstate
 		virtual bool Find(const FindQuery& query, RenderBlockResultSet* target) const;
 
 	private:
-		LinkedList<Renderable, &Renderable::RenderableLink> mRenderables;
+		LinkedList<Renderable> mRenderables;
 		Octree mOctree;
 	};
 

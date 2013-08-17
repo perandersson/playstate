@@ -19,7 +19,7 @@ namespace playstate
 		virtual bool Find(const FindQuery& query, LightSourceResultSet* target) const;
 
 	private:
-		LinkedList<LightSource, &LightSource::LightSourceLink> mLightSources;
+		LinkedList<LightSource> mLightSources;
 		Octree mOctree;
 	};
 
