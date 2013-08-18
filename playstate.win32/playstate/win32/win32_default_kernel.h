@@ -30,7 +30,7 @@ namespace playstate
 		class Win32DefaultKernel : public IKernel
 		{
 		public:
-			Win32DefaultKernel(HINSTANCE app, const std::string& fileSystemPath);
+			Win32DefaultKernel(HINSTANCE app, const playstate::string& fileSystemPath);
 			virtual ~Win32DefaultKernel();
 
 		// IKernel

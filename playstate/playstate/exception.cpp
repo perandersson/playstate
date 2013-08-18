@@ -10,9 +10,9 @@ using playstate::uint64;
 Exception::Exception(const char* function, const long line, const char* file)
 	: mFunction(function), mLine(line), mFile(file)
 {
-	std::string::size_type index = mFile.find(std::string("\\playstate\\"));
-	if(index == std::string::npos) {
-		index = mFile.find(std::string("/playstate/"));
+	playstate::string::size_type index = mFile.find(playstate::string("\\playstate\\"));
+	if(index == playstate::string::npos) {
+		index = mFile.find(playstate::string("/playstate/"));
 	}
 
 	mFile = mFile.substr(index);
@@ -29,17 +29,17 @@ void Exception::SetMessage(const char* format, va_list argp)
 	mMessage = tmp;
 }
 
-const std::string& Exception::GetMessage() const
+const playstate::string& Exception::GetMessage() const
 {
 	return mMessage;
 }
 
-const std::string& Exception::GetFunction() const
+const playstate::string& Exception::GetFunction() const
 {
 	return mFunction;
 }
 
-const std::string& Exception::GetFile() const
+const playstate::string& Exception::GetFile() const
 {
 	return mFile;
 }

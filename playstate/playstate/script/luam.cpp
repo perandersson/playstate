@@ -51,7 +51,7 @@ namespace playstate
 		assert_not_null(L);
 		assert_not_null(className);
 
-		const std::string metaName = std::string(className) + "_mt";
+		const playstate::string metaName = playstate::string(className) + "_mt";
 
 		lua_newtable(L);
 
@@ -232,6 +232,9 @@ namespace playstate
 			if(lua_isnumber(L, -1)) {
 				*colors++ = lua_tonumber(L, -1); lua_pop(L, 1);
 			}
+		} else if(lua_isstring(L, -1)) {
+			playstate::string hex = lua_tostring(L, -1); lua_pop(L, 1);
+			color = Color::HexToRGB(hex.c_str());
 		}
 
 		if(numElements == 1) {
@@ -240,7 +243,7 @@ namespace playstate
 			color.Alpha = 1.0f;
 		}
 
-		return Color::Nothing;
+		return color;
 	}
 
 	void luaM_printerror(lua_State* L, const char* msg)

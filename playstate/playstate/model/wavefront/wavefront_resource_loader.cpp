@@ -28,17 +28,17 @@ WavefrontResourceLoader::~WavefrontResourceLoader()
 ResourceObject* WavefrontResourceLoader::Load(IFile& file)
 {	
 	std::istringstream dataStream = file.Read();
-	std::string path = file.GetPath();
+	playstate::string path = file.GetPath();
 
 	Materials materials;
 	
 	AABB boundingBox;
 	std::vector<WavefrontMesh*> meshes;
 
-	std::string word;
+	playstate::string word;
 	while(!dataStream.eof() && (dataStream >> word)) {
 		if(word == "mtllib") {
-			std::string objectName;
+			playstate::string objectName;
 			dataStream >> objectName;
 			std::auto_ptr<IFile> materialsFile = file.OpenFile(objectName);
 			if(materialsFile->Exists()) {
@@ -46,7 +46,7 @@ ResourceObject* WavefrontResourceLoader::Load(IFile& file)
 			} 
 			continue;
 		} else if(word == "o") {
-			std::string objectName;
+			playstate::string objectName;
 			dataStream >> objectName;
 			LoadMesh(dataStream, meshes, boundingBox);
 		}
@@ -86,7 +86,7 @@ void WavefrontResourceLoader::LoadMaterials(IFile& file, Materials& materials) c
 	std::istringstream dataStream = file.Read();
 
 	WavefrontMaterial* currentMaterial = NULL;
-	std::string word;
+	playstate::string word;
 	while(!dataStream.eof() && (dataStream >> word)) {
 		if(word == "newmtl") {
 			if(currentMaterial != NULL)
@@ -122,18 +122,18 @@ void WavefrontResourceLoader::LoadMaterials(IFile& file, Materials& materials) c
 			dataStream >> currentMaterial->Alpha;
 			continue;
 		} else if(word == "map_Ka") {
-			std::string ambientTexture;
+			playstate::string ambientTexture;
 			std::getline(dataStream, ambientTexture);
 			if(ambientTexture.length() > 0) {
 				currentMaterial->AmbientTexture = mResourceManager.GetResource<Texture2D>(ambientTexture);
 			}
 			continue;
 		} else if(word == "map_Kd") {
-			std::string diffuseTexture;
+			playstate::string diffuseTexture;
 			dataStream >> diffuseTexture;
 			if(diffuseTexture.length() > 0) {
 				std::auto_ptr<IFile> textureFile = file.OpenFile(diffuseTexture);
-				std::string path = "/defaults/texture2d.png";
+				playstate::string path = "/defaults/texture2d.png";
 				if(textureFile->Exists()) {
 					path = textureFile->GetPath();
 				}
@@ -141,35 +141,35 @@ void WavefrontResourceLoader::LoadMaterials(IFile& file, Materials& materials) c
 			}
 			continue;
 		} else if(word == "map_Ks") {
-			std::string specularTexture;
+			playstate::string specularTexture;
 			dataStream >> specularTexture;
 			if(specularTexture.length() > 0) {
 				currentMaterial->SpecularTexture = mResourceManager.GetResource<Texture2D>(specularTexture);
 			}
 			continue;
 		} else if(word == "map_Ns") {
-			std::string specularHighlightTexture;
+			playstate::string specularHighlightTexture;
 			std::getline(dataStream, specularHighlightTexture);
 			if(specularHighlightTexture.length() > 0) {
 				currentMaterial->SpecularHighlightTexture = mResourceManager.GetResource<Texture2D>(specularHighlightTexture);
 			}
 			continue;
 		} else if((word == "map_d") || (word == "map_Tr")) {
-			std::string alphaTexture;
+			playstate::string alphaTexture;
 			std::getline(dataStream, alphaTexture);
 			if(alphaTexture.length() > 0) {
 				currentMaterial->AlphaTexture = mResourceManager.GetResource<Texture2D>(alphaTexture);
 			}
 			continue;
 		} else if(word == "bump") {
-			std::string bumpMap;
+			playstate::string bumpMap;
 			std::getline(dataStream, bumpMap);
 			if(bumpMap.length() > 0) {
 				currentMaterial->BumpMap = mResourceManager.GetResource<Texture2D>(bumpMap);
 			}
 			continue;
 		} else if(word == "disp") {
-			std::string displacementMap;
+			playstate::string displacementMap;
 			std::getline(dataStream, displacementMap);
 			if(displacementMap.length() > 0) {
 				currentMaterial->DisplacementMap = mResourceManager.GetResource<Texture2D>(displacementMap);
@@ -220,8 +220,8 @@ void WavefrontResourceLoader::LoadMesh(std::istringstream& stream, std::vector<W
 	float minDepth = FLT_MAX;
 	float minHeight = FLT_MAX;
 
-	std::string currentMaterial;
-	std::string word;
+	playstate::string currentMaterial;
+	playstate::string word;
 	while(!stream.eof() && (stream >> word)) {
 		if(word == "v") {
 			Vector3 vertex;
@@ -275,25 +275,25 @@ void WavefrontResourceLoader::LoadMesh(std::istringstream& stream, std::vector<W
 			for(int i = 0; i < 3; ++i) {
 				int v = -1, vt = -1, vn = -1;
 
-				std::string face;
+				playstate::string face;
 				if(!(stream >> face))
 					continue;
 
-				std::vector<std::string> parts = Split(face, '/');
-				std::stringstream ss(parts[0]);
+				std::vector<playstate::string> parts = Split(face, '/');
+				playstate::stringstream ss(parts[0]);
 				
 				ss >> v;
 				v--;
 
 				if(parts.size() > 1) {
-					ss = std::stringstream(parts[1]);
+					ss = playstate::stringstream(parts[1]);
 
 					ss >> vt;
 					vt--;
 				}
 				
 				if(parts.size() > 2) {
-					ss = std::stringstream(parts[2]);
+					ss = playstate::stringstream(parts[2]);
 
 					ss >> vn;
 					vn--;

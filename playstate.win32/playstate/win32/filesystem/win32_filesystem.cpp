@@ -8,13 +8,13 @@
 using namespace playstate;
 using namespace playstate::win32;
 
-Win32FileSystem::Win32FileSystem(const std::string& path)
+Win32FileSystem::Win32FileSystem(const playstate::string& path)
 	: mPaths(), mFileWatcher(path)
 {
 	mPaths.push_back(path);
 }
 
-Win32FileSystem::Win32FileSystem(const std::vector<std::string>& paths)
+Win32FileSystem::Win32FileSystem(const std::vector<playstate::string>& paths)
 	: mPaths(paths), mFileWatcher(paths[0])
 {
 }
@@ -23,7 +23,7 @@ Win32FileSystem::~Win32FileSystem()
 {
 }
 
-std::auto_ptr<IFile> Win32FileSystem::OpenFile(const std::string& path) const
+std::auto_ptr<IFile> Win32FileSystem::OpenFile(const playstate::string& path) const
 {
 	// Unknown if the path is relative - must start with a '/'
 	if(IsRelative(path))
@@ -38,12 +38,12 @@ std::auto_ptr<IFile> Win32FileSystem::OpenFile(const std::string& path) const
 
 std::auto_ptr<IDirectory> Win32FileSystem::OpenRootDir() const
 {
-	std::string path = "/";
+	playstate::string path = "/";
 	HANDLE fileHandle = GetHighestPriorityPathHandle(path);
 	return std::auto_ptr<IDirectory>(new Win32Directory(*this, fileHandle, path));
 }
 
-std::auto_ptr<IDirectory> Win32FileSystem::OpenDirectory(const std::string& path) const
+std::auto_ptr<IDirectory> Win32FileSystem::OpenDirectory(const playstate::string& path) const
 {
 	// Unknown if the path is relative - must start with a '/'
 	if(IsRelative(path))
@@ -56,11 +56,11 @@ std::auto_ptr<IDirectory> Win32FileSystem::OpenDirectory(const std::string& path
 		return std::auto_ptr<IDirectory>(new Win32Directory(*this));
 }
 
-HANDLE Win32FileSystem::GetHighestPriorityPathHandle(const std::string& path) const
+HANDLE Win32FileSystem::GetHighestPriorityPathHandle(const playstate::string& path) const
 {
-	std::vector<std::string>::size_type size = mPaths.size();
-	for(std::vector<std::string>::size_type i = 0; i < mPaths.size(); ++i) {
-		std::string absolutePath = mPaths[i] + path;
+	std::vector<playstate::string>::size_type size = mPaths.size();
+	for(std::vector<playstate::string>::size_type i = 0; i < mPaths.size(); ++i) {
+		playstate::string absolutePath = mPaths[i] + path;
 		HANDLE handle = CreateFile(absolutePath.c_str(), GENERIC_READ, FILE_SHARE_READ, 
 				NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
@@ -78,7 +78,7 @@ HANDLE Win32FileSystem::GetHighestPriorityPathHandle(const std::string& path) co
 	return NULL;
 }
 
-bool Win32FileSystem::IsRelative(const std::string& path) const
+bool Win32FileSystem::IsRelative(const playstate::string& path) const
 {
 	if(path.empty())
 		return true;
@@ -86,12 +86,12 @@ bool Win32FileSystem::IsRelative(const std::string& path) const
 	return path.c_str()[0] != L'/';
 }
 
-void Win32FileSystem::AddLookupDirectory(const std::string& path)
+void Win32FileSystem::AddLookupDirectory(const playstate::string& path)
 {
 	mPaths.push_back(path);
 }
 
-void Win32FileSystem::RemoveLookupDirectory(const std::string& path)
+void Win32FileSystem::RemoveLookupDirectory(const playstate::string& path)
 {
 	Paths::iterator it = std::find(mPaths.begin(), mPaths.end(), path);
 	if(it != mPaths.end())
@@ -103,16 +103,16 @@ void Win32FileSystem::Poll()
 	mFileWatcher.LookForChanges();
 }
 
-void Win32FileSystem::AddFileChangedListener(const std::regex& regex, IFileChangedListener* listener)
+void Win32FileSystem::AddFileChangedListener(const playstate::regex& regex, IFileChangedListener* listener)
 {
 	mFileWatcher.AddListener(regex, listener);
 }
 
-void Win32FileSystem::AddFileChangedListener(const std::string& path, IFileChangedListener* listener)
+void Win32FileSystem::AddFileChangedListener(const playstate::string& path, IFileChangedListener* listener)
 {
-	std::string dotsSlash = ReplaceString(path, '.', std::string("\\."));
-	std::string end("$");
-	std::regex r(dotsSlash + end);
+	playstate::string dotsSlash = ReplaceString(path, '.', playstate::string("\\."));
+	playstate::string end("$");
+	playstate::regex r(dotsSlash + end);
 	mFileWatcher.AddListener(r, listener);
 }
 

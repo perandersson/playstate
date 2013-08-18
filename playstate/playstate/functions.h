@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include <string>
+#include "types.h"
 
 namespace playstate
 {
@@ -11,11 +11,11 @@ namespace playstate
 	// @param str
 	// @param delim
 	// @return 
-	std::vector<std::string> Split(const std::string& str, const char delim);
+	std::vector<playstate::string> Split(const playstate::string& str, const char delim);
 
 	//
 	// Replaces a supplied string with a new one.
-	std::string ReplaceString(const std::string& value, const char replace, const std::string& newval);
+	playstate::string ReplaceString(const playstate::string& value, const char replace, const playstate::string& newval);
 	
 #ifdef _UNICODE
 	// 

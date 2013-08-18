@@ -11,6 +11,7 @@ namespace playstate
 	{
 	public:
 		enum Enum {
+			R,
 			RGB, 
 			RGBA,
 			RGBA8,

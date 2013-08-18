@@ -50,7 +50,7 @@ protected:
 		lua_pushnumber(L, value);
 	}
 
-	void push(const std::string& value)
+	void push(const playstate::string& value)
 	{
 		lua_pushstring(L, value.c_str());
 	}
@@ -70,7 +70,7 @@ protected:
 		value = lua_tonumber(L, -1);
 	}
 
-	void get(std::string& value) const 
+	void get(playstate::string& value) const 
 	{
 		 value = (char*)lua_tostring(L, -1);
 	}
@@ -101,7 +101,7 @@ public:
 
 		if(lua_pcall(L, 4, 1, 0) != 0)
 		{
-			std::string err = lua_tostring(L, -1); lua_pop(L, 1);
+			playstate::string err = lua_tostring(L, -1); lua_pop(L, 1);
 			THROW_EXCEPTION(ScriptException, "Could not invoke method. Reason: %s", err.c_str());
 		}
 
@@ -126,7 +126,7 @@ public:
 		push(a3);
 
 		if(lua_pcall(L, 3, 1, 0) != 0) {
-			std::string err = lua_tostring(L, -1); lua_pop(L, 1);
+			playstate::string err = lua_tostring(L, -1); lua_pop(L, 1);
 			THROW_EXCEPTION(ScriptException, "Could not invoke method. Reason: %s", err.c_str());
 		}
 
@@ -150,7 +150,7 @@ public:
 		push(a2);
 
 		if(lua_pcall(L, 2, 1, 0) != 0) {
-			std::string err = lua_tostring(L, -1); lua_pop(L, 1);
+			playstate::string err = lua_tostring(L, -1); lua_pop(L, 1);
 			THROW_EXCEPTION(ScriptException, "Could not invoke method. Reason: %s", err.c_str());
 		}
 
@@ -173,7 +173,7 @@ public:
 		push(a1);
 
 		if(lua_pcall(L, 1, 1, 0) != 0) {
-			std::string err = lua_tostring(L, -1); lua_pop(L, 1);
+			playstate::string err = lua_tostring(L, -1); lua_pop(L, 1);
 			THROW_EXCEPTION(ScriptException, "Could not invoke method. Reason: %s", err.c_str());
 		}
 
@@ -193,7 +193,7 @@ public:
 		TR returnValue;
 
 		if(lua_pcall(L, 0, 1, 0) != 0) {
-			std::string err = lua_tostring(L, -1); lua_pop(L, 1);
+			playstate::string err = lua_tostring(L, -1); lua_pop(L, 1);
 			THROW_EXCEPTION(ScriptException, "Could not invoke method. Reason: %s", err.c_str());
 		}
 
@@ -211,7 +211,7 @@ public:
 	void call(void)
 	{
 		if(lua_pcall(L, 0, 0, 0) != 0) {
-			std::string err = lua_tostring(L, -1); lua_pop(L, 1);
+			playstate::string err = lua_tostring(L, -1); lua_pop(L, 1);
 			THROW_EXCEPTION(ScriptException, "Could not invoke method. Reason: %s", err.c_str());
 		}
 	}

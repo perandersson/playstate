@@ -8,7 +8,7 @@
 using namespace playstate;
 using namespace playstate::win32;
 
-Win32FileWatcher::Win32FileWatcher(const std::string& rootDirPath)
+Win32FileWatcher::Win32FileWatcher(const playstate::string& rootDirPath)
 	: mRootDirHandle(INVALID_HANDLE_VALUE), mThread(NULL), mListenersLock(NULL), mFileEventsLock(NULL)
 {
 	mRootDirHandle = CreateFile(rootDirPath.c_str(), GENERIC_READ, 
@@ -70,7 +70,7 @@ void Win32FileWatcher::GetAndClearEvents(FileEvents& events)
 	mFileEvents.clear();
 }
 
-void Win32FileWatcher::AddListener(const std::regex& regex, IFileChangedListener* listener)
+void Win32FileWatcher::AddListener(const playstate::regex& regex, IFileChangedListener* listener)
 {
 	ScopedLock s(mListenersLock);
 
@@ -106,7 +106,7 @@ void Win32FileWatcher::Run(IThread& thread)
 	DWORD bytesret;
 	TCHAR szFile[MAX_PATH];
 
-	std::string prevFile;
+	playstate::string prevFile;
 	uint32 timestamp = GetTickCount();
 	
 	while(ReadDirectoryChangesW(mRootDirHandle, bytes, sizeof(bytes), TRUE, FILE_NOTIFY_CHANGE_LAST_WRITE, &bytesret, NULL, NULL) == TRUE && 
@@ -129,7 +129,7 @@ void Win32FileWatcher::Run(IThread& thread)
 			int count = WideCharToMultiByte(CP_ACP, 0, pNotify->FileName, pNotify->FileNameLength / sizeof(WCHAR),
 										szFile, MAX_PATH - 1, NULL, NULL);
 			szFile[count] = 0;
-			std::string fileName = "/";
+			playstate::string fileName = "/";
 			fileName += szFile;
 			std::replace(fileName.begin(), fileName.end(), '\\', '/');
 

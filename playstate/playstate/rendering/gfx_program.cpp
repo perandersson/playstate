@@ -154,7 +154,7 @@ void GfxProgram::Prepare(const ScriptCollection& collection)
 
 		glGetActiveUniform(mProgramId, uniformIndex, sizeof(nameData), &actualLength, &arraySize, &type, nameData);
 		nameData[actualLength] = 0;
-		std::string name = nameData;
+		playstate::string name = nameData;
 
 		GLint componentId = glGetUniformLocation(mProgramId, name.c_str());
 		IGfxProgramComponent* component = NULL;
@@ -167,16 +167,16 @@ void GfxProgram::Prepare(const ScriptCollection& collection)
 		} else if(type == GL_FLOAT_MAT4) {
 			component = new MatrixGfxProgramComponent(*this, componentId, type);
 		} else if(type == GL_SAMPLER_2D) {
-			const std::string minFilterKey = std::string(nameData) + ".MinFilter";
+			const playstate::string minFilterKey = playstate::string(nameData) + ".MinFilter";
 			MinFilter::Enum minFilter = (MinFilter::Enum)collection.FindInt(minFilterKey.c_str(), MinFilter::Default);
 			
-			const std::string magFilterKey = std::string(nameData) + ".MagFilter";
+			const playstate::string magFilterKey = playstate::string(nameData) + ".MagFilter";
 			MagFilter::Enum magFilter = (MagFilter::Enum)collection.FindInt(magFilterKey.c_str(), MagFilter::Default);
 			
-			const std::string wrapsKey = std::string(nameData) + ".Wrap.S";
+			const playstate::string wrapsKey = playstate::string(nameData) + ".Wrap.S";
 			TextureWrap::Enum wraps = (TextureWrap::Enum)collection.FindInt(wrapsKey.c_str(), TextureWrap::Default);
 			
-			const std::string wraptKey = std::string(nameData) + ".Wrap.T";
+			const playstate::string wraptKey = playstate::string(nameData) + ".Wrap.T";
 			TextureWrap::Enum wrapt = (TextureWrap::Enum)collection.FindInt(wraptKey.c_str(), TextureWrap::Default);
 
 			component = new Sampler2DGfxProgramComponent(*this, componentId, minFilter, magFilter, wraps, wrapt);
@@ -201,10 +201,10 @@ void GfxProgram::ApplyComponents()
 
 IGfxProgramComponent* GfxProgram::FindComponent(const char* name)
 {
-	return FindComponent(std::string(name));
+	return FindComponent(playstate::string(name));
 }
 
-IGfxProgramComponent* GfxProgram::FindComponent(const std::string& name)
+IGfxProgramComponent* GfxProgram::FindComponent(const playstate::string& name)
 {
 	IGfxProgramComponent* component = NULL;
 	ComponentMap::iterator it = mComponents.find(name);

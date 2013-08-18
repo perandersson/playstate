@@ -96,12 +96,12 @@ void Win32Window::Resize(uint32 width, uint32 height)
 	mPrevHeight = mHeight;
 }
 
-const std::string& Win32Window::GetTitle() const
+const playstate::string& Win32Window::GetTitle() const
 {
 	return mWindowTitle;
 }
 
-void Win32Window::SetTitle(const std::string& title)
+void Win32Window::SetTitle(const playstate::string& title)
 {
 	mWindowTitle = title;
 	SetWindowText(mWindowHandle, title.c_str());

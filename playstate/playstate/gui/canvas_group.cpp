@@ -77,6 +77,16 @@ const Vector2& CanvasGroup::GetSize() const
 	return mSize;
 }
 
+void CanvasGroup::SetStyle(const GuiStyle& style)
+{
+	mStyle = style;
+	GuiWidget* widget = mWidgets.First();
+	while(widget != NULL) {
+		widget->UpdateStyle(mStyle);
+		widget = widget->GuiWidgetLink.Tail;
+	}
+}
+
 const bool CanvasGroup::BuildWidgetGeometry(GuiGeometryBuilder& builder) const
 {
 	GuiWidget* widget = mWidgets.First();
@@ -96,7 +106,7 @@ int playstate::CanvasGroup_Factory(lua_State* L)
 
 int playstate::CanvasGroup_Load(lua_State* L)
 {
-	const std::string fileName = lua_tostring(L, -1); lua_pop(L, 1);
+	const playstate::string fileName = lua_tostring(L, -1); lua_pop(L, 1);
 	try {
 		ScriptSystem& scriptSystem = ScriptSystem::Get();
 		std::auto_ptr<Script> script = scriptSystem.CompileFile(fileName);
@@ -114,4 +124,16 @@ int playstate::CanvasGroup_Load(lua_State* L)
 		
 	lua_pushnil(L);
 	return 1;
+}
+
+int playstate::CanvasGroup_SetStyle(lua_State* L)
+{
+	bool istable = lua_istable(L, -1);
+	int configRef = luaL_ref(L, LUA_REGISTRYINDEX);
+	GuiStyle style(L, configRef);
+	CanvasGroup* self = luaM_popobject<CanvasGroup>(L);
+	if(self != NULL) {
+		self->SetStyle(style);
+	}
+	return 0;
 }

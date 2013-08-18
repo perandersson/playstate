@@ -1,8 +1,8 @@
 #pragma once
 
 #include "../rendering/render_system.h"
-#include "../math/rect.h"
 #include "../memory/memory_pool.h"
+#include "font/font.h"
 
 namespace playstate
 {
@@ -36,6 +36,17 @@ namespace playstate
 		void AddGradientQuad(const Vector2& position, const Vector2& size, const Color& topColor, const Color& bottomColor);
 		void AddGradientQuad(const Vector2& position, const Vector2& size, const Color& topLeftColor, const Color& topRightColor,
 			const Color& bottomLeftColor, const Color& bottomRightColor);
+
+		//
+		// Adds text into the geometry buffer at the supplied position
+		//
+		// @param font
+		// @param position
+		// @param color
+		// @param text
+		void AddText(Font* font, const Vector2& position, const Color& color, const playstate::string& text);
+		void AddText(Font* font, const Vector2& position, const Color& color, const playstate::string& text, uint32 maxLenght);
+		void AddText(Font* font, const Vector2& position, const Color& color, const playstate::string& text, const Vector2& maxSize);
 
 		//
 		// @return The build vertex buffer

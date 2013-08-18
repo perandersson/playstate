@@ -13,7 +13,7 @@ namespace playstate
 
 		//
 		// Creates a new gfx program based on the supplied file
-		GfxProgram* Create(const std::string& fileName);
+		GfxProgram* Create(const playstate::string& fileName);
 
 	private:
 		RenderSystem& mRenderSystem;

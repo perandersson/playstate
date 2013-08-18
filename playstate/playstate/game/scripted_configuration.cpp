@@ -31,7 +31,7 @@ bool ScriptedConfiguration::FindBool(const char* key, bool defaultVal) const
 	return mScriptCollection->FindBool(key, defaultVal);
 }
 
-std::string ScriptedConfiguration::FindString(const char* key, const char* defaultVal) const
+playstate::string ScriptedConfiguration::FindString(const char* key, const char* defaultVal) const
 {
 	return mScriptCollection->FindString(key, defaultVal);
 }

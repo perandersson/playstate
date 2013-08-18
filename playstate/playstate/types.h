@@ -1,5 +1,7 @@
 #pragma once
 #include <string>
+#include <regex>
+#include <sstream>
 
 #ifdef __GNUC__
 #include <ext/hash_map>
@@ -33,9 +35,21 @@ namespace playstate
 	typedef float float32;
 	typedef double float64;
 
-	typedef char byte;
+	typedef unsigned char byte;
 
 	typedef uint32 type_mask;
+
+#ifdef _UNICODE
+	typedef std::wstring string;
+	typedef wchar_t character;
+	typedef std::wregex regex;
+	typedef std::wstringstream stringstream;
+#else
+	typedef std::string string;
+	typedef char character;
+	typedef std::regex regex;
+	typedef std::stringstream stringstream;
+#endif
 }
 
 #ifndef ALIGN_DATA

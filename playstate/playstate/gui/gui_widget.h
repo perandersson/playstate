@@ -2,6 +2,7 @@
 #include "../linked_list.h"
 #include "../script/scriptable.h"
 #include "gui_event.h"
+#include "gui_style.h"
 #include "../math/vector2.h"
 #include "gui_geometry_builder.h"
 
@@ -55,6 +56,11 @@ namespace playstate
 		void DetachingWidgetFromCanvasGroup(CanvasGroup* group);
 
 		//
+		// Notify this widget that the graphical style has been changed on the canvas.
+		//
+		void UpdateStyle(const GuiStyle& style);
+
+		//
 		// @return TRUE if this widget control is attached to a canvas group.
 		inline bool IsAttachedToGroup() const {
 			return mCanvasGroup != NULL;
@@ -85,7 +91,7 @@ namespace playstate
 		//
 		// Sets this widgets size
 		void SetSize(const Vector2& size);
-
+		
 		//
 		// Builds this GUI widgets geometry in preperation for drawing it onto the screen.
 		virtual const void BuildWidgetGeometry(GuiGeometryBuilder& builder) const;
@@ -107,6 +113,12 @@ namespace playstate
 		// Updates the absolute position value based on the parents position
 		void UpdatePosition();
 
+		//
+		// Method called when this gui widgets style has been changed
+		// 
+		// @param style The new style
+		virtual void OnStyleChanged(const GuiStyle& style);
+
 	private:
 		CanvasGroup* mCanvasGroup;
 		GuiWidget* mParent;
@@ -117,6 +129,8 @@ namespace playstate
 		Vector2 mPosition;
 		Vector2 mAbsolutePosition;
 		Vector2 mSize;
+		Color mBackColorTop;
+		Color mBackColorBottom;
 	};
 	
 	// Script integration

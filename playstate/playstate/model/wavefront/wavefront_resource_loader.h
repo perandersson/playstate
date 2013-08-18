@@ -14,7 +14,7 @@ namespace playstate
 	{	
 		struct WavefrontMaterial
 		{
-			std::string Name;
+			playstate::string Name;
 			Resource<Texture2D> DiffuseTexture;
 			Resource<Texture2D> AmbientTexture;
 			Resource<Texture2D> SpecularTexture;
@@ -31,11 +31,11 @@ namespace playstate
 
 		struct WavefrontMesh
 		{
-			std::string Material;
+			playstate::string Material;
 			VertexBuffer* Vertices;
 		};
 
-		typedef std::hash_map<std::string, WavefrontMaterial*> Materials;
+		typedef std::hash_map<playstate::string, WavefrontMaterial*> Materials;
 
 	public:
 		WavefrontResourceLoader(IResourceManager& resourceManager, IFileSystem& fileSystem, RenderSystem& renderSystem);

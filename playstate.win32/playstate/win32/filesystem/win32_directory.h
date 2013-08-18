@@ -14,22 +14,22 @@ namespace playstate
 		{
 		public:
 			Win32Directory(const Win32FileSystem& fileSystem);
-			Win32Directory(const Win32FileSystem& fileSystem, HANDLE handle, const std::string& path);
+			Win32Directory(const Win32FileSystem& fileSystem, HANDLE handle, const playstate::string& path);
 			virtual ~Win32Directory();
 
 		// IDirectory
 		public:
-			virtual std::vector<std::string> GetFiles() const;
-			virtual std::vector<std::string> GetDirectories() const;
-			virtual std::auto_ptr<IFile> OpenFile(const std::string& path) const;
-			virtual std::auto_ptr<IDirectory> OpenDirectory(const std::string& path) const;
-			virtual const std::string& GetPath() const;
+			virtual std::vector<playstate::string> GetFiles() const;
+			virtual std::vector<playstate::string> GetDirectories() const;
+			virtual std::auto_ptr<IFile> OpenFile(const playstate::string& path) const;
+			virtual std::auto_ptr<IDirectory> OpenDirectory(const playstate::string& path) const;
+			virtual const playstate::string& GetPath() const;
 			virtual bool Exists() const;
 		
 		private:
 			const Win32FileSystem& mFileSystem;
 
-			std::string mPath;
+			playstate::string mPath;
 			HANDLE mDirectoryHandle;
 		};
 	}

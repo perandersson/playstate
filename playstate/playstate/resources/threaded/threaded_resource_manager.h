@@ -20,14 +20,14 @@ namespace playstate
 	{
 		struct LoadRequestResponse
 		{
-			std::string Name;
+			playstate::string Name;
 			IResourceLoader* Loader;
 			ResourceData* Data;
 			ResourceObject* LoadedResource;
 		};
 
-		typedef std::hash_map<std::string, IResourceLoader*> Loaders;
-		typedef std::hash_map<std::string, ResourceData*> LoadedResources;
+		typedef std::hash_map<playstate::string, IResourceLoader*> Loaders;
+		typedef std::hash_map<playstate::string, ResourceData*> LoadedResources;
 		typedef std::vector<LoadRequestResponse*> LoadRequests;
 		typedef std::vector<LoadRequestResponse*> LoadResponses;
 
@@ -42,8 +42,8 @@ namespace playstate
 
 	// IResourceManager
 	public:
-		virtual void RegisterResourceType(IResourceLoader*, const std::string& suffix);
-		virtual ResourceData* GetResourceData(const std::string& path);
+		virtual void RegisterResourceType(IResourceLoader*, const playstate::string& suffix);
+		virtual ResourceData* GetResourceData(const playstate::string& path);
 		virtual void UnloadResourceData(ResourceData* data);
 
 	// IRunnable
@@ -51,10 +51,10 @@ namespace playstate
 		virtual void Run(IThread& thread);
 
 	private:
-		IResourceLoader* GetLoaderFromSuffix(const std::string& suffix) const;
-		std::string GetSuffixFromName(const std::string& name) const;
-		void AddLoadRequest(const std::string& name, IResourceLoader* loader, ResourceData* data);
-		ResourceData* LoadResourceAndWait(const std::string& name, IResourceLoader* loader);
+		IResourceLoader* GetLoaderFromSuffix(const playstate::string& suffix) const;
+		playstate::string GetSuffixFromName(const playstate::string& name) const;
+		void AddLoadRequest(const playstate::string& name, IResourceLoader* loader, ResourceData* data);
+		ResourceData* LoadResourceAndWait(const playstate::string& name, IResourceLoader* loader);
 		void GetAndClearLoadRequests(LoadRequests& target);
 		void GetAndClearLoadResponses(LoadResponses& target);
 

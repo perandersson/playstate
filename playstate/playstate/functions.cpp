@@ -5,23 +5,23 @@
 
 namespace playstate
 {
-	std::vector<std::string>& Split(const std::string& str, const char delim, std::vector<std::string>& elems) {
-		std::stringstream ss(str);
-		std::string item;
+	std::vector<playstate::string>& Split(const playstate::string& str, const char delim, std::vector<playstate::string>& elems) {
+		playstate::stringstream ss(str);
+		playstate::string item;
 		while(std::getline(ss, item, delim)) {
 			elems.push_back(item);
 		}
 		return elems;
 	}
 
-	std::vector<std::string> Split(const std::string& str, const char delim) {
-		std::vector<std::string> elems;
+	std::vector<playstate::string> Split(const playstate::string& str, const char delim) {
+		std::vector<playstate::string> elems;
 		return Split(str, delim, elems);
 	}
 
-	std::string ReplaceString(const std::string& value, const char replace, const std::string& newval)
+	playstate::string ReplaceString(const playstate::string& value, const char replace, const playstate::string& newval)
 	{
-		std::string result;
+		playstate::string result;
 		for(size_t i = 0; i < value.size(); ++i) {
 			if(value[i] == replace) {
 				result += newval;

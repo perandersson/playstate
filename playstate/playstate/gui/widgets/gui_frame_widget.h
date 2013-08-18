@@ -13,14 +13,14 @@ namespace playstate
 
 		//
 		// Sets this widgets title 
-		void SetTitle(const std::string& title);
+		void SetTitle(const playstate::string& title);
 
 	// GuiWidget
 	public:
 		virtual const void BuildWidgetGeometry(GuiGeometryBuilder& builder) const;
 
 	private:
-		std::string mTitle;
+		playstate::string mTitle;
 	};
 
 	// Script integration

@@ -23,7 +23,7 @@ int __playstate_delete(lua_State* L)
 
 int __playstate_lua_require(lua_State* L)
 {
-	std::string package = lua_tostring(L, -1);
+	playstate::string package = lua_tostring(L, -1);
 	lua_pop(L, 1);
 		
 	if(package.c_str()[0] != '/') {
@@ -33,15 +33,15 @@ int __playstate_lua_require(lua_State* L)
 			}
 		}
 		package += ".lua";
-		package = std::string("/") + package;
+		package = playstate::string("/") + package;
 	}
 	std::auto_ptr<IFile> file = IFileSystem::Get().OpenFile(package);
 
 	if(file->Exists()) {
-		std::string value = file->Read().str();
+		playstate::string value = file->Read().str();
 		int res = luaL_loadstring(L, value.c_str());
 		if(res != 0) {
-			std::string err = lua_tostring(L, -1);
+			playstate::string err = lua_tostring(L, -1);
 			//Services::Get<ILoggerManager>().Error("Could not load file \"%s\". Reason: %s", err.c_str());
 		}
 	} else {
@@ -59,7 +59,7 @@ ScriptSystem::ScriptSystem(IFileSystem& fileSystem, ILogger& logger)
 	lua_register(mLuaState, "__playstate_lua_require", __playstate_lua_require);
 	int res = luaL_dostring(mLuaState, "table.insert(package.searchers, __playstate_lua_require)");
 	if(res != 0) {
-		std::string err = lua_tostring(mLuaState, -1);
+		playstate::string err = lua_tostring(mLuaState, -1);
 		lua_pop(mLuaState, 1);
 	}
 
@@ -76,7 +76,7 @@ ScriptSystem::~ScriptSystem()
 	}
 }
 
-std::auto_ptr<Script> ScriptSystem::CompileFile(const std::string& fileName)
+std::auto_ptr<Script> ScriptSystem::CompileFile(const playstate::string& fileName)
 {
 	std::auto_ptr<IFile> scriptFile = mFileSystem.OpenFile(fileName);
 	if(!scriptFile->Exists()) {
@@ -85,10 +85,10 @@ std::auto_ptr<Script> ScriptSystem::CompileFile(const std::string& fileName)
 	}
 
 	uint32 stackCount = lua_gettop(mLuaState);
-	std::string value = scriptFile->Read().str();
+	playstate::string value = scriptFile->Read().str();
 	int res = luaL_loadstring(mLuaState, value.c_str());
 	if(res != 0) {
-		std::string err = lua_tostring(mLuaState, -1);
+		playstate::string err = lua_tostring(mLuaState, -1);
 		lua_pop(mLuaState, 1);
 		mLogger.Error("Could not load file: %s. Reason: %s", fileName.c_str(), err.c_str());
 		THROW_EXCEPTION(ScriptException, "Could not load file: %s. Reason: %s", fileName.c_str(), err.c_str());
@@ -96,7 +96,7 @@ std::auto_ptr<Script> ScriptSystem::CompileFile(const std::string& fileName)
 
 	res = lua_pcall(mLuaState, 0, LUA_MULTRET, NULL);
 	if(res != 0) {
-		std::string err = lua_tostring(mLuaState, -1);
+		playstate::string err = lua_tostring(mLuaState, -1);
 		lua_pop(mLuaState, 1);
 		mLogger.Error("Could not compile file: %s. Reason: %s", fileName.c_str(), err.c_str());
 		THROW_EXCEPTION(ScriptException, "Could not compile file: %s. Reason: %s", fileName.c_str(), err.c_str());
@@ -112,8 +112,8 @@ void ScriptSystem::RegisterType(const char* className, luaL_Reg* methods)
 	assert_not_null(className);
 	assert_not_null(methods);
 
-	const std::string name(className);
-	const std::string metaName = name + "_mt";
+	const playstate::string name(className);
+	const playstate::string metaName = name + "_mt";
 
 	luaL_newmetatable(mLuaState, metaName.c_str());
 	lua_pushvalue(mLuaState, -1);

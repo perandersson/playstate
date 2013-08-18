@@ -25,6 +25,6 @@ namespace playstate
 
 		virtual bool FindBool(const char* key, bool defaultVal = false) const = 0;
 
-		virtual std::string FindString(const char* key, const char* defaultVal = "") const = 0;
+		virtual playstate::string FindString(const char* key, const char* defaultVal = "") const = 0;
 	};
 }

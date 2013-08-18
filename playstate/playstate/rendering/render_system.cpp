@@ -92,7 +92,7 @@ Version RenderSystem::getVersion(GLenum name) const
 	return Version(major, minor);
 }
 
-GfxProgram* RenderSystem::LoadGfxProgram(const std::string& fileName)
+GfxProgram* RenderSystem::LoadGfxProgram(const playstate::string& fileName)
 {
 	GfxProgram* program = NULL;
 	try {

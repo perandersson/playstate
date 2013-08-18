@@ -100,7 +100,7 @@ bool GameRunner::Initialize()
 
 	int32 width = mConfiguration->FindInt("window.width");
 	int32 height = mConfiguration->FindInt("window.height");
-	std::string title = mConfiguration->FindString("window.title");
+	playstate::string title = mConfiguration->FindString("window.title");
 
 	window.Resize(width, height);
 	window.SetTitle(title);

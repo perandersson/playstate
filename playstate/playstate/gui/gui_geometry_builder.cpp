@@ -65,6 +65,38 @@ void GuiGeometryBuilder::AddGradientQuad(const Vector2& position, const Vector2&
 	element->Color = bottomRightColor;
 }
 
+void GuiGeometryBuilder::AddText(Font* font, const Vector2& position, const Color& color, const playstate::string& text)
+{
+	Vector2 currentPos = position;
+	bool newline = false;
+	playstate::string::size_type size = text.length();
+	for(playstate::string::size_type i = 0; i < size; ++i) {
+		playstate::character c = text[i];
+		if(c == '\n') {
+			newline = true;
+			continue;
+		} else if(c == '\r') {
+			continue;
+		}
+
+		const FontCharInfo& info = font->GetFontCharInfo(c);
+		if(newline) {
+			newline = false;
+			currentPos.Y += info.Size.Y;
+		}
+		AddQuad(currentPos, info.Size, Color::Black);
+		currentPos.X += info.Size.X;
+	}
+}
+
+void GuiGeometryBuilder::AddText(Font* font, const Vector2& position, const Color& color, const playstate::string& text, uint32 maxLenght)
+{
+}
+
+void GuiGeometryBuilder::AddText(Font* font, const Vector2& position, const Color& color, const playstate::string& text, const Vector2& maxSize)
+{
+}
+
 VertexBuffer* GuiGeometryBuilder::GetVertexBuffer()
 {
 	const uint32 size = mMemoryPool.GetSize();

@@ -16,7 +16,7 @@ GuiFrameWidget::~GuiFrameWidget()
 {
 }
 
-void GuiFrameWidget::SetTitle(const std::string& title)
+void GuiFrameWidget::SetTitle(const playstate::string& title)
 {
 	mTitle = title;
 }
@@ -30,10 +30,7 @@ const void GuiFrameWidget::BuildWidgetGeometry(GuiGeometryBuilder& builder) cons
 
 	static const Color titleTop = Color::HexToRGB("#EEEEEE");
 	static const Color titleBottom = Color::HexToRGB("#777777");
-
-	static const Color bodyTop = Color::HexToRGB("#999999");
-	static const Color bodybottom = Color::HexToRGB("#222222");
-
+	
 	// Add shadow
 	builder.AddQuad(GetAbsolutePosition() - Vector2(shadowOffset, shadowOffset),
 		GetSize() + Vector2(shadowOffset * 2, shadowOffset * 2), shadowColor);
@@ -42,7 +39,7 @@ const void GuiFrameWidget::BuildWidgetGeometry(GuiGeometryBuilder& builder) cons
 	builder.AddGradientQuad(GetAbsolutePosition(), Vector2(GetSize().X, titleHeight), titleTop, titleBottom);
 
 	// Add body
-	builder.AddGradientQuad(GetAbsolutePosition() + Vector2(0.0f, titleHeight), GetSize() - Vector2(0.0f, titleHeight), bodyTop, bodybottom);
+	builder.AddGradientQuad(GetAbsolutePosition() + Vector2(0.0f, titleHeight), GetSize() - Vector2(0.0f, titleHeight), mBackColorTop, mBackColorBottom);
 
 	// Add text?
 	
@@ -64,7 +61,7 @@ int playstate::GuiFrameWidget_Factory(lua_State* L)
 
 int playstate::GuiFrameWidget_SetTitle(lua_State* L)
 {
-	std::string title = lua_tostring(L, -1);
+	playstate::string title = lua_tostring(L, -1);
 	lua_pop(L, 1);
 
 	GuiFrameWidget* widget = luaM_popobject<GuiFrameWidget>(L);

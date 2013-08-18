@@ -16,7 +16,7 @@ GuiButtonWidget::~GuiButtonWidget()
 {
 }
 
-void GuiButtonWidget::SetText(const std::string& text)
+void GuiButtonWidget::SetText(const playstate::string& text)
 {
 	mText = text;
 }
@@ -27,19 +27,22 @@ const void GuiButtonWidget::BuildWidgetGeometry(GuiGeometryBuilder& builder) con
 
 	static const Color shadowColor(0, 0, 0, 0.3);
 
-	static const Color bodyTop = Color::HexToRGB("#999999");
-	static const Color bodybottom = Color::HexToRGB("#222222");
-
 	// Add shadow
 	builder.AddQuad(GetAbsolutePosition() - Vector2(shadowOffset, shadowOffset),
 		GetSize() + Vector2(shadowOffset * 2, shadowOffset * 2), shadowColor);
 
 	// Add body
-	builder.AddGradientQuad(GetAbsolutePosition(), GetSize(), bodyTop, bodybottom);
+	builder.AddGradientQuad(GetAbsolutePosition(), GetSize(), mBackColorTop, mBackColorBottom);
 
 	// Add text?
+	//builder.AddText(mFont, GetAbsolutePosition(), Color::White, mText, GetSize());
 
 	GuiWidget::BuildWidgetGeometry(builder);
+}
+
+void GuiButtonWidget::OnStyleChanged(const GuiStyle& style)
+{
+	GuiWidget::OnStyleChanged(style);
 }
 
 int playstate::GuiButtonWidget_Factory(lua_State* L)
@@ -57,7 +60,7 @@ int playstate::GuiButtonWidget_Factory(lua_State* L)
 
 int playstate::GuiButtonWidget_SetText(lua_State* L)
 {
-	std::string text = lua_tostring(L, -1);
+	playstate::string text = lua_tostring(L, -1);
 	lua_pop(L, 1);
 
 	GuiButtonWidget* widget = luaM_popobject<GuiButtonWidget>(L);

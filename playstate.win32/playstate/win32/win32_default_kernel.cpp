@@ -11,7 +11,7 @@
 using namespace playstate;
 using namespace playstate::win32;
 
-Win32DefaultKernel::Win32DefaultKernel(HINSTANCE app, const std::string& fileSystemPath) 
+Win32DefaultKernel::Win32DefaultKernel(HINSTANCE app, const playstate::string& fileSystemPath) 
 	: mAppInstance(app)
 {
 	mFileSystem = new Win32FileSystem(fileSystemPath);

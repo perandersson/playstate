@@ -62,20 +62,20 @@ void Color::operator = (const Color &c)
 Color Color::HexToRGB(const char* hex)
 {
 	assert_not_null(hex);
-	std::string value;
+	playstate::string value;
 	if(hex[0] == '#')
 		value += &hex[1];
 	else
 		value += hex;
 
 	if(value.length() == 2) {
-		std::string replicateValue = value;
+		playstate::string replicateValue = value;
 		value += replicateValue;
 		value += replicateValue;
 		value += replicateValue;
 	}
 
-	value = std::string("0x") + value;
+	value = playstate::string("0x") + value;
 	int32 hexbits = 0;
 	sscanf(value.c_str(), "%x", &hexbits);
 	return Color(

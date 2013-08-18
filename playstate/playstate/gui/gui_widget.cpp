@@ -7,6 +7,8 @@ GuiWidget::GuiWidget()
 	: mCanvasGroup(NULL), mParent(NULL), 
 	mEvents(offsetof(GuiEvent, EventLink)), mChildren(offsetof(GuiWidget, GuiWidgetLink))
 {
+	mBackColorTop = Color::HexToRGB("#99");
+	mBackColorBottom = Color::HexToRGB("#22");
 }
 
 GuiWidget::GuiWidget(CanvasGroup* group)
@@ -14,6 +16,10 @@ GuiWidget::GuiWidget(CanvasGroup* group)
 	mEvents(offsetof(GuiEvent, EventLink)), mChildren(offsetof(GuiWidget, GuiWidgetLink))
 {
 	assert_not_null(group);
+
+	mBackColorTop = Color::HexToRGB("#99");
+	mBackColorBottom = Color::HexToRGB("#22");
+
 	group->AddWidget(this);
 }
 
@@ -49,6 +55,7 @@ void GuiWidget::WidgetAttachedToCanvasGroup(CanvasGroup* group)
 		DetachingWidgetFromCanvasGroup(group);
 
 	mCanvasGroup = group;
+	UpdateStyle(group->GetStyle());
 
 	GuiEvent* event = mEvents.First();
 	while(event != NULL) {
@@ -85,9 +92,20 @@ void GuiWidget::SetPosition(const Vector2& position)
 	}
 }
 
+void GuiWidget::UpdateStyle(const GuiStyle& style)
+{
+	mBackColorTop = style.FindColor("BackColor.Top", Color::HexToRGB("#99"));
+	mBackColorBottom = style.FindColor("BackColor.Bottom", Color::HexToRGB("#22"));
+	OnStyleChanged(style);
+}
+
 void GuiWidget::SetSize(const Vector2& size)
 {
 	mSize = size;
+}
+
+void GuiWidget::OnStyleChanged(const GuiStyle& style)
+{
 }
 
 const void GuiWidget::BuildWidgetGeometry(GuiGeometryBuilder& builder) const

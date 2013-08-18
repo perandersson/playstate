@@ -13,14 +13,14 @@ GfxProgramFactory::~GfxProgramFactory()
 {
 }
 
-GfxProgram* GfxProgramFactory::Create(const std::string& fileName)
+GfxProgram* GfxProgramFactory::Create(const playstate::string& fileName)
 {
 	std::auto_ptr<Script> script = mScriptSystem.CompileFile(fileName);
 	ScriptCollection c = script->ReadCollection();
 	
-	std::string vertexShader = c.FindString("VertexShader");
-	std::string fragmentShader = c.FindString("FragmentShader");
-	std::string geometryShader = c.FindString("GeometryShader");
+	playstate::string vertexShader = c.FindString("VertexShader");
+	playstate::string fragmentShader = c.FindString("FragmentShader");
+	playstate::string geometryShader = c.FindString("GeometryShader");
 
 	GLuint vs = glCreateShader(GL_VERTEX_SHADER);
 	const char* vv = vertexShader.c_str();

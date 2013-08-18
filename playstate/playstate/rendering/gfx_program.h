@@ -22,7 +22,7 @@ namespace playstate
 
 	class GfxProgram
 	{
-		typedef std::hash_map<std::string, IGfxProgramComponent*> ComponentMap;
+		typedef std::hash_map<playstate::string, IGfxProgramComponent*> ComponentMap;
 
 	public:
 		LinkedListLink<GfxProgram> Link;
@@ -58,7 +58,7 @@ namespace playstate
 		// @return The component if found; A pointer to an GfxProgramComponentNotFound instance (to prevent crashes and unneccessary null checks) if
 		//	no component is found.
 		IGfxProgramComponent* FindComponent(const char* name);
-		IGfxProgramComponent* FindComponent(const std::string& name);
+		IGfxProgramComponent* FindComponent(const playstate::string& name);
 
 		//
 		// Draw the supplied buffer object using this graphics program.

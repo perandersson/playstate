@@ -17,15 +17,15 @@ namespace playstate
 
 		//
 		// @return The exception message
-		const std::string& GetMessage() const;
+		const playstate::string& GetMessage() const;
 
 		//
 		// @return The function where the exception originated
-		const std::string& GetFunction() const;
+		const playstate::string& GetFunction() const;
 
 		//
 		// @return The file where the exception originated
-		const std::string& GetFile() const;
+		const playstate::string& GetFile() const;
 
 		//
 		// @return The line where the exception originated
@@ -35,9 +35,9 @@ namespace playstate
 		void SetMessage(const char* format, va_list argp);
 
 	private:
-		std::string mFunction;
-		std::string mFile;
-		std::string mMessage;
+		playstate::string mFunction;
+		playstate::string mFile;
+		playstate::string mMessage;
 		uint64 mLine;
 	};
 }

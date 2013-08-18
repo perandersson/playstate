@@ -16,8 +16,8 @@ namespace playstate
 		virtual uint32 GetHeight() const = 0;
 		virtual void Resize(uint32 width, uint32 height) = 0;
 
-		virtual const std::string& GetTitle() const = 0;
-		virtual void SetTitle(const std::string& title) = 0;
+		virtual const playstate::string& GetTitle() const = 0;
+		virtual void SetTitle(const playstate::string& title) = 0;
 
 		virtual void AddWindowClosedListener(IWindowClosedListener* listener) = 0;
 		virtual void RemoveWindowClosedListener(IWindowClosedListener* listener) = 0;

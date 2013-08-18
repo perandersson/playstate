@@ -36,7 +36,7 @@ namespace playstate
 		// @param fileName The absolute filename of the script file.
 		// @throw playstate::ScriptNotFoundException If the supplied script file wasn't found.
 		// @throw playstate::ScriptException If the script compilation wasn't successfull.
-		std::auto_ptr<Script> CompileFile(const std::string& fileName);
+		std::auto_ptr<Script> CompileFile(const playstate::string& fileName);
 
 		// 
 		// Register a list of methods for the supplied class name

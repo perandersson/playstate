@@ -151,7 +151,7 @@ namespace playstate
 
 	int SceneGroup_Load(lua_State* L)
 	{
-		const std::string fileName = lua_tostring(L, -1); lua_pop(L, 1);
+		const playstate::string fileName = lua_tostring(L, -1); lua_pop(L, 1);
 		try {
 			ScriptSystem& scriptSystem = ScriptSystem::Get();
 			std::auto_ptr<Script> script = scriptSystem.CompileFile(fileName);

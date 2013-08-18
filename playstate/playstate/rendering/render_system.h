@@ -39,7 +39,7 @@ namespace playstate
 		//		If the configuration flag: "graphics.developmentmode" = true then this method will 
 		//		return a default instance instead. (So that you can, while running the game, fix the problems with the shaders)
 		// @return
-		GfxProgram* LoadGfxProgram(const std::string& fileName);
+		GfxProgram* LoadGfxProgram(const playstate::string& fileName);
 
 		//
 		// @return The shader-version on the current computer.

@@ -22,32 +22,32 @@ DeferredRenderPipeline::DeferredRenderPipeline(RenderSystem& renderSystem, IWind
 	mDepthRenderTarget = mRenderSystem.CreateRenderTarget2D(width, height, TextureFormat::DEPTH24);
 	mLightRenderTarget = mRenderSystem.CreateRenderTarget2D(width, height, TextureFormat::RGBA);
 
-	mDeferredShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(std::string("/demo/effects/deferred/deferred.lua")));
+	mDeferredShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(playstate::string("/demo/effects/deferred/deferred.lua")));
 	mDeferredShader->SetRenderTarget(mDiffuseRenderTarget, 0);
 	mDeferredShader->SetRenderTarget(mPositionsRenderTarget, 1);
 	mDeferredShader->SetRenderTarget(mNormalsRenderTarget, 2);
 	mDeferredShader->SetDepthRenderTarget(mDepthRenderTarget);
 	
 	mPointLightTexture = resourceManager.GetResource<Texture2D>("/demo/effects/deferred/light.png");
-	mPointLightShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(std::string("/demo/effects/deferred/deferred_point_light.lua")));
+	mPointLightShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(playstate::string("/demo/effects/deferred/deferred_point_light.lua")));
 	mPointLightShader->FindComponent("DiffuseTexture")->SetTexture(mDiffuseRenderTarget);
 	mPointLightShader->FindComponent("PositionsTexture")->SetTexture(mPositionsRenderTarget);
 	mPointLightShader->FindComponent("NormalsTexture")->SetTexture(mNormalsRenderTarget);
 	mPointLightShader->SetRenderTarget(mLightRenderTarget, 0);
 	
-	mTexturedShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(std::string("/demo/effects/deferred/deferred_result.lua")));
+	mTexturedShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(playstate::string("/demo/effects/deferred/deferred_result.lua")));
 	mTexturedShader->FindComponent("DiffuseTexture")->SetTexture(mDiffuseRenderTarget);
 	mTexturedShader->FindComponent("PositionsTexture")->SetTexture(mPositionsRenderTarget);
 	mTexturedShader->FindComponent("NormalsTexture")->SetTexture(mNormalsRenderTarget);
 	mTexturedShader->FindComponent("LightTexture")->SetTexture(mLightRenderTarget);
 
-	mUserInterfaceShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(std::string("/demo/effects/gui/gui.lua")));
+	mUserInterfaceShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(playstate::string("/demo/effects/gui/gui.lua")));
 	mWhiteTexture = resourceManager.GetResource<Texture2D>("/engine/textures/white.png");
 
-	mFileSystem.AddFileChangedListener(std::string("/demo/effects/deferred/deferred.lua"), this);
-	mFileSystem.AddFileChangedListener(std::string("/demo/effects/deferred/deferred_point_light.lua"), this);
-	mFileSystem.AddFileChangedListener(std::string("/demo/effects/deferred/deferred_result.lua"), this);
-	mFileSystem.AddFileChangedListener(std::string("/demo/effects/gui/gui.lua"), this);
+	mFileSystem.AddFileChangedListener(playstate::string("/demo/effects/deferred/deferred.lua"), this);
+	mFileSystem.AddFileChangedListener(playstate::string("/demo/effects/deferred/deferred_point_light.lua"), this);
+	mFileSystem.AddFileChangedListener(playstate::string("/demo/effects/deferred/deferred_result.lua"), this);
+	mFileSystem.AddFileChangedListener(playstate::string("/demo/effects/gui/gui.lua"), this);
 }
 
 DeferredRenderPipeline::~DeferredRenderPipeline()
@@ -229,10 +229,10 @@ void DeferredRenderPipeline::OnWindowResized(uint32 width, uint32 height)
 
 void DeferredRenderPipeline::FileChanged(const IFile& file, FileChangeAction::Enum action)
 {
-	const std::string deferred = "/demo/effects/deferred/deferred.lua";
-	const std::string deferred_point_light = "/demo/effects/deferred/deferred_point_light.lua";
-	const std::string deferred_result = "/demo/effects/deferred/deferred_result.lua";
-	const std::string gui = "/demo/effects/gui/gui.lua";
+	const playstate::string deferred = "/demo/effects/deferred/deferred.lua";
+	const playstate::string deferred_point_light = "/demo/effects/deferred/deferred_point_light.lua";
+	const playstate::string deferred_result = "/demo/effects/deferred/deferred_result.lua";
+	const playstate::string gui = "/demo/effects/gui/gui.lua";
 
 	// Update shaders when changing file
 

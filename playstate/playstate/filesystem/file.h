@@ -20,7 +20,7 @@ namespace playstate
 
 		//
 		// @return A new file based on the current files path. This method always returns an object.
-		virtual std::auto_ptr<IFile> OpenFile(const std::string& path) const = 0;
+		virtual std::auto_ptr<IFile> OpenFile(const playstate::string& path) const = 0;
 
 		//
 		// @return the size of the current file.
@@ -36,7 +36,7 @@ namespace playstate
 
 		//
 		// @return The path to the file
-		virtual const std::string& GetPath() const = 0;
+		virtual const playstate::string& GetPath() const = 0;
 		
 		//
 		// @return A new directory instance where this file is located.

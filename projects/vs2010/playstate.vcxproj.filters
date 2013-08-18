@@ -120,6 +120,12 @@
     <Filter Include="Source Files\gui\widgets">
       <UniqueIdentifier>{5d70a75f-dfd6-4a44-9dca-aae5e241da20}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\gui\font">
+      <UniqueIdentifier>{b95dd630-54eb-4c94-abee-0bc2fb66029b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gui\font\truetype">
+      <UniqueIdentifier>{c95c1800-4796-46df-a1bd-ae6947870d44}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\playstate\playstate\camera\camera.cpp">
@@ -391,6 +397,15 @@
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\gui\widgets\gui_button_widget.cpp">
       <Filter>Source Files\gui\widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\gui\font\font.cpp">
+      <Filter>Source Files\gui\font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\gui\font\truetype\truetype_font_resource_loader.cpp">
+      <Filter>Source Files\gui\font\truetype</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\gui\gui_style.cpp">
+      <Filter>Source Files\gui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -774,6 +789,15 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\gui\widgets\gui_button_widget.h">
       <Filter>Source Files\gui\widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\gui\font\font.h">
+      <Filter>Source Files\gui\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\gui\font\truetype\truetype_font_resource_loader.h">
+      <Filter>Source Files\gui\font\truetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\gui\gui_style.h">
+      <Filter>Source Files\gui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

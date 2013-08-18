@@ -18,7 +18,7 @@ namespace playstate
 			~Win32FileListener() {}
 
 			IFileChangedListener* Callback;
-			std::regex Regex;
+			playstate::regex Regex;
 		};
 
 		struct Win32FileEvent
@@ -27,7 +27,7 @@ namespace playstate
 			~Win32FileEvent() {}
 
 			IFileChangedListener* Callback;
-			std::string FileName;
+			playstate::string FileName;
 			FileChangeAction::Enum Action;
 		};
 
@@ -37,7 +37,7 @@ namespace playstate
 			typedef std::vector<Win32FileEvent*> FileEvents;
 
 		public:
-			Win32FileWatcher(const std::string& rootDirPath);
+			Win32FileWatcher(const playstate::string& rootDirPath);
 			~Win32FileWatcher();
 
 			//
@@ -45,7 +45,7 @@ namespace playstate
 			//
 			void LookForChanges();
 
-			void AddListener(const std::regex& regex, IFileChangedListener* listener);
+			void AddListener(const playstate::regex& regex, IFileChangedListener* listener);
 
 			void RemoveListener(IFileChangedListener* listener);
 

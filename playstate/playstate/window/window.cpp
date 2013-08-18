@@ -45,7 +45,7 @@ namespace playstate
 	int IWindow_SetTitle(lua_State* L)
 	{
 		int top = lua_gettop(L);
-		std::string title = lua_tostring(L, -1); lua_pop(L, 1);
+		playstate::string title = lua_tostring(L, -1); lua_pop(L, 1);
 		IWindow::Get().SetTitle(title);
 		return 0;
 	}

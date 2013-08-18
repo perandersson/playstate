@@ -12,3 +12,5 @@ http://glew.sourceforge.net/ - GLEW (OpenGL Extension library)
 http://www.lua.org/ - The Programming Language Lua (LUA)
 
 http://freeimage.sourceforge.net/ - FreeImage
+
+http://www.freetype.org/ - The FreeType Project

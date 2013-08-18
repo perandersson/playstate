@@ -12,7 +12,7 @@ Win32Directory::Win32Directory(const Win32FileSystem& fileSystem)
 {
 }
 
-Win32Directory::Win32Directory(const Win32FileSystem& fileSystem, HANDLE handle, const std::string& path) 
+Win32Directory::Win32Directory(const Win32FileSystem& fileSystem, HANDLE handle, const playstate::string& path) 
 	: mFileSystem(fileSystem), mPath(path), mDirectoryHandle(handle)
 {
 }
@@ -27,9 +27,9 @@ Win32Directory::~Win32Directory()
 	mPath.clear();
 }
 
-std::vector<std::string> Win32Directory::GetFiles() const
+std::vector<playstate::string> Win32Directory::GetFiles() const
 {
-	std::vector<std::string> files;
+	std::vector<playstate::string> files;
 	/*WIN32_FIND_DATAA ffd;
 	HANDLE fileHandle = INVALID_HANDLE_VALUE;
 	
@@ -46,19 +46,19 @@ std::vector<std::string> Win32Directory::GetFiles() const
 	return files;
 }
 
-std::vector<std::string> Win32Directory::GetDirectories() const
+std::vector<playstate::string> Win32Directory::GetDirectories() const
 {
-	std::vector<std::string> directories;
+	std::vector<playstate::string> directories;
 	
 	return directories;
 }
 
-std::auto_ptr<IFile> Win32Directory::OpenFile(const std::string& path) const
+std::auto_ptr<IFile> Win32Directory::OpenFile(const playstate::string& path) const
 {
 	if(!Exists())
 		return std::auto_ptr<IFile>(new Win32File(mFileSystem));
 
-	std::string fullPath = path;
+	playstate::string fullPath = path;
 	if(mFileSystem.IsRelative(path)) {
 		fullPath = mPath + "/" + path;
 	}
@@ -66,12 +66,12 @@ std::auto_ptr<IFile> Win32Directory::OpenFile(const std::string& path) const
 	return mFileSystem.OpenFile(fullPath);
 }
 
-std::auto_ptr<IDirectory> Win32Directory::OpenDirectory(const std::string& path) const
+std::auto_ptr<IDirectory> Win32Directory::OpenDirectory(const playstate::string& path) const
 {
 	if(!Exists())
 		return std::auto_ptr<IDirectory>(new Win32Directory(mFileSystem));
 	
-	std::string fullPath = path;
+	playstate::string fullPath = path;
 	if(mFileSystem.IsRelative(path)) {
 		fullPath = mPath + path;
 	}
@@ -79,7 +79,7 @@ std::auto_ptr<IDirectory> Win32Directory::OpenDirectory(const std::string& path)
 	return mFileSystem.OpenDirectory(fullPath);
 }
 
-const std::string& Win32Directory::GetPath() const
+const playstate::string& Win32Directory::GetPath() const
 {
 	return mPath;
 }

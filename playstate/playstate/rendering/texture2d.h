@@ -19,8 +19,15 @@ namespace playstate
 		
 		void Bind(uint32 activeTexture, MinFilter::Enum minFilter, MagFilter::Enum magFilter, TextureWrap::Enum ws, TextureWrap::Enum wt);
 
+		//
+		// @return This textures width in pixels
 		uint32 GetWidth() const;
+
+		//
+		// @return This textures height in pixels
 		uint32 GetHeight() const;
+
+		//void Update(
 
 	protected:
 		uint32 mWidth;

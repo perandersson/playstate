@@ -25,7 +25,7 @@ namespace playstate
 		// @return A smart resource container. If the supplied path is not found then a resource wrapper containing the default resource
 		//	will be returned instead.
 		template<class T>
-		Resource<T> GetResource(const std::string& path);
+		Resource<T> GetResource(const playstate::string& path);
 
 		//
 		// Method for unloading the supplied resource. The internal resource data will be removed and the supplied containers resource will be
@@ -41,7 +41,7 @@ namespace playstate
 		//
 		// @param resourceLoader
 		// @param suffix
-		virtual void RegisterResourceType(IResourceLoader*, const std::string& suffix) = 0;
+		virtual void RegisterResourceType(IResourceLoader*, const playstate::string& suffix) = 0;
 
 	protected:
 		//
@@ -49,7 +49,7 @@ namespace playstate
 		//
 		// @param path The resource path
 		// @return An resource data object. This method always returns a valid, usable instance.
-		virtual ResourceData* GetResourceData(const std::string& path) = 0;
+		virtual ResourceData* GetResourceData(const playstate::string& path) = 0;
 
 		//
 		// Non-public method for unloading a resource data object.
@@ -62,11 +62,11 @@ namespace playstate
 
 	template<class T>
 	Resource<T> IResourceManager::GetResource(const char* path) {
-		return Resource<T>(GetResourceData(std::string(path)));
+		return Resource<T>(GetResourceData(playstate::string(path)));
 	}
 
 	template<class T>
-	Resource<T> IResourceManager::GetResource(const std::string& path) {
+	Resource<T> IResourceManager::GetResource(const playstate::string& path) {
 		return Resource<T>(GetResourceData(path));
 	}
 

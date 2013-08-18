@@ -36,7 +36,7 @@ void Script::Execute(const char* expression)
 	if(result != 0) 
 	{
 		// Might be error? or result? Assume error for now!
-		std::string err = lua_tostring(mLuaState, -1);
+		playstate::string err = lua_tostring(mLuaState, -1);
 		lua_pop(mLuaState, 1);
 		THROW_EXCEPTION(ScriptException, "Could not evaluate expression:\n%s\n\nReason:\n%s", expression, err.c_str());
 	}

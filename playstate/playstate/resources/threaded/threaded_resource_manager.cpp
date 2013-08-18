@@ -58,9 +58,9 @@ ThreadedResourceManager::~ThreadedResourceManager()
 	mLoaders.clear();
 }
 
-ResourceData* ThreadedResourceManager::GetResourceData(const std::string& path)
+ResourceData* ThreadedResourceManager::GetResourceData(const playstate::string& path)
 {
-	const std::string suffix = GetSuffixFromName(path);	
+	const playstate::string suffix = GetSuffixFromName(path);	
 	IResourceLoader* loader = GetLoaderFromSuffix(suffix);
 	if(loader == NULL) {
 		return NULL;
@@ -118,15 +118,15 @@ ResourceData* ThreadedResourceManager::GetResourceData(const std::string& path)
 	return data;
 }
 
-std::string ThreadedResourceManager::GetSuffixFromName(const std::string& name) const
+playstate::string ThreadedResourceManager::GetSuffixFromName(const playstate::string& name) const
 {
-	std::string::size_type separator = name.find_last_of('.');
-	assert(separator != std::string::npos && "No real filename was supplied");
-	std::string suffix = name.substr(separator);
+	playstate::string::size_type separator = name.find_last_of('.');
+	assert(separator != playstate::string::npos && "No real filename was supplied");
+	playstate::string suffix = name.substr(separator);
 	return suffix;
 }
 
-ResourceData* ThreadedResourceManager::LoadResourceAndWait(const std::string& path, IResourceLoader* loader)
+ResourceData* ThreadedResourceManager::LoadResourceAndWait(const playstate::string& path, IResourceLoader* loader)
 {
 	std::auto_ptr<IFile> file = mFileSystem.OpenFile(path);
 	ResourceObject* resource = NULL;
@@ -146,7 +146,7 @@ ResourceData* ThreadedResourceManager::LoadResourceAndWait(const std::string& pa
 }
 
 
-void ThreadedResourceManager::RegisterResourceType(IResourceLoader* resourceLoader, const std::string& suffix)
+void ThreadedResourceManager::RegisterResourceType(IResourceLoader* resourceLoader, const playstate::string& suffix)
 {
 	assert(mLoaders.find(suffix) == mLoaders.end() && "You are trying to add the same loader twice");
 	mLoaders.insert(std::make_pair(suffix, resourceLoader));
@@ -156,7 +156,7 @@ void ThreadedResourceManager::RegisterResourceType(IResourceLoader* resourceLoad
 		resourceLoader->GetDefaultResource();
 }
 
-void ThreadedResourceManager::AddLoadRequest(const std::string& name, IResourceLoader* loader, ResourceData* data)
+void ThreadedResourceManager::AddLoadRequest(const playstate::string& name, IResourceLoader* loader, ResourceData* data)
 {
 	data->Unloaded = false;
 	data->Loading = true;
@@ -253,7 +253,7 @@ void ThreadedResourceManager::Run(IThread& thread)
 	}
 }
 
-IResourceLoader* ThreadedResourceManager::GetLoaderFromSuffix(const std::string& suffix) const
+IResourceLoader* ThreadedResourceManager::GetLoaderFromSuffix(const playstate::string& suffix) const
 {
 	Loaders::const_iterator it = mLoaders.find(suffix);
 	if(it == mLoaders.end())

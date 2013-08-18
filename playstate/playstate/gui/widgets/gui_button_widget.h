@@ -1,5 +1,6 @@
 #pragma once
 #include "../gui_widget.h"
+#include "../font/font.h"
 
 namespace playstate
 {
@@ -11,15 +12,17 @@ namespace playstate
 		virtual ~GuiButtonWidget();
 
 		//
-		// Set the button text
-		void SetText(const std::string& text);
+		// Set the button text with the supplied font. 
+		void SetText(const playstate::string& text);
 
 	// GuiWidget
 	public:
 		virtual const void BuildWidgetGeometry(GuiGeometryBuilder& builder) const;
+		virtual void OnStyleChanged(const GuiStyle& style);
 
 	private:
-		std::string mText;
+		Resource<Font> mFont;
+		playstate::string mText;
 	};
 
 	// Script integration
