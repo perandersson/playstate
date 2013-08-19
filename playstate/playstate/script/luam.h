@@ -61,19 +61,22 @@ namespace playstate
 
 	//
 	//
-	extern void luaM_pushvector3(lua_State* L, const Vector3& vec);
+	extern uint32 luaM_pushvector3(lua_State* L, const Vector3& vec);
 	
 	//
 	//
-	extern void luaM_pushvector2(lua_State* L, const Vector2& vec);
+	extern uint32 luaM_pushvector2(lua_State* L, const Vector2& vec);
 
 	//
-	//
-	extern void luaM_pushpoint(lua_State* L, const Point& point);
+	// @return The number of elements pushed to the stack
+	extern uint32 luaM_pushpoint(lua_State* L, const Point& point);
 
 	//
+	extern Point luaM_poppoint(lua_State* L);
+
 	//
-	extern void luaM_pushcolor(lua_State* L, const Color& color);
+	// @return The number of elements pushed to the stack
+	extern uint32 luaM_pushcolor(lua_State* L, const Color& color);
 
 	//
 	// Pops the color from the top of the stack and returns the result. 

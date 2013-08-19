@@ -209,6 +209,7 @@
     <ClInclude Include="..\..\playstate\playstate\scene\tree\octree_node.h" />
     <ClInclude Include="..\..\playstate\playstate\script\exception\script_exception.h" />
     <ClInclude Include="..\..\playstate\playstate\script\exception\script_not_found_exception.h" />
+    <ClInclude Include="..\..\playstate\playstate\script\lambda.h" />
     <ClInclude Include="..\..\playstate\playstate\script\luam.h" />
     <ClInclude Include="..\..\playstate\playstate\script\lua_call.h" />
     <ClInclude Include="..\..\playstate\playstate\script\script.h" />

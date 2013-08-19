@@ -13,9 +13,8 @@ namespace playstate
 	public:
 		//
 		// Method called when the supplied window has been resized.
-		// @param window
-		// @param width
-		// @param height
-		virtual void OnWindowResized(uint32 width, uint32 height) = 0;
+		//
+		// @param newSize
+		virtual void OnWindowResized(const Point& newSize) = 0;
 	};
 }

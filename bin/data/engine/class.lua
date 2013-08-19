@@ -1,25 +1,49 @@
--- Function for generating a class and class metatable based on the supplied parameters
-
--- Usage: MyClass = class("MyClass", "ParentClass")
--- The reason for using strings as in-parameters is because we MUST NOT create a new table for a class
--- when the file is reloaded. This will enable us to alter existing classes in runtime.
-function class(className, inheritsClassName)
+--[[
+	Function for generating a class and class metatable based on the supplied parameters. 
+	The reason for supplying the class name as a strings as in-parameter is because it's not
+	allowed for the game engine to create a new class definition everytime this function is called.
+	Features such as script hotswapping is dependant on this.
+	
+	Usage:
+	
+	-- Does not create a new class-table definition if one already exists
+	MyClass = class("MyClass")
+	
+	-- Constructor
+	function MyClass:__init(x)
+	
+	end
+	
+	-- You can also use the Class container for information about the class itself.
+	-- This is needed if you want the item to be usable by the in-game editor:
+	MyClass.Class
+	MyClass.Class.Description
+	MyClass.Class.Args[n].Name
+	MyClass.Class.Args[n].Type
+]]--
+function class(className, inheritsClass, classDef)
 	-- If the class definition already exists.
 	local c = _G[className]
 	if c then
-		print("Found metatable for class " .. className)
 		return c
 	end
 	
-	c = {}
+	-- Create the classDef table if no value was supplied to the function
+	if not classDef then
+		classDef = {}
+	end
+	
+	classDef.ClassName = className
+	c = { Class = classDef }
 	
 	-- Inherit class if needed
-	local inheritsClass = _G[inheritsClassName]
 	if inheritsClass then
-		for i, v in pairs(inheritsClass) do
-			c[i] = v
+		if inheritsClass then
+			for i, v in pairs(inheritsClass) do
+				c[i] = v
+			end
+			c.__base = inheritsClass
 		end
-		c.__base = inheritsClass
 	end
 	
 	-- the class will be the metatable for all its objects,
@@ -34,7 +58,6 @@ function class(className, inheritsClassName)
 		if c.__init then
 			c.__init(new_instance, ...)
 		elseif c.__base and c.__base.__init then
-			print("calling base constructor")
 			c.__base.__init(new_instance, ...)
 		end		
 		return new_instance

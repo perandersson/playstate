@@ -1,7 +1,7 @@
 local class = require "engine.class"
 local config = require "config"
 
-DemoGame = class("DemoGame", "IGame")
+DemoGame = class("DemoGame", IGame)
 
 function DemoGame:__init()
 	IGame.__init(self)

@@ -29,7 +29,7 @@ ScriptCollection::~ScriptCollection()
 	}
 }
 
-int32 ScriptCollection::FindInt(const char* key, int32 defaultVal) const
+int32 ScriptCollection::FindInt(const playstate::character* key, int32 defaultVal) const
 {
 	int32 result = defaultVal;
 	if(FindKey(key)) {
@@ -39,7 +39,7 @@ int32 ScriptCollection::FindInt(const char* key, int32 defaultVal) const
 	return result;
 }
 
-float32 ScriptCollection::FindFloat(const char* key, float32 defaultVal) const
+float32 ScriptCollection::FindFloat(const playstate::character* key, float32 defaultVal) const
 {
 	float32 result = defaultVal;
 	if(FindKey(key)) {
@@ -49,7 +49,7 @@ float32 ScriptCollection::FindFloat(const char* key, float32 defaultVal) const
 	return result;
 }
 
-bool ScriptCollection::FindBool(const char* key, bool defaultVal) const
+bool ScriptCollection::FindBool(const playstate::character* key, bool defaultVal) const
 {
 	bool result = defaultVal;
 	if(FindKey(key)) {
@@ -59,7 +59,7 @@ bool ScriptCollection::FindBool(const char* key, bool defaultVal) const
 	return result;
 }
 
-playstate::string ScriptCollection::FindString(const char* key, const char* defaultVal) const
+playstate::string ScriptCollection::FindString(const playstate::character* key, const playstate::character* defaultVal) const
 {
 	playstate::string result = defaultVal;
 	if(FindKey(key)) {
@@ -69,7 +69,7 @@ playstate::string ScriptCollection::FindString(const char* key, const char* defa
 	return result;
 }
 
-bool ScriptCollection::FindKey(const char* key) const
+bool ScriptCollection::FindKey(const playstate::character* key) const
 {
 	if(mLuaState == NULL)
 		return false;

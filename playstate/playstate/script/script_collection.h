@@ -24,10 +24,10 @@ namespace playstate
 		ScriptCollection& operator = (const ScriptCollection& s);
 
 	public:
-		int32 FindInt(const char* key, int32 defaultVal = 0) const;
-		float32 FindFloat(const char* key, float32 defaultVal = 0.0f) const;
-		bool FindBool(const char* key, bool defaultVal = false) const;
-		playstate::string FindString(const char* key, const char* defaultVal = "") const;
+		int32 FindInt(const playstate::character* key, int32 defaultVal = 0) const;
+		float32 FindFloat(const playstate::character* key, float32 defaultVal = 0.0f) const;
+		bool FindBool(const playstate::character* key, bool defaultVal = false) const;
+		playstate::string FindString(const playstate::character* key, const playstate::character* defaultVal = "") const;
 
 	protected:
 		//
@@ -35,7 +35,7 @@ namespace playstate
 		//
 		// @return TRUE if the key is found; FALSE otherwise
 		// @remark If no key is found then no element is pushed onto the stack
-		bool FindKey(const char* key) const;
+		bool FindKey(const playstate::character* key) const;
 
 	protected:
 		uint32 mScriptRef;

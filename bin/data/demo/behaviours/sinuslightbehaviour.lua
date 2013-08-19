@@ -1,6 +1,6 @@
 local class = require "engine.class"
 
-SinusLightBehaviour = class("SinusLightBehaviour", "Component")
+SinusLightBehaviour = class("SinusLightBehaviour", Component)
 function SinusLightBehaviour:__init(speed)
 	Component.__init(self)
 	self.speed = speed

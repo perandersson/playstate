@@ -161,7 +161,7 @@ namespace playstate
 		return vec;
 	}
 
-	void luaM_pushvector3(lua_State* L, const Vector3& vec)
+	uint32 luaM_pushvector3(lua_State* L, const Vector3& vec)
 	{
 		assert_not_null(L);
 
@@ -169,27 +169,33 @@ namespace playstate
 		lua_pushnumber(L, vec.X);
 		lua_pushnumber(L, vec.Y);
 		lua_pushnumber(L, vec.Z);
+
+		return 3;
 	}
 
-	void luaM_pushvector2(lua_State* L, const Vector2& vec)
+	uint32 luaM_pushvector2(lua_State* L, const Vector2& vec)
 	{
 		assert_not_null(L);
 
 		// X, Y
 		lua_pushnumber(L, vec.X);
 		lua_pushnumber(L, vec.Y);
+
+		return 2;
 	}
 	
-	void luaM_pushpoint(lua_State* L, const Point& point)
+	uint32 luaM_pushpoint(lua_State* L, const Point& point)
 	{
 		assert_not_null(L);
 
 		// X, Y
 		lua_pushinteger(L, point.X);
 		lua_pushinteger(L, point.Y);
+
+		return 2;
 	}
 	
-	void luaM_pushcolor(lua_State* L, const Color& color)
+	uint32 luaM_pushcolor(lua_State* L, const Color& color)
 	{
 		assert_not_null(L);
 
@@ -198,6 +204,8 @@ namespace playstate
 		lua_pushnumber(L, color.Green);
 		lua_pushnumber(L, color.Blue);
 		lua_pushnumber(L, color.Alpha);
+
+		return 4;
 	}
 
 	Color luaM_popcolor(lua_State* L)
@@ -219,7 +227,6 @@ namespace playstate
 			}
 
 			lua_pop(L, 1);
-			return color;
 		} else if(lua_isnumber(L, -1)) {
 			float* colors = color.Colors;
 			*colors++ = lua_tonumber(L, -1); lua_pop(L, 1);
@@ -244,6 +251,31 @@ namespace playstate
 		}
 
 		return color;
+	}
+	
+	Point luaM_poppoint(lua_State* L)
+	{
+		Point point;
+
+		if(lua_istable(L, -1)) {
+			lua_pushnil(L);
+			if(lua_next(L, -2)) {
+				point.X = lua_tointeger(L, -1);
+				lua_pop(L, 1);
+			}
+	
+			if(lua_next(L, -2)) {
+				point.Y = lua_tointeger(L, -1);
+				lua_pop(L, 1);
+			}
+			lua_pop(L, 1);
+		} else if(lua_isnumber(L, -1) && lua_isnumber(L, -2)) {
+			point.X = lua_tointeger(L, -2);
+			point.Y = lua_tointeger(L, -1);
+			lua_pop(L, 2);
+		}
+
+		return point;
 	}
 
 	void luaM_printerror(lua_State* L, const char* msg)

@@ -50,15 +50,27 @@ namespace playstate
 		return 0;
 	}
 	
+	int IWindow_GetSize(lua_State* L)
+	{
+		return luaM_pushpoint(L, IWindow::Get().GetSize());
+	}
+	
+	int IWindow_SetSize(lua_State* L)
+	{
+		Point size = luaM_poppoint(L);
+		IWindow::Get().SetSize(size);
+		return 0;
+	}
+	
 	int IWindow_GetWidth(lua_State* L)
 	{
-		lua_pushnumber(L, IWindow::Get().GetWidth());
+		lua_pushinteger(L, IWindow::Get().GetSize().X);
 		return 1;
 	}
 
 	int IWindow_GetHeight(lua_State* L)
 	{
-		lua_pushnumber(L, IWindow::Get().GetHeight());
+		lua_pushinteger(L, IWindow::Get().GetSize().Y);
 		return 1;
 	}
 

@@ -58,6 +58,7 @@ namespace playstate
 		//
 		// Notify this widget that the graphical style has been changed on the canvas.
 		//
+		// @param style The new style
 		void UpdateStyle(const GuiStyle& style);
 
 		//

@@ -51,16 +51,6 @@ void ScriptableComponent::OnComponentRemoved()
 	}
 }
 
-void ScriptableComponent::Show()
-{
-	Renderable::Attach(GetNode()->GetGroup());
-}
-
-void ScriptableComponent::Hide()
-{
-	Renderable::Detach();
-}
-
 void ScriptableComponent::Collect(const RenderState& state, RenderBlockResultSet* resultSet)
 {
 	/*if(PrepareMethod("Collect")) {
@@ -197,7 +187,7 @@ int playstate::Component_Show(lua_State* L)
 
 	ScriptableComponent* component = luaM_popobject<ScriptableComponent>(L);
 	if(component != NULL) {
-		component->Hide();
+		component->Show();
 	}
 
 	return 0;
@@ -205,5 +195,15 @@ int playstate::Component_Show(lua_State* L)
 
 int playstate::Component_Hide(lua_State* L)
 {
+	if(lua_gettop(L) < 1) {
+		luaM_printerror(L, "Expected: self<Component>:Hide()");
+		return 0;
+	}
+
+	ScriptableComponent* component = luaM_popobject<ScriptableComponent>(L);
+	if(component != NULL) {
+		component->Hide();
+	}
+
 	return 0;
 }

@@ -19,7 +19,27 @@ namespace playstate
 		Point(const Point& point);
 		Point(int32 x, int32 y);
 
-		void operator = (const Point& pt);
+		inline Point& operator = (const Point& pt) {
+			X = pt.X;
+			Y = pt.Y;
+			return *this;
+		}
+
+		inline bool operator == (const Point& pt) const {
+			return X == pt.X && Y == pt.Y;
+		}
+
+		inline bool operator != (const Point& pt) const {
+			return X != pt.X || Y != pt.Y;
+		}
+
+		inline bool operator >= (const Point& pt) const {
+			return X >= pt.X && Y >= pt.Y;
+		}
+		
+		inline bool operator <= (const Point& pt) const {
+			return X <= pt.X && Y <= pt.Y;
+		}
 
 		static Point Zero;
 	};

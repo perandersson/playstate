@@ -20,10 +20,10 @@ void Win32InputSystem::Poll()
 {	
 	POINT p;
 	if(GetCursorPos(&p)) {
-		if (ScreenToClient(mWindow.GetWindowHandle(), &p)) {
-			if(p.x >= 0 && p.y >= 0 &&
-				p.x <= mWindow.GetWidth() && p.y <= mWindow.GetHeight()) {
-					mMouseState.SetPosition(Point(p.x, p.y));
+		if(ScreenToClient(mWindow.GetWindowHandle(), &p)) {
+			Point cursorPoint((int32)p.x, (int32)p.y);
+			if(cursorPoint >= Point::Zero && cursorPoint <= mWindow.GetSize()) {
+				mMouseState.SetPosition(Point(p.x, p.y));
 			}
 		}
 	}

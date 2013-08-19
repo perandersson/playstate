@@ -111,10 +111,10 @@ GfxProgram* RenderSystem::LoadGfxProgram(const playstate::string& fileName)
 	return program;
 }
 
-void RenderSystem::OnWindowResized(uint32 width, uint32 height)
+void RenderSystem::OnWindowResized(const Point& newSize)
 {
-	mScreenViewport.Width = width;
-	mScreenViewport.Height = height;
+	mScreenViewport.Width = newSize.X;
+	mScreenViewport.Height = newSize.Y;
 
 	// Mark system as dirty
 	StatePolicy::MarkAsDirty();

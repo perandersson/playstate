@@ -13,14 +13,6 @@ namespace playstate
 		ScriptableComponent(uint32 type);
 		~ScriptableComponent();
 		
-		//
-		// Shows this component (i.e adds it to the renderable list)
-		void Show();
-
-		//
-		// Hides this component (i.e. remove it from the renderable list)
-		void Hide();
-
 	// Component
 	protected:
 		virtual void OnComponentAdded();

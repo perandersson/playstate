@@ -50,10 +50,9 @@ const bool Canvas::BuildWidgetGeometry(GuiGeometryBuilder& builder) const
 
 Vector2 Canvas::GetMousePositionAsUniform() const
 {
-	float32 x = mWindow.GetWidth();
-	float32 y = mWindow.GetHeight();
+	Point size = mWindow.GetSize();
 	Point pt = mInputSystem.GetMouseState().GetPosition();
-	return Vector2(pt.X / x, pt.Y / y);
+	return Vector2(pt.X / (float32)size.X, pt.Y / (float32)size.Y);
 }
 
 void Canvas::SetSize(const Vector2& size)

@@ -16,7 +16,7 @@ namespace {
 }
 
 Win32Window::Win32Window(HINSTANCE hInstance) : mAppInstance(hInstance), 
-	mWindowHandle(NULL), mWidth(320), mPrevWidth(320), mHeight(240), mPrevHeight(240), mWindowTitle("playstate"),
+	mWindowHandle(NULL), mSize(320, 240), mPrevSize(320, 240), mWindowTitle(SAFE_STRING("playstate")),
 	mTimeSinceLastUpdate(0.0f), mLastTime(0)
 {
 	_window = this;
@@ -28,17 +28,17 @@ Win32Window::Win32Window(HINSTANCE hInstance) : mAppInstance(hInstance),
 	windowProperties.style = CS_HREDRAW | CS_VREDRAW;
 	windowProperties.lpfnWndProc = WindowsWindowWindowProc;
 	windowProperties.hInstance = mAppInstance;
-	windowProperties.lpszClassName = "playstate.Game";
+	windowProperties.lpszClassName = SAFE_STRING("playstate.Game");
 	windowProperties.hCursor = (HCURSOR)LoadImage(NULL, MAKEINTRESOURCE(IDC_ARROW), IMAGE_CURSOR, 0, 0, LR_SHARED);
 	RegisterClassEx(&windowProperties);
 
 	mExStyle = WS_EX_CLIENTEDGE;
 	mStyle = WS_CAPTION | WS_SYSMENU | WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_OVERLAPPEDWINDOW;
 
-	RECT windowSize = {0, 0, mWidth, mHeight};
+	RECT windowSize = {0, 0, mSize.X, mSize.Y};
 	AdjustWindowRectEx(&windowSize, mStyle, false, mExStyle);
 
-	mWindowHandle = CreateWindowEx(mExStyle, "playstate.Game", mWindowTitle.c_str(), mStyle, CW_USEDEFAULT, CW_USEDEFAULT,
+	mWindowHandle = CreateWindowEx(mExStyle, SAFE_STRING("playstate.Game"), mWindowTitle.c_str(), mStyle, CW_USEDEFAULT, CW_USEDEFAULT,
 		windowSize.right - windowSize.left, windowSize.bottom - windowSize.top,
 		NULL, NULL, mAppInstance, NULL);
 	
@@ -63,37 +63,34 @@ Win32Window::~Win32Window()
 		mWindowHandle = NULL;
 	}
 
-	UnregisterClass("playstate.Game", mAppInstance);
+	UnregisterClass(SAFE_STRING("playstate.Game"), mAppInstance);
 	mAppInstance = NULL;
 }
 
-uint32 Win32Window::GetWidth() const 
+const Point& Win32Window::GetSize() const 
 {
-	return mWidth;
+	return mSize;
 }
 
-uint32 Win32Window::GetHeight() const 
+void Win32Window::SetSize(const Point& size)
 {
-	return mHeight;
-}
+	uint32 width = size.X > 0 ? size.X : 1;
+	uint32 height = size.Y > 0 ? size.Y : 1;
 
-void Win32Window::Resize(uint32 width, uint32 height)
-{
-	mWidth = width > 0 ? width : 1;
-	mHeight = height > 0 ? height : 1;
+	mSize.X = width;
+	mSize.Y = height;
 
-	RECT windowRect = {0, 0, mWidth, mHeight};
+	RECT windowRect = {0, 0, mSize.X, mSize.Y};
 	AdjustWindowRectEx(&windowRect, mStyle, FALSE, mExStyle);
 
 	SetWindowPos(mWindowHandle, NULL, 0, 0, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, SWP_NOMOVE);
 
-	WindowResizedListeners::size_type size = mWindowResizeListeners.size();
-	for(WindowResizedListeners::size_type i = 0; i < size; ++i) {
-		mWindowResizeListeners[i]->OnWindowResized(mWidth, mHeight);
+	WindowResizedListeners::size_type numListeners = mWindowResizeListeners.size();
+	for(WindowResizedListeners::size_type i = 0; i < numListeners; ++i) {
+		mWindowResizeListeners[i]->OnWindowResized(mSize);
 	}
 
-	mPrevWidth = mWidth;
-	mPrevHeight = mHeight;
+	mPrevSize = mSize;
 }
 
 const playstate::string& Win32Window::GetTitle() const
@@ -139,8 +136,8 @@ LRESULT CALLBACK Win32Window::HandleEvent(HWND hwnd, UINT message, WPARAM wparam
 			width = width <= 0 ? 1 : width;
 			height = height <= 0 ? 1 : height;
 
-			mWidth = width;
-			mHeight = height;
+			mSize.X = width;
+			mSize.Y = height;
 
 			break;
 		}
@@ -162,19 +159,6 @@ void Win32Window::HandleEvents()
 		mTimeSinceLastUpdate = (float)(dt);
 	}
 	mLastTime = now.QuadPart;
-	/*
-	mTotalTimeThisSecond += mTimeSinceLastUpdate;
-	mCurrentFrameNumber++;
-	if(mTotalTimeThisSecond > 1.0f) {
-		mTotalTimeThisSecond -= 1.0f;
-		mFps = mCurrentFrameNumber;
-		mCurrentFrameNumber = 0;
-
-		char title[64];
-		sprintf(title, "Snowpeak: %d", mFps);
-		SetWindowTextA(mWindowHandle, title);
-	}
-	*/
 
 	if(PeekMessage(&mMessageQueue, NULL, 0, 0, PM_REMOVE)) {
 		if(mMessageQueue.message == WM_QUIT) {
@@ -192,13 +176,13 @@ void Win32Window::HandleEvents()
 	}
 
 	// Dispatch resize events if a resize has occured.
-	if(mWidth != mPrevWidth || mHeight != mPrevHeight) {
-		mPrevWidth = mWidth;
-		mPrevHeight = mHeight;
+	if(mSize != mPrevSize) {
+	//if(mWidth != mPrevWidth || mHeight != mPrevHeight) {
+		mPrevSize = mSize;
 
 		WindowResizedListeners::size_type size = mWindowResizeListeners.size();
 		for(WindowResizedListeners::size_type i = 0; i < size; ++i) {
-			mWindowResizeListeners[i]->OnWindowResized(mWidth, mHeight);
+			mWindowResizeListeners[i]->OnWindowResized(mSize);
 		}
 	}
 }

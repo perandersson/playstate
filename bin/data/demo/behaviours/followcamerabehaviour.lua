@@ -2,7 +2,7 @@ local class = require "engine.class"
 local Vector3 = require "engine.core.math.vector3"
 local config = require "config"
 
-FollowCameraBehaviour = class("FollowCameraBehaviour", "Component")
+FollowCameraBehaviour = class("FollowCameraBehaviour", Component)
 
 function FollowCameraBehaviour:__init()
 	Component.__init(self)

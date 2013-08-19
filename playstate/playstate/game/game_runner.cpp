@@ -102,7 +102,7 @@ bool GameRunner::Initialize()
 	int32 height = mConfiguration->FindInt("window.height");
 	playstate::string title = mConfiguration->FindString("window.title");
 
-	window.Resize(width, height);
+	window.SetSize(Point(width, height));
 	window.SetTitle(title);
 	window.AddWindowClosedListener(this);
 	

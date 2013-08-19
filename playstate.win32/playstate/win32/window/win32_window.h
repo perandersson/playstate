@@ -25,9 +25,8 @@ namespace playstate
 
 		// IWindowManager
 		public:
-			virtual uint32 GetWidth() const;
-			virtual uint32 GetHeight() const;
-			virtual void Resize(uint32 width, uint32 height);
+			virtual const Point& GetSize() const;
+			virtual void SetSize(const Point& size);
 
 			virtual const playstate::string& GetTitle() const;
 			virtual void SetTitle(const playstate::string& title);
@@ -51,11 +50,8 @@ namespace playstate
 
 			playstate::string mWindowTitle;
 
-			uint32 mWidth;
-			uint32 mHeight;
-
-			uint32 mPrevWidth;
-			uint32 mPrevHeight;
+			Point mSize;
+			Point mPrevSize;
 
 			float32 mTimeSinceLastUpdate;
 			LONGLONG mLastTime;

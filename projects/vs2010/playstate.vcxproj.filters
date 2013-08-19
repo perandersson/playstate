@@ -799,5 +799,8 @@
     <ClInclude Include="..\..\playstate\playstate\gui\gui_style.h">
       <Filter>Source Files\gui</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\script\lambda.h">
+      <Filter>Source Files\script</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
