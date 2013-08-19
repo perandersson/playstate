@@ -44,11 +44,13 @@ namespace playstate
 	typedef wchar_t character;
 	typedef std::wregex regex;
 	typedef std::wstringstream stringstream;
+#define SAFE_STRING(x) L##x
 #else
 	typedef std::string string;
 	typedef char character;
 	typedef std::regex regex;
 	typedef std::stringstream stringstream;
+#define SAFE_STRING(x) x
 #endif
 }
 
