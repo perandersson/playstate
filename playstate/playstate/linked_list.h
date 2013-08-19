@@ -5,27 +5,7 @@
 namespace playstate
 {
 	template<class T> class LinkedListLink;
-
-	template<class T>
-	class LinkedListBase
-	{
-		friend class LinkedListLink<T>;
-
-	public:
-		LinkedListBase();
-		virtual ~LinkedListBase();
-	
-	public:
-		T* Head;
-		T* Tail;
-
-		//
-		// @return The number of elements located in this list
-		uint32 GetSize() const;
-
-	protected:
-		uint32 mSize;
-	};
+	template<class T> class LinkedList;
 
 	template<class T>
 	class LinkedListLink
@@ -45,7 +25,7 @@ namespace playstate
 
 		//
 		// Link an item
-		void Link(T* item, LinkedListBase<T>* list);
+		void Link(T* item, LinkedList<T>* list);
 
 	private:
 		size_t mOffset;
@@ -53,12 +33,14 @@ namespace playstate
 	public:
 		T* Head;
 		T* Tail;
-		LinkedListBase<T>* List;
+		LinkedList<T>* List;
 	};
 
 	template<class T>
-	class LinkedList : public LinkedListBase<T>
+	class LinkedList
 	{
+		friend class LinkedListLink<T>;
+
 	public:
 		typename typedef LinkedListLink<T> Link;
 
@@ -92,32 +74,21 @@ namespace playstate
 		// Unlinks all the nodes inside this list
 		void UnlinkAll();
 
+		//
+		// @return The number of elements located in this list
+		uint32 GetSize() const;
+
 	protected:
 		//
 		// Retrieves the link value from the supplied item.
 		Link* GetLink(T* item);
-
+		
 	private:
 		size_t mLinkOffset;
+		T* mHead;
+		T* mTail;
+		uint32 mSize;
 	};
-
-	///////////////////////////////////
-
-	template<class T>
-	LinkedListBase<T>::LinkedListBase() : Head(NULL), Tail(NULL), mSize(0)
-	{
-	}
-
-	template<class T>
-	LinkedListBase<T>::~LinkedListBase()
-	{
-	}
-	
-	template<class T>
-	uint32 LinkedListBase<T>::GetSize() const
-	{
-		return mSize;
-	}
 
 	/////////////////////////////////
 
@@ -138,12 +109,12 @@ namespace playstate
 		if(List != NULL) {
 			// We are head if Head is NULL!
 			if(Head == NULL) {
-				List->Head = Tail;
+				List->mHead = Tail;
 			}
 		
 			// We are tail if Tail is NULL!
 			if(Tail == NULL) {
-				List->Tail = Head;
+				List->mTail = Head;
 			}
 
 			if(Head != NULL) {
@@ -165,7 +136,7 @@ namespace playstate
 	}
 
 	template<class T>
-	void LinkedListLink<T>::Link(T* item, LinkedListBase<T>* list)
+	void LinkedListLink<T>::Link(T* item, LinkedList<T>* list)
 	{
 		// Offset is needed so that we can find where the link is located inside the item
 		mOffset = (char*)(this) - (char*)(item);
@@ -175,7 +146,7 @@ namespace playstate
 	///////////////////////////////////
 
 	template<class T>
-	LinkedList<T>::LinkedList(size_t offset) : LinkedListBase<T>(), mLinkOffset(offset)
+	LinkedList<T>::LinkedList(size_t offset) : mLinkOffset(offset), mHead(NULL), mTail(NULL), mSize(0)
 	{
 	}
 
@@ -195,13 +166,13 @@ namespace playstate
 		link->Unlink();
 
 		// Assign the item into the linked list
-		if(Head == NULL) {
-			Head = Tail = item;
+		if(mHead == NULL) {
+			mHead = mTail = item;
  		} else {
 			// Put the item to the end of the list
-			GetLink(Tail)->Tail = item;
-			link->Head = Tail;
-			Tail = item;
+			GetLink(mTail)->Tail = item;
+			link->Head = mTail;
+			mTail = item;
 		}
 
 		// Link the item with this list
@@ -233,12 +204,12 @@ namespace playstate
 	template<class T>
 	T* LinkedList<T>::First() const
 	{
-		return Head;
+		return mHead;
 	}
 
 	template<class T>
 	void LinkedList<T>::UnlinkAll() {
-		T* ptr = Head;
+		T* ptr = mHead;
 		while(ptr != NULL) {
 			Link* link = GetLink(ptr);
 			T* next = link->Tail;
@@ -246,19 +217,26 @@ namespace playstate
 			link->List = NULL;
 			ptr = next;
 		}
-		Head = Tail = NULL;
+		mHead = mTail = NULL;
 	}
 
 	template<class T>
 	void LinkedList<T>::DeleteAll()
 	{
-		T* ptr = Head;
+		T* ptr = mHead;
 		while(ptr != NULL) {
 			Link* link = GetLink(ptr);
 			T* next = link->Tail;
 			delete ptr;
 			ptr = next;
 		}
-		Head = Tail = NULL;
+		mHead = mTail = NULL;
 	}
+
+	template<class T>
+	uint32 LinkedList<T>::GetSize() const
+	{
+		return mSize;
+	}
+
 }
