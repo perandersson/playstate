@@ -180,7 +180,7 @@ namespace playstate
 		static void SetActiveTexture(uint32 id);
 		static void BindTexture(GLenum type, GLuint texture);
 		static void InvalidateTexture(GLuint texture);
-
+		
 		static void Viewport(const Rect& viewport);
 	
 		static void BindVertexBuffer(VertexBuffer* vertexBuffer);

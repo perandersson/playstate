@@ -1,4 +1,5 @@
 #include "../memory/memory.h"
+
 #include "gfx_program.h"
 #include "texture2d.h"
 #include "vertex_buffer.h"
@@ -126,6 +127,7 @@ void GfxProgram::Prepare(const ScriptCollection& collection)
 	GLint numUniforms = 0;
 	glGetProgramiv(mProgramId, GL_ACTIVE_UNIFORMS, &numUniforms);
 	GLchar nameData[256] = {0};
+	uint32 nextTextureId = 0;
 	for(GLint uniformIndex = 0; uniformIndex < numUniforms; ++uniformIndex) {
 		GLint arraySize = 0;
 		GLenum type = 0;
@@ -162,7 +164,7 @@ void GfxProgram::Prepare(const ScriptCollection& collection)
 			const playstate::string wraptKey = playstate::string(nameData) + ".Wrap.T";
 			TextureWrap::Enum wrapt = (TextureWrap::Enum)collection.FindInt(wraptKey.c_str(), TextureWrap::Default);
 
-			component = new Sampler2DGfxProgramComponent(*this, componentId, minFilter, magFilter, wraps, wrapt);
+			component = new Sampler2DGfxProgramComponent(*this, componentId, nextTextureId++, minFilter, magFilter, wraps, wrapt);
 		}
 
 		if(component == NULL) {

@@ -17,7 +17,7 @@ namespace playstate
 		};
 
 	public:
-		Sampler2DGfxProgramComponent(GfxProgram& program, GLint componentId, MinFilter::Enum minFilter, MagFilter::Enum magFilter,
+		Sampler2DGfxProgramComponent(GfxProgram& program, GLint componentId, uint32 activeTexture, MinFilter::Enum minFilter, MagFilter::Enum magFilter,
 			TextureWrap::Enum ws, TextureWrap::Enum wt);
 		virtual ~Sampler2DGfxProgramComponent();
 

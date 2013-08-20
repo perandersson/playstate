@@ -7,17 +7,10 @@
 
 using namespace playstate;
 
-namespace {
-	int32 _current_textureIndex = 0; 
-}
-
-Sampler2DGfxProgramComponent::Sampler2DGfxProgramComponent(GfxProgram& program, GLint componentId, MinFilter::Enum minFilter, MagFilter::Enum magFilter,
-	TextureWrap::Enum ws, TextureWrap::Enum wt) : mProgram(program), mComponentId(componentId), mDirty(UNIFORM_BIT), mActiveTexture(0), mTexture(NULL),
+Sampler2DGfxProgramComponent::Sampler2DGfxProgramComponent(GfxProgram& program, GLint componentId, uint32 activeTexture, MinFilter::Enum minFilter, MagFilter::Enum magFilter,
+	TextureWrap::Enum ws, TextureWrap::Enum wt) : mProgram(program), mComponentId(componentId), mDirty(UNIFORM_BIT), mActiveTexture(activeTexture), mTexture(NULL),
 	mMinFilter(minFilter), mMagFilter(magFilter), mWS(ws), mWT(wt)
 {
-	mActiveTexture = _current_textureIndex++;
-	if(_current_textureIndex > MaxActiveTextures)
-		_current_textureIndex = 0;
 }
 
 Sampler2DGfxProgramComponent::~Sampler2DGfxProgramComponent()
@@ -30,9 +23,7 @@ void Sampler2DGfxProgramComponent::Apply()
 		return;
 	}
 
-	if(BIT_ISSET(mDirty, TEXTURE_BIT)) {
-		mTexture->Bind(mActiveTexture, mMinFilter, mMagFilter, mWS, mWT);
-	}
+	mTexture->Bind(mActiveTexture, mMinFilter, mMagFilter, mWS, mWT);
 
 	if(BIT_ISSET(mDirty, UNIFORM_BIT)) {
 		glUniform1i(mComponentId, mActiveTexture);
