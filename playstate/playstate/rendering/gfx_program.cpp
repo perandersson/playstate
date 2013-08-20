@@ -22,7 +22,7 @@ namespace {
 }
 
 GfxProgram::GfxProgram(RenderSystem& renderSystem)
-	: mProgramId(0), mVertexShader(0), mPixelShader(0), mGeometryShader(0), mApplied(false),
+	: mProgramId(0), mApplied(false),
 	mDepthTest(true), mDepthFunc(DepthFunc::Default),
 	mBlend(false), mSrcFactor(SrcFactor::Default), mDestFactor(DestFactor::Default), 
 	mClearColor(Color::Nothing), mClearDepth(1.0f), mCullFaces(CullFaces::Default),
@@ -31,10 +31,8 @@ GfxProgram::GfxProgram(RenderSystem& renderSystem)
 	memset(mRenderTargets, 0, sizeof(mRenderTargets));
 }
 
-GfxProgram::GfxProgram(GLuint programId, GLuint vertexShader, GLuint pixelShader, 
-	GLuint geometryShader, RenderSystem& renderSystem, const ScriptCollection& collection) 
-	:  mProgramId(programId), mVertexShader(vertexShader), 
-	mPixelShader(pixelShader), mGeometryShader(geometryShader), mApplied(false),
+GfxProgram::GfxProgram(GLuint programId, RenderSystem& renderSystem, const ScriptCollection& collection) 
+	:  mProgramId(programId), mApplied(false),
 	mDepthTest(true), mDepthFunc(DepthFunc::Default),
 	mBlend(false), mSrcFactor(SrcFactor::Default), mDestFactor(DestFactor::Default), 
 	mClearColor(Color::Nothing), mClearDepth(1.0f), mCullFaces(CullFaces::Default),
@@ -53,21 +51,6 @@ GfxProgram::~GfxProgram()
 		delete ptr;
 	}
 	mComponents.clear();
-
-	if(mPixelShader != 0) {
-		glDeleteShader(mPixelShader);
-		mPixelShader = 0;
-	}
-
-	if(mVertexShader != 0) {
-		glDeleteShader(mVertexShader);
-		mVertexShader = 0;
-	}
-
-	if(mGeometryShader != 0) {
-		glDeleteShader(mGeometryShader);
-		mGeometryShader = 0;
-	}
 
 	if(mProgramId != 0) {
 		glDeleteProgram(mProgramId);

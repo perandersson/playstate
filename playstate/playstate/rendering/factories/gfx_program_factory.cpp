@@ -89,9 +89,13 @@ GfxProgram* GfxProgramFactory::Create(const playstate::string& fileName)
 	// Detach the shaders when done
 	// @see http://www.opengl.org/wiki/GLSL_Object
 	glDetachShader(program, fs);
+	glDeleteShader(fs);
 	glDetachShader(program, vs);
-	if(gs != 0)
+	glDeleteShader(vs);
+	if(gs != 0) {
 		glDetachShader(program, gs);
+		glDeleteShader(gs);
+	}
 
 	glGetProgramiv(program, GL_LINK_STATUS, &status);
 	GLchar infoLogg[2048] = {0};
@@ -111,7 +115,7 @@ GfxProgram* GfxProgramFactory::Create(const playstate::string& fileName)
 
 	// Load all attributes
 
-	GfxProgram* g = new GfxProgram(program, vs, fs, gs, mRenderSystem, c);
+	GfxProgram* g = new GfxProgram(program, mRenderSystem, c);
 	
 	bool blend = c.FindBool("Blend", false);
 	bool depthTest = c.FindBool("DepthTest", true);

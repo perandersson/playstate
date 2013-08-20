@@ -29,8 +29,7 @@ namespace playstate
 
 	public:
 		GfxProgram(RenderSystem& renderSystem);
-		GfxProgram(GLuint programId, GLuint vertexShader, GLuint pixelShader, GLuint geometryShader, RenderSystem& renderSystem,
-			const ScriptCollection& collection);
+		GfxProgram(GLuint programId, RenderSystem& renderSystem, const ScriptCollection& collection);
 		~GfxProgram();
 
 		//
@@ -151,9 +150,6 @@ namespace playstate
 		RenderSystem& mRenderSystem;
 		
 		GLuint mProgramId;
-		GLuint mGeometryShader;
-		GLuint mVertexShader;
-		GLuint mPixelShader;
 
 		ComponentMap mComponents;
 		GfxProgramComponentNotFound mComponentNotFound;
