@@ -1,6 +1,6 @@
 #pragma once
 #include "../gui_widget.h"
-#include "../font/font.h"
+#include "../../font/font.h"
 
 namespace playstate
 {

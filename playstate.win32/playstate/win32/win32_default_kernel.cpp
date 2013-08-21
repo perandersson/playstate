@@ -7,6 +7,7 @@
 #include <playstate/component/lightsources/point_light.h>
 #include <playstate/gui/widgets/gui_frame_widget.h>
 #include <playstate/gui/widgets/gui_button_widget.h>
+#include <playstate/font/font.h>
 
 using namespace playstate;
 using namespace playstate::win32;
@@ -87,6 +88,7 @@ void Win32DefaultKernel::RegisterScript()
 	ss.RegisterType("PointLight", PointLight_Methods);
 	ss.RegisterType("Canvas", Canvas_Methods);
 	ss.RegisterType("CanvasGroup", CanvasGroup_Methods);
+	ss.RegisterType("Font", Font_Methods);
 
 	ss.RegisterType("GuiFrameWidget", GuiWidget_Methods);
 	ss.RegisterType("GuiFrameWidget", GuiFrameWidget_Methods);

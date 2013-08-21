@@ -1,6 +1,9 @@
 #pragma once
 
-#include "../../rendering/texture2d.h"
+#include "../math/vector2.h"
+#include "../script/luam.h"
+#include "../resources/resource_object.h"
+#include "../rendering/texture2d.h"
 
 namespace playstate
 {
@@ -16,12 +19,12 @@ namespace playstate
 		Vector2 TexCoord;
 	};
 
-	class Font : public Texture2D
+	class Font : public ResourceObject
 	{
 		typedef std::hash_map<playstate::character, FontCharInfo*> FontCharInfoMap;
 
 	public:
-		Font(GLuint textureId, uint32 width, uint32 height);
+		Font(Texture2D* fontTexture);
 		virtual ~Font();
 
 		//
@@ -45,9 +48,16 @@ namespace playstate
 		//	Returns a "[]" character if the supplied character wasn't one of the loaded ones.
 		const FontCharInfo& GetFontCharInfo(playstate::character c) const;
 
+		//
+		// @return Texture representation for this font
+		inline Texture2D* GetTexture() {
+			return mTexture;
+		}
+
 	private:
 		FontCharInfoMap mInfo;
 		FontCharInfo mCharInfoNotFound;
+		Texture2D* mTexture;
 	};
 
 	//

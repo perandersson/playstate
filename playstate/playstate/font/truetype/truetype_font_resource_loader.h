@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../../../resources/resource_loader.h"
-#include "../../../filesystem/file_system.h"
+#include "../../resources/resource_loader.h"
+#include "../../filesystem/file_system.h"
 
 namespace playstate
 {
@@ -19,6 +19,7 @@ namespace playstate
 
 	private:
 		int GetNextP2(int a) const;
+		void CopyToBuffer(uint32 s, uint32 t, uint32 width, uint32 height, playstate::byte* target, const playstate::byte* src);
 
 	private:
 		IFileSystem& mFileSystem;

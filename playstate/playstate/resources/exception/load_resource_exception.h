@@ -4,6 +4,9 @@
 
 namespace playstate
 {
+	//
+	// Exception thrown if an error occured while loading a resource. If the resource loader is threadable, then the exception handling
+	// is handled by the ResourceManager. 
 	class LoadResourceException : public ResourceException
 	{
 	public:

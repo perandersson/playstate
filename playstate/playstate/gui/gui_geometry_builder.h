@@ -2,7 +2,7 @@
 
 #include "../rendering/render_system.h"
 #include "../memory/memory_pool.h"
-#include "font/font.h"
+#include "../font/font.h"
 
 namespace playstate
 {

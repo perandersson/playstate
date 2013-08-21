@@ -40,16 +40,6 @@ void Texture2D::Bind(uint32 activeTexture, MinFilter::Enum minFilter, MagFilter:
 	}
 }
 
-uint32 Texture2D::GetWidth() const
-{
-	return mWidth;
-}
-
-uint32 Texture2D::GetHeight() const
-{
-	return mHeight;
-}
-
 Texture2DResourceLoader::Texture2DResourceLoader(RenderSystem& renderSystem, IFileSystem& fileSystem) : 
 	mRenderSystem(renderSystem), mFileSystem(fileSystem), mDefaultResource(NULL)
 {
@@ -90,7 +80,7 @@ ResourceObject* Texture2DResourceLoader::Load(IFile& file)
 	
 	GLuint textureId = 0;	
 	glGenTextures(1, &textureId);
-	glBindTexture(GL_TEXTURE_2D, textureId);
+	StatePolicy::BindTexture(GL_TEXTURE_2D, textureId);
 	GLint format = GL_BGR;
 	GLint internalFormat = GL_RGB;
 	GLint components = 3;

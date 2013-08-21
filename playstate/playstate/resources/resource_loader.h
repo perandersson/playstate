@@ -2,6 +2,7 @@
 
 #include "../types.h"
 #include "../filesystem/file.h"
+#include "exception/load_resource_exception.h"
 
 namespace playstate
 {
@@ -16,8 +17,9 @@ namespace playstate
 
 		//
 		// Method called when this resource type is loading it's resource. 
-		// If this method exists then the file is guaranteeded to exist.
+		// If this method is called then the file is guaranteeded to exist.
 		// @param file 
+		// @throws playstate::LoadResourceException
 		virtual ResourceObject* Load(IFile& file) = 0;
 
 		//

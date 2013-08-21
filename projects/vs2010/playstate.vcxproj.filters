@@ -120,11 +120,11 @@
     <Filter Include="Source Files\gui\widgets">
       <UniqueIdentifier>{5d70a75f-dfd6-4a44-9dca-aae5e241da20}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\gui\font">
-      <UniqueIdentifier>{b95dd630-54eb-4c94-abee-0bc2fb66029b}</UniqueIdentifier>
+    <Filter Include="Source Files\font">
+      <UniqueIdentifier>{6041ea1f-4a97-43c0-88fa-178c65ffb061}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\gui\font\truetype">
-      <UniqueIdentifier>{c95c1800-4796-46df-a1bd-ae6947870d44}</UniqueIdentifier>
+    <Filter Include="Source Files\font\truetype">
+      <UniqueIdentifier>{70725730-8d89-45b1-a0f8-24380d4bff86}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -398,14 +398,14 @@
     <ClCompile Include="..\..\playstate\playstate\gui\widgets\gui_button_widget.cpp">
       <Filter>Source Files\gui\widgets</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\gui\font\font.cpp">
-      <Filter>Source Files\gui\font</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\gui\font\truetype\truetype_font_resource_loader.cpp">
-      <Filter>Source Files\gui\font\truetype</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\gui\gui_style.cpp">
       <Filter>Source Files\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\font\font.cpp">
+      <Filter>Source Files\font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\font\truetype\truetype_font_resource_loader.cpp">
+      <Filter>Source Files\font\truetype</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -790,17 +790,20 @@
     <ClInclude Include="..\..\playstate\playstate\gui\widgets\gui_button_widget.h">
       <Filter>Source Files\gui\widgets</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\gui\font\font.h">
-      <Filter>Source Files\gui\font</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\gui\font\truetype\truetype_font_resource_loader.h">
-      <Filter>Source Files\gui\font\truetype</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\gui\gui_style.h">
       <Filter>Source Files\gui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\script\lambda.h">
       <Filter>Source Files\script</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\component\renderable\billboarded_text.h">
+      <Filter>Source Files\component\renderable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\font\font.h">
+      <Filter>Source Files\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\font\truetype\truetype_font_resource_loader.h">
+      <Filter>Source Files\font\truetype</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,15 +1,19 @@
-#include "../../memory/memory.h"
+#include "../memory/memory.h"
 #include "font.h"
-#include "../../resources/resource_manager.h"
+#include "../resources/resource_manager.h"
 using namespace playstate;
 
-Font::Font(GLuint textureId, uint32 width, uint32 height)
-	: Texture2D(textureId, width, height, TextureFormat::R)
+Font::Font(Texture2D* fontTexture) : mTexture(fontTexture)
 {
+	assert_not_null(fontTexture);
 }
 
 Font::~Font()
 {
+	if(mTexture != NULL) {
+		delete mTexture;
+		mTexture = NULL;
+	}
 }
 
 Vector2 Font::GetSizeOfString(const playstate::string& str) const

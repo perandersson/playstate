@@ -5,7 +5,7 @@ local class = require "engine.class"
 -- BackColor = "#FFFFFF" or "#FF" or { 0.5, 0.5, 0.5, 0.5 } or { Top = "#FF", Bottom = "#FF" }
 
 local style = { 
-	--Font = Font.Load("/demo/fonts/calibri.ttf"), 
+	Font = Font.Load("/demo/fonts/consolab.ttf"), 
 	ShadowOffset = 3, 
 	BackColor = { 
 		Top = "#99", 

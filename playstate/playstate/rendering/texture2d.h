@@ -21,11 +21,15 @@ namespace playstate
 
 		//
 		// @return This textures width in pixels
-		uint32 GetWidth() const;
+		inline uint32 GetWidth() const {
+			return mWidth;
+		}
 
 		//
 		// @return This textures height in pixels
-		uint32 GetHeight() const;
+		inline uint32 GetHeight() const {
+			return mHeight;
+		}
 
 		//void Update(
 
