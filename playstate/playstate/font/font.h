@@ -16,15 +16,17 @@ namespace playstate
 		Vector2 Offset;
 
 		// The texture coordinates for this character
-		Vector2 TexCoord;
+		Vector2 BottomLeftTexCoord;
+		Vector2 TopRightTexCoord;
 	};
 
-	class Font : public ResourceObject
+	class Font : public Texture2D
 	{
+	public:
 		typedef std::hash_map<playstate::character, FontCharInfo*> FontCharInfoMap;
 
 	public:
-		Font(Texture2D* fontTexture);
+		Font(GLuint textureId, uint32 width, uint32 height, const FontCharInfoMap& infoMap);
 		virtual ~Font();
 
 		//
@@ -48,16 +50,9 @@ namespace playstate
 		//	Returns a "[]" character if the supplied character wasn't one of the loaded ones.
 		const FontCharInfo& GetFontCharInfo(playstate::character c) const;
 
-		//
-		// @return Texture representation for this font
-		inline Texture2D* GetTexture() {
-			return mTexture;
-		}
-
 	private:
 		FontCharInfoMap mInfo;
 		FontCharInfo mCharInfoNotFound;
-		Texture2D* mTexture;
 	};
 
 	//

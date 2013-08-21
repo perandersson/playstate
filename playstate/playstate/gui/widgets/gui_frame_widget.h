@@ -8,7 +8,6 @@ namespace playstate
 	{
 	public:
 		GuiFrameWidget();
-		GuiFrameWidget(CanvasGroup* group);
 		virtual ~GuiFrameWidget();
 
 		//
@@ -17,7 +16,7 @@ namespace playstate
 
 	// GuiWidget
 	public:
-		virtual const void BuildWidgetGeometry(GuiGeometryBuilder& builder) const;
+		virtual const void BuildWidgetGeometry(GuiGeometryBuilder& builder);
 
 	private:
 		playstate::string mTitle;

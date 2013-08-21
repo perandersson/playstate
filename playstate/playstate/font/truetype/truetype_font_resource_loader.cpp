@@ -59,6 +59,7 @@ ResourceObject* TrueTypeFontResourceLoader::Load(IFile& file)
 	uint32 offsetX = 0;
 	uint32 offsetY = 0;
 	uint32 highestHeightOnRow = 0;
+	Font::FontCharInfoMap infoMap;
 	for(uint32 i = 0; i < values.length(); ++i) {
 		const playstate::character ch = values[i];
 		if(FT_Load_Glyph(face, FT_Get_Char_Index(face, ch), FT_LOAD_DEFAULT)) {
@@ -84,9 +85,19 @@ ResourceObject* TrueTypeFontResourceLoader::Load(IFile& file)
 		}
 
 		CopyToBuffer(offsetX, offsetY, bitmapWidth, bitmapHeight, bytes, bitmap.buffer);
+
+		// Create character description
+		FontCharInfo* info = new FontCharInfo();
+		info->Size.Set(bitmapWidth, bitmapHeight);
+		info->Offset.Set(face->glyph->advance.x, bitmap_glyph->top - bitmap.rows);
+		info->BottomLeftTexCoord.Set(offsetX / (float32)textureWidth, offsetY / (float32)textureHeight);
+		info->TopRightTexCoord.Set(offsetX + bitmapWidth / (float32)textureWidth, offsetY + bitmapHeight / (float32)textureHeight);
+		infoMap.insert(std::make_pair(ch, info));
 			
 		offsetX += bitmap.width;
 		highestHeightOnRow = highestHeightOnRow < bitmapHeight ? bitmapHeight : highestHeightOnRow;
+
+		FT_Done_Glyph(glyph);
 	}
 	
 	GLuint textureId = 0;	
@@ -103,25 +114,14 @@ ResourceObject* TrueTypeFontResourceLoader::Load(IFile& file)
 											   valid 'target', 'format' or 'type' parameters", file.GetPath().c_str());
 	}
 
-	Texture2D* fontTexture = new Texture2D(textureId, textureWidth, textureHeight, TextureFormat::R);
-
 	FT_Done_Face(face);
 	FT_Done_FreeType(library);
 
-	return new Font(fontTexture);
+	return new Font(textureId, textureWidth, textureHeight, infoMap);
 }
 
 void TrueTypeFontResourceLoader::CopyToBuffer(uint32 x, uint32 y, uint32 width, uint32 height, playstate::byte* target, const playstate::byte* src)
 {
-	/*
-	  |
-	--x----x+width
-	  |
-	  |
-	  y----y+height
-
-	*/
-
 	for(int32 t = height - 1; t >= 0; --t) {
 		for(uint32 s = 0; s < width; ++s) {
 			const uint32 targetOffset = (s + x) + (t + y) * 1024;

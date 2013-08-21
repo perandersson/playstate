@@ -7,11 +7,6 @@ GuiButtonWidget::GuiButtonWidget()
 {
 }
 
-GuiButtonWidget::GuiButtonWidget(CanvasGroup* group)
-	: GuiWidget(group)
-{
-}
-
 GuiButtonWidget::~GuiButtonWidget()
 {
 }
@@ -21,7 +16,7 @@ void GuiButtonWidget::SetText(const playstate::string& text)
 	mText = text;
 }
 
-const void GuiButtonWidget::BuildWidgetGeometry(GuiGeometryBuilder& builder) const
+const void GuiButtonWidget::BuildWidgetGeometry(GuiGeometryBuilder& builder)
 {
 	const uint32 shadowOffset = 3;
 
@@ -35,26 +30,22 @@ const void GuiButtonWidget::BuildWidgetGeometry(GuiGeometryBuilder& builder) con
 	builder.AddGradientQuad(GetAbsolutePosition(), GetSize(), mBackColorTop, mBackColorBottom);
 
 	// Add text?
-	//builder.AddText(mFont, GetAbsolutePosition(), Color::White, mText, GetSize());
+	builder.AddText(mFont.Get(), GetAbsolutePosition(), mFrontColor, mText, GetSize());
 
 	GuiWidget::BuildWidgetGeometry(builder);
 }
 
 void GuiButtonWidget::OnStyleChanged(const GuiStyle& style)
 {
+	mFont = style.FindResource<Font>(SAFE_STRING("Font"));
+	mFrontColor = style.FindColor(SAFE_STRING("FrontColor"), Color::White);
 	GuiWidget::OnStyleChanged(style);
 }
 
 int playstate::GuiButtonWidget_Factory(lua_State* L)
 {
-	CanvasGroup* group = luaM_getobject<CanvasGroup>(L);
-	if(group != NULL) {
-		GuiButtonWidget* widget = new GuiButtonWidget(group);
-		luaM_pushobject(L, "GuiButtonWidget", widget);
-	} else {
-		lua_pushnil(L);
-	}
-
+	GuiButtonWidget* widget = new GuiButtonWidget();
+	luaM_pushobject(L, "GuiButtonWidget", widget);
 	return 1;
 }
 

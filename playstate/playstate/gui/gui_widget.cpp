@@ -11,18 +11,6 @@ GuiWidget::GuiWidget()
 	mBackColorBottom = Color::HexToRGB("#22");
 }
 
-GuiWidget::GuiWidget(CanvasGroup* group)
-	: mCanvasGroup(NULL), mParent(NULL), 
-	mEvents(offsetof(GuiEvent, EventLink)), mChildren(offsetof(GuiWidget, GuiWidgetLink))
-{
-	assert_not_null(group);
-
-	mBackColorTop = Color::HexToRGB("#99");
-	mBackColorBottom = Color::HexToRGB("#22");
-
-	group->AddWidget(this);
-}
-
 GuiWidget::~GuiWidget()
 {
 	mEvents.DeleteAll();
@@ -94,9 +82,9 @@ void GuiWidget::SetPosition(const Vector2& position)
 
 void GuiWidget::UpdateStyle(const GuiStyle& style)
 {
-	mBackColorTop = style.FindColor("BackColor.Top", Color::HexToRGB("#99"));
-	mBackColorBottom = style.FindColor("BackColor.Bottom", Color::HexToRGB("#22"));
-	OnStyleChanged(style);
+	mBackColorTop = style.FindColor(SAFE_STRING("BackColor.Top"), Color::HexToRGB("#99"));
+	mBackColorBottom = style.FindColor(SAFE_STRING("BackColor.Bottom"), Color::HexToRGB("#22"));
+	this->OnStyleChanged(style);
 }
 
 void GuiWidget::SetSize(const Vector2& size)
@@ -108,7 +96,7 @@ void GuiWidget::OnStyleChanged(const GuiStyle& style)
 {
 }
 
-const void GuiWidget::BuildWidgetGeometry(GuiGeometryBuilder& builder) const
+const void GuiWidget::BuildWidgetGeometry(GuiGeometryBuilder& builder)
 {
 	GuiWidget* child = mChildren.First();
 	while(child != NULL) {
@@ -117,7 +105,7 @@ const void GuiWidget::BuildWidgetGeometry(GuiGeometryBuilder& builder) const
 	}
 }
 
-void GuiWidget::AddChildNode(GuiWidget* widget)
+void GuiWidget::AddWidget(GuiWidget* widget)
 {
 	assert_not_null(widget);
 
@@ -125,9 +113,10 @@ void GuiWidget::AddChildNode(GuiWidget* widget)
 	widget->mParent = this;
 
 	widget->UpdatePosition();
+	widget->UpdateStyle(mCanvasGroup->GetStyle());
 }
 
-void GuiWidget::RemoveChildNode(GuiWidget* widget)
+void GuiWidget::RemoveWidget(GuiWidget* widget)
 {
 	assert_not_null(widget);
 	assert(widget->mParent == this && "You are not allowed to remove another scene objects child node");
@@ -169,22 +158,22 @@ int playstate::GuiWidget_SetSize(lua_State* L)
 	return 0;
 }
 
-int playstate::GuiWidget_AddChildNode(lua_State* L)
+int playstate::GuiWidget_AddWidget(lua_State* L)
 {
 	GuiWidget* child = luaM_popobject<GuiWidget>(L);
 	GuiWidget* self = luaM_popobject<GuiWidget>(L);
 	if(self != NULL && child != NULL) {
-		self->AddChildNode(child);
+		self->AddWidget(child);
 	}
 	return 0;
 }
 
-int playstate::GuiWidget_RemoveChildNode(lua_State* L)
+int playstate::GuiWidget_RemoveWidget(lua_State* L)
 {
 	GuiWidget* child = luaM_popobject<GuiWidget>(L);
 	GuiWidget* self = luaM_popobject<GuiWidget>(L);
 	if(self != NULL && child != NULL) {
-		self->RemoveChildNode(child);
+		self->RemoveWidget(child);
 	}
 	return 0;
 }

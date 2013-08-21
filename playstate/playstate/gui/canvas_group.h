@@ -79,10 +79,14 @@ namespace playstate
 	extern int CanvasGroup_Factory(lua_State* L);
 	extern int CanvasGroup_Load(lua_State* L);
 	extern int CanvasGroup_SetStyle(lua_State* L);
+	extern int CanvasGroup_AddWidget(lua_State* L);
+	extern int CanvasGroup_RemoveWidget(lua_State* L);
 	static luaL_Reg CanvasGroup_Methods[] = {
 		{ LUA_CONSTRUCTOR, CanvasGroup_Factory },
 		{ "Load", CanvasGroup_Load },
 		{ "SetStyle", CanvasGroup_SetStyle },
+		{ "AddWidget", CanvasGroup_AddWidget },
+		{ "RemoveWidget", CanvasGroup_RemoveWidget },
 		{ NULL, NULL }
 	};
 }

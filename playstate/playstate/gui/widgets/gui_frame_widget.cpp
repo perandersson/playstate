@@ -7,11 +7,6 @@ GuiFrameWidget::GuiFrameWidget()
 {
 }
 
-GuiFrameWidget::GuiFrameWidget(CanvasGroup* group)
-	: GuiWidget(group)
-{
-}
-
 GuiFrameWidget::~GuiFrameWidget()
 {
 }
@@ -21,7 +16,7 @@ void GuiFrameWidget::SetTitle(const playstate::string& title)
 	mTitle = title;
 }
 
-const void GuiFrameWidget::BuildWidgetGeometry(GuiGeometryBuilder& builder) const
+const void GuiFrameWidget::BuildWidgetGeometry(GuiGeometryBuilder& builder)
 {
 	const uint32 shadowOffset = 3;
 	const uint32 titleHeight = 25;
@@ -48,14 +43,8 @@ const void GuiFrameWidget::BuildWidgetGeometry(GuiGeometryBuilder& builder) cons
 
 int playstate::GuiFrameWidget_Factory(lua_State* L)
 {
-	CanvasGroup* group = luaM_getobject<CanvasGroup>(L);
-	if(group != NULL) {
-		GuiFrameWidget* widget = new GuiFrameWidget(group);
-		luaM_pushobject(L, "GuiFrameWidget", widget);
-	} else {
-		lua_pushnil(L);
-	}
-
+	GuiFrameWidget* widget = new GuiFrameWidget();
+	luaM_pushobject(L, "GuiFrameWidget", widget);
 	return 1;
 }
 

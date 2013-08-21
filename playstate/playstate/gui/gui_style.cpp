@@ -40,6 +40,15 @@ Vector2 GuiStyle::FindVector2(const char* key, Vector2 defaultVector) const
 	return result;
 }
 
+ResourceData* GuiStyle::FindResourceData(const playstate::character* key, ResourceData* defaultObject) const
+{
+	ResourceData* result = defaultObject;
+	if(FindKey(key)) {
+		result = luaM_popresource(mLuaState);
+	}
+	return result;
+}
+
 GuiStyle& GuiStyle::operator = (const GuiStyle& s)
 {
 	ScriptCollection::operator=(s);

@@ -91,10 +91,31 @@ void GuiGeometryBuilder::AddText(Font* font, const Vector2& position, const Colo
 
 void GuiGeometryBuilder::AddText(Font* font, const Vector2& position, const Color& color, const playstate::string& text, uint32 maxLenght)
 {
+	AddText(font, position, color, text, Vector2((float32)maxLenght, FLT_MAX));
 }
 
 void GuiGeometryBuilder::AddText(Font* font, const Vector2& position, const Color& color, const playstate::string& text, const Vector2& maxSize)
 {
+	Vector2 currentPos = position;
+	bool newline = false;
+	playstate::string::size_type size = text.length();
+	for(playstate::string::size_type i = 0; i < size; ++i) {
+		playstate::character c = text[i];
+		if(c == '\n') {
+			newline = true;
+			continue;
+		} else if(c == '\r') {
+			continue;
+		}
+
+		const FontCharInfo& info = font->GetFontCharInfo(c);
+		if(newline) {
+			newline = false;
+			currentPos.Y += info.Size.Y;
+		}
+		AddQuad(currentPos + Vector2(0, info.Offset.Y), info.Size, color);
+		currentPos.X += info.Size.X;
+	}
 }
 
 VertexBuffer* GuiGeometryBuilder::GetVertexBuffer()

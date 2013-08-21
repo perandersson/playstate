@@ -8,7 +8,6 @@ namespace playstate
 	{
 	public:
 		GuiButtonWidget();
-		GuiButtonWidget(CanvasGroup* group);
 		virtual ~GuiButtonWidget();
 
 		//
@@ -17,12 +16,16 @@ namespace playstate
 
 	// GuiWidget
 	public:
-		virtual const void BuildWidgetGeometry(GuiGeometryBuilder& builder) const;
+		virtual const void BuildWidgetGeometry(GuiGeometryBuilder& builder);
+
+	// GuiWidget
+	protected:
 		virtual void OnStyleChanged(const GuiStyle& style);
 
 	private:
 		Resource<Font> mFont;
 		playstate::string mText;
+		Color mFrontColor;
 	};
 
 	// Script integration

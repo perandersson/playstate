@@ -10,21 +10,23 @@ local style = {
 	BackColor = { 
 		Top = "#99", 
 		Bottom = "#22"
-	}
+	},
+	FrontColor = "#FF"
 }
 
 local mainMenu = CanvasGroup()
 mainMenu:SetStyle(style)
 
-local window = GuiFrameWidget(mainMenu)
+local window = GuiFrameWidget()
 window:SetTitle("Example")
 window:SetSize(200, 768)
 window:SetPosition(1024 - 200, 0)
+mainMenu:AddWidget(window)
 
-local btnLoadLevel = GuiButtonWidget(mainMenu)
+local btnLoadLevel = GuiButtonWidget()
 btnLoadLevel:SetText("Load Level1.lua")
 btnLoadLevel:SetSize(140, 40)
 btnLoadLevel:SetPosition(0, 20)
-window:AddChildNode(btnLoadLevel)
+window:AddWidget(btnLoadLevel)
 
 return mainMenu

@@ -17,7 +17,6 @@ namespace playstate
 
 	public:
 		GuiWidget();
-		GuiWidget(CanvasGroup* group);
 		virtual ~GuiWidget();
 
 		//
@@ -95,19 +94,19 @@ namespace playstate
 		
 		//
 		// Builds this GUI widgets geometry in preperation for drawing it onto the screen.
-		virtual const void BuildWidgetGeometry(GuiGeometryBuilder& builder) const;
+		virtual const void BuildWidgetGeometry(GuiGeometryBuilder& builder);
 
 		//
 		// Adds a widget child node
 		//
 		// @param widget
-		void AddChildNode(GuiWidget* widget);
+		void AddWidget(GuiWidget* widget);
 
 		//
 		// Removes a widget child node from this instance
 		//
 		// @param widget
-		void RemoveChildNode(GuiWidget* widget);
+		void RemoveWidget(GuiWidget* widget);
 
 	protected:
 		//
@@ -138,13 +137,13 @@ namespace playstate
 
 	extern int GuiWidget_SetPosition(lua_State* L);
 	extern int GuiWidget_SetSize(lua_State* L);
-	extern int GuiWidget_AddChildNode(lua_State* L);
-	extern int GuiWidget_RemoveChildNode(lua_State* L);
+	extern int GuiWidget_AddWidget(lua_State* L);
+	extern int GuiWidget_RemoveWidget(lua_State* L);
 	static luaL_Reg GuiWidget_Methods[] = {
 		{ "SetPosition", GuiWidget_SetPosition },
 		{ "SetSize", GuiWidget_SetSize },
-		{ "AddChildNode", GuiWidget_AddChildNode },
-		{ "RemoveChildNode", GuiWidget_RemoveChildNode },
+		{ "AddWidget", GuiWidget_AddWidget },
+		{ "RemoveWidget", GuiWidget_RemoveWidget },
 		{ NULL, NULL }
 	};
 }

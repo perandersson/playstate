@@ -137,3 +137,23 @@ int playstate::CanvasGroup_SetStyle(lua_State* L)
 	}
 	return 0;
 }
+
+int playstate::CanvasGroup_AddWidget(lua_State* L)
+{
+	GuiWidget* widget = luaM_popobject<GuiWidget>(L);
+	CanvasGroup* self = luaM_popobject<CanvasGroup>(L);
+	if(self != NULL && widget != NULL) {
+		self->AddWidget(widget);
+	}
+	return 0;
+}
+
+int playstate::CanvasGroup_RemoveWidget(lua_State* L)
+{
+	GuiWidget* widget = luaM_popobject<GuiWidget>(L);
+	CanvasGroup* self = luaM_popobject<CanvasGroup>(L);
+	if(self != NULL && widget != NULL) {
+		self->RemoveWidget(widget);
+	}
+	return 0;
+}

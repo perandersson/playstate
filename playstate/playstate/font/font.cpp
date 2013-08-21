@@ -3,16 +3,17 @@
 #include "../resources/resource_manager.h"
 using namespace playstate;
 
-Font::Font(Texture2D* fontTexture) : mTexture(fontTexture)
+Font::Font(GLuint textureId, uint32 width, uint32 height, const FontCharInfoMap& infoMap) 
+	: Texture2D(textureId, width, height, TextureFormat::R), mInfo(infoMap)
 {
-	assert_not_null(fontTexture);
 }
 
 Font::~Font()
 {
-	if(mTexture != NULL) {
-		delete mTexture;
-		mTexture = NULL;
+	FontCharInfoMap::iterator it = mInfo.begin();
+	FontCharInfoMap::iterator end = mInfo.end();
+	for(; it != end; ++it) {
+		delete it->second;
 	}
 }
 
