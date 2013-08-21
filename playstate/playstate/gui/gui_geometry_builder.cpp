@@ -84,6 +84,8 @@ void GuiGeometryBuilder::AddText(Font* font, const Vector2& position, const Colo
 			newline = false;
 			currentPos.Y += info.Size.Y;
 		}
+		// Position should NOT be top-left corner for fonts. Position should indicate where font-origin is located
+		// @see http://www.wildfiregames.com/forum/index.php?showtopic=17365
 		AddQuad(currentPos, info.Size, Color::Black);
 		currentPos.X += info.Size.X;
 	}

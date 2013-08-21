@@ -31,11 +31,11 @@ ResourceObject* TrueTypeFontResourceLoader::Load(IFile& file)
 	}
 
 	uint64 size = file.Size();
-	byte* memory = new byte[size + 1];
-	file.ReadBytes(memory, size);
+	auto_array<byte> memory(size + 1);
+	file.ReadBytes(memory.Get(), size);
 
 	FT_Face face;
-	FT_Error error = FT_New_Memory_Face(library, memory, size, 0, &face);
+	FT_Error error = FT_New_Memory_Face(library, memory.Get(), size, 0, &face);
 	if(error == FT_Err_Unknown_File_Format) {
 		// ERROR
 	} else if(error) {
@@ -54,7 +54,7 @@ ResourceObject* TrueTypeFontResourceLoader::Load(IFile& file)
 
 	const uint32 textureWidth = 1024;
 	const uint32 textureHeight = 1024;
-	playstate::byte* bytes = new playstate::byte[textureWidth * textureHeight * 2];
+	auto_array<playstate::byte> bytes(textureWidth * textureHeight * 2);
 
 	uint32 offsetX = 0;
 	uint32 offsetY = 0;
@@ -84,12 +84,12 @@ ResourceObject* TrueTypeFontResourceLoader::Load(IFile& file)
 			offsetY += highestHeightOnRow;
 		}
 
-		CopyToBuffer(offsetX, offsetY, bitmapWidth, bitmapHeight, bytes, bitmap.buffer);
+		CopyToBuffer(offsetX, offsetY, bitmapWidth, bitmapHeight, bytes.Get(), bitmap.buffer);
 
 		// Create character description
 		FontCharInfo* info = new FontCharInfo();
 		info->Size.Set(bitmapWidth, bitmapHeight);
-		info->Offset.Set(face->glyph->advance.x, bitmap_glyph->top - bitmap.rows);
+		info->Offset.Set(0, 0);
 		info->BottomLeftTexCoord.Set(offsetX / (float32)textureWidth, offsetY / (float32)textureHeight);
 		info->TopRightTexCoord.Set(offsetX + bitmapWidth / (float32)textureWidth, offsetY + bitmapHeight / (float32)textureHeight);
 		infoMap.insert(std::make_pair(ch, info));
@@ -104,8 +104,7 @@ ResourceObject* TrueTypeFontResourceLoader::Load(IFile& file)
 	glGenTextures(1, &textureId);
 	StatePolicy::BindTexture(GL_TEXTURE_2D, textureId);
 	CHECK_GL_ERROR();
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_R8, textureWidth, textureHeight, 0, GL_RED, GL_UNSIGNED_BYTE, bytes);
-	delete[] bytes;
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_R8, textureWidth, textureHeight, 0, GL_RED, GL_UNSIGNED_BYTE, bytes.Get());
 
 	GLenum err = glGetError();
 	if(err == GL_INVALID_ENUM) {

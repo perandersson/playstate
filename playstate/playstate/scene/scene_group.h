@@ -26,13 +26,13 @@ namespace playstate
 		// Adds the supplied scene node to this scene group instance
 		// 
 		// @param node The node we want to add
-		void AddSceneNode(SceneNode* node);
+		void AddNode(SceneNode* node);
 
 		//
 		// Removes the supplied scene node from this scene group instance
 		//
 		// @param node The node we want to remove
-		void RemoveSceneNode(SceneNode* node);
+		void RemoveNode(SceneNode* node);
 
 	// IUpdateProcessor
 	public:
@@ -71,10 +71,14 @@ namespace playstate
 	extern int SceneGroup_Factory(lua_State* L);
 	extern int SceneGroup_Init(lua_State* L);
 	extern int SceneGroup_Load(lua_State* L);
+	extern int SceneGroup_AddNode(lua_State* L);
+	extern int SceneGroup_RemoveNode(lua_State* L);
 	static luaL_Reg SceneGroup_Methods[] = {
 		{ LUA_CONSTRUCTOR, SceneGroup_Factory },
 		{ LUA_INHERIT_CONSTRUCTOR, SceneGroup_Init },
 		{ "Load", SceneGroup_Load },
+		{ "AddNode", SceneGroup_AddNode },
+		{ "RemoveNode", SceneGroup_RemoveNode },
 		{ NULL, NULL }
 	};
 }

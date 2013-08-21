@@ -155,3 +155,69 @@ namespace playstate
 #ifndef OFFSET
 #define OFFSET(x) ((char *)NULL + x)
 #endif
+
+namespace playstate
+{
+	template<typename T>
+	class auto_array
+	{
+	private:
+		T* mMemory;
+		uint32 mLength;
+
+	public:
+		auto_array(uint32 length) : mLength(length) {
+			mMemory = new T[length];
+		}
+
+		auto_array(T* memory, uint32 length) 
+			: mMemory(memory), mLength(length)
+		{
+		}
+
+		auto_array(auto_array<T>& other)
+			: mMemory(other.mMemory), mLength(other.mLength)
+		{
+			other.Reset();
+		}
+
+		~auto_array() { 
+			if(mMemory != NULL) {
+				delete[] mMemory; 
+				mMemory = NULL;
+				mLength = 0;
+			}
+		}
+
+		T* Get() { 
+			return mMemory;
+		}
+
+		void Reset() { 
+			mMemory = NULL;
+		}
+
+		uint32 Length() const {
+			return mLength;
+		}
+
+		T operator [] (uint32 index) { 
+			assert(index < mLength && "You are trying to index a to large element in this array");
+			return mMemory[index];
+		}
+
+		T* operator * () { 
+			return mMemory; 
+		}
+
+		auto_array<T>& operator = (auto_array<T>& other) {
+			if(mMemory != NULL)
+				delete[] mMemory;
+
+			mMemory = other.mMemory;
+			mLength = other.mLength;
+			other.Reset();
+			return *this;
+		}
+	};
+}

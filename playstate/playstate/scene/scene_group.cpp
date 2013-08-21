@@ -46,14 +46,14 @@ SceneGroup::~SceneGroup()
 	}
 }
 
-void SceneGroup::AddSceneNode(SceneNode* node)
+void SceneGroup::AddNode(SceneNode* node)
 {
 	assert_not_null(node);
 	mSceneNodes.AddLast(node);
 	node->NodeAttachedToSceneGroup(this);
 }
 
-void SceneGroup::RemoveSceneNode(SceneNode* node)
+void SceneGroup::RemoveNode(SceneNode* node)
 {
 	assert_not_null(node);
 	node->DetachingNodeFromSceneGroup(this);
@@ -125,49 +125,66 @@ bool SceneGroup::Find(const FindQuery& query, LightSourceResultSet* target) cons
 	return mLightSourceProcessor->Find(query, target);
 }
 
-namespace playstate
+int playstate::SceneGroup_Factory(lua_State* L)
 {
-	int SceneGroup_Factory(lua_State* L)
-	{
-		SceneGroup* sceneGroup = new SceneGroup();
-		luaM_pushobject(L, "SceneGroup", sceneGroup);
-		return 1;
-	}
+	SceneGroup* sceneGroup = new SceneGroup();
+	luaM_pushobject(L, "SceneGroup", sceneGroup);
+	return 1;
+}
 
-	int SceneGroup_Init(lua_State* L)
-	{
-		if(lua_istable(L, -1) == 0) {
-			lua_pop(L, 1);
-			return 0;
-		}
-
-		SceneGroup* sceneGroup = new SceneGroup();
-		luaM_setinstance(L, sceneGroup);
-		
-		const int ref = luaL_ref(L, LUA_REGISTRYINDEX);
-		sceneGroup->RegisterObject(L, ref);
+int playstate::SceneGroup_Init(lua_State* L)
+{
+	if(lua_istable(L, -1) == 0) {
+		lua_pop(L, 1);
 		return 0;
 	}
 
-	int SceneGroup_Load(lua_State* L)
-	{
-		const playstate::string fileName = lua_tostring(L, -1); lua_pop(L, 1);
-		try {
-			ScriptSystem& scriptSystem = ScriptSystem::Get();
-			std::auto_ptr<Script> script = scriptSystem.CompileFile(fileName);
-			SceneGroup* group = script->ReadInstance<SceneGroup>();
-			if(group == NULL) {
-				ILogger::Get().Error("The file: '%s' did not return a scene group.", fileName.c_str());
-				lua_pushnil(L);
-			}
-			else
-				luaM_pushobject(L, "SceneGroup", group);
-			return 1;
-		} catch(ScriptException e) {
-			ILogger::Get().Error("Could not load scene group: '%s'. Reason: '%s'", fileName.c_str(), e.GetMessage().c_str());
-		}
+	SceneGroup* sceneGroup = new SceneGroup();
+	luaM_setinstance(L, sceneGroup);
 		
-		lua_pushnil(L);
+	const int ref = luaL_ref(L, LUA_REGISTRYINDEX);
+	sceneGroup->RegisterObject(L, ref);
+	return 0;
+}
+
+int playstate::SceneGroup_Load(lua_State* L)
+{
+	const playstate::string fileName = lua_tostring(L, -1); lua_pop(L, 1);
+	try {
+		ScriptSystem& scriptSystem = ScriptSystem::Get();
+		std::auto_ptr<Script> script = scriptSystem.CompileFile(fileName);
+		SceneGroup* group = script->ReadInstance<SceneGroup>();
+		if(group == NULL) {
+			ILogger::Get().Error("The file: '%s' did not return a scene group.", fileName.c_str());
+			lua_pushnil(L);
+		}
+		else
+			luaM_pushobject(L, "SceneGroup", group);
 		return 1;
+	} catch(ScriptException e) {
+		ILogger::Get().Error("Could not load scene group: '%s'. Reason: '%s'", fileName.c_str(), e.GetMessage().c_str());
 	}
+		
+	lua_pushnil(L);
+	return 1;
+}
+
+int playstate::SceneGroup_AddNode(lua_State* L)
+{
+	SceneNode* node = luaM_popobject<SceneNode>(L);
+	SceneGroup* self = luaM_popobject<SceneGroup>(L);
+	if(self != NULL && node != NULL) {
+		self->AddNode(node);
+	}
+	return 0;
+}
+
+int playstate::SceneGroup_RemoveNode(lua_State* L)
+{
+	SceneNode* node = luaM_popobject<SceneNode>(L);
+	SceneGroup* self = luaM_popobject<SceneGroup>(L);
+	if(self != NULL && node != NULL) {
+		self->RemoveNode(node);
+	}
+	return 0;
 }

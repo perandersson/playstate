@@ -50,6 +50,12 @@ namespace playstate
 		//	Returns a "[]" character if the supplied character wasn't one of the loaded ones.
 		const FontCharInfo& GetFontCharInfo(playstate::character c) const;
 
+		//
+		// Update this font so that the supplied characters are loaded into the font memory.
+		//
+		// @param characters The characters that we want to load into memory
+		void Update(const playstate::string& characters);
+
 	private:
 		FontCharInfoMap mInfo;
 		FontCharInfo mCharInfoNotFound;

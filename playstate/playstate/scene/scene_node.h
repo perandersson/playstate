@@ -20,16 +20,8 @@ namespace playstate
 
 		//
 		// Constructor
-		// @param group The group where this node is to be placed. This will add the current
-		//	instance to the group automatically.
-		SceneNode(SceneGroup* group);
-
-		//
-		// Constructor
-		// @param group The group where this node is to be placed. This will add the current
-		//	instance to the group automatically.
 		// @param typeMask The scene node type mask
-		SceneNode(SceneGroup* group, type_mask typeMask);
+		SceneNode(type_mask typeMask);
 
 		//
 		//
@@ -108,11 +100,11 @@ namespace playstate
 		
 		//
 		// Add a node
-		void AddChildNode(SceneNode* node);
+		void AddNode(SceneNode* node);
 
 		//
 		// 
-		void RemoveChildNode(SceneNode* node);
+		void RemoveNode(SceneNode* node);
 
 		//
 		// Notifies this node that it's been attached to the supplied group
@@ -175,8 +167,8 @@ namespace playstate
 	extern int SceneNode_SetPosition(lua_State* L);
 	extern int SceneNode_Translate(lua_State* L);
 	extern int SceneNode_SetRotatation(lua_State* L);
-	extern int SceneNode_AddChildNode(lua_State* L);
-	extern int SceneNode_RemoveChildNode(lua_State* L);
+	extern int SceneNode_AddNode(lua_State* L);
+	extern int SceneNode_RemoveNode(lua_State* L);
 	static luaL_Reg SceneNode_Methods[] = {
 		{ LUA_CONSTRUCTOR, SceneNode_Factory },
 		{ LUA_TOSTRING, SceneNode_GetID },
@@ -187,8 +179,8 @@ namespace playstate
 		{ "SetPosition", SceneNode_SetPosition },
 		{ "Translate", SceneNode_Translate },
 		{ "SetRotation", SceneNode_SetRotatation },
-		{ "AddChildNode", SceneNode_AddChildNode },
-		{ "RemoveChildNode", SceneNode_RemoveChildNode },
+		{ "AddNode", SceneNode_AddNode },
+		{ "RemoveNode", SceneNode_RemoveNode },
 		{ NULL, NULL }
 	};
 }

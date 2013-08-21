@@ -138,9 +138,11 @@ TEST_SUITE(Scene)
 
 		Scene scene;
 		SceneGroup* group = new SceneGroup(updateProcessorFactory, renderProcessorFactory, lightSourceProcessorFactory);
-		SceneNode* node1 = new SceneNode(group);
+		SceneNode* node1 = new SceneNode();
+		group->AddNode(node1);
 		node1->AddComponent(new MockRenderableComponent());
-		SceneNode* node2 = new SceneNode(group);
+		SceneNode* node2 = new SceneNode();
+		group->AddNode(node2);
 		scene.AddSceneGroup(group);
 	
 		const FindQuery query = { NULL, 0 };

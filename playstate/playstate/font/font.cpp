@@ -84,6 +84,12 @@ const FontCharInfo& Font::GetFontCharInfo(playstate::character c) const
 	return *it->second;
 }
 
+
+void Font::Update(const playstate::string& characters)
+{
+	assert(false && "NOT IMPLEMENTED");
+}
+
 int playstate::Font_Load(lua_State* L)
 {
 	playstate::string path = lua_tostring(L, -1); lua_pop(L, 1);

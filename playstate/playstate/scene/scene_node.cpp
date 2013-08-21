@@ -9,21 +9,10 @@ SceneNode::SceneNode()
 {
 }
 
-SceneNode::SceneNode(SceneGroup* group)
-	: mSceneGroup(NULL), mTypeMask(BIT_ALL), mParent(NULL), 
-	mComponents(offsetof(Component, ComponentLink)), mChildren(offsetof(SceneNode, NodeLink))
-{
-	assert_not_null(group);
-	group->AddSceneNode(this);
-}
-
-
-SceneNode::SceneNode(SceneGroup* group, type_mask typeMask)
+SceneNode::SceneNode(type_mask typeMask)
 	: mSceneGroup(NULL), mTypeMask(typeMask), mParent(NULL), 
 	mComponents(offsetof(Component, ComponentLink)), mChildren(offsetof(SceneNode, NodeLink))
 {
-	assert_not_null(group);
-	group->AddSceneNode(this);
 }
 
 SceneNode::~SceneNode()
@@ -65,7 +54,7 @@ Component* SceneNode::GetComponent(type_mask typeMask)
 	return NULL;
 }
 
-void SceneNode::AddChildNode(SceneNode* node)
+void SceneNode::AddNode(SceneNode* node)
 {
 	assert_not_null(node);
 
@@ -74,14 +63,20 @@ void SceneNode::AddChildNode(SceneNode* node)
 
 	node->UpdatePosition();
 	node->UpdateRotation();
+
+	if(IsAttachedToSceneGroup()) {
+		node->NodeAttachedToSceneGroup(mSceneGroup);
+	}
 }
 
-void SceneNode::RemoveChildNode(SceneNode* node)
+void SceneNode::RemoveNode(SceneNode* node)
 {
 	assert_not_null(node);
 	assert(node->mParent == this && "You are not allowed to remove another scene objects child node");
 	mChildren.Remove(node);
 	node->mParent = NULL;
+
+	node->DetachingNodeFromSceneGroup(mSceneGroup);
 }
 
 void SceneNode::SetPosition(const Vector3& position)
@@ -153,7 +148,7 @@ void SceneNode::UpdateModelMatrix()
 void SceneNode::RemoveFromScene()
 {
 	if(mSceneGroup != NULL)
-		mSceneGroup->RemoveSceneNode(this);
+		mSceneGroup->RemoveNode(this);
 }
 
 void SceneNode::NodeAttachedToSceneGroup(SceneGroup* group)
@@ -170,12 +165,31 @@ void SceneNode::NodeAttachedToSceneGroup(SceneGroup* group)
 		component->OnAttachedToScene(this);
 		component = next;
 	}
+
+	// Attach possible children as well
+	SceneNode* child = mChildren.First();
+	while(child != NULL) {
+		SceneNode* next = child->NodeLink.Tail;
+		child->NodeAttachedToSceneGroup(group);
+		child = next;
+	}
 }
 
 void SceneNode::DetachingNodeFromSceneGroup(SceneGroup* group)
 {
+	if(group == NULL)
+		return;
+
 	assert(mSceneGroup == group && "Why are you trying to notify this node that it's being detached from someone elses group?");
 	
+	// Detach all this nodes children
+	SceneNode* child = mChildren.First();
+	while(child != NULL) {
+		SceneNode* next = child->NodeLink.Tail;
+		child->DetachingNodeFromSceneGroup(group);
+		child = next;
+	}
+
 	// Nofiy the components that they are being detached from the scene
 	Component* component = mComponents.First();
 	while(component != NULL) {
@@ -193,17 +207,12 @@ namespace playstate
 	{
 		int params = lua_gettop(L);
 		type_mask typeMask = BIT_ALL;
-		if(params == 3) {
+		if(params == 2) {
 			typeMask = (type_mask)lua_tonumber(L, -1); lua_pop(L, 1);
 		}
 
-		SceneGroup* group = luaM_popobject<SceneGroup>(L);
-		if(group != NULL) {
-			SceneNode* node = new SceneNode(group, typeMask);
-			luaM_pushobject(L, "SceneNode", node);
-		} else {
-			lua_pushnil(L);
-		}
+		SceneNode* node = new SceneNode(typeMask);
+		luaM_pushobject(L, "SceneNode", node);
 		return 1;
 	}
 
@@ -286,23 +295,23 @@ namespace playstate
 		return 0;
 	}
 
-	int SceneNode_AddChildNode(lua_State* L)
+	int SceneNode_AddNode(lua_State* L)
 	{
 		SceneNode* child = luaM_popobject<SceneNode>(L);
 		SceneNode* parent = luaM_popobject<SceneNode>(L);
 		if(child != NULL && parent != NULL) {
-			parent->AddChildNode(child);
+			parent->AddNode(child);
 		}
 
 		return 0;
 	}
 
-	int SceneNode_RemoveChildNode(lua_State* L)
+	int SceneNode_RemoveNode(lua_State* L)
 	{
 		SceneNode* child = luaM_popobject<SceneNode>(L);
 		SceneNode* parent = luaM_popobject<SceneNode>(L);
 		if(child != NULL && parent != NULL) {
-			parent->RemoveChildNode(child);
+			parent->RemoveNode(child);
 		}
 
 		return 0;
