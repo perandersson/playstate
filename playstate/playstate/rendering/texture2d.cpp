@@ -55,7 +55,7 @@ Texture2DResourceLoader::~Texture2DResourceLoader()
 
 ResourceObject* Texture2DResourceLoader::Load(IFile& file)
 {
-	uint64 fileSize = file.Size();
+	uint32 fileSize = file.Size();
 	std::auto_ptr<byte> fileData(new byte[fileSize]);
 	file.ReadBytes(fileData.get(), fileSize);
 

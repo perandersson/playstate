@@ -12,7 +12,7 @@ Rect::Rect(const Rect& r)
 {
 }
 
-Rect::Rect(uint32 x, uint32 y, uint32 width, uint32 height)
+Rect::Rect(float32 x, float32 y, float32 width, float32 height)
 	: X(x), Y(y), Width(width), Height(height)
 {
 }

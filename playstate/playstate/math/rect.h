@@ -5,16 +5,16 @@ namespace playstate
 {
 	struct Rect
 	{
-		uint32 X;
-		uint32 Y;
-		uint32 Width;
-		uint32 Height;
+		float32 X;
+		float32 Y;
+		float32 Width;
+		float32 Height;
 
 		//
 		// 
 		Rect();
 		Rect(const Rect& r);
-		Rect(uint32 x, uint32 y, uint32 width, uint32 height);
+		Rect(float32 x, float32 y, float32 width, float32 height);
 
 		inline bool operator == (const Rect& rhs) const {
 			return X == rhs.X && Y == rhs.Y && Width == rhs.Width && Height == rhs.Height;

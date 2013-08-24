@@ -176,6 +176,9 @@ namespace playstate
 
 		static void SetClearColor(const Color& color);
 		static void SetClearDepth(float32 depth);
+		
+		static void EnableScissorTest(bool enable);
+		static void SetScissorRect(const Rect& rect);
 
 		static void SetActiveTexture(uint32 id);
 		static void BindTexture(GLenum type, GLuint texture);

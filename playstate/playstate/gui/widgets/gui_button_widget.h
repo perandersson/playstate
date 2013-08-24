@@ -15,11 +15,8 @@ namespace playstate
 		void SetText(const playstate::string& text);
 
 	// GuiWidget
-	public:
-		virtual void PreRender(GuiGeometryBuilder& builder);
-
-	// GuiWidget
 	protected:
+		virtual void PreRender(GuiGeometryBuilder& builder);
 		virtual void OnStyleChanged(const GuiStyle& style);
 
 	private:

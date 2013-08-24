@@ -27,6 +27,7 @@ GfxProgram::GfxProgram(RenderSystem& renderSystem)
 	mDepthTest(true), mDepthFunc(DepthFunc::Default),
 	mBlend(false), mSrcFactor(SrcFactor::Default), mDestFactor(DestFactor::Default), 
 	mClearColor(Color::Nothing), mClearDepth(1.0f), mCullFaces(CullFaces::Default),
+	mScissorTest(false),
 	mRenderSystem(renderSystem), mDepthRenderTarget(NULL), mApplyRenderTarget(false)
 {
 	memset(mRenderTargets, 0, sizeof(mRenderTargets));
@@ -37,6 +38,7 @@ GfxProgram::GfxProgram(GLuint programId, RenderSystem& renderSystem, const Scrip
 	mDepthTest(true), mDepthFunc(DepthFunc::Default),
 	mBlend(false), mSrcFactor(SrcFactor::Default), mDestFactor(DestFactor::Default), 
 	mClearColor(Color::Nothing), mClearDepth(1.0f), mCullFaces(CullFaces::Default),
+	mScissorTest(false),
 	mRenderSystem(renderSystem), mDepthRenderTarget(NULL), mApplyRenderTarget(false)
 {
 	memset(mRenderTargets, 0, sizeof(mRenderTargets));
@@ -79,6 +81,8 @@ void GfxProgram::Apply()
 	if(mBlend)
 		StatePolicy::SetBlendFunc(mSrcFactor, mDestFactor);
 	StatePolicy::SetDepthFunc(mDepthFunc);
+	StatePolicy::EnableScissorTest(mScissorTest);
+	StatePolicy::SetScissorRect(mScissorRect);
 	
 	for(int i = 0; i < MaxDrawBuffers; ++i) {
 		mRenderSystem.SetRenderTarget(mRenderTargets[i], i);
@@ -294,6 +298,20 @@ void GfxProgram::SetCullFaces(CullFaces::Enum cullFaces)
 	mCullFaces = cullFaces;
 	if(mApplied)
 		StatePolicy::SetCullFaces(cullFaces);
+}
+
+void GfxProgram::EnableScissorTest(bool enable)
+{
+	mScissorTest = enable;
+	if(mApplied)
+		StatePolicy::EnableScissorTest(mScissorTest);
+}
+
+void GfxProgram::SetScissorRect(const Rect& rect)
+{
+	mScissorRect = rect;
+	if(mApplied)
+		StatePolicy::SetScissorRect(mScissorRect);
 }
 
 void GfxProgram::SetDepthRenderTarget(RenderTarget2D* renderTarget)

@@ -3,6 +3,7 @@
 #include "../types.h"
 #include "../linked_list.h"
 #include "../math/matrix4x4.h"
+#include "../math/rect.h"
 #include "gfx_program_component.h"
 #include "components/gfx_program_component_not_found.h"
 #include "state/state_policy.h"
@@ -131,6 +132,16 @@ namespace playstate
 		void SetClearColor(const Color& color);
 		
 		//
+		// Enables/Disables sicssor test.
+		//
+		// @param enable
+		void EnableScissorTest(bool enable);
+
+		//
+		// Set
+		void SetScissorRect(const Rect& rect);
+
+		//
 		// Enables rendering to the supplied render target.
 		// @param renderTarget
 		void SetDepthRenderTarget(RenderTarget2D* renderTarget);
@@ -168,6 +179,9 @@ namespace playstate
 		float32 mClearDepth;
 
 		CullFaces::Enum mCullFaces;
+
+		bool mScissorTest;
+		Rect mScissorRect;
 
 		RenderTarget2D* mDepthRenderTarget;
 		RenderTarget2D* mRenderTargets[MaxDrawBuffers];

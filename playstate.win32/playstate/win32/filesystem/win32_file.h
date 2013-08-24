@@ -21,9 +21,9 @@ namespace playstate
 		public:
 			virtual std::istringstream Read() const;
 			virtual std::auto_ptr<IFile> OpenFile(const playstate::string& path) const;
-			virtual uint64 Size() const;
-			virtual uint64 ReadBytes(byte* buffer, uint64 offset, uint64 bufferSize) const;
-			virtual uint64 ReadBytes(byte* buffer, uint64 bufferSize) const;
+			virtual uint32 Size() const;
+			virtual uint32 ReadBytes(byte* buffer, uint32 offset, uint32 bufferSize) const;
+			virtual uint32 ReadBytes(byte* buffer, uint32 bufferSize) const;
 			virtual const playstate::string& GetPath() const;
 			virtual std::auto_ptr<IDirectory> GetDirectory() const;
 			virtual bool Exists() const;
@@ -32,7 +32,7 @@ namespace playstate
 			const Win32FileSystem& mFileSystem;
 
 			playstate::string mPath;
-			uint64 mFileSize;
+			uint32 mFileSize;
 			HANDLE mFileHandle;
 		};
 	}

@@ -58,12 +58,12 @@ std::auto_ptr<IFile> Win32File::OpenFile(const playstate::string& path) const
 	return mFileSystem.OpenFile(fullPath);
 }
 
-uint64 Win32File::Size() const
+uint32 Win32File::Size() const
 {
 	return mFileSize;
 }
 
-uint64 Win32File::ReadBytes(byte* buffer, uint64 offset, uint64 bufferSize) const
+uint32 Win32File::ReadBytes(byte* buffer, uint32 offset, uint32 bufferSize) const
 {
 	if(!Exists())
 		return 0;
@@ -78,7 +78,7 @@ uint64 Win32File::ReadBytes(byte* buffer, uint64 offset, uint64 bufferSize) cons
 	return 0;
 }
 
-uint64 Win32File::ReadBytes(byte* buffer, uint64 bufferSize) const
+uint32 Win32File::ReadBytes(byte* buffer, uint32 bufferSize) const
 {
 	return ReadBytes(buffer, 0, bufferSize);
 }

@@ -36,9 +36,18 @@ void GuiFrameWidget::PreRender(GuiGeometryBuilder& builder)
 	// Add body
 	builder.AddGradientQuad(GetAbsolutePosition() + Vector2(0.0f, titleHeight), GetSize() - Vector2(0.0f, titleHeight), mBackColorTop, mBackColorBottom);
 
-	// Add text?
+	// Add title
+	builder.AddText(mFont.Get(), GetAbsolutePosition(), mFrontColor, mTitle, Vector2(GetSize().X, titleHeight));
+	
 	
 	GuiWidget::PreRender(builder);
+}
+
+void GuiFrameWidget::OnStyleChanged(const GuiStyle& style)
+{
+	mFont = style.FindResource<Font>(SAFE_STRING("Font"));
+	mFrontColor = style.FindColor(SAFE_STRING("FrontColor"), Color::White);
+	GuiWidget::OnStyleChanged(style);
 }
 
 int playstate::GuiFrameWidget_Factory(lua_State* L)

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../gui_widget.h"
+#include "../../font/font.h"
 
 namespace playstate
 {
@@ -15,11 +16,14 @@ namespace playstate
 		void SetTitle(const playstate::string& title);
 
 	// GuiWidget
-	public:
+	protected:
 		virtual void PreRender(GuiGeometryBuilder& builder);
+		virtual void OnStyleChanged(const GuiStyle& style);
 
 	private:
 		playstate::string mTitle;
+		Color mFrontColor;
+		Resource<Font> mFont;
 	};
 
 	// Script integration

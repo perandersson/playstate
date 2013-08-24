@@ -41,6 +41,8 @@ DeferredRenderPipeline::DeferredRenderPipeline(RenderSystem& renderSystem, IWind
 	mTexturedShader->FindComponent("LightTexture")->SetTexture(mLightRenderTarget);
 
 	mUserInterfaceShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(playstate::string("/demo/effects/gui/gui.lua")));
+	mUserInterfaceShader->EnableScissorTest(true);
+	mUserInterfaceShader->SetScissorRect(Rect(0, 0, windowSize.X, windowSize.Y));
 	mWhiteTexture = resourceManager.GetResource<Texture2D>("/engine/textures/white.png");
 
 	mFileSystem.AddFileChangedListener(playstate::string("/demo/effects/deferred/deferred.lua"), this);

@@ -22,7 +22,7 @@ ResourceObject* TrueTypeFontResourceLoader::Load(IFile& file)
 {
 	static const playstate::string values = SAFE_STRING("()*+-/0123456789=.?@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz");	
 
-	uint64 size = file.Size();
+	uint32 size = file.Size();
 	auto_array<byte> memory(size + 1);
 	file.ReadBytes(memory.Get(), size);
 
@@ -34,7 +34,7 @@ ResourceObject* TrueTypeFontResourceLoader::Load(IFile& file)
 		THROW_EXCEPTION(LoadResourceException, "Could not initialize freetype face. for file: '%s'", file.GetPath().c_str());
 	}
 
-	const uint32 px = 24;
+	const uint32 px = 12;
 	error = FT_Set_Char_Size(face, px << 6, px << 6, 96, 96);
 	if(error) {
 		THROW_EXCEPTION(LoadResourceException, "Invalid freetype char size for file: '%s'", file.GetPath().c_str());
@@ -77,10 +77,7 @@ ResourceObject* TrueTypeFontResourceLoader::Load(IFile& file)
 		// Create character description
 		FontCharInfo* info = new FontCharInfo();
 		info->Size.Set(bitmapWidth, bitmapHeight);
-		//info->Offset.Set(0, (face->glyph->bitmap_top + bitmapHeight * -1.0f) - (bitmap_glyph->top - bitmap.rows));
 		info->Offset.Set(0, px - (face->glyph->metrics.horiBearingY >> 6));
-		//info->Offset.Set(0, -1.0f * (face->glyph->metrics.horiBearingY >> 6));
-		//info->Offset.Set(0, (face->bbox.yMax >> 6) - (face->bbox.yMin >> 6));
 		info->BottomRightTexCoord.Set((offsetX + bitmapWidth) / (float32)textureWidth, offsetY / (float32)textureHeight);
 		info->TopLeftTexCoord.Set(offsetX / (float32)textureWidth, (offsetY + bitmapHeight) / (float32)textureHeight);
 		infoMap.insert(std::make_pair(ch, info));

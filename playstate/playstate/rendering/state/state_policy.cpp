@@ -16,6 +16,9 @@ namespace {
 
 	Color _clearColor = Color::Nothing;
 	float32 _clearDepth = 1.0f;
+	
+	bool _scissorTest = false;
+	Rect _scissorRect;
 
 	uint32 _activeTexture = 0;
 	uint32 _bindTextures[MaxActiveTextures] = {0};
@@ -131,6 +134,27 @@ void StatePolicy::SetClearDepth(float32 depth)
 	glClearDepth(depth);
 
 	CHECK_GL_ERROR();
+}
+
+void StatePolicy::EnableScissorTest(bool enable)
+{
+	if(_scissorTest == enable)
+		return;
+
+	_scissorTest = enable;
+	if(enable)
+		glEnable(GL_SCISSOR_TEST);
+	else
+		glDisable(GL_SCISSOR_TEST);
+}
+
+void StatePolicy::SetScissorRect(const Rect& rect)
+{
+	if(_scissorRect == rect)
+		return;
+
+	glScissor(rect.X, rect.Y, rect.Width, rect.Height);
+	_scissorRect = rect;
 }
 
 void StatePolicy::SetActiveTexture(uint32 id)
