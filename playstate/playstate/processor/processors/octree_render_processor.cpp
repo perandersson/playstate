@@ -48,7 +48,7 @@ public:
 public:
 	virtual void Visit(OctreeNode* item)
 	{
-		static_cast<Renderable*>(item)->Collect(mRenderState, mResultSetTarget);
+		static_cast<Renderable*>(item)->PreRender(mRenderState, mResultSetTarget);
 		mFoundResults = true;
 	}
 

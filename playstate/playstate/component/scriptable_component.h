@@ -24,7 +24,7 @@ namespace playstate
 
 	// Renderable
 	public:
-		virtual void Collect(const RenderState& state, RenderBlockResultSet* resultSet);
+		virtual void PreRender(const RenderState& state, RenderBlockResultSet* resultSet);
 
 	// Tickable
 	public:

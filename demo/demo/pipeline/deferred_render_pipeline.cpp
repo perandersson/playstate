@@ -70,7 +70,7 @@ DeferredRenderPipeline::~DeferredRenderPipeline()
 	mFileSystem.RemoveFileChangedListener(this);
 }
 	
-void DeferredRenderPipeline::Render(const Scene& scene, const Canvas& canvas, const Camera& camera)
+void DeferredRenderPipeline::Render(Scene& scene, Canvas& canvas, const Camera& camera)
 {
 	// Draw geometry
 	DrawGeometry(scene, camera);
@@ -79,18 +79,31 @@ void DeferredRenderPipeline::Render(const Scene& scene, const Canvas& canvas, co
 	DrawUserInterface(canvas);
 }
 
-void DeferredRenderPipeline::DrawUserInterface(const Canvas& canvas)
+void DeferredRenderPipeline::DrawUserInterface(Canvas& canvas)
 {
-	if(canvas.BuildWidgetGeometry(mGeometryBuilder)) {
+	if(canvas.PreRender(mGeometryBuilder)) {
 		mUserInterfaceShader->Apply();
 		mUserInterfaceShader->FindComponent("ProjectionMatrix")->SetMatrix(canvas.GetProjectionMatrix());
 
-		VertexBuffer* buffer = mGeometryBuilder.GetVertexBuffer();
-		mUserInterfaceShader->Render(buffer);
+		IGfxProgramComponent* textureComponent = mUserInterfaceShader->FindComponent("Texture");
+		textureComponent->SetTexture(mWhiteTexture);
+
+		WidgetBuildingBlock* blocks = mGeometryBuilder.GetBuildingBlocks();
+		uint32 numBlocks = mGeometryBuilder.GetNumBuildingBlocks();
+		for(uint32 i = 0; i < numBlocks; ++i) {
+			WidgetBuildingBlock& block = blocks[i];
+			if(block.Texture == NULL)
+				textureComponent->SetTexture(mWhiteTexture);
+			else
+				textureComponent->SetTexture(block.Texture);
+			mUserInterfaceShader->Render(block.VertexBuffer, NULL, block.StartElement, block.NumElements);	
+		}
 	}
+	mGeometryBuilder.Reset();
+	CHECK_GL_ERROR();
 }
 
-void DeferredRenderPipeline::DrawGeometry(const Scene& scene, const Camera& camera)
+void DeferredRenderPipeline::DrawGeometry(Scene& scene, const Camera& camera)
 {
 	FindQuery query;
 	query.Camera = &camera;
@@ -130,7 +143,7 @@ void DeferredRenderPipeline::DrawGeometry(const Scene& scene, const Camera& came
 	CHECK_GL_ERROR();
 }
 
-void DeferredRenderPipeline::DrawLighting(const Scene& scene, const Camera& camera)
+void DeferredRenderPipeline::DrawLighting(Scene& scene, const Camera& camera)
 {
 	FindQuery query;
 	query.Camera = &camera;
@@ -187,7 +200,7 @@ Matrix4x4 DeferredRenderPipeline::CalculateBillboardModelMatrix(const Vector3& p
 	return mat;
 }
 
-void DeferredRenderPipeline::DrawFinalResultToScreen(const Scene& scene, const Camera& camera)
+void DeferredRenderPipeline::DrawFinalResultToScreen(Scene& scene, const Camera& camera)
 {
 	mTexturedShader->Apply();
 	mTexturedShader->Clear(ClearTypes::COLOR | ClearTypes::DEPTH);

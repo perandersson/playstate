@@ -24,7 +24,7 @@ window:SetPosition(1024 - 200, 0)
 mainMenu:AddWidget(window)
 
 local btnLoadLevel = GuiButtonWidget()
-btnLoadLevel:SetText("Load Level1.lua")
+btnLoadLevel:SetText("Loading Level1.lua")
 btnLoadLevel:SetSize(140, 40)
 btnLoadLevel:SetPosition(0, 20)
 window:AddWidget(btnLoadLevel)

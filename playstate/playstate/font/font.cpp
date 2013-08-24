@@ -3,8 +3,8 @@
 #include "../resources/resource_manager.h"
 using namespace playstate;
 
-Font::Font(GLuint textureId, uint32 width, uint32 height, const FontCharInfoMap& infoMap) 
-	: Texture2D(textureId, width, height, TextureFormat::R), mInfo(infoMap)
+Font::Font(GLuint textureId, uint32 width, uint32 height, const FontCharInfoMap& infoMap, float32 spaceWidth, float32 lineHeight) 
+	: Texture2D(textureId, width, height, TextureFormat::R), mInfo(infoMap), mSpaceWidth(spaceWidth), mLineHeight(lineHeight)
 {
 }
 
@@ -19,25 +19,26 @@ Font::~Font()
 
 Vector2 Font::GetSizeOfString(const playstate::string& str) const
 {
+	float32 currentWidth = 0.f;
 	Vector2 totalSize;
 	playstate::string::size_type numChars = str.length();
 	for(playstate::string::size_type i = 0; i < numChars; ++i) {
 		playstate::character c = str[i];
 		if(c == '\n') {
-			// New line
+			totalSize.Y += mLineHeight;
+			currentWidth = 0;
 			continue;
 		} else if(c == '\r') {
 			continue; // ignore
+		} else if(c == ' ') {
+			totalSize.X += mSpaceWidth;
+			continue;
 		}
 		const FontCharInfo& info = GetFontCharInfo(c);
-
-		float32 width = info.Size.Y + info.Offset.X;
-		float32 height = info.Size.Y + info.Offset.Y;
-
-		totalSize.X += width;
-		if(totalSize.Y < height) {
-			totalSize.Y = height;
-		}
+		
+		currentWidth += info.Size.Y + info.Offset.X;
+		if(totalSize.X < currentWidth)
+			totalSize.X = currentWidth;
 	}
 
 	return totalSize;
@@ -45,34 +46,8 @@ Vector2 Font::GetSizeOfString(const playstate::string& str) const
 
 Vector2 Font::GetSizeOfString(const playstate::string& str, uint32 maxLength) const
 {
-	Vector2 totalSize;
-	playstate::string::size_type numChars = str.length();
-	for(playstate::string::size_type i = 0; i < numChars; ++i) {
-		playstate::character c = str[i];
-		if(c == '\n') {
-			// New line
-			continue;
-		} else if(c == '\r') {
-			continue; // ignore
-		}
-		const FontCharInfo& info = GetFontCharInfo(c);
-
-		float32 width = info.Size.Y + info.Offset.X;
-		float32 height = info.Size.Y + info.Offset.Y;
-
-		// Have we reached the maximum length?
-		if((uint32)(totalSize.X + width + 0.5f) > maxLength) {
-			// new line
-		} else {
-			totalSize.X += width;
-		}
-
-		if(totalSize.Y < height) {
-			totalSize.Y = height;
-		}
-	}
-
-	return totalSize;
+	assert(false && "NOT IMPLEMENTED");
+	return Vector2::Zero;
 }
 
 const FontCharInfo& Font::GetFontCharInfo(playstate::character c) const

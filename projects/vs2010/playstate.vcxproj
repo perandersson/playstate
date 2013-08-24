@@ -137,6 +137,7 @@
     <ClInclude Include="..\..\playstate\playstate\gui\gui_geometry_builder.h" />
     <ClInclude Include="..\..\playstate\playstate\gui\widgets\gui_button_widget.h" />
     <ClInclude Include="..\..\playstate\playstate\gui\widgets\gui_frame_widget.h" />
+    <ClInclude Include="..\..\playstate\playstate\gui\widget_geometry_declaration.h" />
     <ClInclude Include="..\..\playstate\playstate\input\input_state.h" />
     <ClInclude Include="..\..\playstate\playstate\input\input_system.h" />
     <ClInclude Include="..\..\playstate\playstate\kernel.h" />

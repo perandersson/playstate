@@ -16,8 +16,8 @@ namespace playstate
 		Vector2 Offset;
 
 		// The texture coordinates for this character
-		Vector2 BottomLeftTexCoord;
-		Vector2 TopRightTexCoord;
+		Vector2 BottomRightTexCoord;
+		Vector2 TopLeftTexCoord;
 	};
 
 	class Font : public Texture2D
@@ -26,7 +26,7 @@ namespace playstate
 		typedef std::hash_map<playstate::character, FontCharInfo*> FontCharInfoMap;
 
 	public:
-		Font(GLuint textureId, uint32 width, uint32 height, const FontCharInfoMap& infoMap);
+		Font(GLuint textureId, uint32 width, uint32 height, const FontCharInfoMap& infoMap, float32 spaceWidth, float32 lineHeight);
 		virtual ~Font();
 
 		//
@@ -56,9 +56,23 @@ namespace playstate
 		// @param characters The characters that we want to load into memory
 		void Update(const playstate::string& characters);
 
+		//
+		// @return The width of a space character
+		inline float32 GetSpaceWidth() const {
+			return mSpaceWidth;
+		}
+
+		//
+		// @return The height of a new line
+		inline float32 GetLineHeight() const {
+			return mLineHeight;
+		}
+
 	private:
 		FontCharInfoMap mInfo;
 		FontCharInfo mCharInfoNotFound;
+		float32 mSpaceWidth;
+		float32 mLineHeight;
 	};
 
 	//

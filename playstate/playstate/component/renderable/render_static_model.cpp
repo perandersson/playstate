@@ -36,7 +36,7 @@ void RenderStaticModel::OnUnloading(ResourceObject* object)
 	SetBoundingBox(mModel->GetBoundingBox(), GetNode()->GetAbsolutePosition());
 }
 
-void RenderStaticModel::Collect(const RenderState& state, RenderBlockResultSet* resultSet)
+void RenderStaticModel::PreRender(const RenderState& state, RenderBlockResultSet* resultSet)
 {
 	uint32 size = mModel->GetNumMeshes();
 	ModelMesh* meshes = mModel->GetMeshes();

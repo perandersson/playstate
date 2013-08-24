@@ -1,56 +1,44 @@
 #include "../../memory/memory.h"
 #include "truetype_font_resource_loader.h"
 #include "../../math/color.h"
-#include <ft2build.h>
-#include <freetype/freetype.h>
-#include <freetype/ftglyph.h>
 #include "../font.h"
 using namespace playstate;
 
 TrueTypeFontResourceLoader::TrueTypeFontResourceLoader(IFileSystem& fileSystem)
-	: mFileSystem(fileSystem), mDefaultResource(NULL)
+	: mFileSystem(fileSystem), mLibrary(NULL)
 {
+	if(FT_Init_FreeType(&mLibrary)) {
+		THROW_EXCEPTION(LoadResourceException, "Could not initialize freetype library");
+	}
 }
 
 TrueTypeFontResourceLoader::~TrueTypeFontResourceLoader()
 {
-	if(mDefaultResource != NULL) {
-		delete mDefaultResource;
-		mDefaultResource = NULL;
-	}
+	FT_Done_FreeType(mLibrary);
+	mLibrary = NULL;
 }
 
 ResourceObject* TrueTypeFontResourceLoader::Load(IFile& file)
 {
-	// TODO: https://code.google.com/p/freetype-gl/
-	static const playstate::string values = SAFE_STRING("()*+-/0123456789=?@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz");	
-
-	FT_Library library;
-	if(FT_Init_FreeType(&library)) {
-		// ERROR
-	}
+	static const playstate::string values = SAFE_STRING("()*+-/0123456789=.?@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz");	
 
 	uint64 size = file.Size();
 	auto_array<byte> memory(size + 1);
 	file.ReadBytes(memory.Get(), size);
 
 	FT_Face face;
-	FT_Error error = FT_New_Memory_Face(library, memory.Get(), size, 0, &face);
+	FT_Error error = FT_New_Memory_Face(mLibrary, memory.Get(), size, 0, &face);
 	if(error == FT_Err_Unknown_File_Format) {
-		// ERROR
+		THROW_EXCEPTION(LoadResourceException, "Unknown face format for freetype file: '%s'", file.GetPath().c_str());
 	} else if(error) {
-		// ERROR
+		THROW_EXCEPTION(LoadResourceException, "Could not initialize freetype face. for file: '%s'", file.GetPath().c_str());
 	}
 
 	const uint32 px = 24;
 	error = FT_Set_Char_Size(face, px << 6, px << 6, 96, 96);
 	if(error) {
-		// ERROR
+		THROW_EXCEPTION(LoadResourceException, "Invalid freetype char size for file: '%s'", file.GetPath().c_str());
 	}
-
-	//if(FT_Set_Char_Size(face, 0, 16 * 64, 300, 300)) {
-		// ERROR
-	//}
 
 	const uint32 textureWidth = 1024;
 	const uint32 textureHeight = 1024;
@@ -78,7 +66,7 @@ ResourceObject* TrueTypeFontResourceLoader::Load(IFile& file)
 		const uint32 bitmapHeight = (uint32)bitmap.rows;
 		const uint32 bitmapWidth = (uint32)bitmap.width;
 
-		// Offset 
+		// Texture offset 
 		if(offsetX + bitmapWidth > textureWidth) {
 			offsetX = 0;
 			offsetY += highestHeightOnRow;
@@ -89,16 +77,20 @@ ResourceObject* TrueTypeFontResourceLoader::Load(IFile& file)
 		// Create character description
 		FontCharInfo* info = new FontCharInfo();
 		info->Size.Set(bitmapWidth, bitmapHeight);
-		info->Offset.Set(0, 0);
-		info->BottomLeftTexCoord.Set(offsetX / (float32)textureWidth, offsetY / (float32)textureHeight);
-		info->TopRightTexCoord.Set(offsetX + bitmapWidth / (float32)textureWidth, offsetY + bitmapHeight / (float32)textureHeight);
+		//info->Offset.Set(0, (face->glyph->bitmap_top + bitmapHeight * -1.0f) - (bitmap_glyph->top - bitmap.rows));
+		info->Offset.Set(0, px - (face->glyph->metrics.horiBearingY >> 6));
+		//info->Offset.Set(0, -1.0f * (face->glyph->metrics.horiBearingY >> 6));
+		//info->Offset.Set(0, (face->bbox.yMax >> 6) - (face->bbox.yMin >> 6));
+		info->BottomRightTexCoord.Set((offsetX + bitmapWidth) / (float32)textureWidth, offsetY / (float32)textureHeight);
+		info->TopLeftTexCoord.Set(offsetX / (float32)textureWidth, (offsetY + bitmapHeight) / (float32)textureHeight);
 		infoMap.insert(std::make_pair(ch, info));
-			
+
 		offsetX += bitmap.width;
 		highestHeightOnRow = highestHeightOnRow < bitmapHeight ? bitmapHeight : highestHeightOnRow;
 
 		FT_Done_Glyph(glyph);
 	}
+	FT_Done_Face(face);
 	
 	GLuint textureId = 0;	
 	glGenTextures(1, &textureId);
@@ -113,10 +105,7 @@ ResourceObject* TrueTypeFontResourceLoader::Load(IFile& file)
 											   valid 'target', 'format' or 'type' parameters", file.GetPath().c_str());
 	}
 
-	FT_Done_Face(face);
-	FT_Done_FreeType(library);
-
-	return new Font(textureId, textureWidth, textureHeight, infoMap);
+	return new Font(textureId, textureWidth, textureHeight, infoMap, px / 2.0f, face->height >> 6);
 }
 
 void TrueTypeFontResourceLoader::CopyToBuffer(uint32 x, uint32 y, uint32 width, uint32 height, playstate::byte* target, const playstate::byte* src)

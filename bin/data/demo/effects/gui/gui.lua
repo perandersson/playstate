@@ -18,12 +18,14 @@ return {
 		layout(location = 1) in vec2 texCoord;
 		layout(location = 2) in vec4 color;
 		
-		out vec4 outColor;
+		out vec2 fsCoords;
+		out vec4 fsColor;
 
 		void main()
 		{
 			gl_Position = ProjectionMatrix * vec4(position.x, position.y, 0.0, 1.0);
-			outColor = color;
+			fsColor = color;
+			fsCoords = texCoord;
 		}
 	]],
 	UserInterfaceTexture = {
@@ -37,11 +39,15 @@ return {
 	FragmentShader = [[
 		#version 330
 		
-		in vec4 outColor;
-
+		uniform sampler2D Texture;
+		
+		in vec4 fsColor;
+		in vec2 fsCoords;
+		
 		void main()
 		{
-			gl_FragColor = outColor;
+			vec4 textureColor = texture2D(Texture, fsCoords);
+			gl_FragColor = fsColor * vec4(textureColor.r, textureColor.r, textureColor.r, textureColor.r);
 		}
 	]]
 }

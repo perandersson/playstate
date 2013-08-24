@@ -54,7 +54,7 @@ namespace playstate
 		// Builds the geometry needed to draw the user interface
 		//
 		// @param builder
-		const bool BuildWidgetGeometry(GuiGeometryBuilder& builder) const;
+		bool PreRender(GuiGeometryBuilder& builder);
 
 	// IUpdateProcessor
 	public:

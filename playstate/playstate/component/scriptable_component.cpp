@@ -51,7 +51,7 @@ void ScriptableComponent::OnComponentRemoved()
 	}
 }
 
-void ScriptableComponent::Collect(const RenderState& state, RenderBlockResultSet* resultSet)
+void ScriptableComponent::PreRender(const RenderState& state, RenderBlockResultSet* resultSet)
 {
 	/*if(PrepareMethod("Collect")) {
 		if(lua_pcall(mCurrentState, 1, 0, NULL) == 0) {

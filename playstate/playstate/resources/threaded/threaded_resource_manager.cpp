@@ -6,8 +6,8 @@
 
 using namespace playstate;
 
-ThreadedResourceManager::ThreadedResourceManager(RenderSystem& renderSystem, IFileSystem& fileSystem) 
-	: mRenderSystem(renderSystem), mFileSystem(fileSystem), mThread(0)
+ThreadedResourceManager::ThreadedResourceManager(RenderSystem& renderSystem, IFileSystem& fileSystem, ILogger& logger) 
+	: mRenderSystem(renderSystem), mFileSystem(fileSystem), mLogger(logger), mThread(0)
 {
 	mLoadRequestLock = new SimpleLock();
 	mLoadResponseLock = new SimpleLock();
@@ -240,7 +240,12 @@ void ThreadedResourceManager::Run(IThread& thread)
 				LoadRequestResponse* request = requests[i];
 				std::auto_ptr<IFile> file = mFileSystem.OpenFile(request->Name);
 				if(file->Exists()) {
-					request->LoadedResource = request->Loader->Load(*file);
+					try {
+						request->LoadedResource = request->Loader->Load(*file);
+					} catch(ResourceException e) {
+						mLogger.Error("Could not load resource: '%s'. Reason: '%s'", file->GetPath().c_str(),
+							e.GetMessage().c_str());
+					}
 				}
 				ScopedLock scl(mLoadResponseLock);
 				mResponses.push_back(request);
@@ -248,7 +253,6 @@ void ThreadedResourceManager::Run(IThread& thread)
 			requests.clear();
 			continue;
 		}
-		
 		thread.Wait();
 	}
 }

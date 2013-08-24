@@ -94,7 +94,7 @@ namespace playstate
 		
 		//
 		// Builds this GUI widgets geometry in preperation for drawing it onto the screen.
-		virtual const void BuildWidgetGeometry(GuiGeometryBuilder& builder);
+		virtual void PreRender(GuiGeometryBuilder& builder);
 
 		//
 		// Adds a widget child node

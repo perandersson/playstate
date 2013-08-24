@@ -39,10 +39,10 @@ namespace playstate
 		Vector2 GetMousePositionAsUniform() const;
 		
 		//
-		// Builds the geometry needed to draw the user interface
+		// Prepares the building blocks for the user interface contained in this canvas.
 		//
 		// @param builder
-		const bool BuildWidgetGeometry(GuiGeometryBuilder& builder) const;
+		bool PreRender(GuiGeometryBuilder& builder);
 
 		//
 		// Sets the base size for the entire canvas. All positions and sizes are in uniform size internally. 

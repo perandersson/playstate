@@ -38,7 +38,7 @@ namespace playstate
 		//		
 		//	}
 		// }
-		bool Find(const FindQuery& query, RenderBlockResultSet* target) const;
+		bool Find(const FindQuery& query, RenderBlockResultSet* target);
 
 		//
 		// Query this scene for items located in it and sorts them using the supplied sorter algorithm
@@ -46,7 +46,7 @@ namespace playstate
 		// @param query
 		// @param target
 		// @param sorter
-		bool Find(const FindQuery& query, RenderBlockResultSet* target, IArraySorter<RenderBlock*>* sorter) const;
+		bool Find(const FindQuery& query, RenderBlockResultSet* target, IArraySorter<RenderBlock*>* sorter);
 
 		//
 		// Queries this scene for light sources, based on the supplied query. The result of the found light 
@@ -54,7 +54,7 @@ namespace playstate
 		// 
 		// @param query
 		// @param target
-		bool Find(const FindQuery& query, LightSourceResultSet* target) const;
+		bool Find(const FindQuery& query, LightSourceResultSet* target);
 
 		//
 		// Sets the ambient lighting on the entire scene. 

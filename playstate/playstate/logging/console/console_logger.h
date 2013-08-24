@@ -12,8 +12,8 @@ namespace playstate
 
 	// ILogger
 	public:
-		virtual void Error(const char* msg, ...);
-		virtual void Info(const char* msg, ...);
-		virtual void Debug(const char* msg, ...);
+		virtual void Error(const playstate::character* msg, ...);
+		virtual void Info(const playstate::character* msg, ...);
+		virtual void Debug(const playstate::character* msg, ...);
 	};
 }

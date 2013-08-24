@@ -70,7 +70,7 @@ void VertexBuffer::Render(uint32 firstElement) const
 void VertexBuffer::Render(uint32 firstElement, uint32 numIndices) const
 {
 	static const uint32 numElementsInTriangle = 3;
-	glDrawArrays(mVertexType, firstElement * numElementsInTriangle, numIndices);
+	glDrawArrays(mVertexType, firstElement * numElementsInTriangle, numIndices * numElementsInTriangle);
 }
 
 void VertexBuffer::Update(const void* data, uint32 numIndices)

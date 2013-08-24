@@ -16,7 +16,7 @@ void GuiFrameWidget::SetTitle(const playstate::string& title)
 	mTitle = title;
 }
 
-const void GuiFrameWidget::BuildWidgetGeometry(GuiGeometryBuilder& builder)
+void GuiFrameWidget::PreRender(GuiGeometryBuilder& builder)
 {
 	const uint32 shadowOffset = 3;
 	const uint32 titleHeight = 25;
@@ -38,7 +38,7 @@ const void GuiFrameWidget::BuildWidgetGeometry(GuiGeometryBuilder& builder)
 
 	// Add text?
 	
-	GuiWidget::BuildWidgetGeometry(builder);
+	GuiWidget::PreRender(builder);
 }
 
 int playstate::GuiFrameWidget_Factory(lua_State* L)

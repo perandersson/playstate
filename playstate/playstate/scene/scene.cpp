@@ -35,13 +35,13 @@ void Scene::Update()
 	}
 }
 
-bool Scene::Find(const FindQuery& query, RenderBlockResultSet* target) const
+bool Scene::Find(const FindQuery& query, RenderBlockResultSet* target)
 {
 	RenderBlockArraySorter defaultSorter;
 	return Find(query, target, &defaultSorter);
 }
 
-bool Scene::Find(const FindQuery& query, LightSourceResultSet* target) const
+bool Scene::Find(const FindQuery& query, LightSourceResultSet* target)
 {
 	bool found = false;
 	const SceneGroup* group = mSceneGroups.First();
@@ -54,7 +54,7 @@ bool Scene::Find(const FindQuery& query, LightSourceResultSet* target) const
 	return found;
 }
 
-bool Scene::Find(const FindQuery& query, RenderBlockResultSet* target, IArraySorter<RenderBlock*>* sorter) const
+bool Scene::Find(const FindQuery& query, RenderBlockResultSet* target, IArraySorter<RenderBlock*>* sorter)
 {
 	bool found = false;
 	const SceneGroup* group = mSceneGroups.First();

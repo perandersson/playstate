@@ -7,6 +7,10 @@
 #include "../math/color.h"
 #include "../logging/logger.h"
 
+#ifndef luaM_tofloat
+#define luaM_tofloat(L, I) (float32)lua_tonumber(L, I)
+#endif
+
 namespace playstate
 {
 	const uint32 LuaInstanceID = 1;
@@ -109,24 +113,24 @@ namespace playstate
 			lua_pushnil(L);
 
 			lua_next(L, -2);
-			*ptr++ = lua_tonumber(L, -1);
+			*ptr++ = luaM_tofloat(L, -1);
 			lua_pop(L, 1);
 
 			lua_next(L, -2);
-			*ptr++ = lua_tonumber(L, -1);
+			*ptr++ = luaM_tofloat(L, -1);
 			lua_pop(L, 1);
 
 			bool rest = lua_next(L, -2) != 0;
-			*ptr++ = lua_tonumber(L, -1);
+			*ptr++ = luaM_tofloat(L, -1);
 			lua_pop(L, rest ? 2 : 1);
 
 			lua_pop(L, 1);
 			return vec;
 		} else if(lua_isnumber(L, -1) && lua_isnumber(L, -2) && lua_isnumber(L, -2)) {
 			float* ptr = &vec.Z;
-			*ptr-- = lua_tonumber(L, -1); 
-			*ptr-- = lua_tonumber(L, -2); 
-			*ptr = lua_tonumber(L, -3); 
+			*ptr-- = luaM_tofloat(L, -1); 
+			*ptr-- = luaM_tofloat(L, -2); 
+			*ptr = luaM_tofloat(L, -3); 
 			lua_pop(L, 3);
 		}
 
@@ -142,19 +146,19 @@ namespace playstate
 			lua_pushnil(L);
 
 			lua_next(L, -2);
-			*ptr++ = lua_tonumber(L, -1);
+			*ptr++ = luaM_tofloat(L, -1);
 			lua_pop(L, 1);
 
 			bool rest = lua_next(L, -2) != 0;
-			*ptr++ = lua_tonumber(L, -1);
+			*ptr++ = luaM_tofloat(L, -1);
 			lua_pop(L, rest ? 2 : 1);
 
 			lua_pop(L, 1);
 			return vec;
 		} else if(lua_isnumber(L, -1) && lua_isnumber(L, -2)) {
 			float* ptr = &vec.Y;
-			*ptr-- = lua_tonumber(L, -1); 
-			*ptr = lua_tonumber(L, -2); 
+			*ptr-- = luaM_tofloat(L, -1); 
+			*ptr = luaM_tofloat(L, -2); 
 			lua_pop(L, 2);
 		}
 
@@ -221,7 +225,7 @@ namespace playstate
 					lua_pop(L, 2);
 					break;
 				}
-				*colors++ = lua_tonumber(L, -1);
+				*colors++ = luaM_tofloat(L, -1);
 				numElements++;
 				lua_pop(L, 1);
 			}
@@ -229,15 +233,15 @@ namespace playstate
 			lua_pop(L, 1);
 		} else if(lua_isnumber(L, -1)) {
 			float* colors = color.Colors;
-			*colors++ = lua_tonumber(L, -1); lua_pop(L, 1);
+			*colors++ = luaM_tofloat(L, -1); lua_pop(L, 1);
 			if(lua_isnumber(L, -1)) {
-				*colors++ = lua_tonumber(L, -1); lua_pop(L, 1);
+				*colors++ = luaM_tofloat(L, -1); lua_pop(L, 1);
 			}
 			if(lua_isnumber(L, -1)) {
-				*colors++ = lua_tonumber(L, -1); lua_pop(L, 1);
+				*colors++ = luaM_tofloat(L, -1); lua_pop(L, 1);
 			}
 			if(lua_isnumber(L, -1)) {
-				*colors++ = lua_tonumber(L, -1); lua_pop(L, 1);
+				*colors++ = luaM_tofloat(L, -1); lua_pop(L, 1);
 			}
 		} else if(lua_isstring(L, -1)) {
 			playstate::string hex = lua_tostring(L, -1); lua_pop(L, 1);

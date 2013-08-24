@@ -28,7 +28,7 @@ Win32DefaultKernel::Win32DefaultKernel(HINSTANCE app, const playstate::string& f
 	mGraphicsDriver = new Win32GraphicsDriver(*mWindow);
 	mThreadFactory = new Win32ThreadFactory();
 	mRenderSystem = new RenderSystem(*mWindow, *mScriptSystem);
-	mThreadedResourceManager = new ThreadedResourceManager(*mRenderSystem, *mFileSystem);
+	mThreadedResourceManager = new ThreadedResourceManager(*mRenderSystem, *mFileSystem, *mLogger);
 }
 
 Win32DefaultKernel::~Win32DefaultKernel()

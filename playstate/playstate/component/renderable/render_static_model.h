@@ -35,7 +35,7 @@ namespace playstate
 
 	// IRenderable
 	public:
-		virtual void Collect(const RenderState& state, RenderBlockResultSet* resultSet);
+		virtual void PreRender(const RenderState& state, RenderBlockResultSet* resultSet);
 
 	private:
 		Resource<Model> mModel;

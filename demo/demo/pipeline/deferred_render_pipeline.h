@@ -20,7 +20,7 @@ public:
 
 // IRenderPipeline
 public:
-	virtual void Render(const Scene& scene, const Canvas& canvas, const Camera& camera);
+	virtual void Render(Scene& scene, Canvas& canvas, const Camera& camera);
 
 // IWindowResizeListener
 public:
@@ -31,10 +31,10 @@ public:
 	virtual void FileChanged(const IFile& file, FileChangeAction::Enum action);
 		
 private:
-	void DrawGeometry(const Scene& scene, const Camera& camera);
-	void DrawLighting(const Scene& scene, const Camera& camera);
-	void DrawFinalResultToScreen(const Scene& scene, const Camera& camera);
-	void DrawUserInterface(const Canvas& canvas);
+	void DrawGeometry(Scene& scene, const Camera& camera);
+	void DrawLighting(Scene& scene, const Camera& camera);
+	void DrawFinalResultToScreen(Scene& scene, const Camera& camera);
+	void DrawUserInterface(Canvas& canvas);
 
 	Matrix4x4 CalculateBillboardModelMatrix(const Vector3& position, const Camera& camera);
 		

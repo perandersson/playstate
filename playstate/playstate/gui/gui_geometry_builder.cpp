@@ -3,9 +3,9 @@
 using namespace playstate;
 
 GuiGeometryBuilder::GuiGeometryBuilder(RenderSystem& renderSystem)
-	: mRenderSystem(renderSystem), mMemoryPool(6, 24)
+	: mRenderSystem(renderSystem), mMemoryPool(6, 24), mBuildingBlocks(5, 5), mNumElements(0), mStartElement(0), mCurrentTexture(NULL)
 {
-	mVertexBuffer = mRenderSystem.CreateDynamicBuffer(NULL, sizeof(GuiGeometryData), GuiGeometryDataVAOFactory, 0);
+	mVertexBuffer = mRenderSystem.CreateDynamicBuffer(NULL, sizeof(WidgetGeometryData), WidgetGeometryDataVAOFactory, 0);
 }
 
 GuiGeometryBuilder::~GuiGeometryBuilder()
@@ -34,13 +34,24 @@ void GuiGeometryBuilder::AddGradientQuad(const Vector2& position, const Vector2&
 void GuiGeometryBuilder::AddGradientQuad(const Vector2& position, const Vector2& size, const Color& topLeftColor, const Color& topRightColor,
 	const Color& bottomLeftColor, const Color& bottomRightColor)
 {
+	AddQuad(position, size, topLeftColor, topRightColor, bottomLeftColor, bottomRightColor, NULL);
+}
+
+void GuiGeometryBuilder::AddQuad(const Vector2& position, const Vector2& size, const Color& topLeftColor, const Color& topRightColor,
+			const Color& bottomLeftColor, const Color& bottomRightColor, Texture2D* texture)
+{
+	if(mNumElements > 0 && mCurrentTexture != texture) {
+		BuildAndPushBuildingBlocks();
+		mCurrentTexture = texture;
+	}
+
 	/*
 		p0 ---- p1
 		|       |
 		p2------p3
 	*/
 
-	GuiGeometryData* element = mMemoryPool.Allocate();
+	WidgetGeometryData* element = mMemoryPool.Allocate();
 	element->Position.Set(position.X, position.Y); //p0
 	element->Color = topLeftColor;
 	
@@ -63,32 +74,13 @@ void GuiGeometryBuilder::AddGradientQuad(const Vector2& position, const Vector2&
 	element = mMemoryPool.Allocate();
 	element->Position.Set(position.X + size.X, position.Y + size.Y); //p3
 	element->Color = bottomRightColor;
+
+	mNumElements += 2;
 }
 
 void GuiGeometryBuilder::AddText(Font* font, const Vector2& position, const Color& color, const playstate::string& text)
 {
-	Vector2 currentPos = position;
-	bool newline = false;
-	playstate::string::size_type size = text.length();
-	for(playstate::string::size_type i = 0; i < size; ++i) {
-		playstate::character c = text[i];
-		if(c == '\n') {
-			newline = true;
-			continue;
-		} else if(c == '\r') {
-			continue;
-		}
-
-		const FontCharInfo& info = font->GetFontCharInfo(c);
-		if(newline) {
-			newline = false;
-			currentPos.Y += info.Size.Y;
-		}
-		// Position should NOT be top-left corner for fonts. Position should indicate where font-origin is located
-		// @see http://www.wildfiregames.com/forum/index.php?showtopic=17365
-		AddQuad(currentPos, info.Size, Color::Black);
-		currentPos.X += info.Size.X;
-	}
+	AddText(font, position, color, text, Vector2(FLT_MAX, FLT_MAX));
 }
 
 void GuiGeometryBuilder::AddText(Font* font, const Vector2& position, const Color& color, const playstate::string& text, uint32 maxLenght)
@@ -98,6 +90,11 @@ void GuiGeometryBuilder::AddText(Font* font, const Vector2& position, const Colo
 
 void GuiGeometryBuilder::AddText(Font* font, const Vector2& position, const Color& color, const playstate::string& text, const Vector2& maxSize)
 {
+	if(mNumElements > 0 && mCurrentTexture != font) {
+		BuildAndPushBuildingBlocks();
+	}
+	mCurrentTexture = font;
+
 	Vector2 currentPos = position;
 	bool newline = false;
 	playstate::string::size_type size = text.length();
@@ -108,26 +105,105 @@ void GuiGeometryBuilder::AddText(Font* font, const Vector2& position, const Colo
 			continue;
 		} else if(c == '\r') {
 			continue;
+		} else if(c == ' ') {
+			currentPos.X += font->GetSpaceWidth();
+			continue;
 		}
 
 		const FontCharInfo& info = font->GetFontCharInfo(c);
 		if(newline) {
 			newline = false;
-			currentPos.Y += info.Size.Y;
+			currentPos.Y += font->GetLineHeight();
 		}
-		AddQuad(currentPos + Vector2(0, info.Offset.Y), info.Size, color);
+
+		const Vector2& size = info.Size;
+		const Vector2 offsetedPosition = currentPos + Vector2(0, info.Offset.Y);
+		
+	/*
+		p0 ---- p1
+		|       |
+		p2------p3
+	*/
+
+		WidgetGeometryData* element = mMemoryPool.Allocate();
+		element->Position.Set(offsetedPosition.X, offsetedPosition.Y); //p0
+		element->Color = color;
+		element->TexCoord.Set(info.TopLeftTexCoord.S, info.TopLeftTexCoord.T);
+	
+		element = mMemoryPool.Allocate();
+		element->Position.Set(offsetedPosition.X + size.X, offsetedPosition.Y); //p1
+		element->Color = color;
+		element->TexCoord.Set(info.BottomRightTexCoord.S, info.TopLeftTexCoord.T);
+
+		element = mMemoryPool.Allocate();
+		element->Position.Set(offsetedPosition.X, offsetedPosition.Y + size.Y); //p2
+		element->Color = color;
+		element->TexCoord.Set(info.TopLeftTexCoord.S, info.BottomRightTexCoord.T);
+	
+		element = mMemoryPool.Allocate();
+		element->Position.Set(offsetedPosition.X, offsetedPosition.Y + size.Y); //p2
+		element->Color = color;
+		element->TexCoord.Set(info.TopLeftTexCoord.S, info.BottomRightTexCoord.T);
+
+		element = mMemoryPool.Allocate();
+		element->Position.Set(offsetedPosition.X + size.X, offsetedPosition.Y); //p1
+		element->Color = color;
+		element->TexCoord.Set(info.BottomRightTexCoord.S, info.TopLeftTexCoord.T);
+
+		element = mMemoryPool.Allocate();
+		element->Position.Set(offsetedPosition.X + size.X, offsetedPosition.Y + size.Y); //p3
+		element->Color = color;
+		element->TexCoord.Set(info.BottomRightTexCoord.S, info.BottomRightTexCoord.T);
+
 		currentPos.X += info.Size.X;
 	}
+
+	mNumElements += 2 * size;
 }
 
-VertexBuffer* GuiGeometryBuilder::GetVertexBuffer()
+VertexBuffer* GuiGeometryBuilder::PrepareVertexBuffer()
 {
 	const uint32 size = mMemoryPool.GetSize();
 	if(size > 0) {
-		GuiGeometryData* data = mMemoryPool.GetFirstElement();
+		WidgetGeometryData* data = mMemoryPool.GetFirstElement();
 		mVertexBuffer->Update(data, size);
 		mMemoryPool.Reset();
 	}
 
 	return mVertexBuffer;
+}
+
+void GuiGeometryBuilder::BuildAndPushBuildingBlocks()
+{
+	WidgetBuildingBlock* block = mBuildingBlocks.Allocate();
+	block->VertexBuffer = mVertexBuffer;
+	block->Texture = mCurrentTexture;
+	block->StartElement = mStartElement;
+	block->NumElements = mNumElements;
+
+	mStartElement += mNumElements;
+	mNumElements = 0;
+}
+
+WidgetBuildingBlock* GuiGeometryBuilder::GetBuildingBlocks()
+{
+	if(mNumElements > 0) {
+		BuildAndPushBuildingBlocks();
+		PrepareVertexBuffer();
+	}
+
+	return mBuildingBlocks.GetFirstElement();
+}
+
+void GuiGeometryBuilder::Reset()
+{
+	mBuildingBlocks.Reset();
+	mStartElement = 0;
+	mNumElements = 0;
+	mCurrentTexture = NULL;
+}
+
+uint32 GuiGeometryBuilder::GetNumBuildingBlocks() const
+{
+	return mBuildingBlocks.GetSize();
 }

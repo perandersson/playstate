@@ -16,7 +16,7 @@ void GuiButtonWidget::SetText(const playstate::string& text)
 	mText = text;
 }
 
-const void GuiButtonWidget::BuildWidgetGeometry(GuiGeometryBuilder& builder)
+void GuiButtonWidget::PreRender(GuiGeometryBuilder& builder)
 {
 	const uint32 shadowOffset = 3;
 
@@ -32,7 +32,7 @@ const void GuiButtonWidget::BuildWidgetGeometry(GuiGeometryBuilder& builder)
 	// Add text?
 	builder.AddText(mFont.Get(), GetAbsolutePosition(), mFrontColor, mText, GetSize());
 
-	GuiWidget::BuildWidgetGeometry(builder);
+	GuiWidget::PreRender(builder);
 }
 
 void GuiButtonWidget::OnStyleChanged(const GuiStyle& style)

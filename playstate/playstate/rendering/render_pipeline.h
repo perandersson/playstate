@@ -20,7 +20,7 @@ namespace playstate
 		// @param scene 
 		// @param canvas
 		// @param camera
-		virtual void Render(const Scene& scene, const Canvas& canvas, const Camera& camera) = 0;
+		virtual void Render(Scene& scene, Canvas& canvas, const Camera& camera) = 0;
 	};
 }
 

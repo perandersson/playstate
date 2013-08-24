@@ -805,5 +805,8 @@
     <ClInclude Include="..\..\playstate\playstate\font\truetype\truetype_font_resource_loader.h">
       <Filter>Source Files\font\truetype</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\gui\widget_geometry_declaration.h">
+      <Filter>Source Files\gui</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

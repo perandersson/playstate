@@ -32,12 +32,12 @@ namespace playstate
 		void Detach();
 		
 		//
-		// Collects all the building blocks for this object. Then it's the pipelines responsibility
-		// to draw those items onto the screen.
+		// Performs the pre-render stage. The purpos of this stage is to prepare the render blocks
+		// before rendering. The collected render blocks will then be sent to the render pipeline.
 		//
 		// @param state
 		// @param builder
-		virtual void Collect(const RenderState& state, RenderBlockResultSet* resultSet) = 0;
+		virtual void PreRender(const RenderState& state, RenderBlockResultSet* resultSet) = 0;
 
 		//
 		// Hides this renderable item.

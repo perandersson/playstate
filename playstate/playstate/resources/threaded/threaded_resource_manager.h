@@ -4,6 +4,7 @@
 #include "../resource_changed_listener.h"
 #include "../exception/load_resource_exception.h"
 #include "../../thread/thread_factory.h"
+#include "../../logging/logger.h"
 
 #include <string>
 #include <memory>
@@ -32,7 +33,7 @@ namespace playstate
 		typedef std::vector<LoadRequestResponse*> LoadResponses;
 
 	public:
-		ThreadedResourceManager(RenderSystem& renderSystem, IFileSystem& fileSystem);
+		ThreadedResourceManager(RenderSystem& renderSystem, IFileSystem& fileSystem, ILogger& logger);
 		~ThreadedResourceManager();
 		
 		//
@@ -61,6 +62,7 @@ namespace playstate
 	private:
 		RenderSystem& mRenderSystem;
 		IFileSystem& mFileSystem;
+		ILogger& mLogger;
 
 	private:
 		RenderAwareThread* mThread;

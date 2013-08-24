@@ -116,14 +116,14 @@ TEST_SUITE(Scene)
 			Renderable::Detach();
 		}
 
-		virtual void Collect(const RenderState& state, RenderBlockResultSet* builder)
+		virtual void PreRender(const RenderState& state, RenderBlockResultSet* builder)
 		{
 		}
 	};
 
 	UNIT_TEST(Scene_FindNonExistingItems)
 	{
-		const Scene scene;
+		Scene scene;
 		const FindQuery query = { NULL, 0 };
 
 		RenderBlockResultSet resultSet;

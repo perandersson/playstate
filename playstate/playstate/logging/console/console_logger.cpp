@@ -12,7 +12,7 @@ ConsoleLogger::~ConsoleLogger()
 {
 }
 
-void ConsoleLogger::Error(const char* msg, ...)
+void ConsoleLogger::Error(const playstate::character* msg, ...)
 {
 	va_list arglist;
     va_start(arglist, msg);
@@ -23,7 +23,7 @@ void ConsoleLogger::Error(const char* msg, ...)
 	std::cout << "[ERROR] " << tmp << std::endl;
 }
 
-void ConsoleLogger::Info(const char* msg, ...)
+void ConsoleLogger::Info(const playstate::character* msg, ...)
 {
 	va_list arglist;
     va_start(arglist, msg);
@@ -34,7 +34,7 @@ void ConsoleLogger::Info(const char* msg, ...)
 	std::cout << "[INFO] " << tmp << std::endl;
 }
 
-void ConsoleLogger::Debug(const char* msg, ...)
+void ConsoleLogger::Debug(const playstate::character* msg, ...)
 {
 	va_list arglist;
     va_start(arglist, msg);

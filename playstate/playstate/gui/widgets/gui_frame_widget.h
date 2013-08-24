@@ -16,7 +16,7 @@ namespace playstate
 
 	// GuiWidget
 	public:
-		virtual const void BuildWidgetGeometry(GuiGeometryBuilder& builder);
+		virtual void PreRender(GuiGeometryBuilder& builder);
 
 	private:
 		playstate::string mTitle;

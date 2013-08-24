@@ -87,11 +87,11 @@ void CanvasGroup::SetStyle(const GuiStyle& style)
 	}
 }
 
-const bool CanvasGroup::BuildWidgetGeometry(GuiGeometryBuilder& builder) const
+bool CanvasGroup::PreRender(GuiGeometryBuilder& builder)
 {
 	GuiWidget* widget = mWidgets.First();
 	while(widget != NULL) {
-		widget->BuildWidgetGeometry(builder);
+		widget->PreRender(builder);
 		widget = widget->GuiWidgetLink.Tail;
 	}
 	return true;

@@ -3,6 +3,10 @@
 #include "../../resources/resource_loader.h"
 #include "../../filesystem/file_system.h"
 
+#include <ft2build.h>
+#include <freetype/freetype.h>
+#include <freetype/ftglyph.h>
+
 namespace playstate
 {
 	class TrueTypeFontResourceLoader : public IResourceLoader
@@ -23,6 +27,6 @@ namespace playstate
 
 	private:
 		IFileSystem& mFileSystem;
-		ResourceObject* mDefaultResource;
+		FT_Library mLibrary;
 	};
 }

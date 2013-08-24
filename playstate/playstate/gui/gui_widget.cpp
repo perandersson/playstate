@@ -96,11 +96,11 @@ void GuiWidget::OnStyleChanged(const GuiStyle& style)
 {
 }
 
-const void GuiWidget::BuildWidgetGeometry(GuiGeometryBuilder& builder)
+void GuiWidget::PreRender(GuiGeometryBuilder& builder)
 {
 	GuiWidget* child = mChildren.First();
 	while(child != NULL) {
-		child->BuildWidgetGeometry(builder);
+		child->PreRender(builder);
 		child = child->GuiWidgetLink.Tail;
 	}
 }

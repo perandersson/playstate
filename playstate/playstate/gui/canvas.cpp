@@ -38,11 +38,11 @@ void Canvas::Update()
 	}
 }
 
-const bool Canvas::BuildWidgetGeometry(GuiGeometryBuilder& builder) const
+bool Canvas::PreRender(GuiGeometryBuilder& builder)
 {
 	CanvasGroup* group = mGroups.First();
 	while(group != NULL) {
-		group->BuildWidgetGeometry(builder);
+		group->PreRender(builder);
 		group = group->CanvasGroupLink.Tail;
 	}
 	return true;
