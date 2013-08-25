@@ -7,16 +7,15 @@ using namespace playstate;
 RenderStaticModel::RenderStaticModel(Resource<Model> model) 
 	: Component(), Renderable(), mModel(model)
 {
-	mModel.AddListener(this);
 }
 
 RenderStaticModel::~RenderStaticModel()
 {
-	mModel.RemoveListener(this);
 }
 
 void RenderStaticModel::OnComponentAdded()
 {
+	mModel.AddListener(this);
 	SetBoundingBox(mModel->GetBoundingBox(), GetNode()->GetAbsolutePosition());
 	Renderable::Attach(GetNode()->GetGroup());
 }
@@ -24,6 +23,7 @@ void RenderStaticModel::OnComponentAdded()
 void RenderStaticModel::OnComponentRemoved()
 {
 	Renderable::Detach();
+	mModel.RemoveListener(this);
 }
 
 void RenderStaticModel::OnLoaded(ResourceObject* object)
