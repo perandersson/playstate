@@ -92,6 +92,8 @@ ResourceData* ThreadedResourceManager::GetResourceData(const playstate::string& 
 			std::auto_ptr<IFile> file = mFileSystem.OpenFile(path);
 			if(file->Exists())
 				data->Resource = loader->Load(*file);
+			else
+				ILogger::Get().Error("Could not find resource: '%s'", file->GetPath().c_str());
 
 			data->Unloaded = false;
 			data->Loading = false;
@@ -246,6 +248,8 @@ void ThreadedResourceManager::Run(IThread& thread)
 						mLogger.Error("Could not load resource: '%s'. Reason: '%s'", file->GetPath().c_str(),
 							e.GetMessage().c_str());
 					}
+				} else {
+					ILogger::Get().Error("Could not find resource: '%s'", request->Name.c_str());
 				}
 				ScopedLock scl(mLoadResponseLock);
 				mResponses.push_back(request);
