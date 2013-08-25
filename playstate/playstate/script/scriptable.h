@@ -2,7 +2,7 @@
 
 #include "../types.h"
 #include "luam.h"
-#include <vector>
+#include "script_method.h"
 
 extern "C"
 {
@@ -15,35 +15,14 @@ namespace playstate
 {
 	class Scriptable
 	{
-
-		typedef std::vector<uint32> MethodIds;
-
-	private:
-		
-
 	protected:
 		//
 		// 
 		Scriptable();
 		
 		//
-		// Finds and pushes the supplied method and the "self" parameter to the lua stack.
-		bool PrepareMethod(const char* method);
-
-		//
-		// Checks if this instance has the method with the supplied name
-		// 
-		// @param method The method
-		// @return 
-		bool HasMethod(const char* method);
-
-		//
-		// Finds and pushes the supplied method and the "self" parameter to the lua stack.
-		bool PrepareMethod(uint32 methodID);
-
-		//
-		// @return ID number for the method
-		uint32 GetMethodID(const char* method);
+		// @return A script method; NULL if no method was found with the supplied name
+		ScriptMethod* GetMethod(const char* name);
 
 	protected:
 		//
@@ -53,11 +32,15 @@ namespace playstate
 		virtual ~Scriptable();
 
 		// 
-		// Attaches this object to the supplied lua state
+		// Attaches this object to the supplied lua state.
+		//
+		// @param L The current lua state
+		// @param id The unique script reference for this object.
 		bool RegisterObject(lua_State* L, uint32 id);
 
 		//
 		// Check if this instance is bound to the script engine.
+		//
 		// @return TRUE if this object is bound to the script engine; FALSE otherwise.
 		bool IsScriptBound() const;
 
@@ -68,7 +51,5 @@ namespace playstate
 	protected:
 		uint32 mScriptRef;
 		lua_State* mCurrentState;
-
-		MethodIds mMethodIds;
 	};
 }

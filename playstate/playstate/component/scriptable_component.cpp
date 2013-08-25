@@ -5,35 +5,29 @@
 using namespace playstate;
 
 ScriptableComponent::ScriptableComponent(uint32 type)
-	: Component(type), Updatable(), Renderable(), Tickable(), Scriptable()
+	: Component(type), Updatable(), Renderable(), Tickable(), Scriptable(),
+	mOnComponentAdded(NULL), mOnComponentRemoved(NULL), mUpdate(NULL), mTick(NULL)
 {
 }
 
 ScriptableComponent::~ScriptableComponent()
 {
+	delete mOnComponentAdded;
+	delete mOnComponentRemoved;
+	delete mUpdate;
+	delete mTick;
 }
 
 void ScriptableComponent::OnComponentAdded()
 {
-	if(HasMethod("Update")) {
+	if(mUpdate != NULL)
 		Updatable::Attach(GetNode()->GetGroup());
-	}
 
-	if(HasMethod("Collect")) {
-		Renderable::Attach(GetNode()->GetGroup());
-	}
-
-	if(HasMethod("Tick")) {
+	if(mTick != NULL)
 		Tickable::Attach(GetNode()->GetGroup());
-	}
-		
-	if(PrepareMethod("OnComponentAdded")) {
-		if(lua_pcall(mCurrentState, 1, 0, NULL) == 0) {
-		} else {
-			const char* err = lua_tostring(mCurrentState, -1);
-			lua_pop(mCurrentState, 1);
-		}
-	}
+
+	if(mOnComponentAdded != NULL)
+		mOnComponentAdded->Invoke();
 }
 
 void ScriptableComponent::OnComponentRemoved()
@@ -42,46 +36,32 @@ void ScriptableComponent::OnComponentRemoved()
 	Renderable::Detach();
 	Tickable::Detach();
 
-	if(PrepareMethod("OnComponentRemoved")) {
-		if(lua_pcall(mCurrentState, 1, 0, NULL) == 0) {
-		} else {
-			const char* err = lua_tostring(mCurrentState, -1);
-			lua_pop(mCurrentState, 1);
-		}
-	}
+	if(mOnComponentRemoved != NULL)
+		mOnComponentRemoved->Invoke();
 }
 
 void ScriptableComponent::PreRender(const RenderState& state, RenderBlockResultSet* resultSet)
 {
-	/*if(PrepareMethod("Collect")) {
-		if(lua_pcall(mCurrentState, 1, 0, NULL) == 0) {
-		} else {
-			const char* err = lua_tostring(mCurrentState, -1);
-			lua_pop(mCurrentState, 1);
-		}
-	}*/
 }
 
 void ScriptableComponent::Update()
 {
-	if(PrepareMethod("Update")) {
-		if(lua_pcall(mCurrentState, 1, 0, NULL) == 0) {
-		} else {
-			const char* err = lua_tostring(mCurrentState, -1);
-			lua_pop(mCurrentState, 1);
-		}
-	}
+	if(mUpdate != NULL)
+		mUpdate->Invoke();
 }
 
 void ScriptableComponent::Tick()
 {
-	if(PrepareMethod("Tick")) {
-		if(lua_pcall(mCurrentState, 1, 0, NULL) == 0) {
-		} else {
-			const char* err = lua_tostring(mCurrentState, -1);
-			lua_pop(mCurrentState, 1);
-		}
-	}
+	if(mTick != NULL)
+		mTick->Invoke();
+}
+
+void ScriptableComponent::OnRegistered()
+{
+	mOnComponentAdded = GetMethod("OnComponentAdded");
+	mOnComponentRemoved = GetMethod("OnComponentRemoved");
+	mUpdate = GetMethod("Update");
+	mTick = GetMethod("Tick");
 }
 
 int playstate::Component_Init(lua_State* L)

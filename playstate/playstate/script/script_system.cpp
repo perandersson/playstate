@@ -144,7 +144,7 @@ void ScriptSystem::RegisterFunctions(luaL_Reg* functions)
 	}
 }
 
-void ScriptSystem::SetGlobalVar(const char* name, lua_Number value)
+void ScriptSystem::SetGlobalVar(const char* name, float64 value)
 {
 	lua_pushnumber(mLuaState, value);
 	lua_setglobal(mLuaState, name);
@@ -156,9 +156,14 @@ void ScriptSystem::SetGlobalVar(const char* name, const char* value)
 	lua_setglobal(mLuaState, name);
 }
 
+void ScriptSystem::SetGlobalVar(const char* name, bool value)
+{
+	lua_pushboolean(mLuaState, value ? 1 : 0);
+	lua_setglobal(mLuaState, name);
+}
+
 void ScriptSystem::HandleGC()
 {
 	lua_gc(mLuaState, LUA_GCSTEP, 180);
 	lua_gc(mLuaState, LUA_GCSTOP, 0);
 }
-

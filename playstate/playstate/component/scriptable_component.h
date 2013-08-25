@@ -29,6 +29,16 @@ namespace playstate
 	// Tickable
 	public:
 		virtual void Tick();
+
+	// Scriptable
+	public:
+		virtual void OnRegistered();
+
+	private:
+		ScriptMethod* mOnComponentAdded;
+		ScriptMethod* mOnComponentRemoved;
+		ScriptMethod* mUpdate;
+		ScriptMethod* mTick;
 	};
 	
 	extern int Component_Init(lua_State* L);

@@ -50,11 +50,15 @@ namespace playstate
 		
 		//
 		// Sets a global value
-		void SetGlobalVar(const char* name, lua_Number value);
+		void SetGlobalVar(const char* name, float64 value);
 
 		//
 		// Sets a global value
 		void SetGlobalVar(const char* name, const char* value);
+		
+		//
+		// Sets a global value
+		void SetGlobalVar(const char* name, bool value);
 
 		//
 		//

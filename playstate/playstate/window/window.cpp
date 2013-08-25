@@ -11,24 +11,17 @@ public:
 	virtual ~ScriptWindowClosedListener() {}
 		
 	virtual void OnRegistered() {
-		mOnWindowClosingID = GetMethodID("OnWindowClosing");
+		mOnWindowClosing = std::auto_ptr<ScriptMethod>(GetMethod("OnWindowClosing"));
 	}
 
 	virtual bool OnWindowClosing() {
-		if(PrepareMethod(mOnWindowClosingID)) {
-			if(lua_pcall(mCurrentState, 1, 1, NULL) == 0) {
-				bool ret = lua_toboolean(mCurrentState, -1) == 1; lua_pop(mCurrentState, -1);
-				return ret;
-			} else {
-				const char* err = lua_tostring(mCurrentState, -1);
-				lua_pop(mCurrentState, 1);
-			}
+		if(mOnWindowClosing->Invoke()) {
+			return mOnWindowClosing->GetBool();
 		}
-		return true;
 	}
 
 private:
-	uint32 mOnWindowClosingID;
+	std::auto_ptr<ScriptMethod> mOnWindowClosing;
 };
 
 namespace playstate

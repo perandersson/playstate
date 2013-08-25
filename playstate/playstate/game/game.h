@@ -57,11 +57,11 @@ namespace playstate
 		virtual void OnRegistered();
 
 	private:
-		uint32 mLoadContentFunc;
-		uint32 mUnloadContentFunc;
-		uint32 mInitializeFunc;
-		uint32 mReleaseFunc;
-		uint32 mUpdateFunc;
+		ScriptMethod* mLoadContent;
+		ScriptMethod* mUnloadContent;
+		ScriptMethod* mInitialize;
+		ScriptMethod* mRelease;
+		ScriptMethod* mUpdate;
 	};
 
 	//

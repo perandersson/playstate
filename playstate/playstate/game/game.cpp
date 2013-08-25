@@ -5,47 +5,36 @@
 using namespace playstate;
 
 ScriptableGame::ScriptableGame()
-	: mLoadContentFunc(0), mUnloadContentFunc(0), mInitializeFunc(0), mReleaseFunc(0)
+	: mLoadContent(NULL), mUnloadContent(NULL), mInitialize(NULL), mRelease(NULL), mUpdate(NULL)
 {
 }
 
 ScriptableGame::~ScriptableGame()
 {
+	delete mLoadContent;
+	delete mUnloadContent;
+	delete mInitialize;
+	delete mRelease;
+	delete mUpdate;
 }
 
 void ScriptableGame::LoadContent()
 {
-	if(mLoadContentFunc != 0 && PrepareMethod(mLoadContentFunc)) {
-		if(lua_pcall(mCurrentState, 1, 0, NULL) == 0) {
-		} else {
-			const char* err = lua_tostring(mCurrentState, -1);
-			lua_pop(mCurrentState, 1);
-		}
-	}
+	if(mLoadContent != NULL)
+		mLoadContent->Invoke();
 }
 
 void ScriptableGame::UnloadContent()
 {
-	if(mUnloadContentFunc != 0 && PrepareMethod(mUnloadContentFunc)) {
-		if(lua_pcall(mCurrentState, 1, 0, NULL) == 0) {
-		} else {
-			const char* err = lua_tostring(mCurrentState, -1);
-			lua_pop(mCurrentState, 1);
-		}
-	}
+	if(mUnloadContent != NULL)
+		mUnloadContent->Invoke();
 }
 
 bool ScriptableGame::Initialize()
 {
-	if(mInitializeFunc != 0) {
-		if(PrepareMethod(mInitializeFunc)) {
-			if(lua_pcall(mCurrentState, 1, 1, NULL) == 0) {
-				bool res = lua_toboolean(mCurrentState, -1) == 1; lua_pop(mCurrentState, 1);
-				return res;
-			} else {
-				const char* err = lua_tostring(mCurrentState, -1);
-				lua_pop(mCurrentState, 1);
-			}
+	if(mInitialize != NULL) {
+		if(mInitialize->Invoke()) {
+			return mInitialize->GetBool();
 		}
 		return false;
 	}
@@ -54,33 +43,23 @@ bool ScriptableGame::Initialize()
 
 void ScriptableGame::Release()
 {
-	if(mReleaseFunc != 0 && PrepareMethod(mReleaseFunc)) {
-		if(lua_pcall(mCurrentState, 1, 0, NULL) == 0) {
-		} else {
-			const char* err = lua_tostring(mCurrentState, -1);
-			lua_pop(mCurrentState, 1);
-		}
-	}
+	if(mRelease != NULL)
+		mRelease->Invoke();
 }
 
 void ScriptableGame::Update()
 {
-	if(mUpdateFunc != 0 && PrepareMethod(mUpdateFunc)) {
-		if(lua_pcall(mCurrentState, 1, 0, NULL) == 0) {
-		} else {
-			const char* err = lua_tostring(mCurrentState, -1);
-			lua_pop(mCurrentState, 1);
-		}
-	}
+	if(mUpdate != NULL)
+		mUpdate->Invoke();
 }
 
 void ScriptableGame::OnRegistered()
 {
-	mLoadContentFunc = GetMethodID("LoadContent");
-	mUnloadContentFunc = GetMethodID("UnloadContent");
-	mInitializeFunc = GetMethodID("Initialize");
-	mReleaseFunc = GetMethodID("Release");
-	mUpdateFunc = GetMethodID("Update");
+	mLoadContent = GetMethod("LoadContent");
+	mUnloadContent = GetMethod("UnloadContent");
+	mInitialize = GetMethod("Initialize");
+	mRelease = GetMethod("Release");
+	mUpdate = GetMethod("Update");
 }
 
 //
