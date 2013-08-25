@@ -1,6 +1,6 @@
 #include "../../memory/memory.h"
 #include "openal_sound_effect_resource_loader.h"
-#include "../sound_effect.h"
+#include "openal_sound_effect.h"
 using namespace playstate;
 
 OpenALSoundEffectResourceLoader::OpenALSoundEffectResourceLoader(IFileSystem& fileSystem)
@@ -61,8 +61,7 @@ ResourceObject* OpenALSoundEffectResourceLoader::Load(IFile& file)
 	
 	ALuint bufferID = 0;
 	alGenBuffers(1, &bufferID);
-
-	float32 duration = 0.0f;
+	
 	ALenum alFormat;
 	SoundFormat::Enum format = SoundFormat::Default;
 	if(header.BitsPerSample == 8) {
@@ -82,10 +81,10 @@ ResourceObject* OpenALSoundEffectResourceLoader::Load(IFile& file)
 			alFormat = AL_FORMAT_STEREO16;
 		}
 	}
-	duration = header.SampleRate / (header.BitsPerSample / 8.0f) / (header.SampleRate * 1.0f);
 
+	const float32 duration = header.SampleRate / (header.BitsPerSample / 8.0f) / (header.SampleRate * 1.0f);
 	alBufferData(bufferID, alFormat, data.Get(), header.Subchunk2Size, header.SampleRate);
-	return new SoundEffect(bufferID, duration);
+	return new OpenALSoundEffect(format, duration, bufferID);
 }
 
 ResourceObject* OpenALSoundEffectResourceLoader::GetDefaultResource()

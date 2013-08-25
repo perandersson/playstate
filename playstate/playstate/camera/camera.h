@@ -61,10 +61,14 @@ namespace playstate
 	extern int ActiveCamera_SetPerspective(lua_State* L);
 	extern int ActiveCamera_LookAt(lua_State* L);
 	extern int ActiveCamera_Move(lua_State* L);
+	extern int ActiveCamera_GetPosition(lua_State* L);
+	extern int ActiveCamera_GetUp(lua_State* L);
 	static luaL_Reg ActiveCamera_Methods[] = {
 		{ "SetPerspective", ActiveCamera_SetPerspective },
 		{ "LookAt", ActiveCamera_LookAt },
 		{ "Move", ActiveCamera_Move },
+		{ "GetPosition", ActiveCamera_GetPosition },
+		{ "GetUp", ActiveCamera_GetUp },
 		{ NULL, NULL }
 	};
 }

@@ -431,6 +431,9 @@
     <ClCompile Include="..\..\playstate\playstate\sound\openal\openal_sound_effect_resource_loader.cpp">
       <Filter>Source Files\sound\openal</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\sound\openal\openal_sound_effect.cpp">
+      <Filter>Source Files\sound\openal</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\playstate\playstate\camera\camera.h">
@@ -848,6 +851,9 @@
       <Filter>Source Files\sound</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\sound\openal\openal_sound_effect_resource_loader.h">
+      <Filter>Source Files\sound\openal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\sound\openal\openal_sound_effect.h">
       <Filter>Source Files\sound\openal</Filter>
     </ClInclude>
   </ItemGroup>

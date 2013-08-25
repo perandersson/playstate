@@ -14,6 +14,8 @@ function FollowCameraBehaviour:Update()
 	local eye = Vector3.Add(pos, config.camera.eye)
 	
 	ActiveCamera.LookAt(eye, pos, config.camera.up)
+	SoundListener.SetPosition(ActiveCamera.GetPosition())
+	SoundListener.LookAt(0, 0, -1.0, ActiveCamera.GetUp())
 end
 
 return FollowCameraBehaviour

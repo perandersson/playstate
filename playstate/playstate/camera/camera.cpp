@@ -154,4 +154,15 @@ namespace playstate
 		GameRunner::Get().GetScene().GetActiveCamera().Move(Vector3(direction));
 		return 0;
 	}
+	
+	int ActiveCamera_GetPosition(lua_State* L)
+	{
+		return luaM_pushvector3(L, GameRunner::Get().GetScene().GetActiveCamera().GetPosition());
+	}
+
+	int ActiveCamera_GetUp(lua_State* L)
+	{
+		return luaM_pushvector3(L, GameRunner::Get().GetScene().GetActiveCamera().GetUp());
+	}
+
 }

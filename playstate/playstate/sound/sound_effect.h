@@ -3,34 +3,45 @@
 #include "../resources/resource_object.h"
 #include "../script/scriptable.h"
 
-#include <AL/al.h>
-#include <AL/alc.h>
-#include <AL/alext.h>
-
 namespace playstate
 {
+	class SoundFormat
+	{
+	public:
+		enum Enum {
+			UNKNOWN,
+			MONO8,
+			MONO16,
+			STEREO8,
+			STEREO16
+		};
+
+		static const Enum Default = SoundFormat::UNKNOWN;
+	};
+
 	//
-	// 
+	// This class symbolizes a sound effect inside the game engine. 
+	// Use the class {@code playstate::ISoundEngine} to play this sound effect.
 	class SoundEffect : public ResourceObject, public Scriptable
 	{
 	public:
-		SoundEffect(ALuint bufferId, float32 duration);
-		~SoundEffect();
+		SoundEffect(SoundFormat::Enum format, float32 duration);
+		virtual ~SoundEffect();
 
 		//
-		//
-		inline ALuint GetBufferID() const {
-			return mBufferID;
-		}
-
+		// @return This sound effects duration in seconds.
 		inline float32 GetDuration() const {
 			return mDuration;
 		}
-	
-	protected:
 
+		//
+		// @return This sound effects format
+		inline SoundFormat::Enum GetFormat() const {
+			return mFormat;
+		}
+	
 	private:
-		ALuint mBufferID;
+		SoundFormat::Enum mFormat;
 		float32 mDuration;
 	};
 	

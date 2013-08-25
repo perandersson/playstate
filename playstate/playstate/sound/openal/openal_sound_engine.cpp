@@ -1,7 +1,7 @@
 #include "../../memory/memory.h"
 #include "openal_sound_engine.h"
 #include "../music.h"
-#include "../sound_effect.h"
+#include "openal_sound_effect.h"
 using namespace playstate;
 
 OpenALSoundEngine::OpenALSoundEngine()
@@ -21,6 +21,11 @@ OpenALSoundEngine::OpenALSoundEngine()
 		alGenSources(1, &mSources[i]);
 		mNumSources++;
 	}
+	
+	static const float32 velocity[] = {0.0f, 0.0f, 0.0f};
+	alListenerfv(AL_VELOCITY, velocity);
+	static const float32 orientation[] = {0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f};
+	alListenerfv(AL_ORIENTATION, orientation);
 }
 
 OpenALSoundEngine::~OpenALSoundEngine()
@@ -45,7 +50,6 @@ void OpenALSoundEngine::Play(Music* music)
 	alSource3i(source, AL_POSITION, 0, 0, -1);
 	alSourcei(source, AL_SOURCE_RELATIVE, AL_TRUE);
     alSourcei(source, AL_ROLLOFF_FACTOR, 0);
-
 }
 
 void OpenALSoundEngine::Stop(Music* music)
@@ -59,7 +63,7 @@ void OpenALSoundEngine::Play(SoundEffect* effect)
 
 	alSource3i(source, AL_POSITION, 0, 0, -1);
 	alSourcei(source, AL_SOURCE_RELATIVE, AL_TRUE);
-	PlaySoundEffectBuffer(source, effect->GetBufferID());
+	PlaySoundEffectBuffer(source, static_cast<OpenALSoundEffect*>(effect)->GetBufferID());
 }
 
 void OpenALSoundEngine::Play(SoundEffect* effect, const Vector3& position)
@@ -67,16 +71,18 @@ void OpenALSoundEngine::Play(SoundEffect* effect, const Vector3& position)
 	assert_not_null(effect);
 	const ALuint source = FindNextSource();
 
-	alSourcefv(source, AL_POSITION, position.Points);
+	alSource3f(source, AL_POSITION, position.X, position.Y, position.Z);
 	alSourcei(source, AL_SOURCE_RELATIVE, AL_FALSE);
-	PlaySoundEffectBuffer(source, effect->GetBufferID());
+	PlaySoundEffectBuffer(source, static_cast<OpenALSoundEffect*>(effect)->GetBufferID());
 }
 
 void OpenALSoundEngine::PlaySoundEffectBuffer(ALuint sourceID, ALuint bufferID)
 {
+	alSourcef(sourceID, AL_PITCH, 1.0f);
 	alSourcef(sourceID, AL_GAIN, mSoundEffectVolume * mMasterVolume);
-	alSourcei(sourceID, AL_BUFFER, bufferID);
     alSourcei(sourceID, AL_LOOPING, AL_FALSE);
+	alSourcei(sourceID, AL_BUFFER, bufferID);
+	alSource3f(sourceID, AL_VELOCITY, 0.0f, 0.0f, 0.0f);
 	alSourcePlay(sourceID);
     assert(alGetError() == AL_NO_ERROR && "Could not set source parameters and play buffer");
 }
@@ -122,11 +128,13 @@ ISoundListener* OpenALSoundEngine::GetListener()
 
 void OpenALSoundEngine::SetPosition(const Vector3& position)
 {
-	static const float32 velocity[] = {0.0f, 0.0f, 0.0f};
-	static const float32 orientation[] = {0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f};
+	alListener3f(AL_POSITION, position.X, position.Y, position.Z);
+	alListener3f(AL_VELOCITY, 0.0f, 0.0f, 0.0f);
+}
 
-	alListenerfv(AL_POSITION, position.Points);
-	alListenerfv(AL_VELOCITY, velocity);
+void OpenALSoundEngine::LookAt(const Vector3& direction, const Vector3& up)
+{
+	const float32 orientation[] = {direction.X, direction.Y, direction.Z, up.X, up.Y, up.Z};
 	alListenerfv(AL_ORIENTATION, orientation);
 }
 

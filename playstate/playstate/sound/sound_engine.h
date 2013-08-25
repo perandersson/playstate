@@ -3,6 +3,7 @@
 #include "../singleton.h"
 #include "../types.h"
 #include "../math/vector3.h"
+#include "sound_effect.h"
 
 extern "C"
 {
@@ -14,21 +15,6 @@ extern "C"
 namespace playstate
 {
 	class Music;
-	class SoundEffect;
-
-	class SoundFormat
-	{
-	public:
-		enum Enum {
-			UNKNOWN,
-			MONO8,
-			MONO16,
-			STEREO8,
-			STEREO16
-		};
-
-		static const Enum Default = SoundFormat::UNKNOWN;
-	};
 
 	class ISoundListener
 	{
@@ -37,6 +23,7 @@ namespace playstate
 
 	public:
 		virtual void SetPosition(const Vector3& position) = 0;
+		virtual void LookAt(const Vector3& direction, const Vector3& up) = 0;
 	};
 
 	//
@@ -61,14 +48,24 @@ namespace playstate
 	//
 
 	extern int Sound_Play(lua_State* L);
+	extern int Sound_PlayAtPosition(lua_State* L);
+	extern int Sound_SetMasterVolume(lua_State* L);
+	extern int Sound_SetMusicVolume(lua_State* L);
+	extern int Sound_SetSoundEffectVolume(lua_State* L);
 	static luaL_Reg Sound_Methods[] = {
 		{ "Play", Sound_Play },
+		{ "PlayAtPosition", Sound_PlayAtPosition },
+		{ "SetMasterVolume", Sound_SetMasterVolume },
+		{ "SetMusicVolume", Sound_SetMusicVolume },
+		{ "SetSoundEffectVolume", Sound_SetSoundEffectVolume },
 		{ NULL, NULL }
 	};
 
 	extern int SoundListener_SetPosition(lua_State* L);
+	extern int SoundListener_LookAt(lua_State* L);
 	static luaL_Reg SoundListener_Methods[] = {
 		{ "SetPosition", SoundListener_SetPosition },
+		{ "LookAt", SoundListener_LookAt },
 		{ NULL, NULL }
 	};
 

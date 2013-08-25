@@ -45,8 +45,7 @@ function MovePlayerBehaviour:GetArcballVector(x, y)
 end
 
 function MovePlayerBehaviour:TranslateThis()
-	local x = 0
-	local z = 0
+	local x, y, z = self:GetNodePosition()
 	local move = false
 		
 	if Keys.IsKeyDown(KeyboardKeys.W) then
@@ -70,8 +69,7 @@ function MovePlayerBehaviour:TranslateThis()
 	end
 	
 	if move then
-		self:TranslateNode(x, 0, z)
-		SoundListener.SetPosition(self:GetNodePosition())
+		self:SetNodePosition(x, 0, z)
 	end
 end
 

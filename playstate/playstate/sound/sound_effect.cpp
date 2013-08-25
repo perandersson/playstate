@@ -3,16 +3,13 @@
 #include "../resources/resource_manager.h"
 using namespace playstate;
 
-SoundEffect::SoundEffect(ALuint bufferId, float32 duration)
-	: ResourceObject(), Scriptable(), mBufferID(bufferId), mDuration(duration)
+SoundEffect::SoundEffect(SoundFormat::Enum format, float32 duration)
+	: ResourceObject(), Scriptable(), mFormat(format), mDuration(duration)
 {
-	assert(bufferId != 0 && "Invalid buffer ID. This should not happen");
 }
 
 SoundEffect::~SoundEffect()
 {
-	alDeleteBuffers(1, &mBufferID);
-	mBufferID = 0;
 }
 
 int playstate::SoundEffect_Load(lua_State* L)

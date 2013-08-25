@@ -18,4 +18,10 @@ config.camera.up = {0, 1, 0}
 config.graphics = {}
 config.graphics.developmentmode = true
 
+-- Sound 
+config.sound = {}
+config.sound.mastervolume = 1.0
+config.sound.musicvolume = 0.5
+config.sound.soundeffectvolume = 0.5
+
 return config

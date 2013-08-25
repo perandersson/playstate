@@ -40,6 +40,7 @@ namespace playstate
 	// ISoundListener
 	public:
 		virtual void SetPosition(const Vector3& position);
+		virtual void LookAt(const Vector3& direction, const Vector3& up);
 
 	private:
 		//

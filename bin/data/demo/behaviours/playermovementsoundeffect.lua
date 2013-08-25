@@ -23,7 +23,7 @@ function PlayerMovementSoundEffect:Tick()
 	
 	if self.timeSinceLastReplay < 0 and move then
 		self.timeSinceLastReplay = 2.4
-		Sound.Play(self.soundEffect)
+		Sound.PlayAtPosition(self.soundEffect, {0, 0, 0})
 	end
 end
 
