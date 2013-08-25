@@ -44,3 +44,14 @@ void ConsoleLogger::Debug(const playstate::character* msg, ...)
 	
 	std::cout << "[DEBUG] " << tmp << std::endl;
 }
+
+void ConsoleLogger::Warn(const playstate::character* msg, ...)
+{
+	va_list arglist;
+    va_start(arglist, msg);
+	char tmp[5096];
+    vsprintf_s(tmp, 5096, msg, arglist);
+    va_end(arglist);
+	
+	std::cout << "[WARN] " << tmp << std::endl;
+}

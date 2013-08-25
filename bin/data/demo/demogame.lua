@@ -17,9 +17,6 @@ function DemoGame:Initialize()
 	-- Set the canvas size. This is needed so that the attached widgets get
 	-- the correct uniform size
 	Canvas.SetSize(1024, 768)
-	Sound.SetMasterVolume(config.sound.mastervolume)
-	Sound.SetMusicVolume(config.sound.musicvolume)
-	Sound.SetSoundEffectVolume(config.sound.soundeffectvolume)
 	
 	return true
 end

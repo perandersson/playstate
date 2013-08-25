@@ -12,5 +12,6 @@ namespace playstate
 		virtual void Error(const playstate::character* msg, ...) = 0;
 		virtual void Info(const playstate::character* msg, ...) = 0;
 		virtual void Debug(const playstate::character* msg, ...) = 0;
+		virtual void Warn(const playstate::character* msg, ...) = 0;
 	};
 }

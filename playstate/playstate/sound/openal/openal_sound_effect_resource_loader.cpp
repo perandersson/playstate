@@ -1,6 +1,7 @@
 #include "../../memory/memory.h"
 #include "openal_sound_effect_resource_loader.h"
 #include "openal_sound_effect.h"
+#include "../../logging/logger.h"
 using namespace playstate;
 
 OpenALSoundEffectResourceLoader::OpenALSoundEffectResourceLoader(IFileSystem& fileSystem)
@@ -80,6 +81,11 @@ ResourceObject* OpenALSoundEffectResourceLoader::Load(IFile& file)
 			format = SoundFormat::STEREO16;
 			alFormat = AL_FORMAT_STEREO16;
 		}
+	}
+
+	if(format != SoundFormat::MONO8 || format != SoundFormat::MONO16) {
+		ILogger::Get().Warn("The loaded sound effect: '%s' is not a MONO sound. 3D positioning will not work",
+			file.GetPath().c_str());
 	}
 
 	const float32 duration = header.SampleRate / (header.BitsPerSample / 8.0f) / (header.SampleRate * 1.0f);

@@ -95,6 +95,7 @@ bool GameRunner::Initialize()
 	IFileSystem& fileSystem = IFileSystem::Get();
 	RenderSystem& renderSystem = RenderSystem::Get();
 	IWindow& window = IWindow::Get();
+	ISoundEngine& soundEngine = ISoundEngine::Get();
 
 	// Register resource types
 	resourceManager.RegisterResourceType(new Texture2DResourceLoader(renderSystem, fileSystem), ".png");
@@ -109,6 +110,11 @@ bool GameRunner::Initialize()
 	window.SetSize(Point(width, height));
 	window.SetTitle(title);
 	window.AddWindowClosedListener(this);
+
+	// Set the sound volume
+	soundEngine.SetMasterVolume(mConfiguration->FindFloat("sound.mastervolume", 0.5f));
+	soundEngine.SetMusicVolume(mConfiguration->FindFloat("sound.musicvolume", 0.5f));
+	soundEngine.SetSoundEffectVolume(mConfiguration->FindFloat("sound.soundeffectvolume", 0.5f));
 	
 	return true;
 }
