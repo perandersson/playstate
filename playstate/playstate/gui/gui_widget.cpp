@@ -47,9 +47,9 @@ void GuiWidget::WidgetAttachedToCanvasGroup(CanvasGroup* group)
 
 	GuiEvent* event = mEvents.First();
 	while(event != NULL) {
-		GuiEvent* event = event->EventLink.Tail;
+		GuiEvent* next = event->EventLink.Tail;
 		event->OnAttachedToCanvas(this);
-		event = event;
+		event = next;
 	}
 }
 
@@ -59,9 +59,9 @@ void GuiWidget::DetachingWidgetFromCanvasGroup(CanvasGroup* group)
 
 	GuiEvent* event = mEvents.First();
 	while(event != NULL) {
-		GuiEvent* event = event->EventLink.Tail;
+		GuiEvent* next = event->EventLink.Tail;
 		event->OnDetachingFromCanvas(this);
-		event = event;
+		event = next;
 	}
 
 	mCanvasGroup = NULL;
