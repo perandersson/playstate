@@ -9,6 +9,7 @@
 #include <playstate/processor/processors/linked_list_update_processor.h>
 #include <playstate/processor/processors/octree_light_source_processor.h>
 #include <playstate/processor/processors/octree_render_processor.h>
+#include <playstate/sound/openal/openal_sound_engine.h>
 
 // TODO: Interface these services
 #include <playstate/resources/threaded/threaded_resource_manager.h>
@@ -55,6 +56,7 @@ namespace playstate
 			ThreadedResourceManager* mThreadedResourceManager;
 			Win32FileSystem* mFileSystem;
 			ScriptSystem* mScriptSystem;
+			OpenALSoundEngine* mSoundEngine;
 		};
 	}
 }

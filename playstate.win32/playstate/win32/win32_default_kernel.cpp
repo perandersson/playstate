@@ -8,6 +8,7 @@
 #include <playstate/gui/widgets/gui_frame_widget.h>
 #include <playstate/gui/widgets/gui_button_widget.h>
 #include <playstate/font/font.h>
+#include <playstate/sound/sound_effect.h>
 
 using namespace playstate;
 using namespace playstate::win32;
@@ -29,10 +30,12 @@ Win32DefaultKernel::Win32DefaultKernel(HINSTANCE app, const playstate::string& f
 	mThreadFactory = new Win32ThreadFactory();
 	mRenderSystem = new RenderSystem(*mWindow, *mScriptSystem);
 	mThreadedResourceManager = new ThreadedResourceManager(*mRenderSystem, *mFileSystem, *mLogger);
+	mSoundEngine = new OpenALSoundEngine();
 }
 
 Win32DefaultKernel::~Win32DefaultKernel()
 {
+	delete mSoundEngine;
 	delete mThreadedResourceManager;
 	delete mRenderSystem;
 	delete mThreadFactory;
@@ -89,6 +92,9 @@ void Win32DefaultKernel::RegisterScript()
 	ss.RegisterType("Canvas", Canvas_Methods);
 	ss.RegisterType("CanvasGroup", CanvasGroup_Methods);
 	ss.RegisterType("Font", Font_Methods);
+	ss.RegisterType("SoundEffect", SoundEffect_Methods);
+	ss.RegisterType("Sound", Sound_Methods);
+	ss.RegisterType("SoundListener", SoundListener_Methods);
 
 	ss.RegisterType("GuiFrameWidget", GuiWidget_Methods);
 	ss.RegisterType("GuiFrameWidget", GuiFrameWidget_Methods);

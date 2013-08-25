@@ -99,6 +99,11 @@
     <ClCompile Include="..\..\playstate\playstate\search\render_block_result_set.cpp" />
     <ClCompile Include="..\..\playstate\playstate\search\sorter\quick_sort_array_sorter.cpp" />
     <ClCompile Include="..\..\playstate\playstate\search\sorter\render_block_array_sorter.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\sound\music.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\sound\openal\openal_sound_effect_resource_loader.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\sound\openal\openal_sound_engine.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\sound\sound_effect.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\sound\sound_engine.cpp" />
     <ClCompile Include="..\..\playstate\playstate\thread\thread_factory.cpp" />
     <ClCompile Include="..\..\playstate\playstate\thread\wrapper\lock_wrapper.cpp" />
     <ClCompile Include="..\..\playstate\playstate\thread\wrapper\thread_wrapper.cpp" />
@@ -228,6 +233,11 @@
     <ClInclude Include="..\..\playstate\playstate\search\sorter\quick_sort_array_sorter.h" />
     <ClInclude Include="..\..\playstate\playstate\search\sorter\render_block_array_sorter.h" />
     <ClInclude Include="..\..\playstate\playstate\singleton.h" />
+    <ClInclude Include="..\..\playstate\playstate\sound\music.h" />
+    <ClInclude Include="..\..\playstate\playstate\sound\openal\openal_sound_effect_resource_loader.h" />
+    <ClInclude Include="..\..\playstate\playstate\sound\openal\openal_sound_engine.h" />
+    <ClInclude Include="..\..\playstate\playstate\sound\sound_effect.h" />
+    <ClInclude Include="..\..\playstate\playstate\sound\sound_engine.h" />
     <ClInclude Include="..\..\playstate\playstate\thread\lock.h" />
     <ClInclude Include="..\..\playstate\playstate\thread\runnable.h" />
     <ClInclude Include="..\..\playstate\playstate\thread\thread.h" />
@@ -286,7 +296,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;lua_assert=assert;LUA_USER_H=&lt;cassert&gt;;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../../libraries/lua-5.2.1;../../libraries/glew-1.9.0/include;../../libraries/FreeImage;../../libraries/freetype-2.4.11/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../libraries/lua-5.2.1;../../libraries/glew-1.9.0/include;../../libraries/FreeImage;../../libraries/freetype-2.4.11/include;../../libraries/openal-soft</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4227</DisableSpecificWarnings>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>

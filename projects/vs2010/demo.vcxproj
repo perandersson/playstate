@@ -65,7 +65,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;lua_assert=assert;LUA_USER_H=&lt;cassert&gt;;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)../../playstate;$(SolutionDir)../../libraries/lua-5.2.1;$(SolutionDir)../../libraries/glew-1.9.0/include;$(SolutionDir)../../playstate.win32</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../playstate;$(SolutionDir)../../libraries/lua-5.2.1;$(SolutionDir)../../libraries/glew-1.9.0/include;$(SolutionDir)../../playstate.win32;../../libraries/openal-soft</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4227</DisableSpecificWarnings>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
@@ -73,8 +73,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)libraries/FreeImage/;$(SolutionDir)libraries/glew-1.9.0/lib/;$(SolutionDir)libraries/lua-5.2.1/;$(SolutionDir)../../bin/;$(SolutionDir)libraries/freetype-2.4.11/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>playstate_d.lib;playstate.win32_d.lib;luad.lib;glew32.lib;FreeImage.lib;OpenGL32.lib;GLU32.lib;freetype2411MT_D.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)libraries/FreeImage/;$(SolutionDir)libraries/glew-1.9.0/lib/;$(SolutionDir)libraries/lua-5.2.1/;$(SolutionDir)../../bin/;$(SolutionDir)libraries/freetype-2.4.11/;$(SolutionDir)libraries/openal-soft/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>playstate_d.lib;playstate.win32_d.lib;luad.lib;glew32.lib;FreeImage.lib;OpenGL32.lib;GLU32.lib;freetype2411MT_D.lib;OpenAL32_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
@@ -90,7 +90,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
-      <AdditionalIncludeDirectories>$(SolutionDir)../../playstate;$(SolutionDir)../../libraries/lua-5.2.1;$(SolutionDir)../../libraries/glew-1.9.0/include;$(SolutionDir)../../playstate.win32</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../playstate;$(SolutionDir)../../libraries/lua-5.2.1;$(SolutionDir)../../libraries/glew-1.9.0/include;$(SolutionDir)../../playstate.win32;../../libraries/openal-soft</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4227</DisableSpecificWarnings>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
@@ -100,8 +100,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)libraries/FreeImage/;$(SolutionDir)libraries/glew-1.9.0/lib/;$(SolutionDir)libraries/lua-5.2.1/;$(SolutionDir)../../bin/;$(SolutionDir)libraries/freetype-2.4.11/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>playstate.lib;lua.lib;glew32.lib;FreeImage.lib;OpenGL32.lib;GLU32.lib;playstate.win32.lib;freetype2411MT.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)libraries/FreeImage/;$(SolutionDir)libraries/glew-1.9.0/lib/;$(SolutionDir)libraries/lua-5.2.1/;$(SolutionDir)../../bin/;$(SolutionDir)libraries/freetype-2.4.11/;$(SolutionDir)libraries/openal-soft/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>playstate.lib;lua.lib;glew32.lib;FreeImage.lib;OpenGL32.lib;GLU32.lib;playstate.win32.lib;freetype2411MT.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>

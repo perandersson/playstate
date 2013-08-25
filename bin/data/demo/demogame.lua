@@ -17,6 +17,14 @@ function DemoGame:Initialize()
 	-- Set the canvas size. This is needed so that the attached widgets get
 	-- the correct uniform size
 	Canvas.SetSize(1024, 768)
+	
+	-- Load and play the menu music
+	--menuMusic = Music.Load("/demo/sound/music/sample.ogg")
+	--menuMusic:Play()
+	
+	--listener = Sound.GetListener()
+	--listener:SetPosition(10, 10, 10)
+	
 	return true
 end
 
@@ -37,7 +45,7 @@ function DemoGame:LoadContent()
 
 	-- Load the main menu (this will start the first level later)
 	local mainMenu = CanvasGroup.Load("/demo/menu/mainmenu.lua")
-	Canvas.AddCanvasGroup(mainMenu)	
+	Canvas.AddCanvasGroup(mainMenu)
 end
 
 function DemoGame:Update()

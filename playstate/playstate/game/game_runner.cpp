@@ -6,6 +6,7 @@
 #include "../rendering/graphics_driver.h"
 #include "../input/input_system.h"
 #include "../font/truetype/truetype_font_resource_loader.h"
+#include "../sound/openal/openal_sound_effect_resource_loader.h"
 using namespace playstate;
 
 namespace playstate
@@ -99,6 +100,7 @@ bool GameRunner::Initialize()
 	resourceManager.RegisterResourceType(new Texture2DResourceLoader(renderSystem, fileSystem), ".png");
 	resourceManager.RegisterResourceType(new WavefrontResourceLoader(resourceManager, fileSystem, renderSystem), ".obj");
 	resourceManager.RegisterResourceType(new TrueTypeFontResourceLoader(fileSystem), ".ttf");
+	resourceManager.RegisterResourceType(new OpenALSoundEffectResourceLoader(fileSystem), ".wav");
 
 	int32 width = mConfiguration->FindInt("window.width");
 	int32 height = mConfiguration->FindInt("window.height");
