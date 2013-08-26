@@ -61,7 +61,7 @@ void OpenALSoundEngine::Play(SoundEffect* effect)
 	assert_not_null(effect);
 	const ALuint source = FindNextSource();
 
-	alSource3i(source, AL_POSITION, 0, 0, -1);
+	alSource3i(source, AL_POSITION, 0, 0, 0);
 	alSourcei(source, AL_SOURCE_RELATIVE, AL_TRUE);
 	PlaySoundEffectBuffer(source, static_cast<OpenALSoundEffect*>(effect)->GetBufferID());
 }

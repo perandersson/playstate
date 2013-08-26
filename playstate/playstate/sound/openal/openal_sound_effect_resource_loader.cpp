@@ -70,26 +70,30 @@ ResourceObject* OpenALSoundEffectResourceLoader::Load(IFile& file)
 			format = SoundFormat::MONO8;
 			alFormat = AL_FORMAT_MONO8;
 		} else if(header.NumChannels == 2) {
-			format = SoundFormat::MONO16;
-			alFormat = AL_FORMAT_MONO16;
+			format = SoundFormat::STEREO8;
+			alFormat = AL_FORMAT_STEREO8;
 		}
 	} else if(header.BitsPerSample == 16) {
 		if(header.NumChannels == 1) {
-			format = SoundFormat::STEREO8;
-			alFormat = AL_FORMAT_STEREO8;
+			format = SoundFormat::MONO16;
+			alFormat = AL_FORMAT_MONO16;
 		} else if(header.NumChannels == 2) {
 			format = SoundFormat::STEREO16;
 			alFormat = AL_FORMAT_STEREO16;
 		}
 	}
 
-	if(format != SoundFormat::MONO8 || format != SoundFormat::MONO16) {
+	if(format != SoundFormat::MONO8 && format != SoundFormat::MONO16) {
 		ILogger::Get().Warn("The loaded sound effect: '%s' is not a MONO sound. 3D positioning will not work",
 			file.GetPath().c_str());
 	}
 
 	const float32 duration = header.SampleRate / (header.BitsPerSample / 8.0f) / (header.SampleRate * 1.0f);
-	alBufferData(bufferID, alFormat, data.Get(), header.Subchunk2Size, header.SampleRate);
+	alBufferData(bufferID, alFormat, data.Get(), data.Length(), header.SampleRate);
+	ALenum error = alGetError();
+	if(error != AL_NO_ERROR)
+		THROW_EXCEPTION(LoadResourceException, "Could not load sound buffer with data for sound: '%s'", file.GetPath().c_str());
+	
 	return new OpenALSoundEffect(format, duration, bufferID);
 }
 

@@ -70,6 +70,8 @@ function MovePlayerBehaviour:TranslateThis()
 	
 	if move then
 		self:SetNodePosition(x, 0, z)
+		SoundListener.SetPosition(x, 0, z)
+		SoundListener.LookAt(0, 0, -1.0, ActiveCamera.GetUp())
 	end
 end
 

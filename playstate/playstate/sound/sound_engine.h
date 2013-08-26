@@ -48,13 +48,13 @@ namespace playstate
 	//
 
 	extern int Sound_Play(lua_State* L);
-	extern int Sound_PlayAtPosition(lua_State* L);
+	extern int Sound_PlayAtPos(lua_State* L);
 	extern int Sound_SetMasterVolume(lua_State* L);
 	extern int Sound_SetMusicVolume(lua_State* L);
 	extern int Sound_SetSoundEffectVolume(lua_State* L);
 	static luaL_Reg Sound_Methods[] = {
 		{ "Play", Sound_Play },
-		{ "PlayAtPosition", Sound_PlayAtPosition },
+		{ "PlayAtPos", Sound_PlayAtPos },
 		{ "SetMasterVolume", Sound_SetMasterVolume },
 		{ "SetMusicVolume", Sound_SetMusicVolume },
 		{ "SetSoundEffectVolume", Sound_SetSoundEffectVolume },

@@ -25,7 +25,7 @@ int playstate::SoundEffect_Load(lua_State* L)
 int playstate::SoundEffect_GetDuration(lua_State* L)
 {
 	if(lua_gettop(L) < 1) {
-		luaM_printerror(L, "Expected: Sound:GetDuration()");
+		luaM_printerror(L, "Expected: SoundEffect.GetDuration(effect)");
 		lua_pushnumber(L, 0.0);
 		return 1;
 	}
@@ -35,7 +35,7 @@ int playstate::SoundEffect_GetDuration(lua_State* L)
 		Resource<SoundEffect> effect(resourceData);
 		lua_pushnumber(L, effect->GetDuration());
 	} else {
-		luaM_printerror(L, "Expected: Sound:GetDuration()");
+		luaM_printerror(L, "Expected: SoundEffect.GetDuration(effect)");
 		lua_pushnumber(L, 0.0);
 	}
 	return 1;

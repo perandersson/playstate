@@ -8,8 +8,8 @@ function PlayerMovementSoundEffect:__init(effect)
 	self.soundEffect = effect
 end
 
-function PlayerMovementSoundEffect:Tick()
-	self.timeSinceLastReplay = self.timeSinceLastReplay - SecondsPerTick
+function PlayerMovementSoundEffect:Update()
+	self.timeSinceLastReplay = self.timeSinceLastReplay - GameDeltaTime
 	local move = false
 	if Keys.IsKeyDown(KeyboardKeys.W) then
 		move = true
@@ -22,8 +22,8 @@ function PlayerMovementSoundEffect:Tick()
 	end
 	
 	if self.timeSinceLastReplay < 0 and move then
-		self.timeSinceLastReplay = 2.4
-		Sound.PlayAtPosition(self.soundEffect, {0, 0, 0})
+		self.timeSinceLastReplay = SoundEffect.GetDuration(self.soundEffect)
+		Sound.Play(self.soundEffect)
 	end
 end
 
