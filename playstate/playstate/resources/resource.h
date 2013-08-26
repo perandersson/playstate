@@ -131,6 +131,14 @@ namespace playstate
 			mData->Listener.RemoveListener(listener);
 		}
 
+		//
+		// @param data
+		// @return TRUE if the supplied resource data is of a specific type; FALSE otherwise
+		static bool IsType(ResourceData* data)
+		{
+			return dynamic_cast<T*>(data->Resource) != NULL;
+		}
+
 	private:
 		ResourceObject* GetResourceObject()
 		{

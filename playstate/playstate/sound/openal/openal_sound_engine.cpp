@@ -2,6 +2,7 @@
 #include "openal_sound_engine.h"
 #include "../music.h"
 #include "openal_sound_effect.h"
+#include "../../logging/logger.h"
 using namespace playstate;
 
 OpenALSoundEngine::OpenALSoundEngine()
@@ -52,7 +53,15 @@ void OpenALSoundEngine::Play(Music* music)
     alSourcei(source, AL_ROLLOFF_FACTOR, 0);
 }
 
+void OpenALSoundEngine::Play(Music* music, float32 fadeInTime)
+{
+}
+
 void OpenALSoundEngine::Stop(Music* music)
+{
+}
+
+void OpenALSoundEngine::Stop(Music* music, float32 fadeOutTime)
 {
 }
 
@@ -69,6 +78,11 @@ void OpenALSoundEngine::Play(SoundEffect* effect)
 void OpenALSoundEngine::Play(SoundEffect* effect, const Vector3& position)
 {
 	assert_not_null(effect);
+	const SoundFormat::Enum format = effect->GetFormat();
+	if(format != SoundFormat::MONO8 && format != SoundFormat::MONO16) {
+		ILogger::Get().Warn("The supplied sound effect is not a MONO sound. 3D positioning is disabled for this effect.");
+	}
+
 	const ALuint source = FindNextSource();
 
 	alSource3f(source, AL_POSITION, position.X, position.Y, position.Z);

@@ -89,6 +89,11 @@ ResourceObject* OpenALSoundEffectResourceLoader::Load(IFile& file)
 	}
 
 	const float32 duration = header.SampleRate / (header.BitsPerSample / 8.0f) / (header.SampleRate * 1.0f);
+	if(duration > 5.0f) {
+		ILogger::Get().Warn("The loaded sound effect: '%s' is longer than 5 seconds.",
+			file.GetPath().c_str());
+	}
+
 	alBufferData(bufferID, alFormat, data.Get(), data.Length(), header.SampleRate);
 	ALenum error = alGetError();
 	if(error != AL_NO_ERROR)

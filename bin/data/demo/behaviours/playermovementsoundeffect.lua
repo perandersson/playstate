@@ -2,10 +2,11 @@ local class = require "engine.class"
 local KeyboardKeys = require "engine.core.keyboardkeys"
 
 PlayerMovementSoundEffect = class("PlayerMovementSoundEffect", Component)
-function PlayerMovementSoundEffect:__init(effect)
+function PlayerMovementSoundEffect:__init(effects)
 	Component.__init(self)
 	self.timeSinceLastReplay = 0
-	self.soundEffect = effect
+	self.soundEffects = effects
+	self.playIndex = 1
 end
 
 function PlayerMovementSoundEffect:Update()
@@ -22,8 +23,14 @@ function PlayerMovementSoundEffect:Update()
 	end
 	
 	if self.timeSinceLastReplay < 0 and move then
-		self.timeSinceLastReplay = SoundEffect.GetDuration(self.soundEffect)
-		Sound.Play(self.soundEffect)
+		local currentEffect = self.soundEffects[self.playIndex]
+		if self.playIndex == 1 then
+			self.playIndex = 2
+		else
+			self.playIndex = 1
+		end
+		self.timeSinceLastReplay = SoundEffect.GetDuration(currentEffect)
+		Sound.Play(currentEffect)
 	end
 end
 

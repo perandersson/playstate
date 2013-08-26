@@ -4,6 +4,7 @@
 #include "../types.h"
 #include "../math/vector3.h"
 #include "sound_effect.h"
+#include "music.h"
 
 extern "C"
 {
@@ -14,8 +15,6 @@ extern "C"
 
 namespace playstate
 {
-	class Music;
-
 	class ISoundListener
 	{
 	public:
@@ -31,8 +30,39 @@ namespace playstate
 	class ISoundEngine : public Singleton<ISoundEngine>
 	{
 	public:
+		//
+		// Plays the supplied sound effect
+		//
+		// @param effect
 		virtual void Play(SoundEffect* effect) = 0;
+
+		//
+		// Plays the supplied sound effect at the supplied position
+		//
+		// @param effect
+		// @param position
+		// @remark Playing positioned stereo sound effects are not possible. 
+		//		The sound engine will print a warning message in the log and play this at the
+		//		listeners position instead.
 		virtual void Play(SoundEffect* effect, const Vector3& position) = 0;
+
+		//
+		// Starts playing a music resource
+		//
+		// @param music
+		// @remark The game engine can play up to three music resources at the same time. Although not recommended for extended use,
+		//	this feature greatly enhance smooth transitions between music tracks.
+		virtual void Play(Music* music) = 0;
+
+		//
+		// Starts playing the supplied music resource
+		//
+		// @param fadeInTime
+		virtual void Play(Music* music, float32 fadeInTime) = 0;
+
+		virtual void Stop(Music* music) = 0;
+
+		virtual void Stop(Music* music, float32 fadeOutTime) = 0;
 
 		virtual void SetMasterVolume(float32 volume) = 0;
 		virtual void SetMusicVolume(float32 volume) = 0;

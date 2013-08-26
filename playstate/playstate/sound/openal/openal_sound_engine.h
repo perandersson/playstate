@@ -12,8 +12,8 @@ namespace playstate
 	class SoundEffect;
 
 	// The maximum number of sources the engine tries to allocate
-	static const uint32 MaxMusicSources = 6U;
-	static const uint32 MaxSoundSources = 26U;
+	static const uint32 MaxMusicSources = 3U;
+	static const uint32 MaxSoundSources = 29U;
 	static const uint32 MaxSources = MaxMusicSources + MaxSoundSources;
 
 	class OpenALSoundEngine : public ISoundEngine, public ISoundListener
@@ -22,16 +22,14 @@ namespace playstate
 		OpenALSoundEngine();
 		virtual ~OpenALSoundEngine();
 
-		//
-		// Starts playing music
-		void Play(Music* music);
-
-		void Stop(Music* music);
-
 	// ISoundEngine
 	public:
 		virtual void Play(SoundEffect* effect);
 		virtual void Play(SoundEffect* effect, const Vector3& position);
+		virtual void Play(Music* music);
+		virtual void Play(Music* music, float32 fadeInTime);
+		virtual void Stop(Music* music);
+		virtual void Stop(Music* music, float32 fadeOutTime);
 		virtual void SetMasterVolume(float32 volume);
 		virtual void SetMusicVolume(float32 volume);
 		virtual void SetSoundEffectVolume(float32 volume);
