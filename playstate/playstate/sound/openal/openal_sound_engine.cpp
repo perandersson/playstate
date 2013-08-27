@@ -92,9 +92,6 @@ void OpenALSoundEngine::Stop(Music* music)
 void OpenALSoundEngine::Stop(Music* music, float32 fadeOutTime)
 {
 	assert_not_implemented();
-	
-	const ALuint source = 0;
-	alSourceStop(source);
 }
 
 void OpenALSoundEngine::Play(SoundEffect* effect)

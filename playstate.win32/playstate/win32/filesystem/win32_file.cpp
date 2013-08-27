@@ -16,7 +16,9 @@ Win32File::Win32File(const Win32FileSystem& fileSystem)
 Win32File::Win32File(const Win32FileSystem& fileSystem, HANDLE handle, const playstate::string& path) 
 	:  mFileSystem(fileSystem), mPath(path), mFileSize(0), mFileHandle(handle)
 {
-	mFileSize = GetFileSize(mFileHandle, NULL);
+	LARGE_INTEGER size;
+	GetFileSizeEx(mFileHandle, &size);
+	mFileSize = size.LowPart;
 }
 
 Win32File::~Win32File()

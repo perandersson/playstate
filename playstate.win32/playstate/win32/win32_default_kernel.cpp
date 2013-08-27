@@ -58,7 +58,7 @@ Win32DefaultKernel::~Win32DefaultKernel()
 void Win32DefaultKernel::Initialize()
 {
 	RegisterScript();
-	mThreadedResourceManager->RegisterResourceType(new OpenALResourceLoader(*mSoundEngine), playstate::string(SAFE_STRING(".ogg")));
+	mThreadedResourceManager->RegisterResourceType(new OpenALMusicResourceLoader(*mSoundEngine), playstate::string(SAFE_STRING(".ogg")));
 }
 
 void Win32DefaultKernel::Release()
@@ -99,6 +99,7 @@ void Win32DefaultKernel::RegisterScript()
 	ss.RegisterType("SoundEffect", SoundEffect_Methods);
 	ss.RegisterType("Sound", Sound_Methods);
 	ss.RegisterType("SoundListener", SoundListener_Methods);
+	ss.RegisterType("Music", Music_Methods);
 
 	ss.RegisterType("GuiFrameWidget", GuiWidget_Methods);
 	ss.RegisterType("GuiFrameWidget", GuiFrameWidget_Methods);

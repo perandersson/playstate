@@ -4,11 +4,11 @@
 
 namespace playstate
 {
-	class OpenALResourceLoader : public IResourceLoader
+	class OpenALMusicResourceLoader : public IResourceLoader
 	{
 	public:
-		OpenALResourceLoader(OpenALSoundEngine& soundEngine);
-		virtual ~OpenALResourceLoader();
+		OpenALMusicResourceLoader(OpenALSoundEngine& soundEngine);
+		virtual ~OpenALMusicResourceLoader();
 
 	public:
 		virtual ResourceObject* Load(IFile& file);

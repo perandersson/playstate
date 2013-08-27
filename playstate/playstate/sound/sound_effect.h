@@ -1,7 +1,14 @@
 #pragma once
 
 #include "../resources/resource_object.h"
-#include "../script/scriptable.h"
+#include "../types.h"
+
+extern "C"
+{
+   #include <lua.h>
+   #include <lauxlib.h>
+   #include <lualib.h>
+}
 
 namespace playstate
 {
@@ -22,7 +29,7 @@ namespace playstate
 	//
 	// This class symbolizes a sound effect inside the game engine. 
 	// Use the class {@code playstate::ISoundEngine} to play this sound effect.
-	class SoundEffect : public ResourceObject, public Scriptable
+	class SoundEffect : public ResourceObject
 	{
 	public:
 		SoundEffect(SoundFormat::Enum format, float32 duration);

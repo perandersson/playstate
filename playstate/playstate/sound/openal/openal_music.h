@@ -61,7 +61,7 @@ namespace playstate
 		// @return TRUE if more music are available for processing.
 		// @throws playstate::SoundException If an OpenAL error is raised while updating the queued buffers
 		bool UpdateStream();
-
+		
 	private:
 		ALuint mAttachSourceID;
 		bool mLooping;

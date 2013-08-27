@@ -4,7 +4,7 @@
 using namespace playstate;
 
 SoundEffect::SoundEffect(SoundFormat::Enum format, float32 duration)
-	: ResourceObject(), Scriptable(), mFormat(format), mDuration(duration)
+	: ResourceObject(), mFormat(format), mDuration(duration)
 {
 }
 
@@ -14,11 +14,9 @@ SoundEffect::~SoundEffect()
 
 int playstate::SoundEffect_Load(lua_State* L)
 {
-	int top = lua_gettop(L);
 	playstate::string path = lua_tostring(L, -1); lua_pop(L, 1);
 	Resource<SoundEffect> effect = IResourceManager::Get().GetResource<SoundEffect>(path);
 	luaM_pushresource(L, effect.GetResourceData());
-	int top2 = lua_gettop(L);
 	return 1;
 }
 
