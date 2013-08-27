@@ -35,7 +35,9 @@ public:
 		mCallbacks.tell_func = OggVorbisMusicStream::AR_tellOgg;
 	}
 
-	virtual ~OggVorbisMusicStream () {}
+	virtual ~OggVorbisMusicStream () {
+		ov_clear(&mOggStream);
+	}
 
 	bool Open() {
 		int ret = ov_open_callbacks((void*)this, &mOggStream, NULL, 0, mCallbacks);
