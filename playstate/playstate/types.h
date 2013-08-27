@@ -152,6 +152,10 @@ namespace playstate
 	assert(param != NULL && "Parameter "## #param ##" cannot be NULL")
 #endif
 
+#ifndef assert_not_implemented
+#define assert_not_implemented() assert(false && "Not implemented")
+#endif
+
 #ifndef OFFSET
 #define OFFSET(x) ((char *)NULL + x)
 #endif
@@ -195,6 +199,7 @@ namespace playstate
 
 		void Reset() { 
 			mMemory = NULL;
+			mLength = 0;
 		}
 
 		uint32 Length() const {

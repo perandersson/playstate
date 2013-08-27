@@ -67,6 +67,7 @@ void Win32DefaultKernel::Process()
 	mWindow->HandleEvents();
 	mFileSystem->Poll();
 	mInputSystem->Poll();
+	mSoundEngine->UpdateStreams();
 	mThreadedResourceManager->Poll();
 	mScriptSystem->HandleGC();
 }

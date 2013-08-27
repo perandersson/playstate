@@ -27,6 +27,10 @@ namespace playstate
 		// Link an item
 		void Link(T* item, LinkedList<T>* list);
 
+		//
+		// @return TRUE if this link is attached to a list.
+		bool IsLinked() const;
+
 	private:
 		size_t mOffset;
 
@@ -141,6 +145,12 @@ namespace playstate
 		// Offset is needed so that we can find where the link is located inside the item
 		mOffset = (char*)(this) - (char*)(item);
 		List = list;
+	}
+
+	template<class T>
+	bool LinkedListLink<T>::IsLinked() const
+	{
+		return List != NULL;
 	}
 
 	///////////////////////////////////

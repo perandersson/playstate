@@ -132,6 +132,9 @@
     <Filter Include="Source Files\thread\window">
       <UniqueIdentifier>{f166e526-5578-4379-a8b4-572cfe6c594c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\sound\exception">
+      <UniqueIdentifier>{dd791f9d-566f-4533-a4e2-c006eee07538}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\playstate\playstate\camera\camera.cpp">
@@ -433,6 +436,12 @@
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\sound\openal\openal_sound_effect.cpp">
       <Filter>Source Files\sound\openal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\sound\openal\openal_music.cpp">
+      <Filter>Source Files\sound\openal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\sound\exception\sound_exception.cpp">
+      <Filter>Source Files\sound\exception</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -855,6 +864,12 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\sound\openal\openal_sound_effect.h">
       <Filter>Source Files\sound\openal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\sound\openal\openal_music.h">
+      <Filter>Source Files\sound\openal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\sound\exception\sound_exception.h">
+      <Filter>Source Files\sound\exception</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

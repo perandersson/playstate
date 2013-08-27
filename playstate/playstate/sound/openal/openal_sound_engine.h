@@ -1,6 +1,8 @@
 #pragma once
 #include "../sound_engine.h"
 #include "../../linked_list.h"
+#include "openal_music.h"
+#include "openal_sound_effect.h"
 
 #include <AL/al.h>
 #include <AL/alc.h>
@@ -8,9 +10,6 @@
 
 namespace playstate
 {
-	class Music;
-	class SoundEffect;
-
 	// The maximum number of sources the engine tries to allocate
 	static const uint32 MaxMusicSources = 3U;
 	static const uint32 MaxSoundSources = 29U;
@@ -21,6 +20,10 @@ namespace playstate
 	public:
 		OpenALSoundEngine();
 		virtual ~OpenALSoundEngine();
+
+		//
+		// Update this sound engines sound streams
+		void UpdateStreams();
 
 	// ISoundEngine
 	public:
@@ -45,10 +48,14 @@ namespace playstate
 		// @return The next source in the sources round-robin list. 
 		ALuint FindNextSource();
 
+		ALuint FindNextMusicSource();
+
 		void PlaySoundEffectBuffer(ALuint sourceID, ALuint bufferID);
 
 	private:
 		ALuint mMusicSources[MaxMusicSources];
+		uint32 mNextMusicSourceIndex;
+		LinkedList<OpenALMusic> mMusicResources;
 
 		ALuint mSources[MaxSoundSources];
 		uint32 mNumSources;

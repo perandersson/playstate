@@ -6,8 +6,8 @@
 using namespace playstate;
 
 OpenALSoundEngine::OpenALSoundEngine()
-	: mNumSources(0), mNextSourceIndex(0), mMasterVolume(1.0f), mMusicVolume(0.5f), mSoundEffectVolume(0.5f),
-	mDevice(NULL), mContext(NULL)
+	: mMusicResources(offsetof(OpenALMusic, MusicLink)), mNextMusicSourceIndex(0), mNumSources(0), mNextSourceIndex(0), mMasterVolume(1.0f), 
+	mMusicVolume(0.5f), mSoundEffectVolume(0.5f), mDevice(NULL), mContext(NULL)
 {
 	mDevice = alcOpenDevice(NULL);
 	mContext = alcCreateContext(mDevice, NULL);
@@ -31,6 +31,10 @@ OpenALSoundEngine::OpenALSoundEngine()
 
 OpenALSoundEngine::~OpenALSoundEngine()
 {
+	// Stop all sound sources
+	alSourceStopv(MaxMusicSources, mMusicSources);
+	alSourceStopv(MaxSoundSources, mSources);
+
 	alDeleteSources(MaxMusicSources, mMusicSources);
 	alDeleteSources(mNumSources, mSources);
 
@@ -41,16 +45,35 @@ OpenALSoundEngine::~OpenALSoundEngine()
 	mDevice = NULL;
 }
 
+void OpenALSoundEngine::UpdateStreams()
+{
+	OpenALMusic* music = mMusicResources.First();
+	while(music != NULL) {
+		OpenALMusic* tmp = music->MusicLink.Tail;
+		music->Update();
+		music = tmp;
+	}
+}
+
 void OpenALSoundEngine::Play(Music* music)
 {
 	assert_not_null(music);
-	const ALuint source = 0; //<-- fix this
+
+	OpenALMusic* oalMusic = static_cast<OpenALMusic*>(music);
+	if(oalMusic->IsPlaying())
+		return;
+
+	mMusicResources.AddLast(oalMusic);
+
+	const ALuint source = FindNextMusicSource();
+	oalMusic->AttachToSource(source, true);
 
 	// Set position at a relative position to the player so that
 	// the sound has a "non-positioned" sound
 	alSource3i(source, AL_POSITION, 0, 0, -1);
 	alSourcei(source, AL_SOURCE_RELATIVE, AL_TRUE);
     alSourcei(source, AL_ROLLOFF_FACTOR, 0);
+    alSourcei(source, AL_LOOPING, AL_FALSE);
 }
 
 void OpenALSoundEngine::Play(Music* music, float32 fadeInTime)
@@ -59,10 +82,19 @@ void OpenALSoundEngine::Play(Music* music, float32 fadeInTime)
 
 void OpenALSoundEngine::Stop(Music* music)
 {
+	OpenALMusic* oalMusic = static_cast<OpenALMusic*>(music);
+	if(!oalMusic->IsPlaying())
+		return;
+
+	oalMusic->DetachFromSource();
 }
 
 void OpenALSoundEngine::Stop(Music* music, float32 fadeOutTime)
 {
+	assert_not_implemented();
+	
+	const ALuint source = 0;
+	alSourceStop(source);
 }
 
 void OpenALSoundEngine::Play(SoundEffect* effect)
@@ -157,5 +189,13 @@ ALuint OpenALSoundEngine::FindNextSource()
 	ALuint index = mSources[mNextSourceIndex++];
 	if(mNextSourceIndex >= mNumSources)
 		mNextSourceIndex = 0;
+	return index;
+}
+
+ALuint OpenALSoundEngine::FindNextMusicSource()
+{
+	ALuint index = mMusicSources[mNextMusicSourceIndex++];
+	if(mNextMusicSourceIndex >= MaxMusicSources)
+		mNextMusicSourceIndex = 0;
 	return index;
 }

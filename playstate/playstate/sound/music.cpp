@@ -2,7 +2,8 @@
 #include "music.h"
 using namespace playstate;
 
-Music::Music()
+Music::Music(float32 duration)
+	: mDuration(duration)
 {
 }
 

@@ -18,6 +18,7 @@ public:
 		if(mOnWindowClosing->Invoke()) {
 			return mOnWindowClosing->GetBool();
 		}
+		return true;
 	}
 
 private:
