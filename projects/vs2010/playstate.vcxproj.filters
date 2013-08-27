@@ -443,6 +443,9 @@
     <ClCompile Include="..\..\playstate\playstate\sound\exception\sound_exception.cpp">
       <Filter>Source Files\sound\exception</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\sound\openal\openal_music_resource_loader.cpp">
+      <Filter>Source Files\sound\openal</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\playstate\playstate\camera\camera.h">
@@ -870,6 +873,9 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\sound\exception\sound_exception.h">
       <Filter>Source Files\sound\exception</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\sound\openal\openal_music_resource_loader.h">
+      <Filter>Source Files\sound\openal</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

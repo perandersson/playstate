@@ -19,3 +19,8 @@ http://kcat.strangesoft.net/openal.html - OpenAL Soft
 
 Modifications in the OpenAL Soft build:
 * Altered so that the source project builds the library with a _d suffix for the *debug* filename. Example (OpenAL32_d.lib). This is so that I can have both builds in the same bin directory.
+
+http://xiph.org/ - LibOgg & LibVorbis
+
+Modifications in the LibOgg and LibVorbis build:
+* ALtered so that the source project builds the library with a _d suffix for *debug* filename.

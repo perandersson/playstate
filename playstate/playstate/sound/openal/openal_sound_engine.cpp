@@ -50,7 +50,7 @@ void OpenALSoundEngine::UpdateStreams()
 	OpenALMusic* music = mMusicResources.First();
 	while(music != NULL) {
 		OpenALMusic* tmp = music->MusicLink.Tail;
-		music->Update();
+		music->UpdateStream();
 		music = tmp;
 	}
 }

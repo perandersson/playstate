@@ -9,6 +9,8 @@
 #include <playstate/gui/widgets/gui_button_widget.h>
 #include <playstate/font/font.h>
 #include <playstate/sound/sound_effect.h>
+#include <playstate/sound/music.h>
+#include <playstate/sound/openal/openal_music_resource_loader.h>
 
 using namespace playstate;
 using namespace playstate::win32;
@@ -56,6 +58,7 @@ Win32DefaultKernel::~Win32DefaultKernel()
 void Win32DefaultKernel::Initialize()
 {
 	RegisterScript();
+	mThreadedResourceManager->RegisterResourceType(new OpenALResourceLoader(*mSoundEngine), playstate::string(SAFE_STRING(".ogg")));
 }
 
 void Win32DefaultKernel::Release()

@@ -30,7 +30,7 @@ void OpenALMusic::DetachFromSource()
 	MusicLink.Unlink();
 }
 
-bool OpenALMusic::Update()
+bool OpenALMusic::UpdateStream()
 {
 	int processed = 0;
 	bool active = true;
