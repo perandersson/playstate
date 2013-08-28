@@ -25,7 +25,7 @@ void OpenALMusic::AttachToSource(ALuint source, bool looping)
 	// Fill buffer
 	uint32 numBuffers = mBuffers.Length();
 	for(uint32 i = 0; i < numBuffers; ++i) {
-		if(!mStream->Stream(mBuffers[i])) {
+		if(!mStream->Stream(mBuffers[i], false)) {
 			THROW_EXCEPTION(SoundException, "Could not fill buffer stream");
 		}
 	}
@@ -66,7 +66,7 @@ bool OpenALMusic::UpdateStream()
 			THROW_EXCEPTION(SoundException, "Could not unqueue music buffer from source");
 		}
 
-		active = mStream->Stream(buffer);
+		active = mStream->Stream(buffer, mLooping);
 		if(!active && mLooping) {
 			mStream->Reset();
 			active = true;

@@ -61,22 +61,32 @@ public:
 
 // IOpenALMusicStream
 public:
-	virtual bool Stream(ALuint buffer) {
+	virtual bool Stream(ALuint buffer, bool loop) {
 		int32 size = 0;
 		int32 section = 0;
 		int32 result = 0;
 
 		while(size < BufferSizeInBytes) {
 			result = ov_read(&mOggStream, mTemp + size, BufferSizeInBytes - size, 0, 2, 1, &section);
-			if(result > 0)
-				size += result;
-			else if(result < 0) {
+			if(result < 0) {
 				ILogger::Get().Error("Could not continue stream music file: '%s'", mFile->GetPath().c_str());
-				break;
-			} else
-				break;
-		}
+				return false;
+			}
+			
+			if(result == 0) {
+				if(loop) {
+					Reset();
+					// Prevent an infinite loop
+					loop = false;
+					continue;
+				} else {
+					break;
+				}
+			}
 
+			size += result;
+		}
+		
 		if(size == 0)
 			return false;
 

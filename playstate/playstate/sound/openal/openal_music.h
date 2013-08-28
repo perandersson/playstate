@@ -17,11 +17,10 @@ namespace playstate
 		//
 		// Streams music from this instance and put the result in the supplied OpenAL buffer
 		//
-		// @param data The binary data of the music
-		// @param dataSize The size of the binary data
 		// @param buffer The target buffer
-		// @return TRUE if more data can be streamed from the supplied data
-		virtual bool Stream(ALuint buffer) = 0;
+		// @param loop If the stream should be looping
+		// @return TRUE if more data can be streamed from the supplied data; FALSE otherwise.
+		virtual bool Stream(ALuint buffer, bool loop) = 0;
 
 		//
 		// Resets the stream
