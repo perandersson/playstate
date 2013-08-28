@@ -2,6 +2,7 @@
 #include "texture2d.h"
 #include "render_system.h"
 #include "../filesystem/file_system.h"
+#include "../resources/resource_manager.h"
 #include <FreeImage.h>
 using namespace playstate;
 
@@ -125,4 +126,12 @@ ResourceObject* Texture2DResourceLoader::GetDefaultResource()
 bool Texture2DResourceLoader::IsThreadable() const
 {
 	return true;
+}
+
+int playstate::Texture2D_Load(lua_State* L)
+{
+	playstate::string path = lua_tostring(L, -1); lua_pop(L, 1);
+	Resource<Texture2D> texture = IResourceManager::Get().GetResource<Texture2D>(path);
+	luaM_pushresource(L, texture.GetResourceData());
+	return 1;
 }

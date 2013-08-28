@@ -4,6 +4,13 @@
 #include "../resources/resource_loader.h"
 #include "state/state_policy.h"
 
+extern "C"
+{
+   #include <lua.h>
+   #include <lauxlib.h>
+   #include <lualib.h>
+}
+
 namespace playstate
 {
 	class RenderSystem;
@@ -62,6 +69,17 @@ namespace playstate
 		IFileSystem& mFileSystem;
 
 		ResourceObject* mDefaultResource;
+	};
+
+	
+	//
+	// Script integration
+	//
+
+	extern int Texture2D_Load(lua_State* L);
+	static luaL_Reg Texture2D_Methods[] = {
+		{ "Load", Texture2D_Load },
+		{ NULL, NULL }
 	};
 }
 
