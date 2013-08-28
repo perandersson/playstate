@@ -6,22 +6,6 @@
 #include "state/state_policy.h"
 using namespace playstate;
 
-#ifdef _DEBUG
-#ifndef CHECK_GL_ERROR
-#define CHECK_GL_ERROR() \
-	{ \
-		GLenum err = glGetError(); \
-		assert(err == GL_NO_ERROR); \
-	}
-#endif
-#else
-#ifndef CHECK_GL_ERROR
-#define CHECK_GL_ERROR()
-#endif
-#endif
-
-#define OFFSET(x) ((char *)NULL + x)
-
 VertexBuffer::VertexBuffer(GLenum vertexType, const IVertexArrayObjectFactory& factory, GLuint bufferID, uint32 numIndices, uint32 elementSize) 
 	: mVertexType(vertexType), mVertexArrayID(0), mFactory(factory), mBufferID(bufferID), mNumIndices(numIndices), mElementSize(elementSize)
 {
@@ -89,6 +73,8 @@ void VertexBuffer::Update(const void* data, uint32 numIndices)
 	//GLvoid* ptr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 	//memcpy(ptr, data, numElements * mElementSize);
 	//glUnmapBuffer(GL_ARRAY_BUFFER);
-
-	CHECK_GL_ERROR();
+	
+	GLenum error = glGetError();
+	if(error != GL_NO_ERROR)
+		THROW_EXCEPTION(RenderingException, "Could not update vertex buffer with new data. Reason: '%d'", error);
 }

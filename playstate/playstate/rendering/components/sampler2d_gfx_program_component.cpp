@@ -22,15 +22,15 @@ void Sampler2DGfxProgramComponent::Apply()
 	if(mTexture == NULL) {
 		return;
 	}
-
-	mTexture->Bind(mActiveTexture, mMinFilter, mMagFilter, mWS, mWT);
-
+	
+	mTexture->Bind(mActiveTexture);
+	mTexture->UpdateFilters(mMinFilter, mMagFilter, mWS, mWT);
+	
 	if(BIT_ISSET(mDirty, UNIFORM_BIT)) {
 		glUniform1i(mComponentId, mActiveTexture);
 	}
 
 	mDirty = 0;
-	CHECK_GL_ERROR();
 }
 
 void Sampler2DGfxProgramComponent::SetTexture(Texture2D* texture)

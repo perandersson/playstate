@@ -84,7 +84,7 @@ IRenderContext* Win32GraphicsDriver::CreateRenderContext(IRenderContext* context
 		0
 	};
 
-	HGLRC shareWithContext = context != NULL ? static_cast<Win32RenderContext*>(context)->RenderContext :  NULL;
+	HGLRC shareWithContext = context != NULL ? static_cast<Win32RenderContext*>(context)->GetRenderContext() :  NULL;
 	HGLRC windowsRenderContext = wglCreateContextAttribsARB(mDeviceContext, shareWithContext, attribs);
 	if(!windowsRenderContext) {
 		THROW_EXCEPTION(RenderingException, "You'r graphics card does not support OpenGL 3.3");

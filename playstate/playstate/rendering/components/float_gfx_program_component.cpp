@@ -66,8 +66,6 @@ void FloatGfxProgramComponent::Apply()
 	default:
 		return;
 	}
-
-	CHECK_GL_ERROR();
 }
 
 void FloatGfxProgramComponent::SetFloat(float32 a)

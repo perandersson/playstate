@@ -1,11 +1,11 @@
 #include <playstate/memory/memory.h>
 #include "win32_render_context.h"
+#include <GL/GL.h>
 using namespace playstate;
 using namespace playstate::win32;
 
 Win32RenderContext::Win32RenderContext(HDC deviceContext, HGLRC renderContext) 
-	: mDeviceContext(deviceContext), mRenderContext(renderContext),
-	RenderContext(mRenderContext)
+	: mDeviceContext(deviceContext), mRenderContext(renderContext)
 {
 }
 
@@ -30,4 +30,8 @@ void Win32RenderContext::Unbind()
 void Win32RenderContext::SwapBuffers()
 {
 	::SwapBuffers(mDeviceContext);
+	GLenum error = glGetError();
+	assert(error == GL_NO_ERROR);
+	//if(error != GL_NO_ERROR)
+		//THROW_EXCEPTION
 }

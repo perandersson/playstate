@@ -67,12 +67,8 @@ bool OpenALMusic::UpdateStream()
 		}
 
 		active = mStream->Stream(buffer, mLooping);
-		if(!active && mLooping) {
-			mStream->Reset();
-			active = true;
-		}
-
 		alSourceQueueBuffers(mAttachSourceID, 1, &buffer); 
+
 		if(alGetError() != AL_NO_ERROR) {
 			THROW_EXCEPTION(SoundException, "Could not queue music buffer to source");
 		}

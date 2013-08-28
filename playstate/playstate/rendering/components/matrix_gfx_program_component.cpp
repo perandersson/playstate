@@ -18,8 +18,6 @@ MatrixGfxProgramComponent::~MatrixGfxProgramComponent()
 void MatrixGfxProgramComponent::Apply()
 {
 	glUniformMatrix4fv(mComponentId, 1, false, mValues);
-
-	CHECK_GL_ERROR();
 }
 
 void MatrixGfxProgramComponent::SetMatrix(const Matrix4x4& matrix)

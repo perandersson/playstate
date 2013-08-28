@@ -8,20 +8,6 @@
 
 #include <gl/glew.h>
 
-#ifdef _DEBUG
-#ifndef CHECK_GL_ERROR
-#define CHECK_GL_ERROR() \
-	{ \
-		GLenum err = glGetError(); \
-		assert(err == GL_NO_ERROR); \
-	}
-#endif
-#else
-#ifndef CHECK_GL_ERROR
-#define CHECK_GL_ERROR()
-#endif
-#endif
-
 namespace playstate
 {
 	//

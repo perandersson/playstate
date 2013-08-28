@@ -327,7 +327,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
-      <AdditionalIncludeDirectories>../../libraries/lua-5.2.1;../../libraries/glew-1.9.0/include;../../libraries/FreeImage;../../libraries/freetype-2.4.11/include;../../libraries/libogg;../../libraries/libvorbis;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../libraries/lua-5.2.1;../../libraries/glew-1.9.0/include;../../libraries/FreeImage;../../libraries/freetype-2.4.11/include;../../libraries/openal-soft;../../libraries/libogg;../../libraries/libvorbis;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4227</DisableSpecificWarnings>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>

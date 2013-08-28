@@ -102,7 +102,6 @@ void DeferredRenderPipeline::DrawUserInterface(Canvas& canvas)
 		}
 	}
 	mGeometryBuilder.Reset();
-	CHECK_GL_ERROR();
 }
 
 void DeferredRenderPipeline::DrawGeometry(Scene& scene, const Camera& camera)
@@ -142,7 +141,6 @@ void DeferredRenderPipeline::DrawGeometry(Scene& scene, const Camera& camera)
 		DrawFinalResultToScreen(scene, camera);
 	}
 	mRenderBlockResultSet.Reset();
-	CHECK_GL_ERROR();
 }
 
 void DeferredRenderPipeline::DrawLighting(Scene& scene, const Camera& camera)
@@ -186,7 +184,6 @@ void DeferredRenderPipeline::DrawLighting(Scene& scene, const Camera& camera)
 		}
 	}
 	mLightSourceResultSet.Reset();
-	CHECK_GL_ERROR();
 }
 
 Matrix4x4 DeferredRenderPipeline::CalculateBillboardModelMatrix(const Vector3& position, const Camera& camera)

@@ -15,7 +15,7 @@ namespace playstate
 {
 	class RenderSystem;
 	class IFileSystem;
-
+	
 	//
 	// 
 	class Texture2D : public Texture
@@ -24,8 +24,6 @@ namespace playstate
 		Texture2D(GLuint textureId, uint32 width, uint32 height, TextureFormat::Enum format);
 		virtual ~Texture2D();
 		
-		void Bind(uint32 activeTexture, MinFilter::Enum minFilter, MagFilter::Enum magFilter, TextureWrap::Enum ws, TextureWrap::Enum wt);
-
 		//
 		// @return This textures width in pixels
 		inline uint32 GetWidth() const {
@@ -38,7 +36,17 @@ namespace playstate
 			return mHeight;
 		}
 
-		//void Update(
+		//
+		// Binds this texture to the supplied active texture block
+		//
+		// @param activeTexture
+		void Bind(uint32 activeTexture);
+
+		//
+		// Update this textures filters
+		//
+		//
+		void UpdateFilters(MinFilter::Enum minFilter, MagFilter::Enum magFilter, TextureWrap::Enum ws, TextureWrap::Enum wt);
 
 	protected:
 		uint32 mWidth;

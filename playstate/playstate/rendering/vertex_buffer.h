@@ -25,7 +25,12 @@ namespace playstate
 		~VertexBuffer();
 
 		//
-		// Updates this vertex buffer with new data
+		// Updates this vertex buffer with new data.
+		// 
+		// @param data The data buffer we want to send to the graphics card
+		// @param numIndices How many indices (points) are stored in the supplied data memory block
+		// @throws playstate::RenderingException If the update process fails.
+		// @remark You are not allowed to change how the data is structured.
 		void Update(const void* data, uint32 numIndices);
 
 	private:

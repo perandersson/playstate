@@ -13,16 +13,16 @@ namespace playstate
 		public:
 			Win32RenderContext(HDC deviceContext, HGLRC context);
 			virtual ~Win32RenderContext();
+
+			inline HGLRC GetRenderContext() const {
+				return mRenderContext;
+			}
 		
 		// IRenderContext
 		public:
 			virtual void MakeCurrent();
 			virtual void Unbind();
 			virtual void SwapBuffers();
-
-		public:
-			// Read-only property for the render context
-			HGLRC& const RenderContext;
 
 		private:
 			HDC mDeviceContext;

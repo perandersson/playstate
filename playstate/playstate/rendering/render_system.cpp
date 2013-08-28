@@ -125,8 +125,6 @@ void RenderSystem::OnWindowResized(const Point& newSize)
 		program->MarkAsDirty();
 		program = program->Link.Tail;
 	}
-
-	CHECK_GL_ERROR();
 }
 
 void RenderSystem::SetRenderTarget(RenderTarget2D* renderTarget, GLenum attachmentIndex)
@@ -142,8 +140,6 @@ void RenderSystem::SetDepthRenderTarget(RenderTarget2D* renderTarget)
 
 void RenderSystem::ApplyRenderTargets()
 {
-	CHECK_GL_ERROR();
-
 	bool disableFBO = mDepthRenderTarget == NULL;
 	if(disableFBO) {
 		for(int i = 0; i < MaxDrawBuffers; ++i) {
@@ -161,7 +157,10 @@ void RenderSystem::ApplyRenderTargets()
 			_current_frameBufferObject = 0;
 		}
 		
-		CHECK_GL_ERROR();
+		GLenum error = glGetError();
+		if(error != GL_NO_ERROR)
+			THROW_EXCEPTION(RenderingException, "Could not disable bound frame buffer object. Reason: %d", error);
+
 		return;
 	}
 
@@ -214,9 +213,8 @@ void RenderSystem::ApplyRenderTargets()
 
 	// Check for any GL errors
 	GLenum status = glGetError();
-	if(status != GL_NO_ERROR) {
+	if(status != GL_NO_ERROR)
 		THROW_EXCEPTION(RenderingException, "Could not apply render targets. Reason: %d", status);
-	}
 
 	// Check if all worked fine and unbind the FBO
 	status = glCheckFramebufferStatus(GL_FRAMEBUFFER);

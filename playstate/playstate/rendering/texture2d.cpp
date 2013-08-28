@@ -7,19 +7,23 @@
 using namespace playstate;
 
 Texture2D::Texture2D(GLuint textureId, uint32 width, uint32 height, TextureFormat::Enum format) 
-	: Texture(format), mWidth(width), mHeight(height),
+	: Texture(textureId, format), mWidth(width), mHeight(height),
 	mMinFilter(MinFilter::UNKNOWN), mMagFilter(MagFilter::UNKNOWN), mWS(TextureWrap::UNKNOWN), mWT(TextureWrap::UNKNOWN)
 {
-	mTextureId = textureId;
 }
 
 Texture2D::~Texture2D()
 {
 }
 
-void Texture2D::Bind(uint32 activeTexture, MinFilter::Enum minFilter, MagFilter::Enum magFilter, TextureWrap::Enum ws, TextureWrap::Enum wt)
+void Texture2D::Bind(uint32 activeTexture)
 {
-	Texture::BindToActiveTexture(activeTexture, GL_TEXTURE_2D);
+	StatePolicy::SetActiveTexture(activeTexture);
+	StatePolicy::BindTexture(GL_TEXTURE_2D, mTextureID);
+}
+
+void Texture2D::UpdateFilters(MinFilter::Enum minFilter, MagFilter::Enum magFilter, TextureWrap::Enum ws, TextureWrap::Enum wt)
+{
 	if(mMinFilter != minFilter) {
 		mMinFilter = minFilter;
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, mMinFilter);

@@ -66,8 +66,6 @@ void IntGfxProgramComponent::Apply()
 	default:
 		return;
 	}
-
-	CHECK_GL_ERROR();
 }
 
 void IntGfxProgramComponent::SetInt(int32 a)

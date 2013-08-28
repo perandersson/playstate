@@ -122,8 +122,6 @@ void GfxProgram::Clear(uint32 clearBits)
 	if(clear != 0) {
 		glClear(clear);
 	}
-
-	CHECK_GL_ERROR();
 }
 
 void GfxProgram::Prepare(const ScriptCollection& collection)
@@ -224,8 +222,6 @@ void GfxProgram::Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint32 s
 		indexBuffer->Render(startElement);
 	else
 		buffer->Render(startElement);
-
-	CHECK_GL_ERROR();
 }
 
 void GfxProgram::Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint32 startElement, uint32 numElements)
@@ -240,8 +236,6 @@ void GfxProgram::Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint32 s
 		indexBuffer->Render(startElement, numElements);
 	else
 		buffer->Render(startElement, numElements);
-
-	CHECK_GL_ERROR();
 }
 
 void GfxProgram::ApplyBuffers(VertexBuffer* buffer, IndexBuffer* indexBuffer)
@@ -249,7 +243,6 @@ void GfxProgram::ApplyBuffers(VertexBuffer* buffer, IndexBuffer* indexBuffer)
 	if(mApplyRenderTarget) {
 		mApplyRenderTarget = false;
 		mRenderSystem.ApplyRenderTargets();
-		CHECK_GL_ERROR();
 	}
 
 	StatePolicy::BindVertexBuffer(buffer);

@@ -92,7 +92,6 @@ ResourceObject* TrueTypeFontResourceLoader::Load(IFile& file)
 	GLuint textureId = 0;	
 	glGenTextures(1, &textureId);
 	StatePolicy::BindTexture(GL_TEXTURE_2D, textureId);
-	CHECK_GL_ERROR();
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_R8, textureWidth, textureHeight, 0, GL_RED, GL_UNSIGNED_BYTE, bytes.Get());
 
 	GLenum err = glGetError();

@@ -36,8 +36,6 @@ void StatePolicy::UseProgram(GLuint programID)
 
 	_programID = programID;
 	glUseProgram(programID);
-
-	CHECK_GL_ERROR();
 }
 
 void StatePolicy::EnableDepthTest(bool enable)
@@ -50,8 +48,6 @@ void StatePolicy::EnableDepthTest(bool enable)
 		glEnable(GL_DEPTH_TEST);
 	else
 		glDisable(GL_DEPTH_TEST);
-
-	CHECK_GL_ERROR();
 }
 
 void StatePolicy::SetDepthFunc(DepthFunc::Enum depthFunc)
@@ -61,8 +57,6 @@ void StatePolicy::SetDepthFunc(DepthFunc::Enum depthFunc)
 
 	_depthFunc = depthFunc;
 	glDepthFunc((GLenum)depthFunc);
-
-	CHECK_GL_ERROR();
 }
 
 void StatePolicy::EnableBlend(bool enable)
@@ -75,8 +69,6 @@ void StatePolicy::EnableBlend(bool enable)
 		glEnable(GL_BLEND);
 	else
 		glDisable(GL_BLEND);
-
-	CHECK_GL_ERROR();
 }
 
 void StatePolicy::SetBlendFunc(SrcFactor::Enum sfactor, DestFactor::Enum dfactor)
@@ -87,8 +79,6 @@ void StatePolicy::SetBlendFunc(SrcFactor::Enum sfactor, DestFactor::Enum dfactor
 	_srcFunc = sfactor;
 	_destFunc = dfactor;
 	glBlendFunc((GLenum)sfactor, (GLenum)dfactor);
-
-	CHECK_GL_ERROR();
 }
 
 void StatePolicy::SetCullFaces(CullFaces::Enum cullFaces)
@@ -110,8 +100,6 @@ void StatePolicy::SetCullFaces(CullFaces::Enum cullFaces)
 	}
 
 	_cullFaces = cullFaces;
-
-	CHECK_GL_ERROR();
 }
 
 void StatePolicy::SetClearColor(const Color& color)
@@ -121,8 +109,6 @@ void StatePolicy::SetClearColor(const Color& color)
 
 	glClearColor(color.Red, color.Green, color.Blue, color.Alpha);
 	_clearColor = color;
-
-	CHECK_GL_ERROR();
 }
 
 void StatePolicy::SetClearDepth(float32 depth)
@@ -132,8 +118,6 @@ void StatePolicy::SetClearDepth(float32 depth)
 
 	_clearDepth = depth;
 	glClearDepth(depth);
-
-	CHECK_GL_ERROR();
 }
 
 void StatePolicy::EnableScissorTest(bool enable)
