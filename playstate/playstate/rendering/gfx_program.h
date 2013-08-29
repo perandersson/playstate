@@ -78,17 +78,17 @@ namespace playstate
 		//
 		// @param buffer The vertex buffer we want to draw. Cannot be {@code NULL}.
 		// @param indexBuffer The indices of the supplied buffer we want to draw. Can be {@code NULL}
-		// @param startElement The first element we want to draw
-		void Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint32 startElement);
+		// @param startIndex The index of the first vertex we want to draw
+		void Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint32 startIndex);
 		
 		//
 		// Draw the supplied buffer object using the supplied index buffer using this graphics program.
 		//
 		// @param buffer The vertex buffer we want to draw. Cannot be {@code NULL}.
 		// @param indexBuffer The indices of the supplied buffer we want to draw. Can be {@code NULL}
-		// @param startElement The first element we want to draw
-		// @param numElements how many elements we want to draw
-		void Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint32 startElement, uint32 numElements);
+		// @param startIndex The index of the first vertex we want to draw
+		// @param numVertices how many vertices we want to draw
+		void Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint32 startIndex, uint32 numVertices);
 
 		//
 		// Flags if this program should enable or disable Z-writing.

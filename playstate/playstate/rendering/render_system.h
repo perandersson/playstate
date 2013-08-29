@@ -56,30 +56,31 @@ namespace playstate
 		IndexBuffer* CreateStaticBuffer(const uint32* indices, uint32 numIndices);
 
 		
-		VertexBuffer* CreateStaticBuffer(const PositionData* elements, uint32 numElements);
-		VertexBuffer* CreateStaticBuffer(const PositionTexCoordData* elements, uint32 numElements);
-		VertexBuffer* CreateStaticBuffer(const PositionTexCoordColorData* elements, uint32 numElements);
-		VertexBuffer* CreateStaticBuffer(const PositionNormalData* elements, uint32 numElements);
-		VertexBuffer* CreateStaticBuffer(const PositionColorData* elements, uint32 numElements);
-		VertexBuffer* CreateStaticBuffer(const PositionNormalTextureData* elements, uint32 numElements);
+		VertexBuffer* CreateStaticBuffer(const PositionData* vertices, uint32 numVertices);
+		VertexBuffer* CreateStaticBuffer(const PositionTexCoordData* vertices, uint32 numVertices);
+		VertexBuffer* CreateStaticBuffer(const PositionTexCoordColorData* vertices, uint32 numVertices);
+		VertexBuffer* CreateStaticBuffer(const PositionNormalData* vertices, uint32 numVertices);
+		VertexBuffer* CreateStaticBuffer(const PositionColorData* vertices, uint32 numVertices);
+		VertexBuffer* CreateStaticBuffer(const PositionNormalTextureData* vertices, uint32 numVertices);
 
 		//
 		// Creates a static (non-updatable) buffer based on a supplied data stream
 		//
-		// @param data
-		// @param dataTypeSize The size of one data element. {@code sizeof(PositionData)} is one such size
+		// @param vertices
+		// @param vertexSize The size of one data element. {@code sizeof(PositionData)} is one such size
 		// @param arrayFactory
-		// @param numElements
-		VertexBuffer* CreateStaticBuffer(const void* data, uint32 dataTypeSize, const IVertexArrayObjectFactory& arrayFactory, uint32 numElements);
+		// @param numVertices
+		VertexBuffer* CreateStaticBuffer(const void* vertices, uint32 vertexSize, const IVertexArrayObjectFactory& arrayFactory, uint32 numVertices);
 
 		//
-		// Creates a dynamic buffer based on the supplied data stream
+		// Creates a dynamic buffer based on the supplied data stream. You are allowed to update the data contained inside the returned
+		// vertex buffer instance. Note that you are not allowed to change the type of data stored in the buffer.
 		//
 		// @param data
 		// @param dataTypeSize The size of one data element. {@code sizeof(PositionData)} is one such size
 		// @param arrayFactory
-		// @param numElements
-		VertexBuffer* CreateDynamicBuffer(const void* data, uint32 dataTypeSize, const IVertexArrayObjectFactory& arrayFactory, uint32 numElements);
+		// @param numVertices
+		VertexBuffer* CreateDynamicBuffer(const void* vertices, uint32 vertexSize, const IVertexArrayObjectFactory& arrayFactory, uint32 numVertices);
 		
 		//
 		// Creates a new render target based on the supplied width, height and format.

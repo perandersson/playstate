@@ -12,8 +12,8 @@ namespace playstate
 	{
 		VertexBuffer* VertexBuffer;
 		Texture2D* Texture;
-		uint32 StartElement;
-		uint32 NumElements;
+		uint32 StartIndex;
+		uint32 NumVertices;
 	};
 
 	//
@@ -64,9 +64,8 @@ namespace playstate
 		MemoryPool<WidgetGeometryData> mMemoryPool;
 		MemoryPool<WidgetBuildingBlock> mBuildingBlocks;
 
-
-		uint32 mNumElements;
-		uint32 mStartElement;
+		uint32 mStartIndex;
+		uint32 mNumVertices;
 		Texture2D* mCurrentTexture;
 	};
 

@@ -6,11 +6,16 @@
 #include "state/state_policy.h"
 using namespace playstate;
 
-VertexBuffer::VertexBuffer(GLenum vertexType, const IVertexArrayObjectFactory& factory, GLuint bufferID, uint32 numIndices, uint32 elementSize) 
-	: mVertexType(vertexType), mVertexArrayID(0), mFactory(factory), mBufferID(bufferID), mNumIndices(numIndices), mElementSize(elementSize)
+VertexBuffer::VertexBuffer(GLenum primitiveType, const IVertexArrayObjectFactory& factory, GLuint bufferID, uint32 numVertices, uint32 vertexSize) 
+	: mPrimitiveType(primitiveType), mVertexArrayID(0), mFactory(factory), mBufferID(bufferID), mNumVertices(numVertices), mVertexSize(vertexSize)
 {
-	assert(mVertexType == GL_TRIANGLES && "If this changes then we have to update the render method for vertex buffers");
-	assert(elementSize > 0 && "Invalid element size");
+	assert(mVertexSize > 0 && "The size of one vertex cannot be 0");
+
+	if(mPrimitiveType == GL_TRIANGLES) {
+		mOnePrimitiveCount = 3;
+	} else if(mPrimitiveType == GL_LINE_LOOP) {
+		mOnePrimitiveCount = 1;
+	}
 }
 
 VertexBuffer::~VertexBuffer()
@@ -46,34 +51,31 @@ void VertexBuffer::Render() const
 	Render(0);
 }
 
-void VertexBuffer::Render(uint32 firstElement) const
+void VertexBuffer::Render(uint32 startIndex) const
 {
-	Render(firstElement, mNumIndices);
+	Render(startIndex, mNumVertices);
 }
 
-void VertexBuffer::Render(uint32 firstElement, uint32 numIndices) const
+void VertexBuffer::Render(uint32 startIndex, uint32 count) const
 {
-	static const uint32 numElementsInTriangle = 3;
-	glDrawArrays(mVertexType, firstElement * numElementsInTriangle, numIndices * numElementsInTriangle);
+	// Prevent you from drawing more vertices than exist in the buffer
+	if(count > mNumVertices - startIndex) {
+		count = mNumVertices - startIndex;
+	}
+
+	glDrawArrays(mPrimitiveType, startIndex, count);
 }
 
-void VertexBuffer::Update(const void* data, uint32 numIndices)
+void VertexBuffer::Update(const void* vertices, uint32 numVertices)
 {
 	StatePolicy::BindVertexBuffer(this);
 	glBindBuffer(GL_ARRAY_BUFFER, mBufferID);
 
 	// Copy the data to the buffer. This can be used if we are simply overridding the existing data.
-	glBufferData(GL_ARRAY_BUFFER, numIndices * mElementSize, data, GL_DYNAMIC_DRAW);
-	mNumIndices = numIndices;
+	glBufferData(GL_ARRAY_BUFFER, numVertices * mVertexSize, vertices, GL_DYNAMIC_DRAW);
+	mNumVertices = numVertices;
 	glFlush();
 
-	// If we want to update parts of the data - but knows for sure that the size 
-	//	shouldn't be changed then this might be what you want.
-	// 
-	//GLvoid* ptr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-	//memcpy(ptr, data, numElements * mElementSize);
-	//glUnmapBuffer(GL_ARRAY_BUFFER);
-	
 	GLenum error = glGetError();
 	if(error != GL_NO_ERROR)
 		THROW_EXCEPTION(RenderingException, "Could not update vertex buffer with new data. Reason: '%d'", error);

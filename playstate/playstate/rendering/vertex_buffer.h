@@ -21,31 +21,33 @@ namespace playstate
 		friend class GfxProgram;
 
 	public:
-		VertexBuffer(GLenum vertexType, const IVertexArrayObjectFactory& factory, GLuint bufferID, uint32 numIndices, uint32 elementSize);
+		VertexBuffer(GLenum primitiveType, const IVertexArrayObjectFactory& factory, GLuint bufferID, uint32 numVertices, uint32 vertexSize);
 		~VertexBuffer();
 
 		//
-		// Updates this vertex buffer with new data.
+		// Updates this vertex buffer with new data. The type of vertex data is not allowed to be changed.
 		// 
-		// @param data The data buffer we want to send to the graphics card
-		// @param numIndices How many indices (points) are stored in the supplied data memory block
+		// @param vertices The data buffer containing all the vertices
+		// @param numVertices How many vertices are located in the supplied memory block
 		// @throws playstate::RenderingException If the update process fails.
-		// @remark You are not allowed to change how the data is structured.
-		void Update(const void* data, uint32 numIndices);
+		void Update(const void* vertices, uint32 numVertices);
 
 	private:
 		void Bind();
 		void Render() const;
-		void Render(uint32 firstElement) const;
-		void Render(uint32 firstElement, uint32 numIndices) const;
+		void Render(uint32 startIndex) const;
+		void Render(uint32 startIndex, uint32 count) const;
 
 	private:
-		GLenum mVertexType;
 		GLuint mVertexArrayID;
 		GLuint mBufferID;
-		uint32 mNumIndices;
-		uint32 mElementSize;
 		const IVertexArrayObjectFactory& mFactory;
+
+	private:
+		GLenum mPrimitiveType;
+		uint32 mOnePrimitiveCount;
+		uint32 mNumVertices; 
+		uint32 mVertexSize;
 	};
 }
 

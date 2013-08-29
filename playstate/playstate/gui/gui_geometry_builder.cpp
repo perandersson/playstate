@@ -3,7 +3,7 @@
 using namespace playstate;
 
 GuiGeometryBuilder::GuiGeometryBuilder(RenderSystem& renderSystem)
-	: mRenderSystem(renderSystem), mMemoryPool(6, 24), mBuildingBlocks(5, 5), mNumElements(0), mStartElement(0), mCurrentTexture(NULL)
+	: mRenderSystem(renderSystem), mMemoryPool(6, 24), mBuildingBlocks(5, 5), mNumVertices(0), mStartIndex(0), mCurrentTexture(NULL)
 {
 	mVertexBuffer = mRenderSystem.CreateDynamicBuffer(NULL, sizeof(WidgetGeometryData), WidgetGeometryDataVAOFactory, 0);
 }
@@ -40,7 +40,7 @@ void GuiGeometryBuilder::AddGradientQuad(const Vector2& position, const Vector2&
 void GuiGeometryBuilder::AddQuad(const Vector2& position, const Vector2& size, const Color& topLeftColor, const Color& topRightColor,
 			const Color& bottomLeftColor, const Color& bottomRightColor, Texture2D* texture)
 {
-	if(mNumElements > 0 && mCurrentTexture != texture) {
+	if(mNumVertices > 0 && mCurrentTexture != texture) {
 		BuildAndPushBuildingBlocks();
 		mCurrentTexture = texture;
 	}
@@ -75,7 +75,7 @@ void GuiGeometryBuilder::AddQuad(const Vector2& position, const Vector2& size, c
 	element->Position.Set(position.X + size.X, position.Y + size.Y); //p3
 	element->Color = bottomRightColor;
 
-	mNumElements += 2;
+	mNumVertices += 6;
 }
 
 void GuiGeometryBuilder::AddText(Font* font, const Vector2& position, const Color& color, const playstate::string& text)
@@ -90,7 +90,7 @@ void GuiGeometryBuilder::AddText(Font* font, const Vector2& position, const Colo
 
 void GuiGeometryBuilder::AddText(Font* font, const Vector2& position, const Color& color, const playstate::string& text, const Vector2& maxSize)
 {
-	if(mNumElements > 0 && mCurrentTexture != font) {
+	if(mNumVertices > 0 && mCurrentTexture != font) {
 		BuildAndPushBuildingBlocks();
 	}
 	mCurrentTexture = font;
@@ -158,7 +158,7 @@ void GuiGeometryBuilder::AddText(Font* font, const Vector2& position, const Colo
 		currentPos.X += info.Size.X;
 	}
 
-	mNumElements += 2 * size;
+	mNumVertices += 6 * size;
 }
 
 VertexBuffer* GuiGeometryBuilder::PrepareVertexBuffer()
@@ -178,16 +178,16 @@ void GuiGeometryBuilder::BuildAndPushBuildingBlocks()
 	WidgetBuildingBlock* block = mBuildingBlocks.Allocate();
 	block->VertexBuffer = mVertexBuffer;
 	block->Texture = mCurrentTexture;
-	block->StartElement = mStartElement;
-	block->NumElements = mNumElements;
+	block->StartIndex = mStartIndex;
+	block->NumVertices = mNumVertices;
 
-	mStartElement += mNumElements;
-	mNumElements = 0;
+	mStartIndex += mNumVertices;
+	mNumVertices = 0;
 }
 
 WidgetBuildingBlock* GuiGeometryBuilder::GetBuildingBlocks()
 {
-	if(mNumElements > 0) {
+	if(mNumVertices > 0) {
 		BuildAndPushBuildingBlocks();
 		PrepareVertexBuffer();
 	}
@@ -198,8 +198,8 @@ WidgetBuildingBlock* GuiGeometryBuilder::GetBuildingBlocks()
 void GuiGeometryBuilder::Reset()
 {
 	mBuildingBlocks.Reset();
-	mStartElement = 0;
-	mNumElements = 0;
+	mStartIndex = 0;
+	mNumVertices = 0;
 	mCurrentTexture = NULL;
 }
 

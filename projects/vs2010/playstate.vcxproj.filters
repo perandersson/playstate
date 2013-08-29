@@ -835,9 +835,6 @@
     <ClInclude Include="..\..\playstate\playstate\script\lambda.h">
       <Filter>Source Files\script</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\component\renderable\billboarded_text.h">
-      <Filter>Source Files\component\renderable</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\font\font.h">
       <Filter>Source Files\font</Filter>
     </ClInclude>

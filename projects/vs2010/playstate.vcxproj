@@ -122,7 +122,6 @@
     <ClInclude Include="..\..\playstate\playstate\collision\bounding_sphere.h" />
     <ClInclude Include="..\..\playstate\playstate\component\component.h" />
     <ClInclude Include="..\..\playstate\playstate\component\lightsources\point_light.h" />
-    <ClInclude Include="..\..\playstate\playstate\component\renderable\billboarded_text.h" />
     <ClInclude Include="..\..\playstate\playstate\component\renderable\render_static_model.h" />
     <ClInclude Include="..\..\playstate\playstate\component\scriptable_component.h" />
     <ClInclude Include="..\..\playstate\playstate\config.h" />
