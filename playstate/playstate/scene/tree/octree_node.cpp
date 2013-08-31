@@ -3,8 +3,7 @@
 #include "octree.h"
 using namespace playstate;
 
-OctreeNode::OctreeNode() : mBoundingBox(AABB::OutsideWorld), mOwner(NULL),
-	BoundingBox(mBoundingBox)
+OctreeNode::OctreeNode() : mBoundingBox(AABB::OutsideWorld), mOwner(NULL)
 {
 }
 
@@ -23,7 +22,6 @@ void OctreeNode::SetBoundingBox(const AABB& boundingBox, const Vector3& position
 {
 	mBoundingBox = boundingBox;
 	mBoundingBox.Translate(position);
-	//mBoundingBox.SetPosition(position);
 	if(mOwner != NULL)
 		mOwner->Invalidate(this);
 }

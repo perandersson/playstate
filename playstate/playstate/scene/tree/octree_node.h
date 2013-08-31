@@ -32,9 +32,13 @@ namespace playstate
 		// @param octree
 		void AttachToOctree(Octree* octree);
 
-	public:
-		// Read-only property for this nodes bounding box.
-		const AABB& BoundingBox;
+		inline const AABB& GetBoundingBox() const {
+			return mBoundingBox;
+		}
+
+		inline Octree* GetOctree() {
+			return mOwner;
+		}
 
 	private:
 		AABB mBoundingBox;

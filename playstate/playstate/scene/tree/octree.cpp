@@ -35,8 +35,8 @@ bool Octree::IsLeafNode() const
 void Octree::Remove(OctreeNode* node)
 {
 	assert_not_null(node);
-
-	mNodes.Remove(node);
+	Octree* nodeInTree = node->GetOctree();
+	nodeInTree->mNodes.Remove(node);
 }
 		
 void Octree::FindItems(const Frustum& frustum, IOctreeVisitor* visitor) const
@@ -66,7 +66,7 @@ void Octree::FindItems(const Frustum& frustum, IOctreeVisitor* visitor) const
 	OctreeNode* node = mNodes.First();
 	while(node != NULL) {
 		OctreeNode* tmp = node->OctreeLink.Tail;
-		if(frustum.IsColliding(node->BoundingBox) != AABB::OUTSIDE)
+		if(frustum.IsColliding(node->GetBoundingBox()) != AABB::OUTSIDE)
 			visitor->Visit(node);
 		node = tmp;
 	}
@@ -99,7 +99,7 @@ void Octree::FindItems(const AABB& boundingBox, IOctreeVisitor* visitor) const
 	OctreeNode* node = mNodes.First();
 	while(node != NULL) {
 		OctreeNode* tmp = node->OctreeLink.Tail;
-		if(node->BoundingBox.IsColliding(boundingBox) != AABB::OUTSIDE)
+		if(node->GetBoundingBox().IsColliding(boundingBox) != AABB::OUTSIDE)
 			visitor->Visit(node);
 		node = tmp;
 	}
@@ -199,7 +199,7 @@ bool Octree::Insert(OctreeNode* node)
 	// Only place the node inside the inner-most octree that's fully contain it.
 	// If the item is partially inside an octree then add it to it's parent octree instead,
 	// this is to prevent the same node to be added more than once inside the octree.
-	AABB::CollisionResult result = mBoundingBox.IsColliding(node->BoundingBox);
+	AABB::CollisionResult result = mBoundingBox.IsColliding(node->GetBoundingBox());
 	if(result != AABB::CONTAINED)
 		return false;
 
