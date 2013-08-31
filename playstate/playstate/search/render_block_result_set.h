@@ -43,7 +43,12 @@ namespace playstate
 		void Sort(IArraySorter<RenderBlock*>* sorter);
 
 	private:
+		bool IsResizeRequired() const;
+
+	private:
 		MemoryPool<RenderBlock> mMemoryPool;
+		const RenderBlock* mCurrentMemoryBlock;
 		RenderBlock** mSortedRenderBlocks;
+		uint32 mNumElements;
 	};
 }
