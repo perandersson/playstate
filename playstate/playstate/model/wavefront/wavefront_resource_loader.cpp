@@ -316,7 +316,11 @@ void WavefrontResourceLoader::LoadMesh(std::istringstream& stream, std::vector<W
 		meshes.push_back(mesh);
 	}
 
-	boundingBox = AABB(Vector3::Zero, maxWidth - minWidth, maxHeight - minHeight, maxDepth - minDepth);
+	Vector3 mid( ((maxWidth - minWidth) / 2.0f) + minWidth,
+		((maxHeight - minHeight) / 2.0f) + minHeight,
+		((maxDepth - minDepth) / 2.0f) + minDepth);
+
+	boundingBox = AABB(mid, maxWidth - minWidth, maxHeight - minHeight, maxDepth - minDepth);
 }
 
 

@@ -33,6 +33,15 @@ void AABB::SetPosition(const Vector3& position)
 	Set(position, width, height, depth);
 }
 
+void AABB::Translate(const Vector3& direction)
+{
+	float32 width = mMaxPoint.X - mMinPoint.X;
+	float32 height = mMaxPoint.Y - mMinPoint.Y;
+	float32 depth =  mMaxPoint.Z - mMinPoint.Z;
+
+	Set(GetPosition() + direction, width, height, depth);
+}
+
 void AABB::SetWidth(float32 width)
 {
 	float32 height = mMaxPoint.Y - mMinPoint.Y;

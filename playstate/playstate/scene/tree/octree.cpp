@@ -203,22 +203,24 @@ bool Octree::Insert(OctreeNode* node)
 	if(result != AABB::CONTAINED)
 		return false;
 
-	if(mParts[TOP_FRONT_LEFT]->Insert(node))
-		return true;
-	if(mParts[TOP_FRONT_RIGHT]->Insert(node))
-		return true;
-	if(mParts[TOP_BACK_LEFT]->Insert(node))
-		return true;
-	if(mParts[TOP_BACK_RIGHT]->Insert(node))
-		return true;
-	if(mParts[BOTTOM_FRONT_LEFT]->Insert(node))
-		return true;
-	if(mParts[BOTTOM_FRONT_RIGHT]->Insert(node))
-		return true;
-	if(mParts[BOTTOM_BACK_LEFT]->Insert(node))
-		return true;
-	if(mParts[BOTTOM_BACK_RIGHT]->Insert(node))
-		return true;
+	if(!IsLeafNode()) {
+		if(mParts[TOP_FRONT_LEFT]->Insert(node))
+			return true;
+		if(mParts[TOP_FRONT_RIGHT]->Insert(node))
+			return true;
+		if(mParts[TOP_BACK_LEFT]->Insert(node))
+			return true;
+		if(mParts[TOP_BACK_RIGHT]->Insert(node))
+			return true;
+		if(mParts[BOTTOM_FRONT_LEFT]->Insert(node))
+			return true;
+		if(mParts[BOTTOM_FRONT_RIGHT]->Insert(node))
+			return true;
+		if(mParts[BOTTOM_BACK_LEFT]->Insert(node))
+			return true;
+		if(mParts[BOTTOM_BACK_RIGHT]->Insert(node))
+			return true;
+	}
 
 	mNodes.AddLast(node);
 	node->AttachToOctree(this);

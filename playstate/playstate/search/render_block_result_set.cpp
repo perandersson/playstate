@@ -23,7 +23,7 @@ RenderBlock* RenderBlockResultSet::Create(uint32 id)
 
 bool RenderBlockResultSet::IsResizeRequired() const
 {
-	const uint32 numBlocksToDraw = mMemoryPool.GetSize();
+	const uint32 numBlocksToDraw = mMemoryPool.GetMemorySize() / sizeof(RenderBlock);
 	return numBlocksToDraw > mNumElements;
 }
 

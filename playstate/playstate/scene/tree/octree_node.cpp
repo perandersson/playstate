@@ -22,7 +22,8 @@ void OctreeNode::SetBoundingBox(const AABB& boundingBox)
 void OctreeNode::SetBoundingBox(const AABB& boundingBox, const Vector3& position)
 {
 	mBoundingBox = boundingBox;
-	mBoundingBox.SetPosition(position);
+	mBoundingBox.Translate(position);
+	//mBoundingBox.SetPosition(position);
 	if(mOwner != NULL)
 		mOwner->Invalidate(this);
 }

@@ -28,6 +28,10 @@ namespace playstate
 		void SetPosition(const Vector3& position);
 		
 		//
+		// Translates this bounding box in the supplied direction
+		void Translate(const Vector3& direction);
+
+		//
 		// @param width The new width.
 		void SetWidth(float32 width);
 
