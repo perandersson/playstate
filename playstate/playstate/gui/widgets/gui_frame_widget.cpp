@@ -36,8 +36,9 @@ void GuiFrameWidget::PreRender(GuiGeometryBuilder& builder)
 	// Add body
 	builder.AddGradientQuad(GetAbsolutePosition() + Vector2(0.0f, titleHeight), GetSize() - Vector2(0.0f, titleHeight), mBackColorTop, mBackColorBottom);
 
-	// Add title
-	builder.AddText(mFont.Get(), GetAbsolutePosition(), mFrontColor, mTitle, Vector2(GetSize().X, titleHeight));
+	if(!mFont.IsNull()) {
+		builder.AddText(mFont.Get(), GetAbsolutePosition(), mFrontColor, mTitle, Vector2(GetSize().X, titleHeight));
+	}
 	
 	
 	GuiWidget::PreRender(builder);

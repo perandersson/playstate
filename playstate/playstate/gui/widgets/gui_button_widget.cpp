@@ -29,8 +29,9 @@ void GuiButtonWidget::PreRender(GuiGeometryBuilder& builder)
 	// Add body
 	builder.AddGradientQuad(GetAbsolutePosition(), GetSize(), mBackColorTop, mBackColorBottom);
 
-	// Add text?
-	builder.AddText(mFont.Get(), GetAbsolutePosition(), mFrontColor, mText, GetSize());
+	if(!mFont.IsNull()) {
+		builder.AddText(mFont.Get(), GetAbsolutePosition(), mFrontColor, mText, GetSize());
+	}
 
 	GuiWidget::PreRender(builder);
 }

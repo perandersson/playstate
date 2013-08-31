@@ -12,6 +12,8 @@
 
 #include "../logging/logger.h"
 
+#include <queue>
+
 extern "C"
 {
    #include <lua.h>
@@ -64,9 +66,14 @@ namespace playstate
 		//
 		void HandleGC();
 
+		void PushIdentity(const playstate::string& identity);
+		void PopIdentity();
+		playstate::string GetIdentity() const;
+
 	private:
 		IFileSystem& mFileSystem;
 		ILogger& mLogger;
 		lua_State* mLuaState;
+		std::queue<playstate::string> mIdentities;
 	};
 }

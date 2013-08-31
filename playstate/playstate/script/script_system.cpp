@@ -36,17 +36,17 @@ int __playstate_lua_require(lua_State* L)
 		package = playstate::string("/") + package;
 	}
 	std::auto_ptr<IFile> file = IFileSystem::Get().OpenFile(package);
-
+	ScriptSystem::Get().PushIdentity(file->GetPath());
 	if(file->Exists()) {
 		playstate::string value = file->Read().str();
 		int res = luaL_loadstring(L, value.c_str());
 		if(res != 0) {
 			playstate::string err = lua_tostring(L, -1);
-			//Services::Get<ILoggerManager>().Error("Could not load file \"%s\". Reason: %s", err.c_str());
 		}
 	} else {
 		lua_pushfstring(L, "\n\tCould not include file \"%s\". File not found", package.c_str());
 	}
+	ScriptSystem::Get().PopIdentity();
 	return 1;
 }
 
@@ -86,6 +86,7 @@ std::auto_ptr<Script> ScriptSystem::CompileFile(const playstate::string& fileNam
 
 	uint32 stackCount = lua_gettop(mLuaState);
 	playstate::string value = scriptFile->Read().str();
+	ScriptSystem::Get().PushIdentity(scriptFile->GetPath());
 	int res = luaL_loadstring(mLuaState, value.c_str());
 	if(res != 0) {
 		playstate::string err = lua_tostring(mLuaState, -1);
@@ -102,6 +103,7 @@ std::auto_ptr<Script> ScriptSystem::CompileFile(const playstate::string& fileNam
 		THROW_EXCEPTION(ScriptException, "Could not compile file: %s. Reason: %s", fileName.c_str(), err.c_str());
 	}
 	uint32 numResults = lua_gettop(mLuaState) - stackCount;
+	ScriptSystem::Get().PopIdentity();
 
 	Script* cs = new Script(mLuaState, numResults);
 	return std::auto_ptr<Script>(cs);
@@ -166,4 +168,22 @@ void ScriptSystem::HandleGC()
 {
 	lua_gc(mLuaState, LUA_GCSTEP, 180);
 	lua_gc(mLuaState, LUA_GCSTOP, 0);
+}
+
+void ScriptSystem::PushIdentity(const playstate::string& identity)
+{
+	mIdentities.push(identity);
+}
+
+void ScriptSystem::PopIdentity()
+{
+	mIdentities.pop();
+}
+
+playstate::string ScriptSystem::GetIdentity() const
+{
+	if(mIdentities.empty())
+		return playstate::string();
+
+	return mIdentities.front();
 }

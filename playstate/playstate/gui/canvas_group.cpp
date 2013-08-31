@@ -128,13 +128,21 @@ int playstate::CanvasGroup_Load(lua_State* L)
 
 int playstate::CanvasGroup_SetStyle(lua_State* L)
 {
-	bool istable = lua_istable(L, -1);
+	if(!lua_istable(L, -1)) {
+		luaM_printerror(L, "Expected: self<CanvasGroup>:SetStyle(table)");
+		return 0;
+	}
+
 	int configRef = luaL_ref(L, LUA_REGISTRYINDEX);
 	GuiStyle style(L, configRef);
 	CanvasGroup* self = luaM_popobject<CanvasGroup>(L);
 	if(self != NULL) {
 		self->SetStyle(style);
+	} else {
+		luaM_printerror(L, "Expected: self<CanvasGroup>:SetStyle(table)");
+		return 0;
 	}
+
 	return 0;
 }
 

@@ -38,6 +38,10 @@ namespace playstate
 
 	template<class T>
 	Resource<T> GuiStyle::FindResource(const playstate::character* key) const {
-		return Resource<T>(FindResourceData(key, NULL));
+		ResourceData* data = FindResourceData(key, NULL);
+		if(data != NULL)
+			return Resource<T>(data);
+		else
+			return Resource<T>();
 	}
 }
