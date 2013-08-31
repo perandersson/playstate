@@ -67,18 +67,15 @@ namespace playstate
 		// Calculates and returns the depth		
 		float32 GetDepth() const;
 
-		const Vector3& GetMaxPoint() const;
-		const Vector3& GetMinPoint() const;
-
 	public:
-		void operator = (const AABB& box);
+		AABB& operator = (const AABB& box);
 
 	private:
 		void Set(const Vector3& position, float32 width, float32 height, float32 depth); 
 
-	private:
-		Vector3 mMaxPoint;
-		Vector3 mMinPoint;
+	public:
+		Vector3 MaxPoint;
+		Vector3 MinPoint;
 
 	public:
 		static AABB OutsideWorld;

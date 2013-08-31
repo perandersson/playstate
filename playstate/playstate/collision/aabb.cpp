@@ -16,7 +16,7 @@ AABB::AABB(const Vector3& position, float32 width, float32 height, float32 depth
 }
 
 AABB::AABB(const AABB& box)
-	: mMinPoint(box.mMinPoint), mMaxPoint(box.mMaxPoint)
+	: MinPoint(box.MinPoint), MaxPoint(box.MaxPoint)
 {
 }
 
@@ -26,99 +26,89 @@ AABB::~AABB()
 
 void AABB::SetPosition(const Vector3& position)
 {
-	float32 width = mMaxPoint.X - mMinPoint.X;
-	float32 height = mMaxPoint.Y - mMinPoint.Y;
-	float32 depth =  mMaxPoint.Z - mMinPoint.Z;
+	float32 width = MaxPoint.X - MinPoint.X;
+	float32 height = MaxPoint.Y - MinPoint.Y;
+	float32 depth =  MaxPoint.Z - MinPoint.Z;
 
 	Set(position, width, height, depth);
 }
 
 void AABB::Translate(const Vector3& direction)
 {
-	float32 width = mMaxPoint.X - mMinPoint.X;
-	float32 height = mMaxPoint.Y - mMinPoint.Y;
-	float32 depth =  mMaxPoint.Z - mMinPoint.Z;
+	float32 width = MaxPoint.X - MinPoint.X;
+	float32 height = MaxPoint.Y - MinPoint.Y;
+	float32 depth =  MaxPoint.Z - MinPoint.Z;
 
 	Set(GetPosition() + direction, width, height, depth);
 }
 
 void AABB::SetWidth(float32 width)
 {
-	float32 height = mMaxPoint.Y - mMinPoint.Y;
-	float32 depth =  mMaxPoint.Z - mMinPoint.Z;
+	float32 height = MaxPoint.Y - MinPoint.Y;
+	float32 depth =  MaxPoint.Z - MinPoint.Z;
 	
 	Set(GetPosition(), width, height, depth);
 }
 
 void AABB::SetHeight(float32 height)
 {
-	float32 width = mMaxPoint.X - mMinPoint.X;
-	float32 depth =  mMaxPoint.Z - mMinPoint.Z;
+	float32 width = MaxPoint.X - MinPoint.X;
+	float32 depth =  MaxPoint.Z - MinPoint.Z;
 	
 	Set(GetPosition(), width, height, depth);
 }
 
 void AABB::SetDepth(float32 depth)
 {
-	float32 width = mMaxPoint.X - mMinPoint.X;
-	float32 height = mMaxPoint.Y - mMinPoint.Y;
+	float32 width = MaxPoint.X - MinPoint.X;
+	float32 height = MaxPoint.Y - MinPoint.Y;
 	
 	Set(GetPosition(), width, height, depth);
 }
 
 Vector3 AABB::GetPosition() const
 {
-	return ((mMaxPoint + mMinPoint) / 2.0f);
+	return ((MaxPoint + MinPoint) / 2.0f);
 }
 		
 float32 AABB::GetWidth() const
 {
-	return mMaxPoint.X - mMinPoint.X;
+	return MaxPoint.X - MinPoint.X;
 }
 		
 float32 AABB::GetHeight() const
 {
-	return mMaxPoint.Y - mMinPoint.Y;
+	return MaxPoint.Y - MinPoint.Y;
 }
 		
 float32 AABB::GetDepth() const
 {
-	return mMaxPoint.Z - mMinPoint.Z;
+	return MaxPoint.Z - MinPoint.Z;
 }
 
 AABB::CollisionResult AABB::IsColliding(const AABB& otherBox) const
 {
-	const Vector3& otherMin = otherBox.mMinPoint;
-	const Vector3& otherMax = otherBox.mMaxPoint;
+	const Vector3& otherMin = otherBox.MinPoint;
+	const Vector3& otherMax = otherBox.MaxPoint;
 
 	// The chance of NOT colliding is bigger than either contains or intersects.
 
-    if(mMaxPoint.X < otherMin.X || mMinPoint.X > otherMax.X)
+    if(MaxPoint.X < otherMin.X || MinPoint.X > otherMax.X)
 		return OUTSIDE;
 
-    if(mMaxPoint.Y < otherMin.Y || mMinPoint.Y > otherMax.Y)
+    if(MaxPoint.Y < otherMin.Y || MinPoint.Y > otherMax.Y)
 		return OUTSIDE;
 	
-	if(mMaxPoint.Z < otherMin.Z || mMinPoint.Z > otherMax.Z)
+	if(MaxPoint.Z < otherMin.Z || MinPoint.Z > otherMax.Z)
 		return OUTSIDE;
 	
-	if(otherMin.X >= mMinPoint.X && otherMax.X <= mMaxPoint.X &&
-		otherMin.Y >= mMinPoint.Y && otherMax.Y <= mMaxPoint.Y &&
-		otherMin.Z >= mMinPoint.Z && otherMax.Z <= mMaxPoint.Z) {
+	if(otherMin.X >= MinPoint.X && otherMax.X <= MaxPoint.X &&
+		otherMin.Y >= MinPoint.Y && otherMax.Y <= MaxPoint.Y &&
+		otherMin.Z >= MinPoint.Z && otherMax.Z <= MaxPoint.Z) {
 			return CONTAINED;
 	}
 
 	return INTERSECT;
-}
-
-const Vector3& AABB::GetMaxPoint() const
-{
-	return mMaxPoint;
-}
-
-const Vector3& AABB::GetMinPoint() const
-{
-	return mMinPoint;
 }
 
 void AABB::Set(const Vector3& position, float32 width, float32 height, float32 depth)
@@ -131,24 +121,20 @@ void AABB::Set(const Vector3& position, float32 width, float32 height, float32 d
 	float32 halfHeight = height * 0.5f;
 	float32 halfDepth = depth * 0.5f;
 
-	mMaxPoint = position;
-	mMaxPoint.X += halfWidth;
-	mMaxPoint.Y += halfHeight;
-	mMaxPoint.Z += halfDepth;
+	MaxPoint = position;
+	MaxPoint.X += halfWidth;
+	MaxPoint.Y += halfHeight;
+	MaxPoint.Z += halfDepth;
 	
-	mMinPoint = position;
-	mMinPoint.X -= halfWidth;
-	mMinPoint.Y -= halfHeight;
-	mMinPoint.Z -= halfDepth;
+	MinPoint = position;
+	MinPoint.X -= halfWidth;
+	MinPoint.Y -= halfHeight;
+	MinPoint.Z -= halfDepth;
 }
 
-void AABB::operator = (const AABB& box)
+AABB& AABB::operator = (const AABB& box)
 {
-	mMaxPoint = box.mMaxPoint;
-	mMinPoint = box.mMinPoint;
-
-#ifdef _DEBUG
-	float32 tmp = mMaxPoint.Y - box.mMaxPoint.Y;
-	assert(tmp != 10000.0f);
-#endif
+	MaxPoint = box.MaxPoint;
+	MinPoint = box.MinPoint;
+	return *this;
 }
