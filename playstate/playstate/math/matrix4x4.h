@@ -4,7 +4,6 @@
 
 namespace playstate
 {
-	struct Quaternion;
 	struct ALIGN_DATA(16) Matrix4x4
 	{
 		union
@@ -37,14 +36,7 @@ namespace playstate
 		void Transpose();
 		void Invert();
 		void AxisAndAngleToMatrix(Vector3& vector, float32 angleRadians);
-		void QuaternionToMatrix(Quaternion& quaternion);
-		void Set(float32 m11, float32 m12, float32 m13, float32 m14,
-				 float32 m21, float32 m22, float32 m23, float32 m24,
-				 float32 m31, float32 m32, float32 m33, float32 m34,
-				 float32 m41, float32 m42, float32 m43, float32 m44);
-
-		//void Set(float *matrix);
-
+		
 		Matrix4x4 operator + (const Matrix4x4& matrix) const;
 		Matrix4x4 operator - (const Matrix4x4& matrix) const;
 		Matrix4x4 operator * (const Matrix4x4& matrix) const;

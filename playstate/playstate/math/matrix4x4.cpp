@@ -1,6 +1,5 @@
 #include "../memory/memory.h"
 #include "matrix4x4.h"
-#include "quaternion.h"
 
 #include <cmath>
 #include <string>
@@ -147,29 +146,6 @@ Matrix4x4::Matrix4x4(const Matrix4x4 &Matrix4x4)
 	Values[15] = Matrix4x4.Values[15];
 }
 
-void Matrix4x4::Set(float32 m11, float32 m12, float32 m13, float32 m14,
-				    float32 m21, float32 m22, float32 m23, float32 m24,
-				    float32 m31, float32 m32, float32 m33, float32 m34,
-				    float32 m41, float32 m42, float32 m43, float32 m44)
-{
-	Values[0] = m11;
-	Values[1] = m12;
-	Values[2] = m13;
-	Values[3] = m14;
-	Values[4] = m21;
-	Values[5] = m22;
-	Values[6] = m23;
-	Values[7] = m24;
-	Values[8] = m31;
-	Values[9] = m32;
-	Values[10] = m33;
-	Values[11] = m34;
-	Values[12] = m41;
-	Values[13] = m42;
-	Values[14] = m43;
-	Values[15] = m44;
-}
-
 void Matrix4x4::Translate(const Vector3& vec)
 {
     Values[3*4+0] += Values[0*4+0] * vec.X + Values[1*4+0] * vec.Y + Values[2*4+0] * vec.Z;
@@ -309,9 +285,9 @@ void Matrix4x4::Invert()
 
 void Matrix4x4::AxisAndAngleToMatrix(Vector3 &vector, float32 angleRadians)
 {
-	float32 cosAngle = cosf(angleRadians);
-	float32 sinAngle = sinf(angleRadians);
-	float32 t = 1 - cosAngle;
+	const float32 cosAngle = cosf(angleRadians);
+	const float32 sinAngle = sinf(angleRadians);
+	const float32 t = 1 - cosAngle;
 
 	Values[0] = t * vector.X * vector.X + cosAngle;
 	Values[1] = t * vector.X * vector.Y - vector.Z * sinAngle;
@@ -332,35 +308,6 @@ void Matrix4x4::AxisAndAngleToMatrix(Vector3 &vector, float32 angleRadians)
 	Values[13] = 0;
 	Values[14] = 0;
 	Values[15] = 1;
-}
-
-void Matrix4x4::QuaternionToMatrix(Quaternion &quaternion)
-{
-	const float32* q = quaternion.Values;
-	float32 qx = q[0];
-	float32 qy = q[1];
-	float32 qz = q[2];
-	float32 qw = q[3];
-
-	Set((1 - 2 * qy * qy - 2 * qz * qz),
-		(2 * qx * qy - 2 * qz * qw),
-		(2 * qx * qz + 2 * qy * qw),
-		0,
-
-		(2 * qx * qy + 2 * qz * qw),
-		(1 - 2 * qx * qx - 2 * qz * qz),
-		(2 * qy * qz - 2 * qx * qw),
-		0,
-
-		(2 * qx * qz - 2 * qy * qw),
-		(2 * qy * qz + 2 * qx * qw),
-		(1 - 2 * qx * qx - 2 * qy * qy),
-		0,
-				
-		0,
-		0,
-		0,
-		1);
 }
 
 Matrix4x4 Matrix4x4::operator + (const Matrix4x4 &matrix) const
@@ -417,9 +364,9 @@ Matrix4x4 Matrix4x4::operator * (const Matrix4x4 &matrix) const
 Vector3 Matrix4x4::operator * (const Vector3& vec3) const
 {
 	// assume W = 1.0
-	float x = _11 * vec3.X + _12 * vec3.Y + _13 * vec3.Z + _14 * 1.0f;
-	float y = _21 * vec3.X + _22 * vec3.Y + _23 * vec3.Z + _24 * 1.0f;
-	float z = _31 * vec3.X + _32 * vec3.Y + _33 * vec3.Z + _34 * 1.0f;
+	const float x = _11 * vec3.X + _12 * vec3.Y + _13 * vec3.Z + _14 * 1.0f;
+	const float y = _21 * vec3.X + _22 * vec3.Y + _23 * vec3.Z + _24 * 1.0f;
+	const float z = _31 * vec3.X + _32 * vec3.Y + _33 * vec3.Z + _34 * 1.0f;
 
 	return Vector3(x, y, z);
 }

@@ -45,7 +45,7 @@ namespace playstate
 				abs(c.Blue - Blue) > FLT_EPSILON || abs(c.Alpha - Alpha) > FLT_EPSILON;
 		}
 
-		void operator = (const Color &c);
+		Color& operator = (const Color &c);
 
 		static const Color White;
 		static const Color Black;

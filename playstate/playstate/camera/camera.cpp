@@ -85,7 +85,7 @@ void Camera::LookAt(const Vector3& eye, const Vector3& center, const Vector3& up
 	const Vector3 side = (forward.CrossProduct(up)).GetNormalized();
 	const Vector3 newUp = side.CrossProduct(forward).GetNormalized();
 
-	mViewMatrix.Set(side.X, newUp.X, -forward.X, 0.0f,
+	mViewMatrix = Matrix4x4(side.X, newUp.X, -forward.X, 0.0f,
 		side.Y, newUp.Y, -forward.Y, 0.0f,
 		side.Z, newUp.Z, -forward.Z, 0.0f,
 		0.0f, 0.0f, 0.0f, 1.0f);

@@ -233,6 +233,8 @@ namespace playstate
 		SceneNode* node = luaM_popobject<SceneNode>(L);
 		if(component != NULL && node != NULL) {
 			node->AddComponent(component);
+		} else {
+			luaM_printerror(L, "Expected: self<SceneNode>:AddComponent(Component)");
 		}
 
 		return 0;
@@ -244,6 +246,8 @@ namespace playstate
 		SceneNode* node = luaM_popobject<SceneNode>(L);
 		if(component != NULL && node != NULL) {
 			node->RemoveComponent(component);
+		} else {
+			luaM_printerror(L, "Expected: self<SceneNode>:RemoveComponent(Component)");
 		}
 
 		return 0;
@@ -253,13 +257,11 @@ namespace playstate
 	{
 		SceneNode* node = luaM_popobject<SceneNode>(L);
 		if(node != NULL) {
-			luaM_pushvector3(L, node->GetPosition());
+			return luaM_pushvector3(L, node->GetPosition());
 		} else {
-			// Print error
-			luaM_pushvector3(L, Vector3::Zero);
+			luaM_printerror(L, "Expected: self<SceneNode>:GetPosition()");
+			return luaM_pushvector3(L, Vector3::Zero);
 		}
-
-		return 3;
 	}
 
 	int SceneNode_SetPosition(lua_State* L)
@@ -268,6 +270,8 @@ namespace playstate
 		SceneNode* node = luaM_popobject<SceneNode>(L);
 		if(node != NULL) {
 			node->SetPosition(vec);
+		} else {
+			luaM_printerror(L, "Expected: self<SceneNode>:SetPosition(Vector3)");
 		}
 
 		return 0;
@@ -279,6 +283,8 @@ namespace playstate
 		SceneNode* node = luaM_popobject<SceneNode>(L);
 		if(node != NULL) {
 			node->SetPosition(node->GetPosition() + vec);
+		} else {
+			luaM_printerror(L, "Expected: self<SceneNode>:Translate(Vector3)");
 		}
 
 		return 0;
@@ -290,6 +296,8 @@ namespace playstate
 		SceneNode* node = luaM_popobject<SceneNode>(L);
 		if(node != NULL) {
 			node->SetRotation(vec);
+		} else {
+			luaM_printerror(L, "Expected: self<SceneNode>:SetRotatation(Vector3)");
 		}
 
 		return 0;
@@ -301,6 +309,8 @@ namespace playstate
 		SceneNode* parent = luaM_popobject<SceneNode>(L);
 		if(child != NULL && parent != NULL) {
 			parent->AddNode(child);
+		} else {
+			luaM_printerror(L, "Expected: self<SceneNode>:AddNode(SceneNode)");
 		}
 
 		return 0;
@@ -312,6 +322,8 @@ namespace playstate
 		SceneNode* parent = luaM_popobject<SceneNode>(L);
 		if(child != NULL && parent != NULL) {
 			parent->RemoveNode(child);
+		} else {
+			luaM_printerror(L, "Expected: self<SceneNode>:RemoveNode(SceneNode)");
 		}
 
 		return 0;

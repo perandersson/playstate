@@ -35,12 +35,13 @@ void Color::Set(const Color& c)
 	Alpha = c.Alpha;
 }
 
-void Color::operator = (const Color &c)
+Color& Color::operator = (const Color &c)
 {
 	Red = c.Red;
 	Green = c.Green;
 	Blue = c.Blue;
 	Alpha = c.Alpha;
+	return *this;
 }
 
 Color Color::HexToRGB(const char* hex)
