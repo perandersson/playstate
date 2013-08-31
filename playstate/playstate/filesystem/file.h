@@ -24,15 +24,15 @@ namespace playstate
 
 		//
 		// @return the size of the current file.
-		virtual uint32 Size() const = 0;
+		virtual size_t Size() const = 0;
 		
 		//
 		// @return The number of bytes that where read
-		virtual uint32 ReadBytes(byte* buffer, uint32 offset, uint32 bufferSize) const = 0;
+		virtual size_t ReadBytes(byte* buffer, size_t offset, size_t bufferSize) const = 0;
 
 		//
 		// @return
-		virtual uint32 ReadBytes(byte* buffer, uint32 bufferSize) const = 0;
+		virtual size_t ReadBytes(byte* buffer, size_t bufferSize) const = 0;
 
 		//
 		// @return The path to the file
