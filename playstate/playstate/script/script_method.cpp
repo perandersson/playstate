@@ -3,7 +3,7 @@
 #include "luam.h"
 using namespace playstate;
 
-ScriptMethod::ScriptMethod(uint32 id, uint32 method, lua_State* L)
+ScriptMethod::ScriptMethod(script_ref id, script_ref method, lua_State* L)
 	: mObjectID(id), mMethodID(method), mCurrentState(L), mNumResults(0)
 {
 	assert(method != 0 && "Invalid method ID");

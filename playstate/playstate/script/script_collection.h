@@ -15,7 +15,7 @@ namespace playstate
 	{
 	public:
 		ScriptCollection();
-		ScriptCollection(lua_State* L, uint32 scriptRef);
+		ScriptCollection(lua_State* L, script_ref scriptRef);
 		ScriptCollection(const ScriptCollection& s);
 		virtual ~ScriptCollection();
 		
@@ -38,7 +38,7 @@ namespace playstate
 		bool FindKey(const playstate::character* key) const;
 
 	protected:
-		uint32 mScriptRef;
+		script_ref mScriptRef;
 		lua_State* mLuaState;
 	};
 }

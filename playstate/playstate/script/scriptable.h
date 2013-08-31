@@ -36,7 +36,7 @@ namespace playstate
 		//
 		// @param L The current lua state
 		// @param id The unique script reference for this object.
-		bool RegisterObject(lua_State* L, uint32 id);
+		bool RegisterObject(lua_State* L, script_ref id);
 
 		//
 		// Check if this instance is bound to the script engine.
@@ -46,10 +46,10 @@ namespace playstate
 
 		// 
 		// @return This object ID
-		const uint32 GetID() const;
+		const script_ref GetID() const;
 		
 	protected:
-		uint32 mScriptRef;
+		script_ref mScriptRef;
 		lua_State* mCurrentState;
 	};
 }

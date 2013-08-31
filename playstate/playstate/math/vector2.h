@@ -43,15 +43,22 @@ namespace playstate
 		Vector2 operator * (const Vector2 &vector2) const;
 		Vector2 operator / (const float32 scalar) const;
 
-		void operator += (const Vector2 &vector2);
-		void operator -= (const Vector2 &vector2);
-		void operator *= (const float32 scalar);
-		void operator /= (const float32 scalar);
+		Vector2& operator += (const Vector2 &vector2);
+		Vector2& operator -= (const Vector2 &vector2);
+		Vector2& operator *= (const float32 scalar);
+		Vector2& operator /= (const float32 scalar);
 
 		void operator = (const Vector2 &vector2);
 
-		bool operator == (const Vector2 &vector2) const;
-		bool operator != (const Vector2 &vector2) const;
+		inline bool operator == (const Vector2 &vector2) const {
+			return abs(X - vector2.X) <= FLT_EPSILON &&
+				abs(Y - vector2.Y) <= FLT_EPSILON;
+		}
+
+		inline bool operator != (const Vector2 &vector2) const {
+			return abs(X - vector2.X) > FLT_EPSILON ||
+				abs(Y - vector2.Y) > FLT_EPSILON;
+		}
 
 		Vector2 operator-();
 

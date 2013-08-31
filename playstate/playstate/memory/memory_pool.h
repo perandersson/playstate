@@ -14,7 +14,7 @@ namespace playstate
 		// Default constructor
 		// @param initialBlocksCount How many blocks this array contains when this instance is created.
 		// @param blocksResizeCount The amount of blocks added when the array is full.
-		MemoryPool(uint32 initialBlocksCount, uint32 blocksResizeCount);
+		MemoryPool(size_t initialBlocksCount, size_t blocksResizeCount);
 
 		~MemoryPool();
 
@@ -33,11 +33,11 @@ namespace playstate
 
 		//
 		// @return The amount of elements allocated
-		uint32 GetSize() const;
+		size_t GetSize() const;
 
 		//
 		// @return The total memory size
-		uint32 GetMemorySize() const;
+		size_t GetMemorySize() const;
 
 		//
 		// @return TRUE if this memory pool is full and needs to be resized; FALSE otherwise
@@ -45,14 +45,14 @@ namespace playstate
 
 	protected:
 		T* mMemory;
-		uint32 mSize;
-		uint32 mNumElements;
-		uint32 mInitialBlocksCount;
-		uint32 mBlocksResizeCount;
+		size_t mSize;
+		size_t mNumElements;
+		size_t mInitialBlocksCount;
+		size_t mBlocksResizeCount;
 	};
 
 	template<typename T>
-	MemoryPool<T>::MemoryPool(uint32 initialBlocksCount, uint32 blocksResizeCount) : mMemory(0), mSize(0), mNumElements(initialBlocksCount),
+	MemoryPool<T>::MemoryPool(size_t initialBlocksCount, size_t blocksResizeCount) : mMemory(0), mSize(0), mNumElements(initialBlocksCount),
 		mInitialBlocksCount(initialBlocksCount), mBlocksResizeCount(blocksResizeCount)
 	{
 		mMemory = (T*)malloc(initialBlocksCount * sizeof(T));
@@ -75,7 +75,7 @@ namespace playstate
 			mMemory = (T*)realloc(mMemory, GetMemorySize());
 		}
 
-		const uint32 index = mSize++;
+		const size_t index = mSize++;
 		T* ref = &mMemory[index];
 		memset(ref, 0, sizeof(T));
 		return ref;
@@ -94,7 +94,7 @@ namespace playstate
 	}
 	
 	template<typename T>
-	uint32 MemoryPool<T>::GetSize() const
+	size_t MemoryPool<T>::GetSize() const
 	{
 		return mSize;
 	}
@@ -106,7 +106,7 @@ namespace playstate
 	}
 
 	template<typename T>
-	uint32 MemoryPool<T>::GetMemorySize() const
+	size_t MemoryPool<T>::GetMemorySize() const
 	{
 		return mNumElements * sizeof(T);
 	}

@@ -110,20 +110,6 @@ void Vector3::Set(const Vector3& vector3)
 	Z = vector3.Z;
 }
 
-bool Vector3::operator == (const Vector3 &vector3) const
-{
-	return abs(X - vector3.X) <= FLT_EPSILON &&
-		abs(Y - vector3.Y) <= FLT_EPSILON &&
-		abs(Z - vector3.Z) <= FLT_EPSILON;
-}
-
-bool Vector3::operator != (const Vector3 &vector3) const
-{
-	return abs(X - vector3.X) > FLT_EPSILON ||
-		abs(Y - vector3.Y) > FLT_EPSILON ||
-		abs(Z - vector3.Z) > FLT_EPSILON;
-}
-
 bool Vector3::IsZero() const
 {
 	return abs(X) <= FLT_EPSILON &&

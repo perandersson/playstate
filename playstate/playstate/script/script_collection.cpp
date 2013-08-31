@@ -8,7 +8,7 @@ ScriptCollection::ScriptCollection()
 {
 }
 
-ScriptCollection::ScriptCollection(lua_State* L, uint32 scriptRef)
+ScriptCollection::ScriptCollection(lua_State* L, script_ref scriptRef)
 	: mLuaState(L), mScriptRef(scriptRef)
 {
 }

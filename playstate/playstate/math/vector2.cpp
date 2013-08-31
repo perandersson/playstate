@@ -90,30 +90,34 @@ void Vector2::Set(const Vector2& vector2)
 	Y = vector2.Y;
 }
 
-void Vector2::operator += (const Vector2 &vector2)
+Vector2& Vector2::operator += (const Vector2 &vector2)
 {
 	X += vector2.X;
 	Y += vector2.Y;
+	return *this;
 }
 
-void Vector2::operator -= (const Vector2 &vector2)
+Vector2& Vector2::operator -= (const Vector2 &vector2)
 {
 	X -= vector2.X;
 	Y -= vector2.Y;
+	return *this;
 }
 
-void Vector2::operator *= (const float32 scalar)
+Vector2& Vector2::operator *= (const float32 scalar)
 {
 	X *= scalar;
 	Y *= scalar;
+	return *this;
 }
 
-void Vector2::operator /= (const float32 scalar)
+Vector2& Vector2::operator /= (const float32 scalar)
 {
 	if(scalar != 0) {
 		X /= scalar;
 		Y /= scalar;
 	}
+	return *this;
 }
 
 Vector2 Vector2::operator + (const Vector2 &vector2) const
@@ -166,18 +170,6 @@ void Vector2::operator = (const Vector2 &vector2)
 {
 	X = vector2.X;
 	Y = vector2.Y;
-}
-
-bool Vector2::operator == (const Vector2 &vector2) const
-{
-	return abs(X - vector2.X) <= FLT_EPSILON &&
-		abs(Y - vector2.Y) <= FLT_EPSILON;
-}
-
-bool Vector2::operator != (const Vector2 &vector2) const
-{
-	return abs(X - vector2.X) > FLT_EPSILON ||
-		abs(Y - vector2.Y) > FLT_EPSILON;
 }
 
 Vector2 Vector2::operator - ()

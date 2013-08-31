@@ -16,7 +16,7 @@ Scriptable::~Scriptable()
 	}
 }
 
-bool Scriptable::RegisterObject(lua_State* L, uint32 id)
+bool Scriptable::RegisterObject(lua_State* L, script_ref id)
 {
 	mCurrentState = L;
 	mScriptRef = id;
@@ -29,7 +29,7 @@ bool Scriptable::IsScriptBound() const
 	return mCurrentState != NULL;
 }
 
-const uint32 Scriptable::GetID() const
+const script_ref Scriptable::GetID() const
 {
 	return mScriptRef;
 }

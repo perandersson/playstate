@@ -35,22 +35,6 @@ void Color::Set(const Color& c)
 	Alpha = c.Alpha;
 }
 
-bool Color::operator == (const Color& c) const
-{
-	return abs(c.Red - Red) <= FLT_EPSILON &&
-		abs(c.Green - Green) <= FLT_EPSILON &&
-		abs(c.Blue - Blue) <= FLT_EPSILON &&
-		abs(c.Alpha - Alpha) <= FLT_EPSILON;
-}
-
-bool Color::operator != (const Color& c) const
-{
-	return abs(c.Red - Red) > FLT_EPSILON ||
-		abs(c.Green - Green) > FLT_EPSILON ||
-		abs(c.Blue - Blue) > FLT_EPSILON ||
-		abs(c.Alpha - Alpha) > FLT_EPSILON;
-}
-
 void Color::operator = (const Color &c)
 {
 	Red = c.Red;

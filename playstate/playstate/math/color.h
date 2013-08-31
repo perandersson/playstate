@@ -34,8 +34,16 @@ namespace playstate
 		Color(const Color& c);
 
 		void Set(const Color& c);
-		bool operator == (const Color& c) const;
-		bool operator != (const Color& c) const;
+
+		inline bool operator == (const Color& c) const {
+			return abs(c.Red - Red) <= FLT_EPSILON && abs(c.Green - Green) <= FLT_EPSILON &&
+				abs(c.Blue - Blue) <= FLT_EPSILON && abs(c.Alpha - Alpha) <= FLT_EPSILON;
+		}
+		
+		inline bool operator != (const Color& c) const {
+			return abs(c.Red - Red) > FLT_EPSILON || abs(c.Green - Green) > FLT_EPSILON ||
+				abs(c.Blue - Blue) > FLT_EPSILON || abs(c.Alpha - Alpha) > FLT_EPSILON;
+		}
 
 		void operator = (const Color &c);
 

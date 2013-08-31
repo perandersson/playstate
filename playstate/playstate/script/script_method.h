@@ -15,7 +15,7 @@ namespace playstate
 	class ScriptMethod
 	{
 	public:
-		ScriptMethod(uint32 id, uint32 method, lua_State* L);
+		ScriptMethod(script_ref id, script_ref method, lua_State* L);
 		~ScriptMethod();
 
 		//
@@ -37,8 +37,8 @@ namespace playstate
 		bool GetBool();
 
 	private:
-		uint32 mObjectID;
-		uint32 mMethodID;
+		script_ref mObjectID;
+		script_ref mMethodID;
 		lua_State* mCurrentState;
 		uint32 mNumResults;
 	};

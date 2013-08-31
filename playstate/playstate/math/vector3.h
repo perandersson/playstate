@@ -59,36 +59,42 @@ namespace playstate
 			return Vector3(X * scalar, Y * scalar, Z * scalar);
 		}
 
-		inline void operator += (const Vector3& vector3) {
+		inline Vector3& operator += (const Vector3& vector3) {
 			X += vector3.X;
 			Y += vector3.Y;
 			Z += vector3.Z;
+			return *this;
 		}
 
-		inline void operator -= (const Vector3& vector3) {
+		inline Vector3& operator -= (const Vector3& vector3) {
 			X -= vector3.X;
 			Y -= vector3.Y;
 			Z -= vector3.Z;
+			return *this;
 		}
 
-		inline void operator *= (const float32 scalar) {
+		inline Vector3& operator *= (const float32 scalar) {
 			X *= scalar;
 			Y *= scalar;
 			Z *= scalar;
+			return *this;
 		}
 
-		inline void operator *= (const Vector3& scalar) {
+		inline Vector3& operator *= (const Vector3& scalar) {
 			X *= scalar.X;
 			Y *= scalar.Y;
 			Z *= scalar.Z;
+			return *this;
 		}
 
-		inline void operator /= (float32 scalar) {
-			assert(scalar != 0.0f && "You are not allowed to divide by 0");
-			scalar = 1.0f / scalar;
-			X *= scalar;
-			Y *= scalar;
-			Z *= scalar;
+		inline Vector3& operator /= (float32 scalar) {
+			if(scalar != 0.0f) {
+				scalar = 1.0f / scalar;
+				X *= scalar;
+				Y *= scalar;
+				Z *= scalar;
+			}
+			return *this;
 		}
 
 		inline void operator = (const Vector3 &vector3) {
@@ -97,8 +103,17 @@ namespace playstate
 			Z = vector3.Z;
 		}
 
-		bool operator == (const Vector3 &vector3) const;
-		bool operator != (const Vector3 &vector3) const;
+		inline bool operator == (const Vector3 &vector3) const {
+			return abs(X - vector3.X) <= FLT_EPSILON &&
+				abs(Y - vector3.Y) <= FLT_EPSILON &&
+				abs(Z - vector3.Z) <= FLT_EPSILON;
+		}
+
+		inline bool operator != (const Vector3 &vector3) const {
+			return abs(X - vector3.X) > FLT_EPSILON ||
+				abs(Y - vector3.Y) > FLT_EPSILON ||
+				abs(Z - vector3.Z) > FLT_EPSILON;
+		}
 
 		inline Vector3 operator - () {
 			return Vector3(-X, -Y, -Z);
