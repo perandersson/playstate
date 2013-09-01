@@ -22,9 +22,11 @@ namespace playstate
 		void SetBoundingBox(const AABB& boundingBox);
 		
 		//
-		// Sets the bounding box for this node.
-		// @param boundingBox
-		// @param position
+		// Sets the bounding box for this node and moves it to the supplied position.
+		// 
+		//
+		// @param boundingBox THe bounding box
+		// @param position The position we want to move the bounding box to
 		void SetBoundingBox(const AABB& boundingBox, const Vector3& position);
 
 		//
@@ -32,6 +34,8 @@ namespace playstate
 		// @param octree
 		void AttachToOctree(Octree* octree);
 
+		//
+		// @return The bounding box.
 		inline const AABB& GetBoundingBox() const {
 			return mBoundingBox;
 		}

@@ -78,7 +78,7 @@ namespace playstate
 		Vector3 MinPoint;
 
 	public:
-		static AABB OutsideWorld;
+		static AABB Unit;
 	};
 
 	// TODO: Place all AABB objects in the same memory area - thus lessen the cache miss ratio on the CPU

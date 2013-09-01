@@ -4,7 +4,7 @@
 
 using namespace playstate;
 
-playstate::AABB playstate::AABB::OutsideWorld(playstate::Vector3(-10000.0f, -10000.0f, -10000.0f), 0.01f, 0.01f, 0.01f);
+playstate::AABB playstate::AABB::Unit(playstate::Vector3(), 1, 1, 1);
 
 AABB::AABB()
 {
