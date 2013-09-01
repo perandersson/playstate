@@ -21,6 +21,17 @@ namespace playstate
 	struct ResourceData;
 
 	//
+	// Pops a float value and returns the result from the lua stack. If the value at the top of the stack
+	// is not a float value then return the defaultValue instead.
+	//
+	// @param L
+	// @param defaultValue
+	// @return
+	extern float32 luaM_popfloat(lua_State* L, float32 defaultValue = 0);
+
+	extern float32 luaM_tofloat(lua_State* L, int idx, float32 defaultValue = 0);
+
+	//
 	// Sets/Replaces the supplied data value as the native instance for the table at the top of the stack
 	// @param L
 	// @param data
@@ -80,7 +91,7 @@ namespace playstate
 
 	//
 	// Pops the color from the top of the stack and returns the result. 
-	// How the table converts to a Color object works the same way as how the constructors work for the Color object.
+	// 
 	extern Color luaM_popcolor(lua_State* L);
 
 	//

@@ -8,13 +8,31 @@
 #include "../logging/logger.h"
 #include "script_system.h"
 
-#ifndef luaM_tofloat
-#define luaM_tofloat(L, I) (float32)lua_tonumber(L, I)
-#endif
-
 namespace playstate
 {
 	const uint32 LuaInstanceID = 1;
+
+	float32 luaM_popfloat(lua_State* L, float32 defaultValue)
+	{
+		float32 value = defaultValue;
+		if(lua_gettop(L) > 0) {
+			if(lua_isnumber(L, -1))
+				value = (float32)lua_tonumber(L, -1);
+			lua_pop(L, 1);
+		}
+		return value;
+	}
+
+	float32 luaM_tofloat(lua_State* L, int idx, float32 defaultValue)
+	{
+		float32 value = defaultValue;
+		int required = -idx;
+		if(lua_gettop(L) >= required) {
+			if(lua_isnumber(L, idx))
+				value = (float32)lua_tonumber(L, idx);
+		} 
+		return value;
+	}
 
 	void luaM_setinstance(lua_State* L, Scriptable* data)
 	{
@@ -233,17 +251,10 @@ namespace playstate
 
 			lua_pop(L, 1);
 		} else if(lua_isnumber(L, -1)) {
-			float* colors = color.Colors;
-			*colors++ = luaM_tofloat(L, -1); lua_pop(L, 1);
-			if(lua_isnumber(L, -1)) {
-				*colors++ = luaM_tofloat(L, -1); lua_pop(L, 1);
-			}
-			if(lua_isnumber(L, -1)) {
-				*colors++ = luaM_tofloat(L, -1); lua_pop(L, 1);
-			}
-			if(lua_isnumber(L, -1)) {
-				*colors++ = luaM_tofloat(L, -1); lua_pop(L, 1);
-			}
+			color.Red = luaM_popfloat(L, 0.0f);
+			color.Green = luaM_popfloat(L, 0.0f);
+			color.Blue = luaM_popfloat(L, 0.0f);
+			color.Alpha = luaM_popfloat(L, 1.0f);
 		} else if(lua_isstring(L, -1)) {
 			playstate::string hex = lua_tostring(L, -1); lua_pop(L, 1);
 			color = Color::HexToRGB(hex.c_str());
