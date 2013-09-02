@@ -81,12 +81,21 @@ namespace playstate
 		// Retrieves the ambient lighting used on the entire scene.
 		//
 		// @return The ambient color
-		const Color& GetAmbientLight() const;
+		inline const Color& GetAmbientLight() const {
+			return mAmbientLight;
+		}
 
 		//
 		// @return 
-		Camera& GetActiveCamera();
-		const Camera& GetActiveCamera() const;
+		inline Camera& GetActiveCamera() {
+			return mCamera;
+		}
+
+		//
+		// @return
+		inline const Camera& GetActiveCamera() const {
+			return mCamera;
+		}
 		
 
 	private:

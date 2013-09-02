@@ -93,21 +93,6 @@ void Scene::SetAmbientLight(const Color& color)
 	mAmbientLight = color;
 }
 
-const Color& Scene::GetAmbientLight() const
-{
-	return mAmbientLight;
-}
-
-Camera& Scene::GetActiveCamera()
-{
-	return mCamera;
-}
-
-const Camera& Scene::GetActiveCamera() const
-{
-	return mCamera;
-}
-
 namespace playstate
 {
 	int Scene_AddSceneGroup(lua_State* L)
