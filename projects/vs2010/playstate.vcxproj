@@ -16,6 +16,7 @@
     <ClCompile Include="..\..\playstate\playstate\collision\aabb.cpp" />
     <ClCompile Include="..\..\playstate\playstate\component\component.cpp" />
     <ClCompile Include="..\..\playstate\playstate\component\lightsources\point_light.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\component\renderable\render_dynamic_model.cpp" />
     <ClCompile Include="..\..\playstate\playstate\component\renderable\render_static_model.cpp" />
     <ClCompile Include="..\..\playstate\playstate\component\scriptable_component.cpp" />
     <ClCompile Include="..\..\playstate\playstate\exception.cpp" />
@@ -121,6 +122,7 @@
     <ClInclude Include="..\..\playstate\playstate\collision\bounding_sphere.h" />
     <ClInclude Include="..\..\playstate\playstate\component\component.h" />
     <ClInclude Include="..\..\playstate\playstate\component\lightsources\point_light.h" />
+    <ClInclude Include="..\..\playstate\playstate\component\renderable\render_dynamic_model.h" />
     <ClInclude Include="..\..\playstate\playstate\component\renderable\render_static_model.h" />
     <ClInclude Include="..\..\playstate\playstate\component\scriptable_component.h" />
     <ClInclude Include="..\..\playstate\playstate\config.h" />

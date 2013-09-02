@@ -5,7 +5,7 @@
 using namespace playstate;
 
 RenderStaticModel::RenderStaticModel(Resource<Model> model) 
-	: Component(), Renderable(), mModel(model)
+	: Component(), Renderable(), Scriptable(), mModel(model)
 {
 }
 
@@ -63,18 +63,6 @@ void RenderStaticModel::PreRender(const RenderState& state, RenderBlockResultSet
 
 namespace playstate
 {
-	class ScriptedRenderStaticModel : public RenderStaticModel, public Scriptable
-	{
-	public:
-		ScriptedRenderStaticModel(Resource<Model> model)
-			: RenderStaticModel(model)
-		{}
-
-		virtual ~ScriptedRenderStaticModel()
-		{
-		}
-	};
- 
 	int RenderStaticModel_Factory(lua_State* L)
 	{
 		if(lua_gettop(L) < 1) {
@@ -86,7 +74,7 @@ namespace playstate
 		ResourceData* resourceData = luaM_popresource(L);
 		if(resourceData != NULL) {
 			Resource<Model> model(resourceData);
-			ScriptedRenderStaticModel* renderStaticModel = new ScriptedRenderStaticModel(model);
+			RenderStaticModel* renderStaticModel = new RenderStaticModel(model);
 			luaM_pushobject(L, "RenderStaticModel", renderStaticModel);
 		} else {
 			luaM_printerror(L, "Expected: RenderStaticModel.__init(ResourceData)");

@@ -3,30 +3,31 @@
 #include "../component.h"
 #include "../../model/model.h"
 #include "../../processor/renderable.h"
-#include "../../scene/scene.h"
 #include "../../resources/resource_manager.h"
 #include "../../resources/resource_changed_listener.h"
 #include "../../script/scriptable.h"
+#include "../../processor/tickable.h"
 
 namespace playstate
 {
-	class RenderStaticModel : public Component, public Renderable, public Scriptable, public IResourceChangedListener
+	class RenderDynamicModel : public Component, public Renderable, public Tickable, public Scriptable, public IResourceChangedListener
 	{
 	public:
 		//
 		// Constructor
 		//
 		// @param model The model we want to render onto the screen
-		RenderStaticModel(Resource<Model> model);
+		RenderDynamicModel(Resource<Model> model);
 
 		//
 		// Destructor
-		~RenderStaticModel();
+		~RenderDynamicModel();
 
 	// Component
 	public:
 		virtual void OnComponentAdded();
 		virtual void OnComponentRemoved();
+		virtual void OnEvent(uint32 typeID, uint32 messageID);
 
 	// IResourceChangedListener
 	public:
@@ -37,6 +38,10 @@ namespace playstate
 	public:
 		virtual void PreRender(const RenderState& state, RenderBlockResultSet* resultSet);
 
+	// Tickable
+	public:
+		virtual void Tick();
+
 	private:
 		Resource<Model> mModel;
 	};
@@ -45,9 +50,9 @@ namespace playstate
 	// Script integration
 	//
 
-	extern int RenderStaticModel_Factory(lua_State* L);
-	static luaL_Reg RenderStaticModel_Methods[] = {
-		{ LUA_CONSTRUCTOR, RenderStaticModel_Factory },
+	extern int RenderDynamicModel_Factory(lua_State* L);
+	static luaL_Reg RenderDynamicModel_Methods[] = {
+		{ LUA_CONSTRUCTOR, RenderDynamicModel_Factory },
 		{ NULL, NULL }
 	};
 }

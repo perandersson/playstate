@@ -135,6 +135,9 @@
     <Filter Include="Source Files\sound\exception">
       <UniqueIdentifier>{dd791f9d-566f-4533-a4e2-c006eee07538}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\model\md5">
+      <UniqueIdentifier>{9fa8bc89-1c8c-413b-a085-a4639cba8d48}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\playstate\playstate\camera\camera.cpp">
@@ -442,6 +445,9 @@
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\sound\openal\openal_music_resource_loader.cpp">
       <Filter>Source Files\sound\openal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\component\renderable\render_dynamic_model.cpp">
+      <Filter>Source Files\component\renderable</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -867,6 +873,9 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\sound\openal\openal_music_resource_loader.h">
       <Filter>Source Files\sound\openal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\component\renderable\render_dynamic_model.h">
+      <Filter>Source Files\component\renderable</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

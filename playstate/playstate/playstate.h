@@ -28,6 +28,7 @@
 
 #include "component/scriptable_component.h"
 #include "component/renderable/render_static_model.h"
+#include "component/renderable/render_dynamic_model.h"
 #include "component/lightsources/point_light.h"
 
 #include "logging/console/console_logger.h"

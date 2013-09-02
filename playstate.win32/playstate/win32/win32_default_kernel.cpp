@@ -4,6 +4,7 @@
 #include <playstate/component/scriptable_component.h>
 #include <playstate/model/model.h>
 #include <playstate/component/renderable/render_static_model.h>
+#include <playstate/component/renderable/render_dynamic_model.h>
 #include <playstate/component/lightsources/point_light.h>
 #include <playstate/gui/widgets/gui_frame_widget.h>
 #include <playstate/gui/widgets/gui_button_widget.h>
@@ -91,6 +92,7 @@ void Win32DefaultKernel::RegisterScript()
 	ss.RegisterType("Component", Component_Methods);
 	ss.RegisterType("Model", Model_Methods);
 	ss.RegisterType("RenderStaticModel", RenderStaticModel_Methods);
+	ss.RegisterType("RenderDynamicModel", RenderDynamicModel_Methods);
 	ss.RegisterType("ActiveCamera", ActiveCamera_Methods);
 	ss.RegisterType("PointLight", PointLight_Methods);
 	ss.RegisterType("Canvas", Canvas_Methods);
