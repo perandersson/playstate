@@ -42,7 +42,15 @@ namespace playstate
 		// @param type
 		// @return The component if found; NULL otherwise
 		Component* GetComponent(type_mask type);
-		
+
+		//
+		// Fire an event receivable from this nodes component. Useful for communication 
+		// between components in the same node.
+		//
+		// @param typeID A unique event type ID
+		// @param messageID A unique message ID for the current type ID
+		void FireEvent(uint32 typeID, uint32 messageID);
+
 		//
 		// Sets the position of this node.
 		void SetPosition(const Vector3& position);
@@ -169,6 +177,7 @@ namespace playstate
 	extern int SceneNode_SetRotatation(lua_State* L);
 	extern int SceneNode_AddNode(lua_State* L);
 	extern int SceneNode_RemoveNode(lua_State* L);
+	extern int SceneNode_FireEvent(lua_State* L);
 	static luaL_Reg SceneNode_Methods[] = {
 		{ LUA_CONSTRUCTOR, SceneNode_Factory },
 		{ LUA_TOSTRING, SceneNode_GetID },
@@ -181,6 +190,7 @@ namespace playstate
 		{ "SetRotation", SceneNode_SetRotatation },
 		{ "AddNode", SceneNode_AddNode },
 		{ "RemoveNode", SceneNode_RemoveNode },
+		{ "FireEvent", SceneNode_FireEvent },
 		{ NULL, NULL }
 	};
 }

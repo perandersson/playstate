@@ -79,6 +79,16 @@ void SceneNode::RemoveNode(SceneNode* node)
 	node->DetachingNodeFromSceneGroup(mSceneGroup);
 }
 
+void SceneNode::FireEvent(uint32 typeID, uint32 messageID)
+{
+	Component* component = mComponents.First();
+	while(component != NULL) {
+		Component* next = component->ComponentLink.Tail;
+		component->NotifyOnEvent(typeID, messageID);
+		component = component->ComponentLink.Tail;
+	}
+}
+
 void SceneNode::SetPosition(const Vector3& position)
 {
 	Vector3 diff = position - mPosition;
@@ -324,6 +334,26 @@ namespace playstate
 			parent->RemoveNode(child);
 		} else {
 			luaM_printerror(L, "Expected: self<SceneNode>:RemoveNode(SceneNode)");
+		}
+
+		return 0;
+	}
+
+	int SceneNode_FireEvent(lua_State* L)
+	{
+		if(lua_gettop(L) < 3) {
+			luaM_printerror(L, "Expected: self<SceneNode>:FireEvent(typeID, messageID)");
+			lua_pushnil(L);
+			return 1;
+		}
+		
+		uint32 messageID = lua_tointeger(L, -1); lua_pop(L, 1);
+		uint32 typeID = lua_tointeger(L, -1); lua_pop(L, 1);
+		SceneNode* node = luaM_popobject<SceneNode>(L);
+		if(node != NULL) {
+			node->FireEvent(typeID, messageID);
+		} else {
+			luaM_printerror(L, "Expected: self<SceneNode>:FireEvent(typeID, messageID)");
 		}
 
 		return 0;

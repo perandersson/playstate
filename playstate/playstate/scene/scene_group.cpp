@@ -60,6 +60,27 @@ void SceneGroup::RemoveNode(SceneNode* node)
 	mSceneNodes.Remove(node);
 }
 
+void SceneGroup::FireEvent(uint32 typeID, uint32 messageID)
+{
+	SceneNode* node = mSceneNodes.First();
+	while(node != NULL) {
+		SceneNode* next = node->NodeLink.Tail;
+		node->FireEvent(typeID, messageID);
+		node = next;
+	}
+}
+
+void SceneGroup::FireEvent(uint32 typeID, uint32 messageID, type_mask typeMask)
+{
+	SceneNode* node = mSceneNodes.First();
+	while(node != NULL) {
+		SceneNode* next = node->NodeLink.Tail;
+		if(BIT_ISSET(node->GetTypeMask(), typeMask))
+			node->FireEvent(typeID, messageID);
+		node = next;
+	}
+}
+
 void SceneGroup::Update()
 {
 	mUpdating = true;
@@ -188,3 +209,31 @@ int playstate::SceneGroup_RemoveNode(lua_State* L)
 	}
 	return 0;
 }
+
+int playstate::SceneGroup_FireEvent(lua_State* L)
+{
+	type_mask typeMask = 0;
+	if(lua_gettop(L) < 3) {
+		luaM_printerror(L, "Expected: self<SceneGroup>:FireEvent(typeID, messageID[, typeMask])");
+		lua_pushnil(L);
+		return 1;
+	}
+
+	if(lua_gettop(L) > 3)
+		typeMask = lua_tointeger(L, -1); lua_pop(L, 1);
+		
+	uint32 messageID = lua_tointeger(L, -1); lua_pop(L, 1);
+	uint32 typeID = lua_tointeger(L, -1); lua_pop(L, 1);
+	SceneGroup* group = luaM_popobject<SceneGroup>(L);
+	if(group != NULL) {
+		if(typeMask == 0)
+			group->FireEvent(typeID, messageID);
+		else
+			group->FireEvent(typeID, messageID, typeMask);
+	} else {
+		luaM_printerror(L, "Expected: self<SceneGroup>:FireEvent(typeID, messageID[, typeMask])");
+	}
+
+	return 0;
+}
+

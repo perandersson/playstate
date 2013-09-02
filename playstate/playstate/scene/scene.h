@@ -24,6 +24,21 @@ namespace playstate
 		//
 		// Update the scene
 		void Update();
+		
+		//
+		// Fire an event receivable from this groups child nodes. Useful for sending global events.
+		//
+		// @param typeID A unique event type ID
+		// @param messageID A unique message ID for the current type ID
+		void FireEvent(uint32 typeID, uint32 messageID);
+		
+		//
+		// Fire an event receivable from this groups child nodes. Useful for sending global events.
+		//
+		// @param typeID A unique event type ID
+		// @param messageID A unique message ID for the current type ID
+		// @param typeMask Only nodes of a specific type receives this event
+		void FireEvent(uint32 typeID, uint32 messageID, type_mask typeMask);
 
 		//
 		// Query this scene for items located in it.
@@ -88,11 +103,13 @@ namespace playstate
 	extern int Scene_RemoveSceneGroup(lua_State* L);
 	extern int Scene_SetAmbientLight(lua_State* L);
 	extern int Scene_GetAmbientLight(lua_State* L);
+	extern int Scene_FireEvent(lua_State* L);
 	static luaL_Reg Scene_Methods[] = {
 		{ "AddSceneGroup", Scene_AddSceneGroup },
 		{ "RemoveSceneGroup", Scene_RemoveSceneGroup },
 		{ "SetAmbientLight", Scene_SetAmbientLight },
 		{ "GetAmbientLight", Scene_GetAmbientLight },
+		{ "FireEvent", Scene_FireEvent },
 		{ NULL, NULL }
 	};
 }

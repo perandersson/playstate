@@ -17,6 +17,7 @@ namespace playstate
 	protected:
 		virtual void OnComponentAdded();
 		virtual void OnComponentRemoved();
+		virtual void OnEvent(uint32 typeID, uint32 messageID);
 
 	// Updatable
 	public:
@@ -37,6 +38,7 @@ namespace playstate
 	private:
 		ScriptMethod* mOnComponentAdded;
 		ScriptMethod* mOnComponentRemoved;
+		ScriptMethod* mOnEvent;
 		ScriptMethod* mUpdate;
 		ScriptMethod* mTick;
 	};
@@ -49,6 +51,7 @@ namespace playstate
 	extern int Component_GetNodePosition(lua_State* L);
 	extern int Component_Show(lua_State* L);
 	extern int Component_Hide(lua_State* L);
+	extern int Component_FireEvent(lua_State* L);
 	static luaL_Reg Component_Methods[] = {
 		{ LUA_INHERIT_CONSTRUCTOR, Component_Init },
 		{ "GetNode", Component_GetNode },
@@ -58,6 +61,7 @@ namespace playstate
 		{ "GetNodePosition", Component_GetNodePosition },
 		{ "Show", Component_Show },
 		{ "Hide", Component_Hide },
+		{ "FireEvent", Component_FireEvent },
 		{ NULL, NULL }
 	};
 }

@@ -52,6 +52,10 @@ namespace playstate
 		// Sets the component type.
 		void SetTypeMask(type_mask typeMask);
 
+		//
+		// Notifies this component that a new potential event has been triggered
+		void NotifyOnEvent(uint32 typeID, uint32 messageID);
+
 	protected:		
 		//
 		// Method called when this component is added to a scene node.
@@ -60,6 +64,10 @@ namespace playstate
 		//
 		// Method called when this component is removed from a scene node.
 		virtual void OnComponentRemoved();
+
+		//
+		// Method called when this component receives events from the game engine.
+		virtual void OnEvent(uint32 typeID, uint32 messageID);
 
 	protected:
 		SceneNode* mNode;

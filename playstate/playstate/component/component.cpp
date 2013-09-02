@@ -51,3 +51,12 @@ void Component::SetTypeMask(type_mask typeMask)
 {
 	mTypeMask = typeMask;
 }
+
+void Component::NotifyOnEvent(uint32 typeID, uint32 messageID)
+{
+	this->OnEvent(typeID, messageID);
+}
+
+void Component::OnEvent(uint32 typeID, uint32 messageID)
+{
+}

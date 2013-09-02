@@ -6,7 +6,7 @@ using namespace playstate;
 
 ScriptableComponent::ScriptableComponent(uint32 type)
 	: Component(type), Updatable(), Renderable(), Tickable(), Scriptable(),
-	mOnComponentAdded(NULL), mOnComponentRemoved(NULL), mUpdate(NULL), mTick(NULL)
+	mOnComponentAdded(NULL), mOnComponentRemoved(NULL), mOnEvent(NULL), mUpdate(NULL), mTick(NULL)
 {
 }
 
@@ -14,6 +14,7 @@ ScriptableComponent::~ScriptableComponent()
 {
 	delete mOnComponentAdded;
 	delete mOnComponentRemoved;
+	delete mOnEvent;
 	delete mUpdate;
 	delete mTick;
 }
@@ -40,6 +41,12 @@ void ScriptableComponent::OnComponentRemoved()
 		mOnComponentRemoved->Invoke();
 }
 
+void ScriptableComponent::OnEvent(uint32 typeID, uint32 messageID)
+{
+	if(mOnEvent != NULL)
+		mOnEvent->Invoke(typeID, messageID);
+}
+
 void ScriptableComponent::PreRender(const RenderState& state, RenderBlockResultSet* resultSet)
 {
 }
@@ -60,6 +67,7 @@ void ScriptableComponent::OnRegistered()
 {
 	mOnComponentAdded = GetMethod("OnComponentAdded");
 	mOnComponentRemoved = GetMethod("OnComponentRemoved");
+	mOnEvent = GetMethod("OnEvent");
 	mUpdate = GetMethod("Update");
 	mTick = GetMethod("Tick");
 }
@@ -183,6 +191,30 @@ int playstate::Component_Hide(lua_State* L)
 	ScriptableComponent* component = luaM_popobject<ScriptableComponent>(L);
 	if(component != NULL) {
 		component->Hide();
+	}
+
+	return 0;
+}
+
+int playstate::Component_FireEvent(lua_State* L)
+{
+	if(lua_gettop(L) < 3) {
+		luaM_printerror(L, "Expected: self<Component>:FireEvent(typeID, messageID)");
+		lua_pushnil(L);
+		return 1;
+	}
+		
+	uint32 messageID = lua_tointeger(L, -1); lua_pop(L, 1);
+	uint32 typeID = lua_tointeger(L, -1); lua_pop(L, 1);
+	Component* component = luaM_popobject<Component>(L);
+	if(component != NULL) {
+		SceneNode* node = component->GetNode();
+		if(node != NULL)
+			node->FireEvent(typeID, messageID);
+		else
+			luaM_printerror(L, "Cannot fire an event on a non-attached component");
+	} else {
+		luaM_printerror(L, "Expected: self<Component>:FireEvent(typeID, messageID)");
 	}
 
 	return 0;

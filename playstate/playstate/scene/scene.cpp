@@ -35,6 +35,26 @@ void Scene::Update()
 	}
 }
 
+void Scene::FireEvent(uint32 typeID, uint32 messageID)
+{
+	SceneGroup* group = mSceneGroups.First();
+	while(group != NULL) {
+		SceneGroup* next = group->GroupLink.Tail;
+		group->FireEvent(typeID, messageID);
+		group = next;
+	}
+}
+
+void Scene::FireEvent(uint32 typeID, uint32 messageID, type_mask typeMask)
+{
+	SceneGroup* group = mSceneGroups.First();
+	while(group != NULL) {
+		SceneGroup* next = group->GroupLink.Tail;
+		group->FireEvent(typeID, messageID, typeMask);
+		group = next;
+	}
+}
+
 bool Scene::Find(const FindQuery& query, RenderBlockResultSet* target)
 {
 	RenderBlockArraySorter defaultSorter;
@@ -124,5 +144,18 @@ namespace playstate
 		luaM_pushcolor(L, GameRunner::Get().GetScene().GetAmbientLight());
 		return 1;
 	}
-
+	
+	int Scene_FireEvent(lua_State* L)
+	{
+		if(lua_gettop(L) < 2) {
+			luaM_printerror(L, "Expected: Scene.FireEvent(typeID, messageID)");
+			lua_pushnil(L);
+			return 1;
+		}
+		
+		uint32 messageID = lua_tointeger(L, -1); lua_pop(L, 1);
+		uint32 typeID = lua_tointeger(L, -1); lua_pop(L, 1);
+		GameRunner::Get().GetScene().FireEvent(typeID, messageID);
+		return 0;
+	}
 }

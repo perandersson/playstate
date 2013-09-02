@@ -19,8 +19,10 @@ namespace playstate
 		~ScriptMethod();
 
 		//
-		// Invokes this method
-		bool Invoke();
+		// Invokes this method and returns the number of returned values
+		uint32 Invoke();
+		uint32 Invoke(uint32 p1);
+		uint32 Invoke(uint32 p1, uint32 p2);
 
 		//
 		// @return An integer at the supplied index.
@@ -37,9 +39,11 @@ namespace playstate
 		bool GetBool();
 
 	private:
+		bool PrepareMethod();
+
+	private:
 		script_ref mObjectID;
 		script_ref mMethodID;
 		lua_State* mCurrentState;
-		uint32 mNumResults;
 	};
 }
