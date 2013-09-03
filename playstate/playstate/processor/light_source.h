@@ -1,6 +1,6 @@
 #pragma once
 #include "../linked_list.h"
-#include "../scene/tree/octree_node.h"
+#include "../scene/spatial_node.h"
 
 namespace playstate
 {
@@ -9,7 +9,7 @@ namespace playstate
 	//
 	// A LightSource is represented as an invisible mesh located in a SceneGroup's Octree. This makes it possible
 	// to find visible lights using the camera.
-	class LightSource : public OctreeNode
+	class LightSource : public SpatialNode
 	{
 	public:
 		LinkedListLink<LightSource> LightSourceLink;

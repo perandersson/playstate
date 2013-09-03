@@ -278,9 +278,6 @@
     <ClCompile Include="..\..\playstate\playstate\scene\tree\octree.cpp">
       <Filter>Source Files\scene\tree</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\scene\tree\octree_node.cpp">
-      <Filter>Source Files\scene\tree</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\script\luam.cpp">
       <Filter>Source Files\script</Filter>
     </ClCompile>
@@ -448,6 +445,9 @@
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\component\renderable\render_dynamic_model.cpp">
       <Filter>Source Files\component\renderable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\scene\spatial_node.cpp">
+      <Filter>Source Files\scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -638,9 +638,6 @@
       <Filter>Source Files\scene</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\scene\tree\octree.h">
-      <Filter>Source Files\scene\tree</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\scene\tree\octree_node.h">
       <Filter>Source Files\scene\tree</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\script\lua_call.h">
@@ -876,6 +873,12 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\component\renderable\render_dynamic_model.h">
       <Filter>Source Files\component\renderable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\scene\spatial_node.h">
+      <Filter>Source Files\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\scene\spatial_tree.h">
+      <Filter>Source Files\scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

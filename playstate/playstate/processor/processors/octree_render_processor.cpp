@@ -27,7 +27,7 @@ void OctreeRenderProcessor::DetachRenderable(Renderable* renderable)
 	mOctree.Remove(renderable);
 }
 
-class RenderableEventHandlerVisitor : public IOctreeVisitor
+class RenderableEventHandlerVisitor : public ISpatialTreeVisitor
 {
 public:
 	RenderableEventHandlerVisitor(RenderState state, RenderBlockResultSet* target)
@@ -46,7 +46,7 @@ public:
 
 // IOctreeVisitor
 public:
-	virtual void Visit(OctreeNode* item)
+	virtual void Visit(SpatialNode* item)
 	{
 		static_cast<Renderable*>(item)->PreRender(mRenderState, mResultSetTarget);
 		mFoundResults = true;
@@ -65,7 +65,7 @@ bool OctreeRenderProcessor::Find(const FindQuery& query, RenderBlockResultSet* t
 	state.Filter = query.Filter;
 
 	RenderableEventHandlerVisitor visitor(state, target);
-	mOctree.FindItems(state.Camera->GetViewFrustum(), &visitor);
+	mOctree.Find(state.Camera->GetViewFrustum(), &visitor);
 	return visitor.HasFoundResults();
 }
 

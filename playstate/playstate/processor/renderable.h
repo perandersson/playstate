@@ -1,6 +1,6 @@
 #pragma once
 #include "../linked_list.h"
-#include "../scene/tree/octree_node.h"
+#include "../scene/spatial_node.h"
 #include "../rendering/render_state.h"
 #include "../search/render_block_result_set.h"
 
@@ -8,7 +8,7 @@ namespace playstate
 {
 	class IRenderProcessor;
 
-	class Renderable : public OctreeNode
+	class Renderable : public SpatialNode
 	{
 	public:
 		LinkedListLink<Renderable> RenderableLink;

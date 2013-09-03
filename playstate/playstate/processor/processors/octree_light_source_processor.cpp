@@ -28,7 +28,7 @@ void OctreeLightSourceProcessor::DetachLightSource(LightSource* lightSource)
 	mOctree.Remove(lightSource);
 }
 
-class LightSourceEventHandlerVisitor : public IOctreeVisitor
+class LightSourceEventHandlerVisitor : public ISpatialTreeVisitor
 {
 public:
 	LightSourceEventHandlerVisitor(LightSourceResultSet* target)
@@ -45,7 +45,7 @@ public:
 
 // IOctreeVisitor
 public:
-	virtual void Visit(OctreeNode* item)
+	virtual void Visit(SpatialNode* item)
 	{
 		mResultSetTarget->AddResult(static_cast<LightSource*>(item));
 		mFoundResults = true;
@@ -59,7 +59,7 @@ private:
 bool OctreeLightSourceProcessor::Find(const FindQuery& query, LightSourceResultSet* target) const
 {
 	LightSourceEventHandlerVisitor visitor(target);
-	mOctree.FindItems(query.Camera->GetViewFrustum(), &visitor);
+	mOctree.Find(query.Camera->GetViewFrustum(), &visitor);
 	return visitor.HasFoundResults();
 }
 

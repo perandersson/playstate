@@ -2,24 +2,13 @@
 
 #include "../../collision/aabb.h"
 #include "../../camera/frustum.h"
-#include "octree_node.h"
+#include "../spatial_tree.h"
 
 namespace playstate
 {
-	class IOctreeVisitor
-	{
-	public:
-		//
-		// Method called when an item is found inside the octree.
-		// @param item The item that's found.
-		virtual void Visit(OctreeNode* item) = 0;
-	};
-
 	//
-	// http://en.wikipedia.org/wiki/Octree
-	//
-	// TODO: Add support for BSP-trees, such as indoor objects inside the Octree.
-	class Octree
+	// An octree implementation of the spatial tree.
+	class Octree : public ISpatialTree
 	{
 		enum OctreeParts
 		{
@@ -46,56 +35,25 @@ namespace playstate
 
 		//
 		// Destructor
-		~Octree();
-
-		//
-		// Add a new renderable instance in this quad-tree
-		// @param item the item 
-		// @param boundingBox the objects bounding box
-		void Add(OctreeNode* node);
-
-		//
-		// Remove the supplied data object from the quadtree
-		// @param data the data we want to remove from the quad-tree.
-		void Remove(OctreeNode* node);
-		
-		//
-		// Search for items based on the supplied frustum. Visitor implementation will be called for each found item.
-		// @param frustum
-		// @param visitor
-		void FindItems(const Frustum& frustum, IOctreeVisitor* visitor) const;
-		
-		//
-		// Search for items based on the supplied boundingBox. Visitor implementation will be called for each found item.
-		// @param boundingBox
-		// @param visitor
-		void FindItems(const AABB& boundingBox, IOctreeVisitor* visitor) const;
+		virtual ~Octree();
 
 		//
 		// Clean up all items
 		void Clean();
 
-		//
-		// Invalidates a specific node. This usually means that the bounding-box has changed somehow - i.e. it needs to be moved inside the
-		// octree tree structure.
-		//
-		// @param node 
-		void Invalidate(OctreeNode* node);
+	// ISpatialTree
+	public:
+		virtual void Add(SpatialNode* node);
+		virtual void Remove(SpatialNode* node);
+		virtual void Find(const Frustum& frustum, ISpatialTreeVisitor* visitor) const;
+		virtual void Find(const AABB& boundingBox, ISpatialTreeVisitor* visitor) const;
+		virtual void Invalidate(SpatialNode* node);
 
 	private:
 		void Initialize(const AABB& boundingBox, uint32 level, uint32 maxLevel);
-
-		//
-		bool Insert(OctreeNode* node);
-
-		//
-		// Checks if this octree is a leaf tree-node.
+		bool Insert(SpatialNode* node);
 		bool IsLeafNode() const;
-
-		//
-		// Method called if the current octree is completely inside the view - i.e. no collision detection is needed.
-		// @param visitor
-		void IterateAndVisit(IOctreeVisitor* visitor) const;
+		void IterateAndVisit(ISpatialTreeVisitor* visitor) const;
 
 	private:
 		AABB mBoundingBox;
@@ -106,6 +64,6 @@ namespace playstate
 		Octree* mTop;
 
 	private:
-		LinkedList<OctreeNode> mNodes;
+		LinkedList<SpatialNode> mNodes;
 	};
 }

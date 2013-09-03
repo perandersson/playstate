@@ -3,7 +3,7 @@
 #include "render_processor_factory.h"
 using namespace playstate;
 
-Renderable::Renderable() : OctreeNode(), mAttachedToProcessor(NULL), mVisible(false)
+Renderable::Renderable() : SpatialNode(), mAttachedToProcessor(NULL), mVisible(false)
 {
 }
 

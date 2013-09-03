@@ -85,8 +85,8 @@
     <ClCompile Include="..\..\playstate\playstate\scene\scene.cpp" />
     <ClCompile Include="..\..\playstate\playstate\scene\scene_group.cpp" />
     <ClCompile Include="..\..\playstate\playstate\scene\scene_node.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\scene\spatial_node.cpp" />
     <ClCompile Include="..\..\playstate\playstate\scene\tree\octree.cpp" />
-    <ClCompile Include="..\..\playstate\playstate\scene\tree\octree_node.cpp" />
     <ClCompile Include="..\..\playstate\playstate\script\exception\script_exception.cpp" />
     <ClCompile Include="..\..\playstate\playstate\script\exception\script_not_found_exception.cpp" />
     <ClCompile Include="..\..\playstate\playstate\script\luam.cpp" />
@@ -216,8 +216,9 @@
     <ClInclude Include="..\..\playstate\playstate\scene\scene.h" />
     <ClInclude Include="..\..\playstate\playstate\scene\scene_group.h" />
     <ClInclude Include="..\..\playstate\playstate\scene\scene_node.h" />
+    <ClInclude Include="..\..\playstate\playstate\scene\spatial_node.h" />
+    <ClInclude Include="..\..\playstate\playstate\scene\spatial_tree.h" />
     <ClInclude Include="..\..\playstate\playstate\scene\tree\octree.h" />
-    <ClInclude Include="..\..\playstate\playstate\scene\tree\octree_node.h" />
     <ClInclude Include="..\..\playstate\playstate\script\exception\script_exception.h" />
     <ClInclude Include="..\..\playstate\playstate\script\exception\script_not_found_exception.h" />
     <ClInclude Include="..\..\playstate\playstate\script\lambda.h" />

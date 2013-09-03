@@ -3,14 +3,14 @@
 using namespace playstate;
 
 Octree::Octree(const AABB& boundingBox, uint32 level, uint32 maxLevel, Octree* top)
-	: mBoundingBox(boundingBox), mMaxLevel(maxLevel), mLevel(level), mTop(top), mNodes(offsetof(OctreeNode, OctreeLink))
+	: mBoundingBox(boundingBox), mMaxLevel(maxLevel), mLevel(level), mTop(top), mNodes(offsetof(SpatialNode, SpatialNodeLink))
 {
 	assert_not_null(top);
 	Initialize(boundingBox, level, maxLevel);
 }
 
 Octree::Octree(uint32 maxLevel)
-	: mBoundingBox(AABB(Vector3(0, 0, 0), 1000.0f, 1000.0f, 1000.0f)), mMaxLevel(maxLevel), mLevel(0), mTop(0), mNodes(offsetof(OctreeNode, OctreeLink))
+	: mBoundingBox(AABB(Vector3(0, 0, 0), 1000.0f, 1000.0f, 1000.0f)), mMaxLevel(maxLevel), mLevel(0), mTop(0), mNodes(offsetof(SpatialNode, SpatialNodeLink))
 {
 	mTop = this;
 	Initialize(mBoundingBox, mLevel, maxLevel);
@@ -21,7 +21,7 @@ Octree::~Octree()
 	Clean();
 }
 
-void Octree::Add(OctreeNode* node)
+void Octree::Add(SpatialNode* node)
 {
 	assert_not_null(node);
 	Insert(node);
@@ -32,14 +32,17 @@ bool Octree::IsLeafNode() const
 	return mLevel >= mMaxLevel;
 }
 
-void Octree::Remove(OctreeNode* node)
+void Octree::Remove(SpatialNode* node)
 {
 	assert_not_null(node);
-	Octree* nodeInTree = node->GetOctree();
-	nodeInTree->mNodes.Remove(node);
+	ISpatialTree* nodeInTree = node->GetTree();
+	if(nodeInTree == this)
+		mNodes.Remove(node);
+	else
+		nodeInTree->Remove(node);
 }
 		
-void Octree::FindItems(const Frustum& frustum, IOctreeVisitor* visitor) const
+void Octree::Find(const Frustum& frustum, ISpatialTreeVisitor* visitor) const
 {
 	assert_not_null(visitor);
 
@@ -53,26 +56,26 @@ void Octree::FindItems(const Frustum& frustum, IOctreeVisitor* visitor) const
 	}
 		
 	if(!IsLeafNode()) {		
-		mParts[TOP_FRONT_LEFT]->FindItems(frustum, visitor);
-		mParts[TOP_FRONT_RIGHT]->FindItems(frustum, visitor);
-		mParts[TOP_BACK_LEFT]->FindItems(frustum, visitor);
-		mParts[TOP_BACK_RIGHT]->FindItems(frustum, visitor);
-		mParts[BOTTOM_FRONT_LEFT]->FindItems(frustum, visitor);
-		mParts[BOTTOM_FRONT_RIGHT]->FindItems(frustum, visitor);
-		mParts[BOTTOM_BACK_LEFT]->FindItems(frustum, visitor);
-		mParts[BOTTOM_BACK_RIGHT]->FindItems(frustum, visitor);
+		mParts[TOP_FRONT_LEFT]->Find(frustum, visitor);
+		mParts[TOP_FRONT_RIGHT]->Find(frustum, visitor);
+		mParts[TOP_BACK_LEFT]->Find(frustum, visitor);
+		mParts[TOP_BACK_RIGHT]->Find(frustum, visitor);
+		mParts[BOTTOM_FRONT_LEFT]->Find(frustum, visitor);
+		mParts[BOTTOM_FRONT_RIGHT]->Find(frustum, visitor);
+		mParts[BOTTOM_BACK_LEFT]->Find(frustum, visitor);
+		mParts[BOTTOM_BACK_RIGHT]->Find(frustum, visitor);
 	}
 	
-	OctreeNode* node = mNodes.First();
+	SpatialNode* node = mNodes.First();
 	while(node != NULL) {
-		OctreeNode* tmp = node->OctreeLink.Tail;
+		SpatialNode* tmp = node->SpatialNodeLink.Tail;
 		if(frustum.IsColliding(node->GetBoundingBox()) != AABB::OUTSIDE)
 			visitor->Visit(node);
 		node = tmp;
 	}
 }
 		
-void Octree::FindItems(const AABB& boundingBox, IOctreeVisitor* visitor) const
+void Octree::Find(const AABB& boundingBox, ISpatialTreeVisitor* visitor) const
 {
 	assert_not_null(visitor);
 
@@ -86,30 +89,30 @@ void Octree::FindItems(const AABB& boundingBox, IOctreeVisitor* visitor) const
 	}
 
 	if(!IsLeafNode()) {
-		mParts[TOP_FRONT_LEFT]->FindItems(boundingBox, visitor);
-		mParts[TOP_FRONT_RIGHT]->FindItems(boundingBox, visitor);
-		mParts[TOP_BACK_LEFT]->FindItems(boundingBox, visitor);
-		mParts[TOP_BACK_RIGHT]->FindItems(boundingBox, visitor);
-		mParts[BOTTOM_FRONT_LEFT]->FindItems(boundingBox, visitor);
-		mParts[BOTTOM_FRONT_RIGHT]->FindItems(boundingBox, visitor);
-		mParts[BOTTOM_BACK_LEFT]->FindItems(boundingBox, visitor);
-		mParts[BOTTOM_BACK_RIGHT]->FindItems(boundingBox, visitor);
+		mParts[TOP_FRONT_LEFT]->Find(boundingBox, visitor);
+		mParts[TOP_FRONT_RIGHT]->Find(boundingBox, visitor);
+		mParts[TOP_BACK_LEFT]->Find(boundingBox, visitor);
+		mParts[TOP_BACK_RIGHT]->Find(boundingBox, visitor);
+		mParts[BOTTOM_FRONT_LEFT]->Find(boundingBox, visitor);
+		mParts[BOTTOM_FRONT_RIGHT]->Find(boundingBox, visitor);
+		mParts[BOTTOM_BACK_LEFT]->Find(boundingBox, visitor);
+		mParts[BOTTOM_BACK_RIGHT]->Find(boundingBox, visitor);
 	}
 
-	OctreeNode* node = mNodes.First();
+	SpatialNode* node = mNodes.First();
 	while(node != NULL) {
-		OctreeNode* tmp = node->OctreeLink.Tail;
+		SpatialNode* tmp = node->SpatialNodeLink.Tail;
 		if(node->GetBoundingBox().IsColliding(boundingBox) != AABB::OUTSIDE)
 			visitor->Visit(node);
 		node = tmp;
 	}
 }
 
-void Octree::IterateAndVisit(IOctreeVisitor* visitor) const
+void Octree::IterateAndVisit(ISpatialTreeVisitor* visitor) const
 {
-	OctreeNode* node = mNodes.First();
+	SpatialNode* node = mNodes.First();
 	while(node != NULL) {
-		OctreeNode* tmp = node->OctreeLink.Tail;
+		SpatialNode* tmp = node->SpatialNodeLink.Tail;
 		visitor->Visit(node);
 		node = tmp;
 	}
@@ -138,7 +141,7 @@ void Octree::Clean()
 	}
 }
 	
-void Octree::Invalidate(OctreeNode* node)
+void Octree::Invalidate(SpatialNode* node)
 {
 	assert_not_null(node);
 
@@ -194,7 +197,7 @@ void Octree::Initialize(const AABB& boundingBox, uint32 level, uint32 maxLevel)
 		partWidth, partHeight, partDepth), level + 1, maxLevel, mTop);
 }
 
-bool Octree::Insert(OctreeNode* node)
+bool Octree::Insert(SpatialNode* node)
 {
 	// Only place the node inside the inner-most octree that's fully contain it.
 	// If the item is partially inside an octree then add it to it's parent octree instead,
@@ -223,6 +226,6 @@ bool Octree::Insert(OctreeNode* node)
 	}
 
 	mNodes.AddLast(node);
-	node->AttachToOctree(this);
+	node->AttachToTree(this);
 	return true;
 }

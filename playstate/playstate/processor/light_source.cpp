@@ -3,7 +3,7 @@
 #include "light_source_processor_factory.h"
 using namespace playstate;
 
-LightSource::LightSource() : OctreeNode()
+LightSource::LightSource() : SpatialNode()
 {
 }
 
@@ -19,5 +19,5 @@ void LightSource::Attach(ILightSourceProcessor* processor)
 void LightSource::Detach()
 {
 	LightSourceLink.Unlink();
-	OctreeLink.Unlink();
+	DetachFromTree();
 }
