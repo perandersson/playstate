@@ -6,18 +6,17 @@ using namespace playstate;
 SceneGroup::SceneGroup()
 	: mUpdateProcessor(IUpdateProcessorFactory::Get().Create()),
 	mRenderProcessor(IRenderProcessorFactory::Get().Create()),
-	mLightSourceProcessor(ILightSourceProcessorFactory::Get().Create()), mUpdating(false), mSceneNodes(offsetof(SceneNode, NodeLink))
+	mLightSourceProcessor(ILightSourceProcessorFactory::Get().Create()), 
+	mUpdating(false), mSceneNodes(offsetof(SceneNode, NodeLink))
 {
 	assert(mUpdateProcessor != NULL && "IUpdateProcessorFactory did not create a valid update processor");
 	assert(mRenderProcessor != NULL && "IRenderProcessorFactory did not create a valid render processor");
 	assert(mLightSourceProcessor != NULL && "ILightSourceProcessorFactory did not create a valid light source processor");
 }
 
-SceneGroup::SceneGroup(IUpdateProcessorFactory& updateProcessFactory, IRenderProcessorFactory& renderProcessFactory,
-	ILightSourceProcessorFactory& lightSourceProcessorFactory)
-	: mUpdateProcessor(updateProcessFactory.Create()),
-	mRenderProcessor(renderProcessFactory.Create()),
-	mLightSourceProcessor(lightSourceProcessorFactory.Create()), mUpdating(false), mSceneNodes(offsetof(SceneNode, NodeLink))
+SceneGroup::SceneGroup(IUpdateProcessor* updateProcessor, IRenderProcessor* renderProcessor, ILightSourceProcessor* lightSourceProcessor)
+	: mUpdateProcessor(updateProcessor), mRenderProcessor(renderProcessor), mLightSourceProcessor(lightSourceProcessor), 
+	mUpdating(false), mSceneNodes(offsetof(SceneNode, NodeLink))
 {
 	assert(mUpdateProcessor != NULL && "IUpdateProcessorFactory did not create a valid update processor");
 	assert(mRenderProcessor != NULL && "IRenderProcessorFactory did not create a valid render processor");

@@ -18,8 +18,8 @@ namespace playstate
 
 	public:
 		SceneGroup();
-		SceneGroup(IUpdateProcessorFactory& updateProcessFactory, IRenderProcessorFactory& renderProcessFactory, 
-			ILightSourceProcessorFactory& lightSourceProcessorFactory);
+		SceneGroup(IUpdateProcessor* updateProcessor, IRenderProcessor* renderProcessor, 
+			ILightSourceProcessor* lightSourceProcessor);
 		virtual ~SceneGroup();
 
 		//
