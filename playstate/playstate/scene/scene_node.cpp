@@ -85,7 +85,32 @@ void SceneNode::FireEvent(uint32 typeID, uint32 messageID)
 	while(component != NULL) {
 		Component* next = component->ComponentLink.Tail;
 		component->NotifyOnEvent(typeID, messageID);
-		component = component->ComponentLink.Tail;
+		component = next;
+	}
+
+	SceneNode* child = mChildren.First();
+	while(child != NULL) {
+		child->FireEvent(typeID, messageID);
+		child = child->NodeLink.Tail;
+	}
+}
+
+void SceneNode::FireEvent(uint32 typeID, uint32 messageID, type_mask typeMask)
+{
+	if(!BIT_ISSET(mTypeMask, typeMask))
+		return;
+
+	Component* component = mComponents.First();
+	while(component != NULL) {
+		Component* next = component->ComponentLink.Tail;
+		component->NotifyOnEvent(typeID, messageID);
+		component = next;
+	}
+
+	SceneNode* child = mChildren.First();
+	while(child != NULL) {
+		child->FireEvent(typeID, messageID, typeMask);
+		child = child->NodeLink.Tail;
 	}
 }
 

@@ -50,6 +50,15 @@ namespace playstate
 		// @param typeID A unique event type ID
 		// @param messageID A unique message ID for the current type ID
 		void FireEvent(uint32 typeID, uint32 messageID);
+		
+		//
+		// Fire an event receivable from this nodes component and child nodes. 
+		// Useful for sending global events.
+		//
+		// @param typeID A unique event type ID
+		// @param messageID A unique message ID for the current type ID
+		// @param typeMask Only nodes of a specific type receives this event
+		void FireEvent(uint32 typeID, uint32 messageID, type_mask typeMask);
 
 		//
 		// Sets the position of this node.

@@ -7,7 +7,7 @@ SceneGroup::SceneGroup()
 	: mUpdateProcessor(IUpdateProcessorFactory::Get().Create()),
 	mRenderProcessor(IRenderProcessorFactory::Get().Create()),
 	mLightSourceProcessor(ILightSourceProcessorFactory::Get().Create()), 
-	mUpdating(false), mSceneNodes(offsetof(SceneNode, NodeLink))
+	mSceneNodes(offsetof(SceneNode, NodeLink))
 {
 	assert(mUpdateProcessor != NULL && "IUpdateProcessorFactory did not create a valid update processor");
 	assert(mRenderProcessor != NULL && "IRenderProcessorFactory did not create a valid render processor");
@@ -16,7 +16,7 @@ SceneGroup::SceneGroup()
 
 SceneGroup::SceneGroup(IUpdateProcessor* updateProcessor, IRenderProcessor* renderProcessor, ILightSourceProcessor* lightSourceProcessor)
 	: mUpdateProcessor(updateProcessor), mRenderProcessor(renderProcessor), mLightSourceProcessor(lightSourceProcessor), 
-	mUpdating(false), mSceneNodes(offsetof(SceneNode, NodeLink))
+	mSceneNodes(offsetof(SceneNode, NodeLink))
 {
 	assert(mUpdateProcessor != NULL && "IUpdateProcessorFactory did not create a valid update processor");
 	assert(mRenderProcessor != NULL && "IRenderProcessorFactory did not create a valid render processor");
@@ -25,8 +25,6 @@ SceneGroup::SceneGroup(IUpdateProcessor* updateProcessor, IRenderProcessor* rend
 
 SceneGroup::~SceneGroup()
 {
-	assert(mUpdating == false && "ISSUE #9: You are not allowed to delete this scene group from a Tickable component at the moment");
-
 	mSceneNodes.DeleteAll();
 
 	if(mUpdateProcessor != NULL) {
@@ -74,17 +72,14 @@ void SceneGroup::FireEvent(uint32 typeID, uint32 messageID, type_mask typeMask)
 	SceneNode* node = mSceneNodes.First();
 	while(node != NULL) {
 		SceneNode* next = node->NodeLink.Tail;
-		if(BIT_ISSET(node->GetTypeMask(), typeMask))
-			node->FireEvent(typeID, messageID);
+		node->FireEvent(typeID, messageID, typeMask);
 		node = next;
 	}
 }
 
 void SceneGroup::Update()
 {
-	mUpdating = true;
 	mUpdateProcessor->Update();
-	mUpdating = false;
 }
 
 void SceneGroup::AttachUpdatable(IUpdatable* updatable)
