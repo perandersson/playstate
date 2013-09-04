@@ -18,8 +18,8 @@ namespace playstate
 
 	public:
 		SceneGroup();
-		SceneGroup(IUpdateProcessor* updateProcessor, IRenderProcessor* renderProcessor, 
-			ILightSourceProcessor* lightSourceProcessor);
+		SceneGroup(std::auto_ptr<IUpdateProcessor> updateProcessor, std::auto_ptr<IRenderProcessor> renderProcessor, 
+			std::auto_ptr<ILightSourceProcessor> lightSourceProcessor);
 		virtual ~SceneGroup();
 
 		//
@@ -71,9 +71,9 @@ namespace playstate
 
 	private:
 		LinkedList<SceneNode> mSceneNodes;
-		IUpdateProcessor* mUpdateProcessor;
-		IRenderProcessor* mRenderProcessor;
-		ILightSourceProcessor* mLightSourceProcessor;
+		std::auto_ptr<IUpdateProcessor> mUpdateProcessor;
+		std::auto_ptr<IRenderProcessor> mRenderProcessor;
+		std::auto_ptr<ILightSourceProcessor> mLightSourceProcessor;
 	};
 	
 	//

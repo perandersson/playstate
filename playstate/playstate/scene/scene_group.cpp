@@ -9,38 +9,24 @@ SceneGroup::SceneGroup()
 	mLightSourceProcessor(ILightSourceProcessorFactory::Get().Create()), 
 	mSceneNodes(offsetof(SceneNode, NodeLink))
 {
-	assert(mUpdateProcessor != NULL && "IUpdateProcessorFactory did not create a valid update processor");
-	assert(mRenderProcessor != NULL && "IRenderProcessorFactory did not create a valid render processor");
-	assert(mLightSourceProcessor != NULL && "ILightSourceProcessorFactory did not create a valid light source processor");
+	assert(mUpdateProcessor.get() != NULL && "IUpdateProcessorFactory did not create a valid update processor");
+	assert(mRenderProcessor.get() != NULL && "IRenderProcessorFactory did not create a valid render processor");
+	assert(mLightSourceProcessor.get() != NULL && "ILightSourceProcessorFactory did not create a valid light source processor");
 }
 
-SceneGroup::SceneGroup(IUpdateProcessor* updateProcessor, IRenderProcessor* renderProcessor, ILightSourceProcessor* lightSourceProcessor)
+SceneGroup::SceneGroup(std::auto_ptr<IUpdateProcessor> updateProcessor, std::auto_ptr<IRenderProcessor> renderProcessor, 
+			std::auto_ptr<ILightSourceProcessor> lightSourceProcessor)
 	: mUpdateProcessor(updateProcessor), mRenderProcessor(renderProcessor), mLightSourceProcessor(lightSourceProcessor), 
 	mSceneNodes(offsetof(SceneNode, NodeLink))
 {
-	assert(mUpdateProcessor != NULL && "IUpdateProcessorFactory did not create a valid update processor");
-	assert(mRenderProcessor != NULL && "IRenderProcessorFactory did not create a valid render processor");
-	assert(mLightSourceProcessor != NULL && "ILightSourceProcessorFactory did not create a valid light source processor");
+	assert(mUpdateProcessor.get() != NULL && "IUpdateProcessorFactory did not create a valid update processor");
+	assert(mRenderProcessor.get() != NULL && "IRenderProcessorFactory did not create a valid render processor");
+	assert(mLightSourceProcessor.get() != NULL && "ILightSourceProcessorFactory did not create a valid light source processor");
 }
 
 SceneGroup::~SceneGroup()
 {
 	mSceneNodes.DeleteAll();
-
-	if(mUpdateProcessor != NULL) {
-		delete mUpdateProcessor;
-		mUpdateProcessor = NULL;
-	}
-
-	if(mRenderProcessor != NULL) {
-		delete mRenderProcessor;
-		mRenderProcessor = NULL;
-	}
-
-	if(mLightSourceProcessor != NULL) {
-		delete mLightSourceProcessor;
-		mLightSourceProcessor = NULL;
-	}
 }
 
 void SceneGroup::AddNode(SceneNode* node)
