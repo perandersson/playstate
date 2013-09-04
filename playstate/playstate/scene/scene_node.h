@@ -117,11 +117,11 @@ namespace playstate
 		
 		//
 		// Add a node
-		void AddNode(SceneNode* node);
+		void AddChild(SceneNode* node);
 
 		//
 		// 
-		void RemoveNode(SceneNode* node);
+		void RemoveChild(SceneNode* node);
 
 		//
 		// Notifies this node that it's been attached to the supplied group
@@ -184,8 +184,8 @@ namespace playstate
 	extern int SceneNode_SetPosition(lua_State* L);
 	extern int SceneNode_Translate(lua_State* L);
 	extern int SceneNode_SetRotatation(lua_State* L);
-	extern int SceneNode_AddNode(lua_State* L);
-	extern int SceneNode_RemoveNode(lua_State* L);
+	extern int SceneNode_AddChild(lua_State* L);
+	extern int SceneNode_RemoveChild(lua_State* L);
 	extern int SceneNode_FireEvent(lua_State* L);
 	static luaL_Reg SceneNode_Methods[] = {
 		{ LUA_CONSTRUCTOR, SceneNode_Factory },
@@ -197,8 +197,8 @@ namespace playstate
 		{ "SetPosition", SceneNode_SetPosition },
 		{ "Translate", SceneNode_Translate },
 		{ "SetRotation", SceneNode_SetRotatation },
-		{ "AddNode", SceneNode_AddNode },
-		{ "RemoveNode", SceneNode_RemoveNode },
+		{ "AddChild", SceneNode_AddChild },
+		{ "RemoveChild", SceneNode_RemoveChild },
 		{ "FireEvent", SceneNode_FireEvent },
 		{ NULL, NULL }
 	};

@@ -1,28 +1,7 @@
-local MovePlayerBehaviour = require "demo.behaviours.moveplayerbehaviour"
-local FollowCameraBehaviour = require "demo.behaviours.followcamerabehaviour"
 local SinusLightBehaviour = require "demo.behaviours.sinuslightbehaviour"
-local PlayerMovementSoundEffect = require "demo.behaviours.playermovementsoundeffect"
 
 -- The group name.
 level1 = SceneGroup()
-
--- The player object. Can be moved using keyboard and mouse
-local playerModel = Model.Load("/demo/models/player/player.obj")
-local footsteps = {
-	SoundEffect.Load("/demo/sound/effects/footstep0.wav"),
-	SoundEffect.Load("/demo/sound/effects/footstep1.wav")
-}
-local player1 = SceneNode()
-player1:AddComponent(MovePlayerBehaviour(10.0))
-player1:AddComponent(FollowCameraBehaviour())
-player1:AddComponent(RenderStaticModel(playerModel))
-player1:AddComponent(PlayerMovementSoundEffect(footsteps))
-player1:SetPosition(0, 0, 10)
-level1:AddNode(player1)
-
-local playerColor = SceneNode()
-playerColor:AddComponent(PointLight({0.2, 0.5, 0.7, 1.0}, 10.0, 0.0, 0.0, 0.5))
-player1:AddNode(playerColor)
 
 local i = 0
 local j = 0
@@ -33,7 +12,7 @@ for i=0, 19 do
 		local node = SceneNode()
 		node:AddComponent(RenderStaticModel(chinalampModel))
 		node:SetPosition(i * 20, 0, j * 20)
-		level1:AddNode(node)
+		level1:AddChild(node)
 	end
 end
 
@@ -51,7 +30,7 @@ for i=0, 19 do
 		local quadricAttenuation = 0.5
 		node:AddComponent(PointLight(color, radius, constantAttenuation, linearAttenuation, quadricAttenuation))
 		node:AddComponent(SinusLightBehaviour(math.random(0, 100) / 100.0 * 5.0))
-		level1:AddNode(node)
+		level1:AddChild(node)
 	end
 end
 
@@ -62,7 +41,7 @@ for i=0, 19 do
 		local node = SceneNode()
 		node:AddComponent(RenderStaticModel(ground1))
 		node:SetPosition(i * 20, 0, j * 20)
-		level1:AddNode(node)
+		level1:AddChild(node)
 	end
 end
 

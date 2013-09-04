@@ -26,13 +26,13 @@ namespace playstate
 		// Adds the supplied scene node to this scene group instance
 		// 
 		// @param node The node we want to add
-		void AddNode(SceneNode* node);
+		void AddChild(SceneNode* node);
 
 		//
 		// Removes the supplied scene node from this scene group instance
 		//
 		// @param node The node we want to remove
-		void RemoveNode(SceneNode* node);
+		void RemoveChild(SceneNode* node);
 		
 		//
 		// Fire an event receivable from this groups child nodes. Useful for sending global events.
@@ -83,15 +83,15 @@ namespace playstate
 	extern int SceneGroup_Factory(lua_State* L);
 	extern int SceneGroup_Init(lua_State* L);
 	extern int SceneGroup_Load(lua_State* L);
-	extern int SceneGroup_AddNode(lua_State* L);
-	extern int SceneGroup_RemoveNode(lua_State* L);
+	extern int SceneGroup_AddChild(lua_State* L);
+	extern int SceneGroup_RemoveChild(lua_State* L);
 	extern int SceneGroup_FireEvent(lua_State* L);
 	static luaL_Reg SceneGroup_Methods[] = {
 		{ LUA_CONSTRUCTOR, SceneGroup_Factory },
 		{ LUA_INHERIT_CONSTRUCTOR, SceneGroup_Init },
 		{ "Load", SceneGroup_Load },
-		{ "AddNode", SceneGroup_AddNode },
-		{ "RemoveNode", SceneGroup_RemoveNode },
+		{ "AddChild", SceneGroup_AddChild },
+		{ "RemoveChild", SceneGroup_RemoveChild },
 		{ "FireEvent", SceneGroup_FireEvent },
 		{ NULL, NULL }
 	};

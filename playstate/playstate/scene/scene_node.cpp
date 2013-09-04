@@ -54,7 +54,7 @@ Component* SceneNode::GetComponent(type_mask typeMask)
 	return NULL;
 }
 
-void SceneNode::AddNode(SceneNode* node)
+void SceneNode::AddChild(SceneNode* node)
 {
 	assert_not_null(node);
 
@@ -69,7 +69,7 @@ void SceneNode::AddNode(SceneNode* node)
 	}
 }
 
-void SceneNode::RemoveNode(SceneNode* node)
+void SceneNode::RemoveChild(SceneNode* node)
 {
 	assert_not_null(node);
 	assert(node->mParent == this && "You are not allowed to remove another scene objects child node");
@@ -183,7 +183,7 @@ void SceneNode::UpdateModelMatrix()
 void SceneNode::RemoveFromScene()
 {
 	if(mSceneGroup != NULL)
-		mSceneGroup->RemoveNode(this);
+		mSceneGroup->RemoveChild(this);
 }
 
 void SceneNode::NodeAttachedToSceneGroup(SceneGroup* group)
@@ -338,12 +338,12 @@ namespace playstate
 		return 0;
 	}
 
-	int SceneNode_AddNode(lua_State* L)
+	int SceneNode_AddChild(lua_State* L)
 	{
 		SceneNode* child = luaM_popobject<SceneNode>(L);
 		SceneNode* parent = luaM_popobject<SceneNode>(L);
 		if(child != NULL && parent != NULL) {
-			parent->AddNode(child);
+			parent->AddChild(child);
 		} else {
 			luaM_printerror(L, "Expected: self<SceneNode>:AddNode(SceneNode)");
 		}
@@ -351,12 +351,12 @@ namespace playstate
 		return 0;
 	}
 
-	int SceneNode_RemoveNode(lua_State* L)
+	int SceneNode_RemoveChild(lua_State* L)
 	{
 		SceneNode* child = luaM_popobject<SceneNode>(L);
 		SceneNode* parent = luaM_popobject<SceneNode>(L);
 		if(child != NULL && parent != NULL) {
-			parent->RemoveNode(child);
+			parent->RemoveChild(child);
 		} else {
 			luaM_printerror(L, "Expected: self<SceneNode>:RemoveNode(SceneNode)");
 		}

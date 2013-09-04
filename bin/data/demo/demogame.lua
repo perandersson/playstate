@@ -32,6 +32,10 @@ function DemoGame:LoadContent()
 	-- Set ambient lighting on the scene.
 	Scene.SetAmbientLight({0.1, 0.1, 0.1})
 	
+	-- Add the player group
+	local playerGroup = SceneGroup.Load("/demo/levels/playergroup.lua")
+	Scene.AddSceneGroup(playerGroup)
+	
 	-- Start the first level
 	local level1 = SceneGroup.Load("/demo/levels/level1.lua")
 	Scene.AddSceneGroup(level1)

@@ -29,14 +29,14 @@ SceneGroup::~SceneGroup()
 	mSceneNodes.DeleteAll();
 }
 
-void SceneGroup::AddNode(SceneNode* node)
+void SceneGroup::AddChild(SceneNode* node)
 {
 	assert_not_null(node);
 	mSceneNodes.AddLast(node);
 	node->NodeAttachedToSceneGroup(this);
 }
 
-void SceneGroup::RemoveNode(SceneNode* node)
+void SceneGroup::RemoveChild(SceneNode* node)
 {
 	assert_not_null(node);
 	node->DetachingNodeFromSceneGroup(this);
@@ -170,22 +170,22 @@ int playstate::SceneGroup_Load(lua_State* L)
 	return 1;
 }
 
-int playstate::SceneGroup_AddNode(lua_State* L)
+int playstate::SceneGroup_AddChild(lua_State* L)
 {
 	SceneNode* node = luaM_popobject<SceneNode>(L);
 	SceneGroup* self = luaM_popobject<SceneGroup>(L);
 	if(self != NULL && node != NULL) {
-		self->AddNode(node);
+		self->AddChild(node);
 	}
 	return 0;
 }
 
-int playstate::SceneGroup_RemoveNode(lua_State* L)
+int playstate::SceneGroup_RemoveChild(lua_State* L)
 {
 	SceneNode* node = luaM_popobject<SceneNode>(L);
 	SceneGroup* self = luaM_popobject<SceneGroup>(L);
 	if(self != NULL && node != NULL) {
-		self->RemoveNode(node);
+		self->RemoveChild(node);
 	}
 	return 0;
 }
