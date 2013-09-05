@@ -2,7 +2,8 @@
 #include "scene_group.h"
 #include "../processor/processors/linked_list_update_processor.h"
 #include "../processor/processors/octree_light_source_processor.h"
-#include "../processor/processors/octree_render_processor.h"
+//#include "../processor/processors/octree_render_processor.h"
+#include "../processor/processors/quadtree_render_processor.h"
 #include "../script/script_system.h"
 using namespace playstate;
 
@@ -98,7 +99,7 @@ int playstate::SceneGroup_Factory(lua_State* L)
 {
 	std::auto_ptr<IUpdateProcessor> up(new LinkedListUpdateProcessor());
 	std::auto_ptr<ILightSourceProcessor> lp(new OctreeLightSourceProcessor());
-	std::auto_ptr<IRenderProcessor> rp(new OctreeRenderProcessor());
+	std::auto_ptr<IRenderProcessor> rp(new QuadTreeRenderProcessor());
 
 	SceneGroup* sceneGroup = new SceneGroup(up, rp, lp);
 	luaM_pushobject(L, "SceneGroup", sceneGroup);
@@ -114,7 +115,7 @@ int playstate::SceneGroup_Init(lua_State* L)
 
 	std::auto_ptr<IUpdateProcessor> up(new LinkedListUpdateProcessor());
 	std::auto_ptr<ILightSourceProcessor> lp(new OctreeLightSourceProcessor());
-	std::auto_ptr<IRenderProcessor> rp(new OctreeRenderProcessor());
+	std::auto_ptr<IRenderProcessor> rp(new QuadTreeRenderProcessor());
 
 	SceneGroup* sceneGroup = new SceneGroup(up, rp, lp);
 	luaM_setinstance(L, sceneGroup);

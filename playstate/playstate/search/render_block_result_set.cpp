@@ -43,7 +43,8 @@ void RenderBlockResultSet::Sort(IArraySorter<RenderBlock*>* sorter)
 		}
 		mCurrentMemoryBlock = data;
 	}
-	sorter->Sort(mSortedRenderBlocks, mMemoryPool.GetSize());
+	if(mSortedRenderBlocks != NULL)
+		sorter->Sort(mSortedRenderBlocks, mMemoryPool.GetSize());
 }
 
 RenderBlock** RenderBlockResultSet::GetRenderBlocks()

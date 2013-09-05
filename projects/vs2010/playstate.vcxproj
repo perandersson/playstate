@@ -52,6 +52,7 @@
     <ClCompile Include="..\..\playstate\playstate\processor\processors\linked_list_update_processor.cpp" />
     <ClCompile Include="..\..\playstate\playstate\processor\processors\octree_render_processor.cpp" />
     <ClCompile Include="..\..\playstate\playstate\processor\processors\octree_light_source_processor.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\processor\processors\quadtree_render_processor.cpp" />
     <ClCompile Include="..\..\playstate\playstate\processor\renderable.cpp" />
     <ClCompile Include="..\..\playstate\playstate\processor\tickable.cpp" />
     <ClCompile Include="..\..\playstate\playstate\processor\updatable.cpp" />
@@ -84,6 +85,8 @@
     <ClCompile Include="..\..\playstate\playstate\scene\scene_node.cpp" />
     <ClCompile Include="..\..\playstate\playstate\scene\spatial_node.cpp" />
     <ClCompile Include="..\..\playstate\playstate\scene\tree\octree.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\scene\tree\quadtree.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\scene\tree\quadtree_node.cpp" />
     <ClCompile Include="..\..\playstate\playstate\script\exception\script_exception.cpp" />
     <ClCompile Include="..\..\playstate\playstate\script\exception\script_not_found_exception.cpp" />
     <ClCompile Include="..\..\playstate\playstate\script\luam.cpp" />
@@ -169,6 +172,7 @@
     <ClInclude Include="..\..\playstate\playstate\processor\processors\linked_list_update_processor.h" />
     <ClInclude Include="..\..\playstate\playstate\processor\processors\octree_render_processor.h" />
     <ClInclude Include="..\..\playstate\playstate\processor\processors\octree_light_source_processor.h" />
+    <ClInclude Include="..\..\playstate\playstate\processor\processors\quadtree_render_processor.h" />
     <ClInclude Include="..\..\playstate\playstate\processor\renderable.h" />
     <ClInclude Include="..\..\playstate\playstate\processor\render_processor.h" />
     <ClInclude Include="..\..\playstate\playstate\processor\tickable.h" />
@@ -216,6 +220,8 @@
     <ClInclude Include="..\..\playstate\playstate\scene\spatial_node.h" />
     <ClInclude Include="..\..\playstate\playstate\scene\spatial_tree.h" />
     <ClInclude Include="..\..\playstate\playstate\scene\tree\octree.h" />
+    <ClInclude Include="..\..\playstate\playstate\scene\tree\quadtree.h" />
+    <ClInclude Include="..\..\playstate\playstate\scene\tree\quadtree_node.h" />
     <ClInclude Include="..\..\playstate\playstate\script\exception\script_exception.h" />
     <ClInclude Include="..\..\playstate\playstate\script\exception\script_not_found_exception.h" />
     <ClInclude Include="..\..\playstate\playstate\script\lambda.h" />

@@ -24,6 +24,8 @@ namespace playstate
 			NUM_PARTS
 		};
 
+		static const uint32 MaxItems = 25U;
+
 	protected:
 		Octree(const AABB& boundingBox, uint32 level, uint32 maxLevel, Octree* top);
 		
@@ -43,7 +45,7 @@ namespace playstate
 
 	// ISpatialTree
 	public:
-		virtual void Add(SpatialNode* node);
+		virtual bool Add(SpatialNode* node);
 		virtual void Remove(SpatialNode* node);
 		virtual void Find(const Frustum& frustum, ISpatialTreeVisitor* visitor) const;
 		virtual void Find(const AABB& boundingBox, ISpatialTreeVisitor* visitor) const;
@@ -52,7 +54,13 @@ namespace playstate
 	private:
 		void Initialize(const AABB& boundingBox, uint32 level, uint32 maxLevel);
 		bool Insert(SpatialNode* node);
-		bool IsLeafNode() const;
+
+		//
+		// @return TRUE if this octree instance is a leaf node.
+		inline bool IsLeafNode() const {
+			return mLevel >= mMaxLevel;
+		}
+
 		void IterateAndVisit(ISpatialTreeVisitor* visitor) const;
 
 	private:

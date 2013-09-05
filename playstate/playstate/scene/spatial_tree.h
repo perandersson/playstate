@@ -26,7 +26,7 @@ namespace playstate
 		// Add a new spatial node to this tree
 		//
 		// @param node the node
-		virtual void Add(SpatialNode* node) = 0;
+		virtual bool Add(SpatialNode* node) = 0;
 
 		//
 		// Remove the spatial node from this tree

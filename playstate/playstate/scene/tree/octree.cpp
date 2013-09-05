@@ -21,15 +21,11 @@ Octree::~Octree()
 	Clean();
 }
 
-void Octree::Add(SpatialNode* node)
+bool Octree::Add(SpatialNode* node)
 {
 	assert_not_null(node);
 	Insert(node);
-}
-
-bool Octree::IsLeafNode() const
-{
-	return mLevel >= mMaxLevel;
+	return true;
 }
 
 void Octree::Remove(SpatialNode* node)
