@@ -1,31 +1,32 @@
 #include "../../memory/memory.h"
-#include "octree_light_source_processor.h"
+#include "quadtree_light_source_processor.h"
 #include "../../types.h"
 using namespace playstate;
 
-OctreeLightSourceProcessor::OctreeLightSourceProcessor() : mOctree(3), mLightSources(offsetof(LightSource, LightSourceLink))
+QuadTreeLightSourceProcessor::QuadTreeLightSourceProcessor() 
+	: mQuadTree(AABB(Vector3(500.f, 0, 500.f), 1100.0f, 1100.0f, 1100.0f), 3), mLightSources(offsetof(LightSource, LightSourceLink))
 {
 }
 
-OctreeLightSourceProcessor::~OctreeLightSourceProcessor()
+QuadTreeLightSourceProcessor::~QuadTreeLightSourceProcessor()
 {
 	mLightSources.DeleteAll();
 }
 
-void OctreeLightSourceProcessor::AttachLightSource(LightSource* lightSource)
+void QuadTreeLightSourceProcessor::AttachLightSource(LightSource* lightSource)
 {
 	assert_not_null(lightSource);
 
 	mLightSources.AddLast(lightSource);
-	mOctree.Add(lightSource);
+	mQuadTree.Add(lightSource);
 }
 
-void OctreeLightSourceProcessor::DetachLightSource(LightSource* lightSource)
+void QuadTreeLightSourceProcessor::DetachLightSource(LightSource* lightSource)
 {
 	assert_not_null(lightSource);
 
 	mLightSources.Remove(lightSource);
-	mOctree.Remove(lightSource);
+	mQuadTree.Remove(lightSource);
 }
 
 class LightSourceEventHandlerVisitor : public ISpatialTreeVisitor
@@ -56,9 +57,9 @@ private:
 	bool mFoundResults;
 };
 
-bool OctreeLightSourceProcessor::Find(const FindQuery& query, LightSourceResultSet* target) const
+bool QuadTreeLightSourceProcessor::Find(const FindQuery& query, LightSourceResultSet* target) const
 {
 	LightSourceEventHandlerVisitor visitor(target);
-	mOctree.Find(query.Camera->GetViewFrustum(), &visitor);
+	mQuadTree.Find(query.Camera->GetViewFrustum(), &visitor);
 	return visitor.HasFoundResults();
 }

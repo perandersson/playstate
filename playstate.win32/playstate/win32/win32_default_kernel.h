@@ -6,9 +6,6 @@
 #include <string>
 
 #include <playstate/logging/console/console_logger.h>
-#include <playstate/processor/processors/linked_list_update_processor.h>
-#include <playstate/processor/processors/octree_light_source_processor.h>
-#include <playstate/processor/processors/octree_render_processor.h>
 #include <playstate/sound/openal/openal_sound_engine.h>
 
 // TODO: Interface these services
