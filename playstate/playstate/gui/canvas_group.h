@@ -21,7 +21,7 @@ namespace playstate
 
 	public:
 		CanvasGroup();
-		CanvasGroup(IUpdateProcessorFactory& updateProcessorFactory);
+		CanvasGroup(std::auto_ptr<IUpdateProcessor> updateProcessor);
 		virtual ~CanvasGroup();
 
 		//
@@ -66,7 +66,7 @@ namespace playstate
 
 	private:
 		LinkedList<GuiWidget> mWidgets;
-		IUpdateProcessor* mUpdateProcessor;
+		std::auto_ptr<IUpdateProcessor> mUpdateProcessor;
 
 	private:
 		Vector2 mPosition;

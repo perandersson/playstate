@@ -27,15 +27,6 @@ TEST_SUITE(Scene)
 		std::vector<Renderable*> items;
 	};
 
-	class MockRenderProcessorFactory : public IRenderProcessorFactory
-	{
-	public:
-		virtual IRenderProcessor* Create() const
-		{
-			return new MockRenderProcessor();
-		}
-	};
-
 	class MockUpdateProcessor : public IUpdateProcessor
 	{
 	public:
@@ -60,15 +51,6 @@ TEST_SUITE(Scene)
 		}
 	};
 
-	class MockUpdateProcessFactory : public IUpdateProcessorFactory
-	{
-	public:
-		virtual IUpdateProcessor* Create() const
-		{
-			return new MockUpdateProcessor();
-		}
-	};
-
 	class MockLightSourceProcessor : public ILightSourceProcessor
 	{
 	public:
@@ -83,15 +65,6 @@ TEST_SUITE(Scene)
 		virtual bool Find(const FindQuery& query, LightSourceResultSet* target) const
 		{
 			return true;
-		}
-	};
-
-	class MockLightSourceProcessorFactory : public ILightSourceProcessorFactory
-	{
-	public:
-		virtual ILightSourceProcessor* Create() const
-		{
-			return new MockLightSourceProcessor();
 		}
 	};
 
@@ -132,17 +105,17 @@ TEST_SUITE(Scene)
 
 	UNIT_TEST(Scene_FindRenderableItems)
 	{
-		MockUpdateProcessFactory updateProcessorFactory;
-		MockRenderProcessorFactory renderProcessorFactory;
-		MockLightSourceProcessorFactory lightSourceProcessorFactory;
+		std::auto_ptr<IUpdateProcessor> up(new MockUpdateProcessor());
+		std::auto_ptr<IRenderProcessor> rp(new MockRenderProcessor());
+		std::auto_ptr<ILightSourceProcessor> lp(new MockLightSourceProcessor());
 
 		Scene scene;
-		SceneGroup* group = new SceneGroup(updateProcessorFactory, renderProcessorFactory, lightSourceProcessorFactory);
+		SceneGroup* group = new SceneGroup(up, rp, lp);
 		SceneNode* node1 = new SceneNode();
-		group->AddNode(node1);
+		group->AddChild(node1);
 		node1->AddComponent(new MockRenderableComponent());
 		SceneNode* node2 = new SceneNode();
-		group->AddNode(node2);
+		group->AddChild(node2);
 		scene.AddSceneGroup(group);
 	
 		const FindQuery query = { NULL, 0 };

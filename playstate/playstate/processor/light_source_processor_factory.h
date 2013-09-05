@@ -27,17 +27,4 @@ namespace playstate
 		// @param target
 		virtual bool Find(const FindQuery& query, LightSourceResultSet* target) const = 0;
 	};
-
-	//
-	// Factory that's responsible for creating stand-alone light source processors.
-	class ILightSourceProcessorFactory : public Singleton<ILightSourceProcessorFactory>
-	{
-	public:
-		virtual ~ILightSourceProcessorFactory() {}
-
-	public:
-		//
-		// @return A light source processor
-		virtual ILightSourceProcessor* Create() const = 0;
-	};
 }

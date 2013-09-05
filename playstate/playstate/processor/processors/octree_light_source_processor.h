@@ -22,14 +22,4 @@ namespace playstate
 		LinkedList<LightSource> mLightSources;
 		Octree mOctree;
 	};
-
-	class OctreeLightSourceProcessorFactory : public ILightSourceProcessorFactory
-	{
-	public:
-		OctreeLightSourceProcessorFactory();
-		virtual ~OctreeLightSourceProcessorFactory();
-
-	public:
-		virtual ILightSourceProcessor* Create() const;
-	};
 }

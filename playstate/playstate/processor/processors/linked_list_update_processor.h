@@ -33,17 +33,4 @@ namespace playstate
 		LinkedList<ITickable> mTickables;
 		float32 mTimeSinceLastTick;
 	};
-
-	//
-	// Factory for creating the linked list update processor
-	class LinkedListUpdateProcessorFactory : public IUpdateProcessorFactory
-	{
-	public:
-		LinkedListUpdateProcessorFactory();
-		virtual ~LinkedListUpdateProcessorFactory();
-
-	// IUpdateProcessorFactory
-	public:
-		virtual IUpdateProcessor* Create() const;
-	};
 }

@@ -43,17 +43,4 @@ namespace playstate
 		// Updates this processor.
 		virtual void Update() = 0;
 	};
-
-	//
-	// Factory that's responsible for creating stand-alone update processors
-	class IUpdateProcessorFactory : public Singleton<IUpdateProcessorFactory>
-	{
-	public:
-		virtual ~IUpdateProcessorFactory() {}
-
-	public:
-		//
-		// @return An update processor
-		virtual IUpdateProcessor* Create() const = 0;
-	};
 }

@@ -1,27 +1,17 @@
 #include "../memory/memory.h"
 #include "canvas_group.h"
+#include "../processor/processors/linked_list_update_processor.h"
 using namespace playstate;
 
-CanvasGroup::CanvasGroup()
-	: mUpdateProcessor(IUpdateProcessorFactory::Get().Create()), mWidgets(offsetof(GuiWidget, GuiWidgetLink))
+CanvasGroup::CanvasGroup(std::auto_ptr<IUpdateProcessor> updateProcessor)
+	: mUpdateProcessor(updateProcessor), mWidgets(offsetof(GuiWidget, GuiWidgetLink))
 {
-	assert_not_null(mUpdateProcessor);
-}
-
-CanvasGroup::CanvasGroup(IUpdateProcessorFactory& updateProcessorFactory)
-	: mUpdateProcessor(updateProcessorFactory.Create()), mWidgets(offsetof(GuiWidget, GuiWidgetLink))
-{
-	assert_not_null(mUpdateProcessor);
+	assert_not_null(mUpdateProcessor.get());
 }
 
 CanvasGroup::~CanvasGroup()
 {
 	mWidgets.DeleteAll();
-
-	if(mUpdateProcessor != NULL) {
-		delete mUpdateProcessor;
-		mUpdateProcessor = NULL;
-	}
 }
 
 void CanvasGroup::AttachUpdatable(IUpdatable* updatable)
@@ -99,7 +89,8 @@ bool CanvasGroup::PreRender(GuiGeometryBuilder& builder)
 
 int playstate::CanvasGroup_Factory(lua_State* L)
 {
-	CanvasGroup* group = new CanvasGroup();
+	std::auto_ptr<IUpdateProcessor> up(new LinkedListUpdateProcessor());
+	CanvasGroup* group = new CanvasGroup(up);
 	luaM_pushobject(L, "CanvasGroup", group);
 	return 1;
 }

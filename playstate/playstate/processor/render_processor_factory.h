@@ -31,17 +31,4 @@ namespace playstate
 		// inside the target vector
 		virtual bool Find(const FindQuery& query, RenderBlockResultSet* target) const = 0;
 	};
-
-	//
-	// Factory that's responsible for creating stand-alone render processors
-	class IRenderProcessorFactory : public Singleton<IRenderProcessorFactory>
-	{
-	public:
-		virtual ~IRenderProcessorFactory() {}
-
-	public:
-		//
-		// @return A render processor
-		virtual IRenderProcessor* Create() const = 0;
-	};
 }

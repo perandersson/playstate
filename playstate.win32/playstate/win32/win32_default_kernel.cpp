@@ -25,9 +25,6 @@ Win32DefaultKernel::Win32DefaultKernel(HINSTANCE app, const playstate::string& f
 	mInputSystem = new Win32InputSystem(*mWindow);
 
 	mScriptSystem = new ScriptSystem(*mFileSystem, *mLogger);
-	mUpdateProcessorFactory = new LinkedListUpdateProcessorFactory();
-	mRenderProcessorFactory = new OctreeRenderProcessorFactory();
-	mLightSourceProcessorFactory = new OctreeLightSourceProcessorFactory();
 
 	mGraphicsDriver = new Win32GraphicsDriver(*mWindow);
 	mThreadFactory = new Win32ThreadFactory();
@@ -43,10 +40,6 @@ Win32DefaultKernel::~Win32DefaultKernel()
 	delete mRenderSystem;
 	delete mThreadFactory;
 	delete mGraphicsDriver;
-
-	delete mLightSourceProcessorFactory;
-	delete mRenderProcessorFactory;
-	delete mUpdateProcessorFactory;
 
 	delete mScriptSystem;
 

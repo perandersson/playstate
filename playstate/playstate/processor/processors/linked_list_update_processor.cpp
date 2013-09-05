@@ -57,16 +57,3 @@ void LinkedListUpdateProcessor::Update()
 		mTimeSinceLastTick = 0;
 	}
 }
-
-LinkedListUpdateProcessorFactory::LinkedListUpdateProcessorFactory()
-{
-}
-
-LinkedListUpdateProcessorFactory::~LinkedListUpdateProcessorFactory()
-{
-}
-
-IUpdateProcessor* LinkedListUpdateProcessorFactory::Create() const
-{
-	return new LinkedListUpdateProcessor();
-}

@@ -46,9 +46,6 @@ namespace playstate
 
 			Win32Window* mWindow;
 			ConsoleLogger* mLogger;
-			LinkedListUpdateProcessorFactory* mUpdateProcessorFactory;
-			OctreeRenderProcessorFactory* mRenderProcessorFactory;
-			OctreeLightSourceProcessorFactory* mLightSourceProcessorFactory;
 			Win32InputSystem* mInputSystem;
 			Win32GraphicsDriver* mGraphicsDriver;
 			RenderSystem* mRenderSystem;

@@ -1,18 +1,10 @@
 #include "../memory/memory.h"
 #include "scene_group.h"
+#include "../processor/processors/linked_list_update_processor.h"
+#include "../processor/processors/octree_light_source_processor.h"
+#include "../processor/processors/octree_render_processor.h"
 #include "../script/script_system.h"
 using namespace playstate;
-
-SceneGroup::SceneGroup()
-	: mUpdateProcessor(IUpdateProcessorFactory::Get().Create()),
-	mRenderProcessor(IRenderProcessorFactory::Get().Create()),
-	mLightSourceProcessor(ILightSourceProcessorFactory::Get().Create()), 
-	mSceneNodes(offsetof(SceneNode, NodeLink))
-{
-	assert(mUpdateProcessor.get() != NULL && "IUpdateProcessorFactory did not create a valid update processor");
-	assert(mRenderProcessor.get() != NULL && "IRenderProcessorFactory did not create a valid render processor");
-	assert(mLightSourceProcessor.get() != NULL && "ILightSourceProcessorFactory did not create a valid light source processor");
-}
 
 SceneGroup::SceneGroup(std::auto_ptr<IUpdateProcessor> updateProcessor, std::auto_ptr<IRenderProcessor> renderProcessor, 
 			std::auto_ptr<ILightSourceProcessor> lightSourceProcessor)
@@ -128,7 +120,11 @@ bool SceneGroup::Find(const FindQuery& query, LightSourceResultSet* target) cons
 
 int playstate::SceneGroup_Factory(lua_State* L)
 {
-	SceneGroup* sceneGroup = new SceneGroup();
+	std::auto_ptr<IUpdateProcessor> up(new LinkedListUpdateProcessor());
+	std::auto_ptr<ILightSourceProcessor> lp(new OctreeLightSourceProcessor());
+	std::auto_ptr<IRenderProcessor> rp(new OctreeRenderProcessor());
+
+	SceneGroup* sceneGroup = new SceneGroup(up, rp, lp);
 	luaM_pushobject(L, "SceneGroup", sceneGroup);
 	return 1;
 }
@@ -140,7 +136,11 @@ int playstate::SceneGroup_Init(lua_State* L)
 		return 0;
 	}
 
-	SceneGroup* sceneGroup = new SceneGroup();
+	std::auto_ptr<IUpdateProcessor> up(new LinkedListUpdateProcessor());
+	std::auto_ptr<ILightSourceProcessor> lp(new OctreeLightSourceProcessor());
+	std::auto_ptr<IRenderProcessor> rp(new OctreeRenderProcessor());
+
+	SceneGroup* sceneGroup = new SceneGroup(up, rp, lp);
 	luaM_setinstance(L, sceneGroup);
 		
 	const int ref = luaL_ref(L, LUA_REGISTRYINDEX);

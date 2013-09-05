@@ -17,7 +17,6 @@ namespace playstate
 		LinkedListLink<SceneGroup> GroupLink;
 
 	public:
-		SceneGroup();
 		SceneGroup(std::auto_ptr<IUpdateProcessor> updateProcessor, std::auto_ptr<IRenderProcessor> renderProcessor, 
 			std::auto_ptr<ILightSourceProcessor> lightSourceProcessor);
 		virtual ~SceneGroup();

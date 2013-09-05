@@ -62,19 +62,3 @@ bool OctreeLightSourceProcessor::Find(const FindQuery& query, LightSourceResultS
 	mOctree.Find(query.Camera->GetViewFrustum(), &visitor);
 	return visitor.HasFoundResults();
 }
-
-///////////////////////////////////
-
-
-OctreeLightSourceProcessorFactory::OctreeLightSourceProcessorFactory()
-{
-}
-
-OctreeLightSourceProcessorFactory::~OctreeLightSourceProcessorFactory()
-{
-}
-
-ILightSourceProcessor* OctreeLightSourceProcessorFactory::Create() const
-{
-	return new OctreeLightSourceProcessor();
-}

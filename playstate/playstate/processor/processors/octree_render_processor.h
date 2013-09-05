@@ -27,17 +27,4 @@ namespace playstate
 		LinkedList<Renderable> mRenderables;
 		Octree mOctree;
 	};
-
-	//
-	// Factory for creating the linked list update processor
-	class OctreeRenderProcessorFactory : public IRenderProcessorFactory
-	{
-	public:
-		OctreeRenderProcessorFactory();
-		virtual ~OctreeRenderProcessorFactory();
-
-	// IRenderProcessorFactory
-	public:
-		virtual IRenderProcessor* Create() const;
-	};
 }
