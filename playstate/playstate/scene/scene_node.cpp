@@ -59,6 +59,19 @@ void SceneNode::AddChild(SceneNode* node)
 	assert_not_null(node);
 
 	mChildren.AddLast(node);
+	OnChildAdded(node);
+}
+
+void SceneNode::RemoveChild(SceneNode* node)
+{
+	assert_not_null(node);
+	assert(node->mParent == this && "You are not allowed to remove another scene objects child node");
+	mChildren.Remove(node);
+	OnChildRemoved(node);
+}
+
+void SceneNode::OnChildAdded(SceneNode* node)
+{
 	node->mParent = this;
 
 	node->UpdatePosition();
@@ -69,13 +82,9 @@ void SceneNode::AddChild(SceneNode* node)
 	}
 }
 
-void SceneNode::RemoveChild(SceneNode* node)
+void SceneNode::OnChildRemoved(SceneNode* node)
 {
-	assert_not_null(node);
-	assert(node->mParent == this && "You are not allowed to remove another scene objects child node");
-	mChildren.Remove(node);
 	node->mParent = NULL;
-
 	node->DetachingNodeFromSceneGroup(mSceneGroup);
 }
 

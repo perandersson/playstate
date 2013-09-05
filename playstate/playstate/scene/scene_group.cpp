@@ -8,8 +8,7 @@ using namespace playstate;
 
 SceneGroup::SceneGroup(std::auto_ptr<IUpdateProcessor> updateProcessor, std::auto_ptr<IRenderProcessor> renderProcessor, 
 			std::auto_ptr<ILightSourceProcessor> lightSourceProcessor)
-	: mUpdateProcessor(updateProcessor), mRenderProcessor(renderProcessor), mLightSourceProcessor(lightSourceProcessor), 
-	mSceneNodes(offsetof(SceneNode, NodeLink))
+	: SceneNode(), mUpdateProcessor(updateProcessor), mRenderProcessor(renderProcessor), mLightSourceProcessor(lightSourceProcessor)
 {
 	assert(mUpdateProcessor.get() != NULL && "IUpdateProcessorFactory did not create a valid update processor");
 	assert(mRenderProcessor.get() != NULL && "IRenderProcessorFactory did not create a valid render processor");
@@ -18,41 +17,6 @@ SceneGroup::SceneGroup(std::auto_ptr<IUpdateProcessor> updateProcessor, std::aut
 
 SceneGroup::~SceneGroup()
 {
-	mSceneNodes.DeleteAll();
-}
-
-void SceneGroup::AddChild(SceneNode* node)
-{
-	assert_not_null(node);
-	mSceneNodes.AddLast(node);
-	node->NodeAttachedToSceneGroup(this);
-}
-
-void SceneGroup::RemoveChild(SceneNode* node)
-{
-	assert_not_null(node);
-	node->DetachingNodeFromSceneGroup(this);
-	mSceneNodes.Remove(node);
-}
-
-void SceneGroup::FireEvent(uint32 typeID, uint32 messageID)
-{
-	SceneNode* node = mSceneNodes.First();
-	while(node != NULL) {
-		SceneNode* next = node->NodeLink.Tail;
-		node->FireEvent(typeID, messageID);
-		node = next;
-	}
-}
-
-void SceneGroup::FireEvent(uint32 typeID, uint32 messageID, type_mask typeMask)
-{
-	SceneNode* node = mSceneNodes.First();
-	while(node != NULL) {
-		SceneNode* next = node->NodeLink.Tail;
-		node->FireEvent(typeID, messageID, typeMask);
-		node = next;
-	}
 }
 
 void SceneGroup::Update()
@@ -116,6 +80,18 @@ bool SceneGroup::Find(const FindQuery& query, RenderBlockResultSet* target) cons
 bool SceneGroup::Find(const FindQuery& query, LightSourceResultSet* target) const
 {
 	return mLightSourceProcessor->Find(query, target);
+}
+
+void SceneGroup::OnChildAdded(SceneNode* node)
+{
+	node->NodeAttachedToSceneGroup(this);
+	SceneNode::OnChildAdded(node);
+}
+
+void SceneGroup::OnChildRemoved(SceneNode* node)
+{
+	node->DetachingNodeFromSceneGroup(this);
+	SceneNode::OnChildRemoved(node);
 }
 
 int playstate::SceneGroup_Factory(lua_State* L)

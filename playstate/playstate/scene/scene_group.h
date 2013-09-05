@@ -11,7 +11,7 @@ namespace playstate
 	//
 	// A SceneGroup is the concept where we group scene nodes together in a logical structure. A scene group can
 	// be a level, where all the contained nodes are items for that specific level.
-	class SceneGroup : public Scriptable, public IUpdateProcessor, public IRenderProcessor, public ILightSourceProcessor
+	class SceneGroup : public SceneNode, public IUpdateProcessor, public IRenderProcessor, public ILightSourceProcessor
 	{
 	public:
 		LinkedListLink<SceneGroup> GroupLink;
@@ -20,33 +20,6 @@ namespace playstate
 		SceneGroup(std::auto_ptr<IUpdateProcessor> updateProcessor, std::auto_ptr<IRenderProcessor> renderProcessor, 
 			std::auto_ptr<ILightSourceProcessor> lightSourceProcessor);
 		virtual ~SceneGroup();
-
-		//
-		// Adds the supplied scene node to this scene group instance
-		// 
-		// @param node The node we want to add
-		void AddChild(SceneNode* node);
-
-		//
-		// Removes the supplied scene node from this scene group instance
-		//
-		// @param node The node we want to remove
-		void RemoveChild(SceneNode* node);
-		
-		//
-		// Fire an event receivable from this groups child nodes. Useful for sending global events.
-		//
-		// @param typeID A unique event type ID
-		// @param messageID A unique message ID for the current type ID
-		void FireEvent(uint32 typeID, uint32 messageID);
-		
-		//
-		// Fire an event receivable from this groups child nodes. Useful for sending global events.
-		//
-		// @param typeID A unique event type ID
-		// @param messageID A unique message ID for the current type ID
-		// @param typeMask Only nodes of a specific type receives this event
-		void FireEvent(uint32 typeID, uint32 messageID, type_mask typeMask);
 
 	// IUpdateProcessor
 	public:
@@ -68,8 +41,12 @@ namespace playstate
 		virtual void DetachLightSource(LightSource* lightSource);
 		virtual bool Find(const FindQuery& query, LightSourceResultSet* target) const;
 
+	//
+	protected:
+		virtual void OnChildAdded(SceneNode* node);
+		virtual void OnChildRemoved(SceneNode* node);
+
 	private:
-		LinkedList<SceneNode> mSceneNodes;
 		std::auto_ptr<IUpdateProcessor> mUpdateProcessor;
 		std::auto_ptr<IRenderProcessor> mRenderProcessor;
 		std::auto_ptr<ILightSourceProcessor> mLightSourceProcessor;

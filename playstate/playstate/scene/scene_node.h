@@ -143,6 +143,12 @@ namespace playstate
 		inline bool IsAttachedToSceneGroup() const {
 			return mSceneGroup != NULL;
 		}
+
+	protected:
+		//
+		// Method called when a child is added to this node
+		virtual void OnChildAdded(SceneNode* node);
+		virtual void OnChildRemoved(SceneNode* node);
 		
 	protected:
 		//
