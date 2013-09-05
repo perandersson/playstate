@@ -1,5 +1,5 @@
 #pragma once
-#include "../update_processor_factory.h"
+#include "../update_processor.h"
 
 namespace playstate
 {

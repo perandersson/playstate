@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../linked_list.h"
-#include "../processor/update_processor_factory.h"
+#include "../processor/update_processor.h"
 #include "gui_widget.h"
 #include "../math/vector2.h"
 #include "../math/point.h"

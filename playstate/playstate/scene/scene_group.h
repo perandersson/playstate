@@ -2,9 +2,9 @@
 #include "../script/scriptable.h"
 #include "scene_node.h"
 #include "../linked_list.h"
-#include "../processor/update_processor_factory.h"
-#include "../processor/render_processor_factory.h"
-#include "../processor/light_source_processor_factory.h"
+#include "../processor/update_processor.h"
+#include "../processor/render_processor.h"
+#include "../processor/light_source_processor.h"
 
 namespace playstate
 {

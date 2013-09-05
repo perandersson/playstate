@@ -1,5 +1,5 @@
 #pragma once
-#include "../light_source_processor_factory.h"
+#include "../light_source_processor.h"
 #include "../../scene/tree/octree.h"
 
 namespace playstate

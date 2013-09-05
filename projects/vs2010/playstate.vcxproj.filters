@@ -197,16 +197,10 @@
     <ClCompile Include="..\..\playstate\playstate\processor\processors\octree_render_processor.cpp">
       <Filter>Source Files\processor\processors</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\processor\render_processor_factory.cpp">
-      <Filter>Source Files\processor</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\processor\renderable.cpp">
       <Filter>Source Files\processor</Filter>
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\processor\updatable.cpp">
-      <Filter>Source Files\processor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\processor\update_processor_factory.cpp">
       <Filter>Source Files\processor</Filter>
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\rendering\gfx_program.cpp">
@@ -336,9 +330,6 @@
       <Filter>Source Files\math</Filter>
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\processor\light_source.cpp">
-      <Filter>Source Files\processor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\processor\light_source_processor_factory.cpp">
       <Filter>Source Files\processor</Filter>
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\component\lightsources\point_light.cpp">
@@ -529,16 +520,10 @@
     <ClInclude Include="..\..\playstate\playstate\processor\processors\octree_render_processor.h">
       <Filter>Source Files\processor\processors</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\processor\render_processor_factory.h">
-      <Filter>Source Files\processor</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\processor\renderable.h">
       <Filter>Source Files\processor</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\processor\updatable.h">
-      <Filter>Source Files\processor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\processor\update_processor_factory.h">
       <Filter>Source Files\processor</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\rendering\gfx_program.h">
@@ -751,9 +736,6 @@
     <ClInclude Include="..\..\playstate\playstate\processor\light_source.h">
       <Filter>Source Files\processor</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\processor\light_source_processor_factory.h">
-      <Filter>Source Files\processor</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\component\lightsources\point_light.h">
       <Filter>Source Files\component\lightsources</Filter>
     </ClInclude>
@@ -879,6 +861,15 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\scene\spatial_tree.h">
       <Filter>Source Files\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\processor\light_source_processor.h">
+      <Filter>Source Files\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\processor\update_processor.h">
+      <Filter>Source Files\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\processor\render_processor.h">
+      <Filter>Source Files\processor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
