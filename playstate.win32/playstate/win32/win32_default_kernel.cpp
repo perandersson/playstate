@@ -80,8 +80,9 @@ void Win32DefaultKernel::RegisterScript()
 	ss.RegisterType("Keys", IInputSystem_Keys_Methods);
 	ss.RegisterType("Mouse", IInputSystem_Mouse_Methods);
 	ss.RegisterType("Scene", Scene_Methods);
-	ss.RegisterType("SceneGroup", SceneGroup_Methods);
 	ss.RegisterType("SceneNode", SceneNode_Methods);
+	ss.RegisterType("SceneGroup", SceneNode_Methods);
+	ss.RegisterType("SceneGroup", SceneGroup_Methods);
 	ss.RegisterType("Component", Component_Methods);
 	ss.RegisterType("Model", Model_Methods);
 	ss.RegisterType("RenderStaticModel", RenderStaticModel_Methods);

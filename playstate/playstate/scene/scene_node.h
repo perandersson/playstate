@@ -149,6 +149,9 @@ namespace playstate
 		// Method called when a child is added to this node
 		virtual void OnChildAdded(SceneNode* node);
 		virtual void OnChildRemoved(SceneNode* node);
+
+		void OnDetachedFromParent(SceneNode* parent);
+		void OnAttachedToParent(SceneNode* parent);
 		
 	protected:
 		//

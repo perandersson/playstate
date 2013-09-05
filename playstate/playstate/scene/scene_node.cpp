@@ -45,7 +45,7 @@ Component* SceneNode::GetComponent(type_mask typeMask)
 {
 	Component* component = mComponents.First();
 	while(component != NULL) {
-		if((component->GetTypeMask() & typeMask) != 0)
+		if(BIT_ISSET(component->GetTypeMask(), typeMask))
 			return component;
 
 		component = component->ComponentLink.Tail;
@@ -72,10 +72,7 @@ void SceneNode::RemoveChild(SceneNode* node)
 
 void SceneNode::OnChildAdded(SceneNode* node)
 {
-	node->mParent = this;
-
-	node->UpdatePosition();
-	node->UpdateRotation();
+	node->OnAttachedToParent(this);
 
 	if(IsAttachedToSceneGroup()) {
 		node->NodeAttachedToSceneGroup(mSceneGroup);
@@ -84,8 +81,21 @@ void SceneNode::OnChildAdded(SceneNode* node)
 
 void SceneNode::OnChildRemoved(SceneNode* node)
 {
-	node->mParent = NULL;
 	node->DetachingNodeFromSceneGroup(mSceneGroup);
+	node->OnDetachedFromParent(this);
+}
+
+void SceneNode::OnDetachedFromParent(SceneNode* parent)
+{
+	mParent = NULL;
+}
+
+void SceneNode::OnAttachedToParent(SceneNode* parent)
+{
+	mParent = parent;
+
+	UpdatePosition();
+	UpdateRotation();
 }
 
 void SceneNode::FireEvent(uint32 typeID, uint32 messageID)

@@ -1,6 +1,6 @@
 #include "../memory/memory.h"
 #include "light_source.h"
-#include "light_source_processor_factory.h"
+#include "light_source_processor.h"
 using namespace playstate;
 
 LightSource::LightSource() : SpatialNode()

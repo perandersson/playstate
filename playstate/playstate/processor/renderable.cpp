@@ -1,6 +1,6 @@
 #include "../memory/memory.h"
 #include "renderable.h"
-#include "render_processor_factory.h"
+#include "render_processor.h"
 using namespace playstate;
 
 Renderable::Renderable() : SpatialNode(), mAttachedToProcessor(NULL), mVisible(false)
