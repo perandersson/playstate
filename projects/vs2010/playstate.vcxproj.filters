@@ -135,7 +135,7 @@
     <Filter Include="Source Files\model\md5">
       <UniqueIdentifier>{9fa8bc89-1c8c-413b-a085-a4639cba8d48}</UniqueIdentifier>
     </Filter>
-    <Filter Include="window">
+    <Filter Include="Source Files\window">
       <UniqueIdentifier>{f166e526-5578-4379-a8b4-572cfe6c594c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -348,7 +348,7 @@
       <Filter>Source Files\logging</Filter>
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\window\window.cpp">
-      <Filter>window</Filter>
+      <Filter>Source Files\window</Filter>
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\filesystem\file_system.cpp">
       <Filter>Source Files\filesystem</Filter>
@@ -683,13 +683,13 @@
       <Filter>Source Files\thread\wrapper</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\window\window.h">
-      <Filter>window</Filter>
+      <Filter>Source Files\window</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\window\window_closed_listener.h">
-      <Filter>window</Filter>
+      <Filter>Source Files\window</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\window\window_resized_listener.h">
-      <Filter>window</Filter>
+      <Filter>Source Files\window</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\config.h">
       <Filter>Source Files</Filter>

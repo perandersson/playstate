@@ -9,18 +9,21 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\ogl3">
-      <UniqueIdentifier>{91b98333-fea4-4f68-9de3-54944d674e4c}</UniqueIdentifier>
+    <Filter Include="Source Files\rendering">
+      <UniqueIdentifier>{0f33d6f4-ad0b-4714-b610-41d97c0be5d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\rendering\ogl3">
+      <UniqueIdentifier>{31dc00f5-d144-474c-b4fe-96b6f1ba57bd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\playstate.rendering.ogl3\ogl3\ogl3_render_system.cpp">
-      <Filter>Source Files\ogl3</Filter>
+    <ClCompile Include="..\..\playstate.rendering.ogl3\playstate\rendering\ogl3\ogl3_render_system.cpp">
+      <Filter>Source Files\rendering\ogl3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\playstate.rendering.ogl3\ogl3\ogl3_render_system.h">
-      <Filter>Source Files\ogl3</Filter>
+    <ClInclude Include="..\..\playstate.rendering.ogl3\playstate\rendering\ogl3\ogl3_render_system.h">
+      <Filter>Source Files\rendering\ogl3</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

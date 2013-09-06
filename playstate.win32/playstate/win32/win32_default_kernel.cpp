@@ -12,6 +12,7 @@
 #include <playstate/sound/sound_effect.h>
 #include <playstate/sound/music.h>
 #include <playstate/sound/openal/openal_music_resource_loader.h>
+#include <playstate/rendering/ogl3/ogl3_render_system.h>
 
 using namespace playstate;
 using namespace playstate::win32;
@@ -28,7 +29,7 @@ Win32DefaultKernel::Win32DefaultKernel(HINSTANCE app, const playstate::string& f
 
 	mGraphicsDriver = new Win32GraphicsDriver(*mWindow);
 	mThreadFactory = new Win32ThreadFactory();
-	mRenderSystem = new RenderSystem(*mWindow, *mScriptSystem);
+	mRenderSystem = new OGL3RenderSystem(*mWindow, *mScriptSystem);
 	mThreadedResourceManager = new ThreadedResourceManager(*mRenderSystem, *mFileSystem, *mLogger);
 	mSoundEngine = new OpenALSoundEngine();
 }

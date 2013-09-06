@@ -11,10 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\playstate.rendering.ogl3\ogl3\ogl3_render_system.cpp" />
+    <ClCompile Include="..\..\playstate.rendering.ogl3\playstate\rendering\ogl3\ogl3_render_system.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\playstate.rendering.ogl3\ogl3\ogl3_render_system.h" />
+    <ClInclude Include="..\..\playstate.rendering.ogl3\playstate\rendering\ogl3\ogl3_render_system.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{952E1BA1-356F-41CB-B9B2-90D971113C06}</ProjectGuid>
