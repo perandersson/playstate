@@ -4,7 +4,7 @@
 #include "../exception/gfx_program_exception.h"
 using namespace playstate;
 
-GfxProgramFactory::GfxProgramFactory(RenderSystem& renderSystem, ScriptSystem& scriptSystem)
+GfxProgramFactory::GfxProgramFactory(IRenderSystem& renderSystem, ScriptSystem& scriptSystem)
 	: mRenderSystem(renderSystem), mScriptSystem(scriptSystem)
 {
 }

@@ -4,11 +4,11 @@
 namespace playstate
 {
 	class GfxProgram;
-	class RenderSystem;
+	class IRenderSystem;
 	class GfxProgramFactory
 	{
 	public:
-		GfxProgramFactory(RenderSystem& renderSystem, ScriptSystem& scriptSystem);
+		GfxProgramFactory(IRenderSystem& renderSystem, ScriptSystem& scriptSystem);
 		~GfxProgramFactory();
 
 		//
@@ -16,7 +16,7 @@ namespace playstate
 		GfxProgram* Create(const playstate::string& fileName);
 
 	private:
-		RenderSystem& mRenderSystem;
+		IRenderSystem& mRenderSystem;
 		ScriptSystem& mScriptSystem;
 	};
 }

@@ -13,7 +13,6 @@ extern "C"
 
 namespace playstate
 {
-	class RenderSystem;
 	class IFileSystem;
 	
 	//
@@ -58,12 +57,14 @@ namespace playstate
 		TextureWrap::Enum mWT;
 	};
 
+	class IRenderSystem;
+
 	//
 	// 
 	class Texture2DResourceLoader : public IResourceLoader
 	{
 	public:
-		Texture2DResourceLoader(RenderSystem& renderSystem, IFileSystem& fileSystem);
+		Texture2DResourceLoader(IRenderSystem& renderSystem, IFileSystem& fileSystem);
 		~Texture2DResourceLoader();
 		
 	// IResourceLoader
@@ -73,7 +74,7 @@ namespace playstate
 		virtual bool IsThreadable() const;
 		
 	private:
-		RenderSystem& mRenderSystem;
+		IRenderSystem& mRenderSystem;
 		IFileSystem& mFileSystem;
 
 		ResourceObject* mDefaultResource;

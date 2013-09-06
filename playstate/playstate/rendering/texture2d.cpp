@@ -45,7 +45,7 @@ void Texture2D::UpdateFilters(MinFilter::Enum minFilter, MagFilter::Enum magFilt
 	}
 }
 
-Texture2DResourceLoader::Texture2DResourceLoader(RenderSystem& renderSystem, IFileSystem& fileSystem) : 
+Texture2DResourceLoader::Texture2DResourceLoader(IRenderSystem& renderSystem, IFileSystem& fileSystem) : 
 	mRenderSystem(renderSystem), mFileSystem(fileSystem), mDefaultResource(NULL)
 {
 }

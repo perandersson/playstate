@@ -15,7 +15,7 @@ using namespace playstate;
 class DeferredRenderPipeline : public IRenderPipeline, public IWindowResizedListener, public IFileChangedListener
 {
 public:
-	DeferredRenderPipeline(RenderSystem& renderSystem, IWindow& window, IResourceManager& resourceManager, IFileSystem& fileSystem);
+	DeferredRenderPipeline(IRenderSystem& renderSystem, IWindow& window, IResourceManager& resourceManager, IFileSystem& fileSystem);
 	virtual ~DeferredRenderPipeline();
 
 // IRenderPipeline
@@ -39,7 +39,7 @@ private:
 	Matrix4x4 CalculateBillboardModelMatrix(const Vector3& position, const Camera& camera);
 		
 private:
-	RenderSystem& mRenderSystem;
+	IRenderSystem& mRenderSystem;
 	IWindow& mWindow;
 	IFileSystem& mFileSystem;
 

@@ -21,7 +21,7 @@ namespace playstate
 {
 	//
 	// 
-	class RenderSystem : public Singleton<RenderSystem>
+	class IRenderSystem : public Singleton<IRenderSystem>
 	{
 	public:
 		//

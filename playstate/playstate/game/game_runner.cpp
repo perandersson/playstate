@@ -93,7 +93,7 @@ bool GameRunner::Initialize()
 {
 	IResourceManager& resourceManager = IResourceManager::Get();
 	IFileSystem& fileSystem = IFileSystem::Get();
-	RenderSystem& renderSystem = RenderSystem::Get();
+	IRenderSystem& renderSystem = IRenderSystem::Get();
 	IWindow& window = IWindow::Get();
 	ISoundEngine& soundEngine = ISoundEngine::Get();
 

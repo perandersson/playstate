@@ -2,4 +2,4 @@
 #include "render_system.h"
 using namespace playstate;
 
-template<> playstate::RenderSystem* playstate::Singleton<playstate::RenderSystem>::gSingleton = NULL;
+template<> playstate::IRenderSystem* playstate::Singleton<playstate::IRenderSystem>::gSingleton = NULL;

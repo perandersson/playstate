@@ -10,7 +10,7 @@ namespace {
 }
 
 OGL3RenderSystem::OGL3RenderSystem(IWindow& window, ScriptSystem& scriptSystem) 
-	: RenderSystem(),
+	: IRenderSystem(),
 	mWindow(window), mProgramFactory(NULL), 
 	mUniformVertexBuffer(NULL), 
 	mFrameBufferId(0), mDepthRenderTarget(NULL), mGfxPrograms(offsetof(GfxProgram, Link))

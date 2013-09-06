@@ -38,7 +38,7 @@ namespace playstate
 		typedef std::hash_map<playstate::string, WavefrontMaterial*> Materials;
 
 	public:
-		WavefrontResourceLoader(IResourceManager& resourceManager, IFileSystem& fileSystem, RenderSystem& renderSystem);
+		WavefrontResourceLoader(IResourceManager& resourceManager, IFileSystem& fileSystem, IRenderSystem& renderSystem);
 		~WavefrontResourceLoader();
 
 	// IResourceLoader
@@ -61,7 +61,7 @@ namespace playstate
 	private:
 		IResourceManager& mResourceManager;
 		IFileSystem& mFileSystem;
-		RenderSystem& mRenderSystem;
+		IRenderSystem& mRenderSystem;
 
 		ResourceObject* mDefaultResource;
 	};

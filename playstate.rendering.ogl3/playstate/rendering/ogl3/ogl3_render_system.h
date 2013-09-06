@@ -8,7 +8,7 @@
 
 namespace playstate
 {
-	class OGL3RenderSystem : public RenderSystem, public IWindowResizedListener
+	class OGL3RenderSystem : public IRenderSystem, public IWindowResizedListener
 	{
 	public:
 		OGL3RenderSystem(IWindow& window, ScriptSystem& scriptSystem);

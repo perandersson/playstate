@@ -2,7 +2,7 @@
 #include "gui_geometry_builder.h"
 using namespace playstate;
 
-GuiGeometryBuilder::GuiGeometryBuilder(RenderSystem& renderSystem)
+GuiGeometryBuilder::GuiGeometryBuilder(IRenderSystem& renderSystem)
 	: mRenderSystem(renderSystem), mMemoryPool(6, 24), mBuildingBlocks(5, 5), mNumVertices(0), mStartIndex(0), mCurrentTexture(NULL)
 {
 	mVertexBuffer = mRenderSystem.CreateDynamicBuffer(NULL, sizeof(WidgetGeometryData), WidgetGeometryDataVAOFactory, 0);

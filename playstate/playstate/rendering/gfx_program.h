@@ -17,7 +17,7 @@ namespace playstate
 	class VertexBuffer;
 	class IndexBuffer;
 	class RenderTarget2D;
-	class RenderSystem;
+	class IRenderSystem;
 	
 	const uint32 MaxDrawBuffers = 6;
 
@@ -29,8 +29,8 @@ namespace playstate
 		LinkedListLink<GfxProgram> Link;
 
 	public:
-		GfxProgram(RenderSystem& renderSystem);
-		GfxProgram(GLuint programId, RenderSystem& renderSystem, const ScriptCollection& collection);
+		GfxProgram(IRenderSystem& renderSystem);
+		GfxProgram(GLuint programId, IRenderSystem& renderSystem, const ScriptCollection& collection);
 		~GfxProgram();
 
 		//
@@ -158,7 +158,7 @@ namespace playstate
 		void Prepare(const ScriptCollection& collection);
 
 	private:
-		RenderSystem& mRenderSystem;
+		IRenderSystem& mRenderSystem;
 		
 		GLuint mProgramId;
 

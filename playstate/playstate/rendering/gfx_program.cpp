@@ -22,7 +22,7 @@ namespace {
 	GfxProgram* _current_program = 0;
 }
 
-GfxProgram::GfxProgram(RenderSystem& renderSystem)
+GfxProgram::GfxProgram(IRenderSystem& renderSystem)
 	: mProgramId(0), mApplied(false),
 	mDepthTest(true), mDepthFunc(DepthFunc::Default),
 	mBlend(false), mSrcFactor(SrcFactor::Default), mDestFactor(DestFactor::Default), 
@@ -33,7 +33,7 @@ GfxProgram::GfxProgram(RenderSystem& renderSystem)
 	memset(mRenderTargets, 0, sizeof(mRenderTargets));
 }
 
-GfxProgram::GfxProgram(GLuint programId, RenderSystem& renderSystem, const ScriptCollection& collection) 
+GfxProgram::GfxProgram(GLuint programId, IRenderSystem& renderSystem, const ScriptCollection& collection) 
 	:  mProgramId(programId), mApplied(false),
 	mDepthTest(true), mDepthFunc(DepthFunc::Default),
 	mBlend(false), mSrcFactor(SrcFactor::Default), mDestFactor(DestFactor::Default), 

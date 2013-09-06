@@ -6,7 +6,7 @@
 
 using namespace playstate;
 
-ThreadedResourceManager::ThreadedResourceManager(RenderSystem& renderSystem, IFileSystem& fileSystem, ILogger& logger) 
+ThreadedResourceManager::ThreadedResourceManager(IRenderSystem& renderSystem, IFileSystem& fileSystem, ILogger& logger) 
 	: mRenderSystem(renderSystem), mFileSystem(fileSystem), mLogger(logger), mThread(0)
 {
 	mLoadRequestLock = new SimpleLock();

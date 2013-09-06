@@ -11,7 +11,7 @@
 
 namespace playstate
 {
-	class RenderSystem;
+	class IRenderSystem;
 	class IFileSystem;
 
 	//
@@ -33,7 +33,7 @@ namespace playstate
 		typedef std::vector<LoadRequestResponse*> LoadResponses;
 
 	public:
-		ThreadedResourceManager(RenderSystem& renderSystem, IFileSystem& fileSystem, ILogger& logger);
+		ThreadedResourceManager(IRenderSystem& renderSystem, IFileSystem& fileSystem, ILogger& logger);
 		~ThreadedResourceManager();
 		
 		//
@@ -60,7 +60,7 @@ namespace playstate
 		void GetAndClearLoadResponses(LoadResponses& target);
 
 	private:
-		RenderSystem& mRenderSystem;
+		IRenderSystem& mRenderSystem;
 		IFileSystem& mFileSystem;
 		ILogger& mLogger;
 

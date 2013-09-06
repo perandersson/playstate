@@ -12,7 +12,7 @@ using namespace playstate;
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
 
-WavefrontResourceLoader::WavefrontResourceLoader(IResourceManager& resourceManager, IFileSystem& fileSystem, RenderSystem& renderSystem) 
+WavefrontResourceLoader::WavefrontResourceLoader(IResourceManager& resourceManager, IFileSystem& fileSystem, IRenderSystem& renderSystem) 
 	: mResourceManager(resourceManager), mFileSystem(fileSystem), mRenderSystem(renderSystem), mDefaultResource(NULL)
 {
 }

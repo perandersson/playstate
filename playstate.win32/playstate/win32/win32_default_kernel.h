@@ -45,7 +45,7 @@ namespace playstate
 			ConsoleLogger* mLogger;
 			Win32InputSystem* mInputSystem;
 			Win32GraphicsDriver* mGraphicsDriver;
-			RenderSystem* mRenderSystem;
+			IRenderSystem* mRenderSystem;
 			Win32ThreadFactory* mThreadFactory;
 			ThreadedResourceManager* mThreadedResourceManager;
 			Win32FileSystem* mFileSystem;

@@ -21,7 +21,7 @@ namespace playstate
 	class GuiGeometryBuilder
 	{
 	public:
-		GuiGeometryBuilder(RenderSystem& renderSystem);
+		GuiGeometryBuilder(IRenderSystem& renderSystem);
 		~GuiGeometryBuilder();
 
 		void AddQuad(const Vector2& position, const Vector2& size);
@@ -59,7 +59,7 @@ namespace playstate
 		VertexBuffer* PrepareVertexBuffer();
 
 	private:
-		RenderSystem& mRenderSystem;
+		IRenderSystem& mRenderSystem;
 		VertexBuffer* mVertexBuffer;
 		MemoryPool<WidgetGeometryData> mMemoryPool;
 		MemoryPool<WidgetBuildingBlock> mBuildingBlocks;
