@@ -68,7 +68,7 @@ void VertexBuffer::Render(uint32 startIndex, uint32 count) const
 
 void VertexBuffer::Update(const void* vertices, uint32 numVertices)
 {
-	StatePolicy::BindVertexBuffer(this);
+	StatePolicyGuard::BindVertexBuffer(this);
 	glBindBuffer(GL_ARRAY_BUFFER, mBufferID);
 
 	// Copy the data to the buffer. This can be used if we are simply overridding the existing data.

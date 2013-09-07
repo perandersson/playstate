@@ -61,7 +61,7 @@ GfxProgram::~GfxProgram()
 	}
 
 	if(_current_program == this) {
-		StatePolicy::UseProgram(0);
+		StatePolicyGuard::UseProgram(0);
 		_current_program = NULL;
 	}
 }
@@ -74,15 +74,15 @@ void GfxProgram::Apply()
 	mApplied = true;
 	_current_program = this;
 
-	StatePolicy::UseProgram(mProgramId);
-	StatePolicy::EnableBlend(mBlend);
-	StatePolicy::SetCullFaces(mCullFaces);
-	StatePolicy::EnableDepthTest(mDepthTest);
+	StatePolicyGuard::UseProgram(mProgramId);
+	StatePolicyGuard::EnableBlend(mBlend);
+	StatePolicyGuard::SetCullFaces(mCullFaces);
+	StatePolicyGuard::EnableDepthTest(mDepthTest);
 	if(mBlend)
-		StatePolicy::SetBlendFunc(mSrcFactor, mDestFactor);
-	StatePolicy::SetDepthFunc(mDepthFunc);
-	StatePolicy::EnableScissorTest(mScissorTest);
-	StatePolicy::SetScissorRect(mScissorRect);
+		StatePolicyGuard::SetBlendFunc(mSrcFactor, mDestFactor);
+	StatePolicyGuard::SetDepthFunc(mDepthFunc);
+	StatePolicyGuard::EnableScissorTest(mScissorTest);
+	StatePolicyGuard::SetScissorRect(mScissorRect);
 	
 	for(int i = 0; i < MaxDrawBuffers; ++i) {
 		mRenderSystem.SetRenderTarget(mRenderTargets[i], i);
@@ -116,8 +116,8 @@ void GfxProgram::Clear(uint32 clearBits)
 		clear |= GL_DEPTH_BUFFER_BIT;
 	}
 
-	StatePolicy::SetClearDepth(mClearDepth);
-	StatePolicy::SetClearColor(mClearColor);
+	StatePolicyGuard::SetClearDepth(mClearDepth);
+	StatePolicyGuard::SetClearColor(mClearColor);
 
 	if(clear != 0) {
 		glClear(clear);
@@ -245,29 +245,29 @@ void GfxProgram::ApplyBuffers(VertexBuffer* buffer, IndexBuffer* indexBuffer)
 		mRenderSystem.ApplyRenderTargets();
 	}
 
-	StatePolicy::BindVertexBuffer(buffer);
-	StatePolicy::BindIndexBuffer(indexBuffer);
+	StatePolicyGuard::BindVertexBuffer(buffer);
+	StatePolicyGuard::BindIndexBuffer(indexBuffer);
 }
 
 void GfxProgram::EnableDepthTest(bool enable)
 {
 	mDepthTest = enable;
 	if(mApplied)
-		StatePolicy::EnableDepthTest(enable);
+		StatePolicyGuard::EnableDepthTest(enable);
 }
 
 void GfxProgram::SetDepthFunc(DepthFunc::Enum depthFunc)
 {
 	mDepthFunc = depthFunc;
 	if(mApplied)
-		StatePolicy::SetDepthFunc(depthFunc);
+		StatePolicyGuard::SetDepthFunc(depthFunc);
 }
 
 void GfxProgram::EnableBlend(bool enable)
 {
 	mBlend = enable;
 	if(mApplied)
-		StatePolicy::EnableBlend(enable);
+		StatePolicyGuard::EnableBlend(enable);
 }
 
 void GfxProgram::SetBlendFunc(SrcFactor::Enum sfactor, DestFactor::Enum dfactor)
@@ -276,35 +276,35 @@ void GfxProgram::SetBlendFunc(SrcFactor::Enum sfactor, DestFactor::Enum dfactor)
 	mDestFactor = dfactor;
 
 	if(mApplied)
-		StatePolicy::SetBlendFunc(sfactor, dfactor);
+		StatePolicyGuard::SetBlendFunc(sfactor, dfactor);
 }
 
 void GfxProgram::SetClearColor(const Color& color)
 {
 	mClearColor = color;
 	if(mApplied)
-		StatePolicy::SetClearColor(color);
+		StatePolicyGuard::SetClearColor(color);
 }
 
 void GfxProgram::SetCullFaces(CullFaces::Enum cullFaces)
 {
 	mCullFaces = cullFaces;
 	if(mApplied)
-		StatePolicy::SetCullFaces(cullFaces);
+		StatePolicyGuard::SetCullFaces(cullFaces);
 }
 
 void GfxProgram::EnableScissorTest(bool enable)
 {
 	mScissorTest = enable;
 	if(mApplied)
-		StatePolicy::EnableScissorTest(mScissorTest);
+		StatePolicyGuard::EnableScissorTest(mScissorTest);
 }
 
 void GfxProgram::SetScissorRect(const Rect& rect)
 {
 	mScissorRect = rect;
 	if(mApplied)
-		StatePolicy::SetScissorRect(mScissorRect);
+		StatePolicyGuard::SetScissorRect(mScissorRect);
 }
 
 void GfxProgram::SetDepthRenderTarget(RenderTarget2D* renderTarget)

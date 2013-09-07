@@ -18,8 +18,8 @@ Texture2D::~Texture2D()
 
 void Texture2D::Bind(uint32 activeTexture)
 {
-	StatePolicy::SetActiveTexture(activeTexture);
-	StatePolicy::BindTexture(GL_TEXTURE_2D, mTextureID);
+	StatePolicyGuard::SetActiveTexture(activeTexture);
+	StatePolicyGuard::BindTexture(GL_TEXTURE_2D, mTextureID);
 }
 
 void Texture2D::UpdateFilters(MinFilter::Enum minFilter, MagFilter::Enum magFilter, TextureWrap::Enum ws, TextureWrap::Enum wt)

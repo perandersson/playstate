@@ -2,6 +2,109 @@
 #include "state_policy.h"
 using namespace playstate;
 
+void StatePolicy::UseProgram(GLuint programID)
+{
+	glUseProgram(programID);
+}
+
+void StatePolicy::EnableDepthTest(bool enable)
+{
+	if(enable)
+		glEnable(GL_DEPTH_TEST);
+	else
+		glDisable(GL_DEPTH_TEST);
+}
+
+void StatePolicy::SetDepthFunc(DepthFunc::Enum depthFunc)
+{
+	glDepthFunc((GLenum)depthFunc);
+}
+
+void StatePolicy::EnableBlend(bool enable)
+{
+	if(enable)
+		glEnable(GL_BLEND);
+	else
+		glDisable(GL_BLEND);
+}
+
+void StatePolicy::SetBlendFunc(SrcFactor::Enum sfactor, DestFactor::Enum dfactor)
+{
+	glBlendFunc((GLenum)sfactor, (GLenum)dfactor);
+}
+
+void StatePolicy::SetCullFaces(CullFaces::Enum cullFaces)
+{
+	if(cullFaces == CullFaces::DISABLED)
+	{
+		glDisable(GL_CULL_FACE);
+	}
+	else
+	{
+		glEnable(GL_CULL_FACE);
+		glFrontFace((GLenum)cullFaces);
+		glCullFace(GL_BACK);
+	}
+}
+
+void StatePolicy::SetClearColor(const Color& color)
+{
+	glClearColor(color.Red, color.Green, color.Blue, color.Alpha);
+}
+
+void StatePolicy::SetClearDepth(float32 depth)
+{
+	glClearDepth(depth);
+}
+
+void StatePolicy::EnableScissorTest(bool enable)
+{
+	if(enable)
+		glEnable(GL_SCISSOR_TEST);
+	else
+		glDisable(GL_SCISSOR_TEST);
+}
+
+void StatePolicy::SetScissorRect(const Rect& rect)
+{
+	glScissor(rect.X, rect.Y, rect.Width, rect.Height);
+}
+
+void StatePolicy::SetActiveTexture(uint32 id)
+{
+	glActiveTexture(GL_TEXTURE0 + id);
+}
+
+void StatePolicy::BindTexture(GLenum type, GLuint texture)
+{
+	glBindTexture(type, texture);
+}
+
+void StatePolicy::Viewport(const Rect& viewport)
+{
+	glViewport(viewport.X, viewport.Y, viewport.Width, viewport.Height);
+}
+
+void StatePolicy::BindVertexBuffer(VertexBuffer* vertexBuffer)
+{
+	if(vertexBuffer != NULL) {
+		vertexBuffer->Bind();
+	} else {
+		// Unbind?
+	}
+}
+
+void StatePolicy::BindIndexBuffer(IndexBuffer* indexBuffer)
+{
+	if(indexBuffer != NULL) {
+		indexBuffer->Bind();
+	} else {
+		//_indexBuffer->Unbind();
+	}
+}
+
+////
+
 namespace {
 	GLuint _programID = 0;
 
@@ -29,174 +132,149 @@ namespace {
 	Rect _viewport;
 }
 
-void StatePolicy::UseProgram(GLuint programID)
+void StatePolicyGuard::UseProgram(GLuint programID)
 {
 	if(_programID == programID)
 		return;
 
 	_programID = programID;
-	glUseProgram(programID);
+	StatePolicy::UseProgram(programID);
 }
 
-void StatePolicy::EnableDepthTest(bool enable)
+void StatePolicyGuard::EnableDepthTest(bool enable)
 {
 	if(enable == _depthTest)
 		return;
 
 	_depthTest = enable;
-	if(enable)
-		glEnable(GL_DEPTH_TEST);
-	else
-		glDisable(GL_DEPTH_TEST);
+	StatePolicy::EnableDepthTest(enable);
 }
 
-void StatePolicy::SetDepthFunc(DepthFunc::Enum depthFunc)
+void StatePolicyGuard::SetDepthFunc(DepthFunc::Enum depthFunc)
 {
 	if(depthFunc == _depthFunc)
 		return;
 
 	_depthFunc = depthFunc;
-	glDepthFunc((GLenum)depthFunc);
+	StatePolicy::SetDepthFunc(depthFunc);
 }
 
-void StatePolicy::EnableBlend(bool enable)
+void StatePolicyGuard::EnableBlend(bool enable)
 {
 	if(enable == _blend)
 		return;
 
 	_blend = enable;
-	if(enable)
-		glEnable(GL_BLEND);
-	else
-		glDisable(GL_BLEND);
+	StatePolicy::EnableBlend(enable);
 }
 
-void StatePolicy::SetBlendFunc(SrcFactor::Enum sfactor, DestFactor::Enum dfactor)
+void StatePolicyGuard::SetBlendFunc(SrcFactor::Enum sfactor, DestFactor::Enum dfactor)
 {
 	if(_srcFunc == sfactor && _destFunc == dfactor)
 		return;
 
 	_srcFunc = sfactor;
 	_destFunc = dfactor;
-	glBlendFunc((GLenum)sfactor, (GLenum)dfactor);
+	StatePolicy::SetBlendFunc(sfactor, dfactor);
 }
 
-void StatePolicy::SetCullFaces(CullFaces::Enum cullFaces)
+void StatePolicyGuard::SetCullFaces(CullFaces::Enum cullFaces)
 {
 	if(_cullFaces == cullFaces)
 		return;
 
-	if(cullFaces == CullFaces::DISABLED)
-	{
-		glDisable(GL_CULL_FACE);
-	}
-	else
-	{
-		if(_cullFaces == CullFaces::DISABLED)
-			glEnable(GL_CULL_FACE);
-
-		glFrontFace((GLenum)cullFaces);
-		glCullFace(GL_BACK);
-	}
-
+	StatePolicy::SetCullFaces(cullFaces);
 	_cullFaces = cullFaces;
 }
 
-void StatePolicy::SetClearColor(const Color& color)
+void StatePolicyGuard::SetClearColor(const Color& color)
 {
 	if(_clearColor == color)
 		return;
 
-	glClearColor(color.Red, color.Green, color.Blue, color.Alpha);
+	StatePolicy::SetClearColor(color);
 	_clearColor = color;
 }
 
-void StatePolicy::SetClearDepth(float32 depth)
+void StatePolicyGuard::SetClearDepth(float32 depth)
 {
 	if(abs(_clearDepth - depth) < FLT_EPSILON)
 		return;
 
 	_clearDepth = depth;
-	glClearDepth(depth);
+	StatePolicy::SetClearDepth(depth);
 }
-
-void StatePolicy::EnableScissorTest(bool enable)
+		
+void StatePolicyGuard::EnableScissorTest(bool enable)
 {
 	if(_scissorTest == enable)
 		return;
 
 	_scissorTest = enable;
-	if(enable)
-		glEnable(GL_SCISSOR_TEST);
-	else
-		glDisable(GL_SCISSOR_TEST);
+	StatePolicy::EnableScissorTest(enable);
 }
 
-void StatePolicy::SetScissorRect(const Rect& rect)
+void StatePolicyGuard::SetScissorRect(const Rect& rect)
 {
 	if(_scissorRect == rect)
 		return;
 
-	glScissor(rect.X, rect.Y, rect.Width, rect.Height);
+	StatePolicy::SetScissorRect(rect);
 	_scissorRect = rect;
 }
 
-void StatePolicy::SetActiveTexture(uint32 id)
+void StatePolicyGuard::SetActiveTexture(uint32 id)
 {
 	if(_activeTexture == id)
 		return;
 
-	glActiveTexture(GL_TEXTURE0 + id);
+	StatePolicy::SetActiveTexture(id);
 	_activeTexture = id;
 }
 
-void StatePolicy::BindTexture(GLenum type, GLuint texture)
+void StatePolicyGuard::BindTexture(GLenum type, GLuint texture)
 {
 	if(_bindTextures[_activeTexture] == texture)
 		return;
 
-	glBindTexture(type, texture);
+	StatePolicy::BindTexture(type, texture);
 	_bindTextures[_activeTexture] = texture;
 }
 
-void StatePolicy::InvalidateTexture(GLuint texture)
+void StatePolicyGuard::InvalidateTexture(GLuint texture)
 {
 	for(uint32 i = 0; i < MaxActiveTextures; ++i) {
 		if(_bindTextures[i] == texture)
 			_bindTextures[i] = 0;
 	}
 }
-
-void StatePolicy::Viewport(const Rect& viewport)
+		
+void StatePolicyGuard::Viewport(const Rect& viewport)
 {
 	if(_viewport == viewport)
 		return;
 
-	glViewport(viewport.X, viewport.Y, viewport.Width, viewport.Height);
+	StatePolicy::Viewport(viewport);
 	_viewport = viewport;
 }
-
-void StatePolicy::BindVertexBuffer(VertexBuffer* vertexBuffer)
+	
+void StatePolicyGuard::BindVertexBuffer(VertexBuffer* vertexBuffer)
 {
 	if(_vertexBuffer != vertexBuffer) {
 		_vertexBuffer = vertexBuffer;
-		vertexBuffer->Bind();
+		StatePolicy::BindVertexBuffer(vertexBuffer);
 	}
 }
 
-void StatePolicy::BindIndexBuffer(IndexBuffer* indexBuffer)
+void StatePolicyGuard::BindIndexBuffer(IndexBuffer* indexBuffer)
 {
 	if(_indexBuffer != indexBuffer) {
-		if(indexBuffer == NULL) {
-			//_indexBuffer->Unbind();
-		} else {
-			indexBuffer->Bind();
-		}
+		StatePolicy::BindIndexBuffer(indexBuffer);
 		_indexBuffer = indexBuffer;
 	}
 }
 
-void StatePolicy::MarkAsDirty()
+void StatePolicyGuard::MarkAsDirty()
 {
 	UseProgram(0);
 	

@@ -12,7 +12,7 @@ Texture::Texture(GLuint id, TextureFormat::Enum format)
 Texture::~Texture()
 {
 	if(mTextureID != 0) {
-		StatePolicy::InvalidateTexture(mTextureID);
+		StatePolicyGuard::InvalidateTexture(mTextureID);
 		glDeleteTextures(1, &mTextureID);
 		mTextureID = 0;
 	}

@@ -168,13 +168,42 @@ namespace playstate
 
 		static void SetActiveTexture(uint32 id);
 		static void BindTexture(GLenum type, GLuint texture);
-		static void InvalidateTexture(GLuint texture);
 		
 		static void Viewport(const Rect& viewport);
 	
 		static void BindVertexBuffer(VertexBuffer* vertexBuffer);
 		static void BindIndexBuffer(IndexBuffer* indexBuffer);
 	
+	};
+
+	class StatePolicyGuard
+	{
+	public:
+		static void UseProgram(GLuint programID);
+
+		static void EnableDepthTest(bool enable);
+		static void SetDepthFunc(DepthFunc::Enum depthFunc);
+
+		static void EnableBlend(bool enable);
+		static void SetBlendFunc(SrcFactor::Enum sfactor, DestFactor::Enum dfactor);
+
+		static void SetCullFaces(CullFaces::Enum cullFaces);
+
+		static void SetClearColor(const Color& color);
+		static void SetClearDepth(float32 depth);
+		
+		static void EnableScissorTest(bool enable);
+		static void SetScissorRect(const Rect& rect);
+
+		static void SetActiveTexture(uint32 id);
+		static void BindTexture(GLenum type, GLuint texture);
+		static void InvalidateTexture(GLuint texture);
+
+		static void Viewport(const Rect& viewport);
+	
+		static void BindVertexBuffer(VertexBuffer* vertexBuffer);
+		static void BindIndexBuffer(IndexBuffer* indexBuffer);
+
 		//
 		// Mark all states as dirty.
 		static void MarkAsDirty();

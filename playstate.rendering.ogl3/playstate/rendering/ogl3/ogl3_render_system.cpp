@@ -117,7 +117,7 @@ void OGL3RenderSystem::OnWindowResized(const Point& newSize)
 	mScreenViewport.Height = newSize.Y;
 
 	// Mark system as dirty
-	StatePolicy::MarkAsDirty();
+	StatePolicyGuard::MarkAsDirty();
 
 	// Mark gfx programs as dirty
 	GfxProgram* program = mGfxPrograms.First();
@@ -153,7 +153,7 @@ void OGL3RenderSystem::ApplyRenderTargets()
 	if(disableFBO) {
 		if(_current_frameBufferObject != 0) {
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
-			StatePolicy::Viewport(mScreenViewport);
+			StatePolicyGuard::Viewport(mScreenViewport);
 			_current_frameBufferObject = 0;
 		}
 		
@@ -256,7 +256,7 @@ void OGL3RenderSystem::ApplyRenderTargets()
         break;
     }
 	
-	StatePolicy::Viewport(Rect(0, 0, width, height));
+	StatePolicyGuard::Viewport(Rect(0, 0, width, height));
 }
 
 const Version& OGL3RenderSystem::GetShaderVersion() const
