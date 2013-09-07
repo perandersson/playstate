@@ -204,7 +204,6 @@
     <ClInclude Include="..\..\playstate\playstate\rendering\vertex_array_object_factory.h" />
     <ClInclude Include="..\..\playstate\playstate\rendering\vertex_buffer.h" />
     <ClInclude Include="..\..\playstate\playstate\rendering\vertex_declaration.h" />
-    <ClInclude Include="..\..\playstate\playstate\rendering\window_render_context.h" />
     <ClInclude Include="..\..\playstate\playstate\resources\exception\load_resource_exception.h" />
     <ClInclude Include="..\..\playstate\playstate\resources\exception\resource_exception.h" />
     <ClInclude Include="..\..\playstate\playstate\resources\resource.h" />

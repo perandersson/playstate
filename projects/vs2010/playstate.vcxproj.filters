@@ -568,9 +568,6 @@
     <ClInclude Include="..\..\playstate\playstate\rendering\vertex_buffer.h">
       <Filter>Source Files\rendering</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\rendering\window_render_context.h">
-      <Filter>Source Files\rendering</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\rendering\state\state_policy.h">
       <Filter>Source Files\rendering\state</Filter>
     </ClInclude>

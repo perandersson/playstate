@@ -22,7 +22,7 @@ namespace playstate
 	
 	static const VertexDeclaration PositionDataVertexDeclaration = {
 		{ 
-			{ PositionAttribLocation, sizeof(Vector3), 3, GL_FLOAT, false }, 
+			{ PositionAttribLocation, sizeof(Vector3), 3, VertexElementType::FLOAT, false }, 
 			0 
 		}
 	};
@@ -38,8 +38,8 @@ namespace playstate
 	
 	static const VertexDeclaration PositionTexCoordDataVertexDeclaration = {
 		{ 
-			{ PositionAttribLocation, sizeof(Vector3), 3, GL_FLOAT, false }, 
-			{ TexCoordAttribLocation, sizeof(Vector2), 2, GL_FLOAT, false },
+			{ PositionAttribLocation, sizeof(Vector3), 3, VertexElementType::FLOAT, false }, 
+			{ TexCoordAttribLocation, sizeof(Vector2), 2, VertexElementType::FLOAT, false },
 			0 
 		}
 	};
@@ -56,9 +56,9 @@ namespace playstate
 	
 	static const VertexDeclaration PositionTexCoordColorDataVertexDeclaration = {
 		{ 
-			{ PositionAttribLocation, sizeof(Vector3), 3, GL_FLOAT, false }, 
-			{ TexCoordAttribLocation, sizeof(Vector2), 2, GL_FLOAT, false },
-			{ ColorAttribLocation, sizeof(Color), 4, GL_FLOAT, false },
+			{ PositionAttribLocation, sizeof(Vector3), 3, VertexElementType::FLOAT, false }, 
+			{ TexCoordAttribLocation, sizeof(Vector2), 2, VertexElementType::FLOAT, false },
+			{ ColorAttribLocation, sizeof(Color), 4, VertexElementType::FLOAT, false },
 			0 
 		}
 	};
@@ -74,8 +74,8 @@ namespace playstate
 	
 	static const VertexDeclaration PositionNormalDataVertexDeclaration = {
 		{ 
-			{ PositionAttribLocation, sizeof(Vector3), 3, GL_FLOAT, false }, 
-			{ NormalAttribLocation, sizeof(Vector3), 3, GL_FLOAT, true },
+			{ PositionAttribLocation, sizeof(Vector3), 3, VertexElementType::FLOAT, false }, 
+			{ NormalAttribLocation, sizeof(Vector3), 3, VertexElementType::FLOAT, true },
 			0 
 		}
 	};
@@ -92,9 +92,9 @@ namespace playstate
 
 	static const VertexDeclaration PositionNormalTextureDataVertexDeclaration = {
 		{ 
-			{ PositionAttribLocation, sizeof(Vector3), 3, GL_FLOAT, false }, 
-			{ NormalAttribLocation, sizeof(Vector3), 3, GL_FLOAT, true },
-			{ TexCoordAttribLocation, sizeof(Vector2), 2, GL_FLOAT, false },
+			{ PositionAttribLocation, sizeof(Vector3), 3, VertexElementType::FLOAT, false }, 
+			{ NormalAttribLocation, sizeof(Vector3), 3, VertexElementType::FLOAT, true },
+			{ TexCoordAttribLocation, sizeof(Vector2), 2, VertexElementType::FLOAT, false },
 			0 
 		}
 	};
@@ -110,8 +110,8 @@ namespace playstate
 
 	static const VertexDeclaration PositionColorDataVertexDeclaration = {
 		{ 
-			{ PositionAttribLocation, sizeof(Vector3), 3, GL_FLOAT, false }, 
-			{ ColorAttribLocation, sizeof(Color), 4, GL_FLOAT, false },
+			{ PositionAttribLocation, sizeof(Vector3), 3, VertexElementType::FLOAT, false }, 
+			{ ColorAttribLocation, sizeof(Color), 4, VertexElementType::FLOAT, false },
 			0 
 		}
 	};

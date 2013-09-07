@@ -15,9 +15,9 @@ namespace playstate
 
 	static const VertexDeclaration WidgetGeometryDataVertexDeclaration = {
 		{ 
-			{ 0, sizeof(Vector2), 2, GL_FLOAT, false },
-			{ 1, sizeof(Vector2), 2, GL_FLOAT, false },
-			{ 2, sizeof(Color), 4, GL_FLOAT, false }, 
+			{ 0, sizeof(Vector2), 2, VertexElementType::FLOAT, false },
+			{ 1, sizeof(Vector2), 2, VertexElementType::FLOAT, false },
+			{ 2, sizeof(Color), 4, VertexElementType::FLOAT, false }, 
 			0 
 		}
 	};

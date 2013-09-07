@@ -11,7 +11,6 @@
 #include "../math/rect.h"
 #include "exception/rendering_exception.h"
 #include "../version.h"
-#include "window_render_context.h"
 #include "factories/gfx_program_factory.h"
 #include "datatypes/standard_vertex_buffer_types.h"
 

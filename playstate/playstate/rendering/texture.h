@@ -23,7 +23,7 @@ namespace playstate
 			DEPTH24_STENCIL8,
 		};
 	};
-
+	
 	//
 	// Base class for textures located on the graphics card memory.
 	class Texture : public ResourceObject

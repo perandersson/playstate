@@ -5,6 +5,21 @@
 
 namespace playstate
 {
+	class VertexElementType
+	{
+	public:
+		enum Enum {
+			BYTE = GL_BYTE,
+			UNSIGNED_BYTE = GL_UNSIGNED_BYTE,
+			SHORT = GL_SHORT,
+			UNSIGNED_SHORT = GL_UNSIGNED_SHORT,
+			INT = GL_INT,
+			UNSIGNED_INT = GL_UNSIGNED_INT,
+			FLOAT = GL_FLOAT,
+			DOUBLE = GL_DOUBLE
+		};
+	};
+
 	//
 	struct VertexElementDeclaration
 	{
@@ -20,8 +35,8 @@ namespace playstate
 		uint32 NumElementsInField;
 
 		// What datatype should the element be handled as in the shader. the Vector3 type has float values, which means
-		// that this field should be GL_FLOAT
-		uint32 Type;
+		// that this field should be VertexElementType::FLOAT
+		VertexElementType::Enum Type;
 
 		// Is the supplied value normalized or not?
 		bool Normalized;
@@ -48,8 +63,8 @@ namespace playstate
 	//
 	//	static const VertexDeclaration PositionTexCoordDataVertexDeclaration = {
 	//		{ 
-	//			{ 0, sizeof(Vector3), 3, GL_FLOAT, false }, 
-	//			{ 1, sizeof(Vector2), 2, GL_FLOAT, false },
+	//			{ 0, sizeof(Vector3), 3, VertexElementType::FLOAT, false }, 
+	//			{ 1, sizeof(Vector2), 2, VertexElementType::FLOAT, false },
 	//			0 
 	//		}
 	//	};
