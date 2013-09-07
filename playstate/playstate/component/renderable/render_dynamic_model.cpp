@@ -16,7 +16,7 @@ RenderDynamicModel::~RenderDynamicModel()
 void RenderDynamicModel::OnComponentAdded()
 {
 	mModel.AddListener(this);
-	SetBoundingBox(mModel->GetBoundingBox(), GetNode()->GetAbsolutePosition());
+	SetBoundingBox(mModel->GetBoundingBox(), GetNode()->GetPosition());
 	Renderable::Attach(GetNode()->GetGroup());
 	Tickable::Attach(GetNode()->GetGroup());
 }
@@ -35,12 +35,12 @@ void RenderDynamicModel::OnEvent(uint32 typeID, uint32 messageID)
 
 void RenderDynamicModel::OnLoaded(ResourceObject* object)
 {
-	SetBoundingBox(mModel->GetBoundingBox(), GetNode()->GetAbsolutePosition());
+	SetBoundingBox(mModel->GetBoundingBox(), GetNode()->GetPosition());
 }
 
 void RenderDynamicModel::OnUnloading(ResourceObject* object)
 {
-	SetBoundingBox(mModel->GetBoundingBox(), GetNode()->GetAbsolutePosition());
+	SetBoundingBox(mModel->GetBoundingBox(), GetNode()->GetPosition());
 }
 
 void RenderDynamicModel::PreRender(const RenderState& state, RenderBlockResultSet* resultSet)

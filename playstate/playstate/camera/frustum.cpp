@@ -11,6 +11,13 @@ Frustum::Frustum()
 {
 }
 
+Frustum::Frustum(const Frustum& frustum)
+	: mNearPlane(frustum.mNearPlane), mFarPlane(frustum.mFarPlane), mFov(frustum.mFov), mRatio(frustum.mRatio),
+	mTang(frustum.mTang), mNH(frustum.mNH), mNW(frustum.mNW), mFH(frustum.mFH), mFW(frustum.mFW)
+{
+	memcpy(mPlanes, frustum.mPlanes, sizeof(mPlanes));
+}
+
 Frustum::~Frustum()
 {
 }

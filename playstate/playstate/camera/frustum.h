@@ -26,6 +26,7 @@ namespace playstate
 
 	public:
 		Frustum();
+		Frustum(const Frustum& frustum);
 		~Frustum();
 
 		//

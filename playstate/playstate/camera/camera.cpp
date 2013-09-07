@@ -7,10 +7,18 @@
 using namespace playstate;
 
 Camera::Camera()
-{}
+{
+}
+
+Camera::Camera(const Camera& camera)
+	: mViewFrustum(camera.mViewFrustum), mViewMatrix(camera.mViewMatrix), mProjectionMatrix(camera.mProjectionMatrix),
+	mPosition(camera.mPosition), mCenter(camera.mCenter), mUp(camera.mUp)
+{
+}
 
 Camera::~Camera()
-{}
+{
+}
 
 void Camera::SetPerspective(float32 nearPlane, float32 farPlane, float32 fov, float32 ratio)
 {

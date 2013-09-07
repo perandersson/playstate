@@ -4,6 +4,7 @@
 #include "../processor/processors/quadtree_light_source_processor.h"
 #include "../processor/processors/quadtree_render_processor.h"
 #include "../script/script_system.h"
+#include "../search/find_query.h"
 using namespace playstate;
 
 SceneGroup::SceneGroup(std::auto_ptr<IUpdateProcessor> updateProcessor, std::auto_ptr<IRenderProcessor> renderProcessor, 
@@ -74,7 +75,16 @@ void SceneGroup::DetachLightSource(LightSource* lightSource)
 
 bool SceneGroup::Find(const FindQuery& query, RenderBlockResultSet* target) const
 {
-	return mRenderProcessor->Find(query, target);
+	assert(query.Camera != NULL && "Why are you trying to find items using a non-existing camera?");
+
+	// Move the camera into the SceneGroup view space
+	Camera localCamera(*query.Camera);
+	localCamera.Move(GetAbsolutePosition() * -1.0f);
+
+	FindQuery localQuery;
+	localQuery.Camera = &localCamera;
+	localQuery.Filter = query.Filter;
+	return mRenderProcessor->Find(localQuery, target);
 }
 
 bool SceneGroup::Find(const FindQuery& query, LightSourceResultSet* target) const

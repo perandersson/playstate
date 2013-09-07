@@ -16,7 +16,7 @@ RenderStaticModel::~RenderStaticModel()
 void RenderStaticModel::OnComponentAdded()
 {
 	mModel.AddListener(this);
-	SetBoundingBox(mModel->GetBoundingBox(), GetNode()->GetAbsolutePosition());
+	SetBoundingBox(mModel->GetBoundingBox(), GetNode()->GetPosition());
 	Renderable::Attach(GetNode()->GetGroup());
 }
 
@@ -28,12 +28,12 @@ void RenderStaticModel::OnComponentRemoved()
 
 void RenderStaticModel::OnLoaded(ResourceObject* object)
 {
-	SetBoundingBox(mModel->GetBoundingBox(), GetNode()->GetAbsolutePosition());
+	SetBoundingBox(mModel->GetBoundingBox(), GetNode()->GetPosition());
 }
 
 void RenderStaticModel::OnUnloading(ResourceObject* object)
 {
-	SetBoundingBox(mModel->GetBoundingBox(), GetNode()->GetAbsolutePosition());
+	SetBoundingBox(mModel->GetBoundingBox(), GetNode()->GetPosition());
 }
 
 void RenderStaticModel::PreRender(const RenderState& state, RenderBlockResultSet* resultSet)

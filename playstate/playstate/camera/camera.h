@@ -12,6 +12,7 @@ namespace playstate
 	{
 	public:
 		Camera();
+		Camera(const Camera& camera);
 		~Camera();
 
 		void SetPerspective(float32 nearPlane, float32 farPlane, float32 fov, float32 ratio);

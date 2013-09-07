@@ -16,7 +16,7 @@ PointLight::~PointLight()
 
 void PointLight::OnComponentAdded()
 {
-	SetBoundingBox(AABB(GetNode()->GetAbsolutePosition(), 50.0f, 50.0f, 50.0f));
+	SetBoundingBox(AABB(GetNode()->GetPosition(), 20.0f, 20.0f, 20.0f));
 	LightSource::Attach(GetNode()->GetGroup());
 }
 
