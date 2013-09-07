@@ -10,6 +10,8 @@ namespace playstate
 
 	class SceneNode : public Scriptable
 	{
+		friend class SceneGroup;
+
 	public:
 		LinkedListLink<SceneNode> NodeLink;
 
@@ -71,7 +73,7 @@ namespace playstate
 		}
 
 		//
-		// @return The absolute position of this node instance
+		// @return The absolute position of this node instance in relation to the attached group
 		inline const Vector3& GetAbsolutePosition() const {
 			return mAbsolutePosition;
 		}

@@ -6,6 +6,7 @@
 namespace playstate
 {
 	class SceneNode;
+	class SceneGroup;
 
 	//
 	// Base class for components in the game engine. 
@@ -34,15 +35,27 @@ namespace playstate
 	public:
 		//
 		// 
-		void OnAttachedToScene(SceneNode* node);
+		void OnAttachedToSceneNode(SceneNode* node);
+
+		//
+		// 
+		void OnAttachedToSceneGroup(SceneGroup* group);
 
 		//
 		//
-		void OnDetachingFromScene(SceneNode* node);
+		void OnDetachingFromSceneNode(SceneNode* node);
+		
+		//
+		// 
+		void OnDetachingFromSceneGroup(SceneGroup* group);
 
 		//
 		// @return The owner scene node for this component
 		SceneNode* GetNode() const;
+
+		//
+		// @return The owners group for this component
+		SceneGroup* GetGroup() const;
 
 		//
 		// @return This componenents type mask.
@@ -70,6 +83,7 @@ namespace playstate
 		virtual void OnEvent(uint32 typeID, uint32 messageID);
 
 	protected:
+		SceneGroup* mGroup;
 		SceneNode* mNode;
 		type_mask mTypeMask;
 	};

@@ -30,7 +30,7 @@ void SceneNode::AddComponent(Component* component)
 	
 	mComponents.AddLast(component);
 	if(IsAttachedToSceneGroup())
-		component->OnAttachedToScene(this);
+		component->OnAttachedToSceneNode(this);
 }
 
 void SceneNode::RemoveComponent(Component* component)
@@ -193,10 +193,15 @@ void SceneNode::UpdateRotation()
 
 void SceneNode::UpdateModelMatrix()
 {
+	Vector3 groupPosition;
+	if(IsAttachedToSceneGroup()) {
+		groupPosition = mSceneGroup->GetPosition();
+	}
+
 	if(!mAbsoluteRotation.IsZero())
-		mModelMatrix = Matrix4x4::Rotation(mAbsoluteRotation) * Matrix4x4::Translation(mAbsolutePosition);
+		mModelMatrix = Matrix4x4::Rotation(mAbsoluteRotation) * Matrix4x4::Translation(mAbsolutePosition + groupPosition);
 	else
-		mModelMatrix = Matrix4x4::Translation(mAbsolutePosition);
+		mModelMatrix = Matrix4x4::Translation(mAbsolutePosition + groupPosition);
 }
 
 void SceneNode::RemoveFromScene()
@@ -211,12 +216,13 @@ void SceneNode::NodeAttachedToSceneGroup(SceneGroup* group)
 		DetachingNodeFromSceneGroup(group);
 
 	mSceneGroup = group;
+	UpdateModelMatrix();
 	
 	// Nofiy the components that they are attached to the scene via a scene group
 	Component* component = mComponents.First();
 	while(component != NULL) {
 		Component* next = component->ComponentLink.Tail;
-		component->OnAttachedToScene(this);
+		component->OnAttachedToSceneNode(this);
 		component = next;
 	}
 
@@ -248,7 +254,7 @@ void SceneNode::DetachingNodeFromSceneGroup(SceneGroup* group)
 	Component* component = mComponents.First();
 	while(component != NULL) {
 		Component* next = component->ComponentLink.Tail;
-		component->OnDetachingFromScene(this);
+		component->OnDetachingFromSceneNode(this);
 		component = next;
 	}
 

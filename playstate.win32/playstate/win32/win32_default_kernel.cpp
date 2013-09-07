@@ -82,7 +82,6 @@ void Win32DefaultKernel::RegisterScript()
 	ss.RegisterType("Mouse", IInputSystem_Mouse_Methods);
 	ss.RegisterType("Scene", Scene_Methods);
 	ss.RegisterType("SceneNode", SceneNode_Methods);
-	ss.RegisterType("SceneGroup", SceneNode_Methods);
 	ss.RegisterType("SceneGroup", SceneGroup_Methods);
 	ss.RegisterType("Component", Component_Methods);
 	ss.RegisterType("Model", Model_Methods);
