@@ -18,11 +18,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "playstate.win32", "playstat
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glmock", "glmock.vcxproj", "{C5C88D14-117C-4B4C-8721-F0720DC6BF75}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "playstate.rendering.ogl3", "playstate.rendering.ogl3.vcxproj", "{952E1BA1-356F-41CB-B9B2-90D971113C06}"
-	ProjectSection(ProjectDependencies) = postProject
-		{49640F0E-B772-4535-9E7B-4C0C7C5C1CFF} = {49640F0E-B772-4535-9E7B-4C0C7C5C1CFF}
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -49,10 +44,6 @@ Global
 		{C5C88D14-117C-4B4C-8721-F0720DC6BF75}.Debug|Win32.Build.0 = Debug|Win32
 		{C5C88D14-117C-4B4C-8721-F0720DC6BF75}.Release|Win32.ActiveCfg = Release|Win32
 		{C5C88D14-117C-4B4C-8721-F0720DC6BF75}.Release|Win32.Build.0 = Release|Win32
-		{952E1BA1-356F-41CB-B9B2-90D971113C06}.Debug|Win32.ActiveCfg = Debug|Win32
-		{952E1BA1-356F-41CB-B9B2-90D971113C06}.Debug|Win32.Build.0 = Debug|Win32
-		{952E1BA1-356F-41CB-B9B2-90D971113C06}.Release|Win32.ActiveCfg = Release|Win32
-		{952E1BA1-356F-41CB-B9B2-90D971113C06}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

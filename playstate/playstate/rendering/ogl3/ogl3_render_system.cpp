@@ -1,5 +1,5 @@
-#include <playstate/memory/memory.h>
-#include <playstate/game/configuration.h>
+#include "../../memory/memory.h"
+#include "../../game/configuration.h"
 #include "ogl3_render_system.h"
 using namespace playstate;
 

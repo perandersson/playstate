@@ -1,10 +1,10 @@
 #pragma once
 
-#include <playstate/rendering/render_system.h>
-#include <playstate/window/window_resized_listener.h>
-#include <playstate/script/script_system.h>
-#include <playstate/window/window.h>
-#include <playstate/rendering/render_target_2d.h>
+#include "../render_system.h"
+#include "../render_target_2d.h"
+#include "../../window/window_resized_listener.h"
+#include "../../window/window.h"
+#include "../../script/script_system.h"
 
 namespace playstate
 {

@@ -138,6 +138,9 @@
     <Filter Include="Source Files\window">
       <UniqueIdentifier>{f166e526-5578-4379-a8b4-572cfe6c594c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\rendering\ogl3">
+      <UniqueIdentifier>{6010b342-1bf8-4365-9f09-a0cc7fce798b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\playstate\playstate\camera\camera.cpp">
@@ -448,6 +451,9 @@
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\processor\processors\quadtree_light_source_processor.cpp">
       <Filter>Source Files\processor\processors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\rendering\ogl3\ogl3_render_system.cpp">
+      <Filter>Source Files\rendering\ogl3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -885,6 +891,9 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\processor\processors\quadtree_light_source_processor.h">
       <Filter>Source Files\processor\processors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\ogl3\ogl3_render_system.h">
+      <Filter>Source Files\rendering\ogl3</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
