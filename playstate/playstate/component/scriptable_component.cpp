@@ -22,10 +22,10 @@ ScriptableComponent::~ScriptableComponent()
 void ScriptableComponent::OnComponentAdded()
 {
 	if(mUpdate != NULL)
-		Updatable::Attach(GetNode()->GetGroup());
+		Updatable::Attach(GetGroup());
 
 	if(mTick != NULL)
-		Tickable::Attach(GetNode()->GetGroup());
+		Tickable::Attach(GetGroup());
 
 	if(mOnComponentAdded != NULL)
 		mOnComponentAdded->Invoke();
