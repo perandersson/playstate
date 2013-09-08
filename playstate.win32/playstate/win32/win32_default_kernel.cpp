@@ -99,7 +99,7 @@ void Win32DefaultKernel::RegisterScript()
 	ss.RegisterType("SoundListener", SoundListener_Methods);
 	ss.RegisterType("Music", Music_Methods);
 	ss.RegisterType("Texture2D", Texture2D_Methods);
-
+	ss.RegisterType("Timer", ITimer_Methods);
 	ss.RegisterType("GuiFrameWidget", GuiWidget_Methods);
 	ss.RegisterType("GuiFrameWidget", GuiFrameWidget_Methods);
 
