@@ -32,10 +32,12 @@ Win32DefaultKernel::Win32DefaultKernel(HINSTANCE app, const playstate::string& f
 	mRenderSystem = new OGL3RenderSystem(*mWindow, *mScriptSystem);
 	mThreadedResourceManager = new ThreadedResourceManager(*mRenderSystem, *mFileSystem, *mLogger);
 	mSoundEngine = new OpenALSoundEngine();
+	mTimerFactory = new Win32TimerFactory();
 }
 
 Win32DefaultKernel::~Win32DefaultKernel()
 {
+	delete mTimerFactory;
 	delete mSoundEngine;
 	delete mThreadedResourceManager;
 	delete mRenderSystem;

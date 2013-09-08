@@ -7,6 +7,7 @@
 #include "../input/input_system.h"
 #include "../font/truetype/truetype_font_resource_loader.h"
 #include "../sound/openal/openal_sound_effect_resource_loader.h"
+#include "../timer/timer_factory.h"
 using namespace playstate;
 
 namespace playstate
@@ -19,14 +20,20 @@ template<> playstate::GameRunner* playstate::Singleton<playstate::GameRunner>::g
 
 GameRunner::GameRunner(IGame* game, IConfiguration* configuration) 
 	: mGame(game), mConfiguration(configuration), mRenderPipeline(NULL), mRunning(true),
-	mCanvas(IWindow::Get(), IInputSystem::Get())
+	mCanvas(IWindow::Get(), IInputSystem::Get()), mTimer(NULL)
 {
 	assert_not_null(game);
 	assert_not_null(configuration);
+	mTimer = ITimerFactory::Get().CreateTimer();
 }
 
 GameRunner::~GameRunner()
 {
+	if(mTimer != NULL) {
+		delete mTimer;
+		mTimer = NULL;
+	}
+
 	if(mRenderPipeline != NULL) {
 		delete mRenderPipeline;
 		mRenderPipeline = NULL;
@@ -62,7 +69,7 @@ void GameRunner::Run()
 	IRenderContext* screenRenderContext = IGraphicsDriver::Get().GetScreenRenderContext();
 
 	while(mRunning) {
-		GameDeltaTime = window.GetTimeSinceLastUpdate();
+		GameDeltaTime = mTimer->GetElapsedAndRestart();
 		GameTotalTime += (float64)GameDeltaTime;
 
 		scriptSystem.SetGlobalVar("GameDeltaTime", GameDeltaTime);

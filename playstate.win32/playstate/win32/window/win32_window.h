@@ -36,9 +36,6 @@ namespace playstate
 
 			virtual void AddWindowClosedListener(IWindowClosedListener* listener);
 			virtual void RemoveWindowClosedListener(IWindowClosedListener* listener);
-		
-			virtual float32 GetTimeSinceLastUpdate() const;
-
 			
 		private:
 			HINSTANCE mAppInstance;
@@ -52,10 +49,6 @@ namespace playstate
 
 			Point mSize;
 			Point mPrevSize;
-
-			float32 mTimeSinceLastUpdate;
-			LONGLONG mLastTime;
-			float64 mFrequency;
 
 			DWORD mStyle;
 			DWORD mExStyle;

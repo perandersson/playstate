@@ -27,6 +27,9 @@
     <Filter Include="Source Files\win32\thread">
       <UniqueIdentifier>{5f5ad6e6-1772-467d-aa6c-ca09453bfca5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\win32\timer">
+      <UniqueIdentifier>{69ac3bfa-e153-4875-bac6-835674dca9b1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\playstate.win32\playstate\win32\filesystem\win32_directory.h">
@@ -71,6 +74,12 @@
     <ClInclude Include="..\..\playstate.win32\playstate\win32\filesystem\win32_file_watcher.h">
       <Filter>Source Files\win32\filesystem</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\playstate.win32\playstate\win32\timer\win32_timer_factory.h">
+      <Filter>Source Files\win32\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate.win32\playstate\win32\timer\win32_timer.h">
+      <Filter>Source Files\win32\timer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\playstate.win32\playstate\win32\filesystem\win32_directory.cpp">
@@ -114,6 +123,12 @@
     </ClCompile>
     <ClCompile Include="..\..\playstate.win32\playstate\win32\filesystem\win32_file_watcher.cpp">
       <Filter>Source Files\win32\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate.win32\playstate\win32\timer\win32_timer_factory.cpp">
+      <Filter>Source Files\win32\timer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate.win32\playstate\win32\timer\win32_timer.cpp">
+      <Filter>Source Files\win32\timer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

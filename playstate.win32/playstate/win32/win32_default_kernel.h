@@ -18,6 +18,7 @@
 #include "filesystem/win32_filesystem.h"
 #include "rendering/win32_graphics_driver.h"
 #include "thread/win32_thread_factory.h"
+#include "timer/win32_timer_factory.h"
 
 namespace playstate
 {
@@ -51,6 +52,7 @@ namespace playstate
 			Win32FileSystem* mFileSystem;
 			ScriptSystem* mScriptSystem;
 			OpenALSoundEngine* mSoundEngine;
+			Win32TimerFactory* mTimerFactory;
 		};
 	}
 }

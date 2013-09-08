@@ -38,8 +38,6 @@ namespace playstate
 
 		virtual void AddWindowResizedListener(IWindowResizedListener* listener) = 0;
 		virtual void RemoveWindowResizedListener(IWindowResizedListener* listener) = 0;
-
-		virtual float32 GetTimeSinceLastUpdate() const = 0;
 	};
 
 	

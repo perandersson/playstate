@@ -10,6 +10,7 @@
 #include "../rendering/render_system.h"
 #include "../rendering/render_pipeline.h"
 #include "../resources/resource_manager.h"
+#include "../timer/timer.h"
 
 namespace playstate
 {
@@ -54,6 +55,7 @@ namespace playstate
 		IConfiguration* mConfiguration;
 		IRenderPipeline* mRenderPipeline;
 		Scene mScene;
+		ITimer* mTimer;
 		Canvas mCanvas;
 		bool mRunning;
 	};

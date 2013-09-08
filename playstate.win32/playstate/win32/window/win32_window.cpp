@@ -16,8 +16,7 @@ namespace {
 }
 
 Win32Window::Win32Window(HINSTANCE hInstance) : mAppInstance(hInstance), 
-	mWindowHandle(NULL), mSize(320, 240), mPrevSize(320, 240), mWindowTitle(SAFE_STRING("playstate")),
-	mTimeSinceLastUpdate(0.0f), mLastTime(0)
+	mWindowHandle(NULL), mSize(320, 240), mPrevSize(320, 240), mWindowTitle(SAFE_STRING("playstate"))
 {
 	_window = this;
 	memset(&mMessageQueue, 0, sizeof(MSG));
@@ -42,11 +41,7 @@ Win32Window::Win32Window(HINSTANCE hInstance) : mAppInstance(hInstance),
 		windowSize.right - windowSize.left, windowSize.bottom - windowSize.top,
 		NULL, NULL, mAppInstance, NULL);
 	
-	if(mWindowHandle != NULL) {
-		LARGE_INTEGER performanceFrequency;
-		QueryPerformanceFrequency(&performanceFrequency);
-		mFrequency = (double)(performanceFrequency.QuadPart);
-	
+	if(mWindowHandle != NULL) {	
 		ShowWindow(mWindowHandle, SW_SHOW);
 		UpdateWindow(mWindowHandle);
 	}
@@ -104,11 +99,6 @@ void Win32Window::SetTitle(const playstate::string& title)
 	SetWindowText(mWindowHandle, title.c_str());
 }
 
-float32 Win32Window::GetTimeSinceLastUpdate() const
-{
-	return mTimeSinceLastUpdate;
-}
-
 HWND Win32Window::GetWindowHandle() const
 {
 	return mWindowHandle;
@@ -150,16 +140,6 @@ LRESULT CALLBACK Win32Window::HandleEvent(HWND hwnd, UINT message, WPARAM wparam
 
 void Win32Window::HandleEvents()
 {	
-	LARGE_INTEGER now;
-	QueryPerformanceCounter(&now);
-	if(mLastTime > 0)
-	{
-		LONGLONG quadPartDelta = now.QuadPart - mLastTime;
-		double dt = double(quadPartDelta) / mFrequency;
-		mTimeSinceLastUpdate = (float)(dt);
-	}
-	mLastTime = now.QuadPart;
-
 	if(PeekMessage(&mMessageQueue, NULL, 0, 0, PM_REMOVE)) {
 		if(mMessageQueue.message == WM_QUIT) {
 			WindowClosedListeners::size_type size = mWindowClosedListeners.size();
