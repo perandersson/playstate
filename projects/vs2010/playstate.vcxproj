@@ -112,6 +112,7 @@
     <ClCompile Include="..\..\playstate\playstate\thread\thread_factory.cpp" />
     <ClCompile Include="..\..\playstate\playstate\thread\wrapper\lock_wrapper.cpp" />
     <ClCompile Include="..\..\playstate\playstate\thread\wrapper\thread_wrapper.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\timer\timer_factory.cpp" />
     <ClCompile Include="..\..\playstate\playstate\uuid.cpp" />
     <ClCompile Include="..\..\playstate\playstate\version.cpp" />
     <ClCompile Include="..\..\playstate\playstate\window\window.cpp" />
@@ -257,6 +258,8 @@
     <ClInclude Include="..\..\playstate\playstate\thread\thread_factory.h" />
     <ClInclude Include="..\..\playstate\playstate\thread\wrapper\lock_wrapper.h" />
     <ClInclude Include="..\..\playstate\playstate\thread\wrapper\thread_wrapper.h" />
+    <ClInclude Include="..\..\playstate\playstate\timer\timer.h" />
+    <ClInclude Include="..\..\playstate\playstate\timer\timer_factory.h" />
     <ClInclude Include="..\..\playstate\playstate\types.h" />
     <ClInclude Include="..\..\playstate\playstate\uuid.h" />
     <ClInclude Include="..\..\playstate\playstate\version.h" />

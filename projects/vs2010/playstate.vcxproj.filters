@@ -141,6 +141,9 @@
     <Filter Include="Source Files\rendering\ogl3">
       <UniqueIdentifier>{6010b342-1bf8-4365-9f09-a0cc7fce798b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\timer">
+      <UniqueIdentifier>{0249f50c-8053-461e-b388-75a7a9d9ae8e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\playstate\playstate\camera\camera.cpp">
@@ -454,6 +457,9 @@
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\rendering\ogl3\ogl3_render_system.cpp">
       <Filter>Source Files\rendering\ogl3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\timer\timer_factory.cpp">
+      <Filter>Source Files\timer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -894,6 +900,12 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\rendering\ogl3\ogl3_render_system.h">
       <Filter>Source Files\rendering\ogl3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\timer\timer_factory.h">
+      <Filter>Source Files\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\timer\timer.h">
+      <Filter>Source Files\timer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

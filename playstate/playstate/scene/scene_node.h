@@ -158,11 +158,11 @@ namespace playstate
 	protected:
 		//
 		// Updates the absolute position value based on the parents position
-		void UpdatePosition();
+		void UpdatePosition(const Vector3& parentPosition);
 
 		//
 		// Updates the absolute rotation value based on the parents rotation
-		void UpdateRotation();
+		void UpdateRotation(const Vector3& parentRotation);
 
 		//
 		// Update the model matrix value based on the position and rotation

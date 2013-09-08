@@ -149,7 +149,7 @@ void SceneGroup::SetPosition(const Vector3& position)
 
 	SceneNode* child = mChildren.First();
 	while(child != NULL) {
-		child->UpdatePosition();
+		child->UpdatePosition(Vector3());
 		child = child->NodeLink.Tail;
 	}
 }

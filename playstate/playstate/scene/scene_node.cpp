@@ -94,8 +94,8 @@ void SceneNode::OnAttachedToParent(SceneNode* parent)
 {
 	mParent = parent;
 
-	UpdatePosition();
-	UpdateRotation();
+	UpdatePosition(mParent->mAbsolutePosition);
+	UpdateRotation(mParent->mAbsoluteRotation);
 }
 
 void SceneNode::FireEvent(uint32 typeID, uint32 messageID)
@@ -143,21 +143,20 @@ void SceneNode::SetPosition(const Vector3& position)
 
 	SceneNode* child = mChildren.First();
 	while(child != NULL) {
-		child->UpdatePosition();
+		child->UpdatePosition(mAbsolutePosition);
 		child = child->NodeLink.Tail;
 	}
 }
 
-void SceneNode::UpdatePosition()
+void SceneNode::UpdatePosition(const Vector3& parentPosition)
 {
-	assert(mParent != NULL && "Illegal call when no parent is found for this object");
-	mAbsolutePosition = mParent->mAbsolutePosition + mPosition;
+	mAbsolutePosition = parentPosition + mPosition;
 
 	UpdateModelMatrix();
 
 	SceneNode* child = mChildren.First();
 	while(child != NULL) {
-		child->UpdatePosition();
+		child->UpdatePosition(mAbsolutePosition);
 		child = child->NodeLink.Tail;
 	}
 }
@@ -172,21 +171,20 @@ void SceneNode::SetRotation(const Vector3& rotation)
 	
 	SceneNode* child = mChildren.First();
 	while(child != NULL) {
-		child->UpdateRotation();
+		child->UpdateRotation(mAbsoluteRotation);
 		child = child->NodeLink.Tail;
 	}
 }
 
-void SceneNode::UpdateRotation()
+void SceneNode::UpdateRotation(const Vector3& parentRotation)
 {
-	assert(mParent != NULL && "Illegal call when no parent is found for this object");
-	mAbsoluteRotation = mParent->mAbsoluteRotation + mRotation;
+	mAbsoluteRotation = parentRotation + mRotation;
 
 	UpdateModelMatrix();
 
 	SceneNode* child = mChildren.First();
 	while(child != NULL) {
-		child->UpdateRotation();
+		child->UpdateRotation(mAbsoluteRotation);
 		child = child->NodeLink.Tail;
 	}
 }
