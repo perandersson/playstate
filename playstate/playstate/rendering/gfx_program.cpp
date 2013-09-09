@@ -219,9 +219,12 @@ void GfxProgram::Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint32 s
 	ApplyBuffers(buffer, indexBuffer);
 		
 	if(indexBuffer != NULL)
-		indexBuffer->Render(startElement);
+		indexBuffer->Render(buffer, startElement);
 	else
 		buffer->Render(startElement);
+
+	//GLenum err = glGetError();
+	//assert(err == GL_NO_ERROR);
 }
 
 void GfxProgram::Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint32 startElement, uint32 numElements)
@@ -233,9 +236,12 @@ void GfxProgram::Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint32 s
 	ApplyBuffers(buffer, indexBuffer);
 		
 	if(indexBuffer != NULL)
-		indexBuffer->Render(startElement, numElements);
+		indexBuffer->Render(buffer, startElement, numElements);
 	else
 		buffer->Render(startElement, numElements);
+
+	GLenum err = glGetError();
+	assert(err == GL_NO_ERROR);
 }
 
 void GfxProgram::ApplyBuffers(VertexBuffer* buffer, IndexBuffer* indexBuffer)
@@ -247,6 +253,10 @@ void GfxProgram::ApplyBuffers(VertexBuffer* buffer, IndexBuffer* indexBuffer)
 
 	StatePolicyGuard::BindVertexBuffer(buffer);
 	StatePolicyGuard::BindIndexBuffer(indexBuffer);
+
+	
+	GLenum err = glGetError();
+	assert(err == GL_NO_ERROR);
 }
 
 void GfxProgram::EnableDepthTest(bool enable)

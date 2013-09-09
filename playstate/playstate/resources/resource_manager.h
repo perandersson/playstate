@@ -43,7 +43,6 @@ namespace playstate
 		// @param suffix
 		virtual void RegisterResourceType(IResourceLoader*, const playstate::string& suffix) = 0;
 
-	protected:
 		//
 		// Non-public method for actually retrieving the raw resource data.
 		//

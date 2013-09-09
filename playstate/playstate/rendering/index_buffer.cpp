@@ -1,5 +1,6 @@
 #include "../memory/memory.h"
 #include "index_buffer.h"
+#include "vertex_buffer.h"
 using namespace playstate;
 
 IndexBuffer::IndexBuffer(GLuint indexBufferId, uint32 numElements) 
@@ -15,20 +16,20 @@ IndexBuffer::~IndexBuffer()
 	}
 }
 
-void IndexBuffer::Render() const
+void IndexBuffer::Render(VertexBuffer* buffer) const
 {
-	Render(0);
+	Render(buffer, 0);
 }
 
-void IndexBuffer::Render(uint32 firstElement) const
+void IndexBuffer::Render(VertexBuffer* buffer, uint32 firstElement) const
 {
-	Render(firstElement, mNumElements);
+	Render(buffer, firstElement, mNumElements);
 }
 
-void IndexBuffer::Render(uint32 firstElement, uint32 numElements) const
+void IndexBuffer::Render(VertexBuffer* buffer, uint32 firstElement, uint32 numElements) const
 {
 	// So far only the uint32 indice type is usable
-	glDrawElements(mIndexBufferId, numElements, GL_UNSIGNED_INT, (void*)(firstElement * sizeof(uint32)));
+	glDrawElements(buffer->GetPrimitiveType(), numElements, GL_UNSIGNED_INT, (void*)(firstElement * sizeof(uint32)));
 }
 
 void IndexBuffer::Bind()

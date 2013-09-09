@@ -32,6 +32,10 @@ namespace playstate
 		// @throws playstate::RenderingException If the update process fails.
 		void Update(const void* vertices, uint32 numVertices);
 
+		inline GLenum GetPrimitiveType() const {
+			return mPrimitiveType;
+		}
+
 	private:
 		void Bind();
 		void Render() const;

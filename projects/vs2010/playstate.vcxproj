@@ -43,9 +43,12 @@
     <ClCompile Include="..\..\playstate\playstate\math\matrix4x4.cpp" />
     <ClCompile Include="..\..\playstate\playstate\math\plane.cpp" />
     <ClCompile Include="..\..\playstate\playstate\math\point.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\math\quaternion.cpp" />
     <ClCompile Include="..\..\playstate\playstate\math\rect.cpp" />
     <ClCompile Include="..\..\playstate\playstate\math\vector2.cpp" />
     <ClCompile Include="..\..\playstate\playstate\math\vector3.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\model\dynamic_model.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\model\md5\md5_mesh_resource_loader.cpp" />
     <ClCompile Include="..\..\playstate\playstate\model\model.cpp" />
     <ClCompile Include="..\..\playstate\playstate\model\wavefront\wavefront_resource_loader.cpp" />
     <ClCompile Include="..\..\playstate\playstate\processor\light_source.cpp" />
@@ -160,11 +163,14 @@
     <ClInclude Include="..\..\playstate\playstate\math\matrix4x4.h" />
     <ClInclude Include="..\..\playstate\playstate\math\plane.h" />
     <ClInclude Include="..\..\playstate\playstate\math\point.h" />
+    <ClInclude Include="..\..\playstate\playstate\math\quaternion.h" />
     <ClInclude Include="..\..\playstate\playstate\math\rect.h" />
     <ClInclude Include="..\..\playstate\playstate\math\vector2.h" />
     <ClInclude Include="..\..\playstate\playstate\math\vector3.h" />
     <ClInclude Include="..\..\playstate\playstate\memory\memory.h" />
     <ClInclude Include="..\..\playstate\playstate\memory\memory_pool.h" />
+    <ClInclude Include="..\..\playstate\playstate\model\dynamic_model.h" />
+    <ClInclude Include="..\..\playstate\playstate\model\md5\md5_mesh_resource_loader.h" />
     <ClInclude Include="..\..\playstate\playstate\model\model.h" />
     <ClInclude Include="..\..\playstate\playstate\model\model_mesh.h" />
     <ClInclude Include="..\..\playstate\playstate\model\wavefront\wavefront_resource_loader.h" />

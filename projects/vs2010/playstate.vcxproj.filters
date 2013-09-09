@@ -461,6 +461,15 @@
     <ClCompile Include="..\..\playstate\playstate\timer\timer_factory.cpp">
       <Filter>Source Files\timer</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\model\md5\md5_mesh_resource_loader.cpp">
+      <Filter>Source Files\model\md5</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\model\dynamic_model.cpp">
+      <Filter>Source Files\model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\math\quaternion.cpp">
+      <Filter>Source Files\math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\playstate\playstate\camera\camera.h">
@@ -906,6 +915,15 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\timer\timer.h">
       <Filter>Source Files\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\model\md5\md5_mesh_resource_loader.h">
+      <Filter>Source Files\model\md5</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\model\dynamic_model.h">
+      <Filter>Source Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\math\quaternion.h">
+      <Filter>Source Files\math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -4,7 +4,7 @@
 #include "../../scene/scene_group.h"
 using namespace playstate;
 
-RenderDynamicModel::RenderDynamicModel(Resource<Model> model) 
+RenderDynamicModel::RenderDynamicModel(Resource<DynamicModel> model) 
 	: Component(), Renderable(), Tickable(), Scriptable(), mModel(model)
 {
 }
@@ -16,7 +16,8 @@ RenderDynamicModel::~RenderDynamicModel()
 void RenderDynamicModel::OnComponentAdded()
 {
 	mModel.AddListener(this);
-	SetBoundingBox(mModel->GetBoundingBox(), GetNode()->GetPosition());
+	SetBoundingBox(GetBoundingBox(), GetNode()->GetPosition());
+	//SetBoundingBox(mModel->GetBoundingBox(), GetNode()->GetPosition());
 	Renderable::Attach(GetNode()->GetGroup());
 	Tickable::Attach(GetNode()->GetGroup());
 }
@@ -35,17 +36,39 @@ void RenderDynamicModel::OnEvent(uint32 typeID, uint32 messageID)
 
 void RenderDynamicModel::OnLoaded(ResourceObject* object)
 {
-	SetBoundingBox(mModel->GetBoundingBox(), GetNode()->GetPosition());
+	SetBoundingBox(GetBoundingBox(), GetNode()->GetPosition());
+	//SetBoundingBox(mModel->GetBoundingBox(), GetNode()->GetPosition());
 }
 
 void RenderDynamicModel::OnUnloading(ResourceObject* object)
 {
-	SetBoundingBox(mModel->GetBoundingBox(), GetNode()->GetPosition());
+	SetBoundingBox(GetBoundingBox(), GetNode()->GetPosition());
+	//SetBoundingBox(mModel->GetBoundingBox(), GetNode()->GetPosition());
 }
 
 void RenderDynamicModel::PreRender(const RenderState& state, RenderBlockResultSet* resultSet)
 {
-	
+	uint32 size = mModel->GetNumMeshes();
+	ModelMesh* meshes = mModel->GetMeshes();
+	for(uint32 i = 0; i < size; ++i) {
+		ModelMesh& mesh = meshes[i];
+		RenderBlock* block = resultSet->Create(mesh.Id);
+		block->ModelMatrix = GetNode()->GetModelMatrix();
+		if(BIT_ISSET(state.Filter, RenderStateFilter::GEOMETRY)) {
+			block->VertexBuffer = mesh.Vertices;
+			block->IndexBuffer = mesh.Indices;
+		}
+		if(BIT_ISSET(state.Filter, RenderStateFilter::TEXTURES)) {
+			block->DiffuseTexture = mesh.DiffuseTexture.Get();
+			//block->AmbientTexture = mesh.AmbientTexture.Get();
+			//block->SpecularTexture = mesh.SpecularTexture.Get();
+			//block->SpecularHighlightTexture = mesh.SpecularHighlightTexture.Get();
+			//block->AlphaTexture = mesh.AlphaTexture.Get();
+			//block->BumpMapTexture = mesh.BumpMapTexture.Get();
+			//block->DisplacementTexture = mesh.DisplacementTexture.Get();
+		}
+		block->DiffuseColor = mesh.DiffuseColor;
+	}
 }
 
 void RenderDynamicModel::Tick()
@@ -65,7 +88,7 @@ namespace playstate
 		
 		ResourceData* resourceData = luaM_popresource(L);
 		if(resourceData != NULL) {
-			Resource<Model> model(resourceData);
+			Resource<DynamicModel> model(resourceData);
 			RenderDynamicModel* renderStaticModel = new RenderDynamicModel(model);
 			luaM_pushobject(L, "RenderDynamicModel", renderStaticModel);
 		} else {

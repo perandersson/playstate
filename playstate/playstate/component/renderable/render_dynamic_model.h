@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../component.h"
-#include "../../model/model.h"
+#include "../../model/dynamic_model.h"
 #include "../../processor/renderable.h"
 #include "../../resources/resource_manager.h"
 #include "../../resources/resource_changed_listener.h"
@@ -17,7 +17,7 @@ namespace playstate
 		// Constructor
 		//
 		// @param model The model we want to render onto the screen
-		RenderDynamicModel(Resource<Model> model);
+		RenderDynamicModel(Resource<DynamicModel> model);
 
 		//
 		// Destructor
@@ -43,7 +43,7 @@ namespace playstate
 		virtual void Tick();
 
 	private:
-		Resource<Model> mModel;
+		Resource<DynamicModel> mModel;
 	};
 	
 	//

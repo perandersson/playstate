@@ -8,6 +8,7 @@ namespace playstate
 {
 	class StatePolicy;
 	class GfxProgram;
+	class VertexBuffer;
 
 	//
 	// 
@@ -21,9 +22,9 @@ namespace playstate
 		~IndexBuffer();
 
 	private:
-		void Render() const;
-		void Render(uint32 firstElement) const;
-		void Render(uint32 firstElement, uint32 numElements) const;
+		void Render(VertexBuffer* buffer) const;
+		void Render(VertexBuffer* buffer, uint32 firstElement) const;
+		void Render(VertexBuffer* buffer, uint32 firstElement, uint32 numElements) const;
 		void Bind();
 
 	private:
