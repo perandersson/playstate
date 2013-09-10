@@ -27,7 +27,7 @@ void QuadTreeLightSourceProcessor::DetachLightSource(LightSource* lightSource)
 
 	mLightSources.Remove(lightSource);
 
-	QuadTreeNode* tree = static_cast<QuadTreeNode*>(lightSource->GetTree());
+	QuadTree* tree = static_cast<QuadTree*>(lightSource->GetTree());
 	if(tree != NULL)
 		tree->Remove(lightSource);
 }

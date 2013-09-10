@@ -6,7 +6,7 @@
 
 namespace playstate
 {
-	class QuadTreeNode : public ISpatialTree
+	class QuadTree : public ISpatialTree
 	{
 	public:
 		static const uint32 SizeUntilSplit = 25U;
@@ -20,9 +20,9 @@ namespace playstate
 			BOTTOM_RIGHT
 		};
 	public:
-		QuadTreeNode(const AABB& boundingBox, uint32 maxDepth);
-		QuadTreeNode(QuadTreeNode* parent, const AABB& boundingBox, uint32 depth, uint32 maxDepth);
-		virtual ~QuadTreeNode();
+		QuadTree(const AABB& boundingBox, uint32 maxDepth);
+		QuadTree(QuadTree* parent, const AABB& boundingBox, uint32 depth, uint32 maxDepth);
+		virtual ~QuadTree();
 		
 		//
 		// @return TRUE if this node is a leaf node
@@ -101,8 +101,8 @@ namespace playstate
 		virtual void Find(const AABB& boundingBox, ISpatialTreeVisitor* visitor) const;
 
 	private:
-		QuadTreeNode* mParent;
-		QuadTreeNode* mCorners[4];
+		QuadTree* mParent;
+		QuadTree* mCorners[4];
 		LinkedList<SpatialNode> mChildren;
 		AABB mBoundingBox;
 		uint32 mDepth;

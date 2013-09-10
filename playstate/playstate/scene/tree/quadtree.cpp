@@ -1,8 +1,8 @@
 #include "../../memory/memory.h"
-#include "quadtree_node.h"
+#include "quadtree.h"
 using namespace playstate;
 
-QuadTreeNode::QuadTreeNode(const AABB& boundingBox, uint32 maxDepth)
+QuadTree::QuadTree(const AABB& boundingBox, uint32 maxDepth)
 	: mParent(NULL), mChildren(offsetof(SpatialNode, SpatialNodeLink)), mBoundingBox(boundingBox), mDepth(0), mMaxDepth(maxDepth), mAlive(false)
 {
 	const Vector3 mid = mBoundingBox.GetPosition();
@@ -11,26 +11,26 @@ QuadTreeNode::QuadTreeNode(const AABB& boundingBox, uint32 maxDepth)
 	const float partDepth = mBoundingBox.GetDepth() / 2.0f;
 
 	AABB topLeft(mid + Vector3(-(partWidth / 2.0f), 0, -(partDepth / 2.0f)), partWidth, partHeight, partDepth);
-	mCorners[TOP_LEFT] = new QuadTreeNode(this, topLeft, 1, maxDepth);
+	mCorners[TOP_LEFT] = new QuadTree(this, topLeft, 1, maxDepth);
 	
 	AABB topRight(mid + Vector3(partWidth / 2.0f, 0, -(partDepth / 2.0f)), partWidth, partHeight, partDepth);
-	mCorners[TOP_RIGHT] = new QuadTreeNode(this, topRight, 1, maxDepth);
+	mCorners[TOP_RIGHT] = new QuadTree(this, topRight, 1, maxDepth);
 	
 	AABB bottomLeft(mid + Vector3(-(partWidth / 2.0f), 0, partDepth / 2.0f), partWidth, partHeight, partDepth);
-	mCorners[BOTTOM_LEFT] = new QuadTreeNode(this, bottomLeft, 1, maxDepth);
+	mCorners[BOTTOM_LEFT] = new QuadTree(this, bottomLeft, 1, maxDepth);
 	
 	AABB bottomRight(mid + Vector3(partWidth / 2.0f, 0, partDepth / 2.0f), partWidth, partHeight, partDepth);
-	mCorners[BOTTOM_RIGHT] = new QuadTreeNode(this, bottomRight, 1, maxDepth);
+	mCorners[BOTTOM_RIGHT] = new QuadTree(this, bottomRight, 1, maxDepth);
 }
 
-QuadTreeNode::QuadTreeNode(QuadTreeNode* parent, const AABB& boundingBox, uint32 depth, uint32 maxDepth)
+QuadTree::QuadTree(QuadTree* parent, const AABB& boundingBox, uint32 depth, uint32 maxDepth)
 	: mParent(parent), mChildren(offsetof(SpatialNode, SpatialNodeLink)), mBoundingBox(boundingBox),
 	mDepth(depth), mMaxDepth(maxDepth), mAlive(false)
 {
 	memset(mCorners, 0, sizeof(mCorners));
 }
 
-QuadTreeNode::~QuadTreeNode()
+QuadTree::~QuadTree()
 {
 	if(mCorners[TOP_LEFT] != NULL) {
 		delete mCorners[TOP_LEFT];
@@ -51,7 +51,7 @@ QuadTreeNode::~QuadTreeNode()
 	mChildren.UnlinkAll();
 }
 
-bool QuadTreeNode::Add(SpatialNode* node)
+bool QuadTree::Add(SpatialNode* node)
 {
 	// Ignore nodes not completely inside this quadtree node's bounding box.
 	AABB::CollisionResult result = mBoundingBox.IsColliding(node->GetBoundingBox());
@@ -81,7 +81,7 @@ bool QuadTreeNode::Add(SpatialNode* node)
 	return true;
 }
 
-void QuadTreeNode::MoveChildrenDown()
+void QuadTree::MoveChildrenDown()
 {
 	SpatialNode* node = mChildren.First();
 	while(node != NULL) {
@@ -95,7 +95,7 @@ void QuadTreeNode::MoveChildrenDown()
 	}
 }
 
-void QuadTreeNode::CreateCorners()
+void QuadTree::CreateCorners()
 {
 	assert(IsLeafNode() && "You are not allowed to create corners for a branch node");
 	assert(mDepth < mMaxDepth && "You are not allowed to create corners for a node at max-depth");
@@ -106,19 +106,19 @@ void QuadTreeNode::CreateCorners()
 	const float partDepth = mBoundingBox.GetDepth() / 2.0f;
 
 	AABB topLeft(mid + Vector3(-(partWidth / 2.0f), 0, -(partDepth / 2.0f)), partWidth, partHeight, partDepth);
-	mCorners[TOP_LEFT] = new QuadTreeNode(this, topLeft, mDepth + 1, mMaxDepth);
+	mCorners[TOP_LEFT] = new QuadTree(this, topLeft, mDepth + 1, mMaxDepth);
 	
 	AABB topRight(mid + Vector3(partWidth / 2.0f, 0, -(partDepth / 2.0f)), partWidth, partHeight, partDepth);
-	mCorners[TOP_RIGHT] = new QuadTreeNode(this, topRight, mDepth + 1, mMaxDepth);
+	mCorners[TOP_RIGHT] = new QuadTree(this, topRight, mDepth + 1, mMaxDepth);
 	
 	AABB bottomLeft(mid + Vector3(-(partWidth / 2.0f), 0, partDepth / 2.0f), partWidth, partHeight, partDepth);
-	mCorners[BOTTOM_LEFT] = new QuadTreeNode(this, bottomLeft, mDepth + 1, mMaxDepth);
+	mCorners[BOTTOM_LEFT] = new QuadTree(this, bottomLeft, mDepth + 1, mMaxDepth);
 	
 	AABB bottomRight(mid + Vector3(partWidth / 2.0f, 0, partDepth / 2.0f), partWidth, partHeight, partDepth);
-	mCorners[BOTTOM_RIGHT] = new QuadTreeNode(this, bottomRight, mDepth + 1, mMaxDepth);
+	mCorners[BOTTOM_RIGHT] = new QuadTree(this, bottomRight, mDepth + 1, mMaxDepth);
 }
 
-bool QuadTreeNode::ResizeRequired() const
+bool QuadTree::ResizeRequired() const
 {
 	if(AtMaxDepth())
 		return false;
@@ -127,7 +127,7 @@ bool QuadTreeNode::ResizeRequired() const
 	return numChildren >= SizeUntilSplit;
 }
 
-void QuadTreeNode::Remove(SpatialNode* node)
+void QuadTree::Remove(SpatialNode* node)
 {	
 	// Remove the node
 	mChildren.Remove(node);
@@ -141,7 +141,7 @@ void QuadTreeNode::Remove(SpatialNode* node)
 	}
 }
 
-void QuadTreeNode::Suspend()
+void QuadTree::Suspend()
 {
 	if(!IsLeafNode()) {
 		if(mCorners[TOP_LEFT]->IsAlive()) 
@@ -160,7 +160,7 @@ void QuadTreeNode::Suspend()
 	mAlive = false;
 }
 
-void QuadTreeNode::Absorb(LinkedList<SpatialNode>& children)
+void QuadTree::Absorb(LinkedList<SpatialNode>& children)
 {
 	SpatialNode* node = children.First();
 	while(node != NULL) {
@@ -171,7 +171,7 @@ void QuadTreeNode::Absorb(LinkedList<SpatialNode>& children)
 	}
 }
 
-uint32 QuadTreeNode::CountChildren() const
+uint32 QuadTree::CountChildren() const
 {
 	if(!IsAlive())
 		return 0;
@@ -187,7 +187,7 @@ uint32 QuadTreeNode::CountChildren() const
 	return size;
 }
 
-void QuadTreeNode::AddToRoot(SpatialNode* node)
+void QuadTree::AddToRoot(SpatialNode* node)
 {
 	// Is the node still inside this QuadTreeNode?
 	AABB::CollisionResult result = mBoundingBox.IsColliding(node->GetBoundingBox());
@@ -199,7 +199,7 @@ void QuadTreeNode::AddToRoot(SpatialNode* node)
 	mParent->AddToRoot(node);
 }
 
-void QuadTreeNode::AddToThisNode(SpatialNode* node)
+void QuadTree::AddToThisNode(SpatialNode* node)
 {
 	mChildren.AddLast(node);
 	node->AttachToTree(this);
@@ -212,7 +212,7 @@ void QuadTreeNode::AddToThisNode(SpatialNode* node)
 	}
 }
 
-void QuadTreeNode::Invalidate(SpatialNode* node)
+void QuadTree::Invalidate(SpatialNode* node)
 {
 	assert_not_null(node);
 
@@ -228,7 +228,7 @@ void QuadTreeNode::Invalidate(SpatialNode* node)
 	mParent->AddToRoot(node);
 }
 
-void QuadTreeNode::Find(const Frustum& frustum, ISpatialTreeVisitor* visitor) const
+void QuadTree::Find(const Frustum& frustum, ISpatialTreeVisitor* visitor) const
 {
 	assert_not_null(visitor);
 
@@ -257,7 +257,7 @@ void QuadTreeNode::Find(const Frustum& frustum, ISpatialTreeVisitor* visitor) co
 	}
 }
 
-void QuadTreeNode::IterateAndVisit(ISpatialTreeVisitor* visitor) const
+void QuadTree::IterateAndVisit(ISpatialTreeVisitor* visitor) const
 {
 	if(!IsLeafNode()) {
 		mCorners[TOP_LEFT]->IterateAndVisit(visitor);
@@ -274,7 +274,7 @@ void QuadTreeNode::IterateAndVisit(ISpatialTreeVisitor* visitor) const
 	}
 }
 
-void QuadTreeNode::Find(const AABB& boundingBox, ISpatialTreeVisitor* visitor) const
+void QuadTree::Find(const AABB& boundingBox, ISpatialTreeVisitor* visitor) const
 {
 	assert_not_null(visitor);
 	assert_not_implemented();

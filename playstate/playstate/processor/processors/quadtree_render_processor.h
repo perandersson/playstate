@@ -1,6 +1,6 @@
 #pragma once
 #include "../render_processor.h"
-#include "../../scene/tree/quadtree_node.h"
+#include "../../scene/tree/quadtree.h"
 
 namespace playstate
 {
@@ -20,6 +20,6 @@ namespace playstate
 
 	private:
 		LinkedList<Renderable> mRenderables;
-		QuadTreeNode mQuadTree;
+		QuadTree mQuadTree;
 	};
 }

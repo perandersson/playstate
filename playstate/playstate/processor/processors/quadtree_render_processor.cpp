@@ -26,7 +26,7 @@ void QuadTreeRenderProcessor::DetachRenderable(Renderable* renderable)
 
 	mRenderables.Remove(renderable);
 
-	QuadTreeNode* tree = static_cast<QuadTreeNode*>(renderable->GetTree());
+	QuadTree* tree = static_cast<QuadTree*>(renderable->GetTree());
 	if(tree != NULL)
 		tree->Remove(renderable);
 }
