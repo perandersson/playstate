@@ -13,6 +13,8 @@
 #include <playstate/sound/music.h>
 #include <playstate/sound/openal/openal_music_resource_loader.h>
 #include <playstate/rendering/ogl3/ogl3_render_system.h>
+#include <playstate/processor/processors/linked_list_render_processor.h>
+#include <playstate/processor/processors/quadtree_render_processor.h>
 
 using namespace playstate;
 using namespace playstate::win32;
@@ -105,4 +107,7 @@ void Win32DefaultKernel::RegisterScript()
 
 	ss.RegisterType("GuiButtonWidget", GuiWidget_Methods);
 	ss.RegisterType("GuiButtonWidget", GuiButtonWidget_Methods);
+
+	ss.RegisterType("QuadTreeRenderProcessor", QuadTreeRenderProcessor_Methods);
+	ss.RegisterType("LinkedListRenderProcessor", LinkedListRenderProcessor_Methods);
 }

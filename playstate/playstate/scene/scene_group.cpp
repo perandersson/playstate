@@ -195,6 +195,27 @@ int playstate::SceneGroup_Factory(lua_State* L)
 	std::auto_ptr<IRenderProcessor> rp;//(new QuadTreeRenderProcessor());
 	if(lua_gettop(L) > 1) {
 		std::auto_ptr<ScriptCollection> collection(luaM_popcollection(L));
+		IRenderProcessor* renderProcessor = collection->FindScriptable<IRenderProcessor>("RenderProcessor");
+		if(renderProcessor != NULL) {
+			rp = std::auto_ptr<IRenderProcessor>(renderProcessor);
+		} else {
+			rp = std::auto_ptr<IRenderProcessor>(new QuadTreeRenderProcessor());
+		}
+		
+		//IUpdateProcessor* updateProcessor = collection->FindScriptable<IUpdateProcessor>("UpdateProcessor");
+		//if(updateProcessor != NULL) {
+		//	up = std::auto_ptr<IUpdateProcessor>(updateProcessor);
+		//} else {
+			up = std::auto_ptr<IUpdateProcessor>(new LinkedListUpdateProcessor());
+		//}
+		
+		//ILightSourceProcessor* lightSourceProcessor = collection->FindScriptable<ILightSourceProcessor>("LightSourceProcessor");
+		//if(lightSourceProcessor != NULL) {
+		//	up = std::auto_ptr<ILightSourceProcessor>(lightSourceProcessor);
+		//} else {
+			lp = std::auto_ptr<ILightSourceProcessor>(new QuadTreeLightSourceProcessor());
+		//}
+
 	} else {
 		up = std::auto_ptr<IUpdateProcessor>(new LinkedListUpdateProcessor());
 		lp = std::auto_ptr<ILightSourceProcessor>(new QuadTreeLightSourceProcessor());

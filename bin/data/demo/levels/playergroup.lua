@@ -3,7 +3,9 @@ local FollowCameraBehaviour = require "demo.behaviours.followcamerabehaviour"
 local PlayerMovementSoundEffect = require "demo.behaviours.playermovementsoundeffect"
 
 -- The group name.
-playerGroup = SceneGroup()
+playerGroup = SceneGroup({
+	RenderProcessor = LinkedListRenderProcessor()
+})
 
 -- The player object. Can be moved using keyboard and mouse
 local playerModel = Resource.Load("/demo/models/player/player.obj")

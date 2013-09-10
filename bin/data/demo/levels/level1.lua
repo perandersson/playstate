@@ -1,7 +1,9 @@
 local SinusLightBehaviour = require "demo.behaviours.sinuslightbehaviour"
 
 -- The group name.
-level1 = SceneGroup()
+level1 = SceneGroup({
+	RenderProcessor = QuadTreeRenderProcessor({0, 0, 0}, 1100.0, 1100.0, 3)
+})
 
 local i = 0
 local j = 0

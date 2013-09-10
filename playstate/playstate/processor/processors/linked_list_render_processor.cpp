@@ -3,7 +3,7 @@
 using namespace playstate;
 
 LinkedListRenderProcessor::LinkedListRenderProcessor() 
-	: mRenderables(offsetof(Renderable, RenderableLink))
+	: Scriptable(), mRenderables(offsetof(Renderable, RenderableLink))
 {
 }
 
@@ -45,4 +45,11 @@ bool LinkedListRenderProcessor::Find(const FindQuery& query, RenderBlockResultSe
 	}
 
 	return target->GetSize() > numResults;
+}
+
+int playstate::LinkedListRenderProcessor_Factory(lua_State* L)
+{
+	LinkedListRenderProcessor* processor = new LinkedListRenderProcessor();
+	luaM_pushobject(L, "LinkedListRenderProcessor", processor);
+	return 1;
 }
