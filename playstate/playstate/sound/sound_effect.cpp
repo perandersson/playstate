@@ -28,10 +28,9 @@ int playstate::SoundEffect_GetDuration(lua_State* L)
 		lua_pushnumber(L, 0.0);
 		return 1;
 	}
-	
-	ResourceData* resourceData = luaM_popresource(L);
-	if(resourceData != NULL) {
-		Resource<SoundEffect> effect(resourceData);
+
+	Resource<SoundEffect> effect = luaM_popresource<SoundEffect>(L);
+	if(effect.IsNotNull()) {
 		lua_pushnumber(L, effect->GetDuration());
 	} else {
 		luaM_printerror(L, "Expected: SoundEffect.GetDuration(effect)");

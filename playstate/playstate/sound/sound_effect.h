@@ -59,7 +59,6 @@ namespace playstate
 	extern int SoundEffect_Load(lua_State* L);
 	extern int SoundEffect_GetDuration(lua_State* L);
 	static luaL_Reg SoundEffect_Methods[] = {
-		{ "Load", SoundEffect_Load },
 		{ "GetDuration", SoundEffect_GetDuration },
 		{ NULL, NULL }
 	};

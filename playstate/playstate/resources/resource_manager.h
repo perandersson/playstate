@@ -73,5 +73,14 @@ namespace playstate
 	void IResourceManager::UnloadResource(Resource<T>& resource) {
 		UnloadResourceData(resource.GetResourceData());
 	}
+	
+	//
+	// Script integration
+	//
 
+	extern int Resource_Load(lua_State* L);
+	static luaL_Reg Resource_Methods[] = {
+		{ "Load", Resource_Load },
+		{ NULL, NULL }
+	};
 }

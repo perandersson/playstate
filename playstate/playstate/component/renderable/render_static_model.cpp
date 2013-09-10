@@ -66,18 +66,17 @@ namespace playstate
 	int RenderStaticModel_Factory(lua_State* L)
 	{
 		if(lua_gettop(L) < 1) {
-			luaM_printerror(L, "Expected: RenderStaticModel.__init(ResourceData)");
+			luaM_printerror(L, "Expected: RenderStaticModel.__init(Model)");
 			lua_pushnil(L);
 			return 1;
 		}
-		
-		ResourceData* resourceData = luaM_popresource(L);
-		if(resourceData != NULL) {
-			Resource<Model> model(resourceData);
+
+		Resource<Model> model = luaM_popresource<Model>(L);
+		if(model.IsNotNull()) {
 			RenderStaticModel* renderStaticModel = new RenderStaticModel(model);
 			luaM_pushobject(L, "RenderStaticModel", renderStaticModel);
 		} else {
-			luaM_printerror(L, "Expected: RenderStaticModel.__init(ResourceData)");
+			luaM_printerror(L, "Expected: RenderStaticModel.__init(Model)");
 			lua_pushnil(L);
 		}
 		return 1;

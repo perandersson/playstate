@@ -14,7 +14,7 @@ int playstate::Sound_Play(lua_State* L)
 		return 0;
 	}
 		
-	ResourceData* resourceData = luaM_popresource(L);
+	ResourceData* resourceData = luaM_popresourcedata(L);
 	if(resourceData != NULL) {
 		ISoundEngine& engine = ISoundEngine::Get();
 		if(Resource<SoundEffect>::IsType(resourceData))
@@ -36,9 +36,9 @@ int playstate::Sound_PlayAtPos(lua_State* L)
 		return 0;
 	}
 	Vector3 pos = luaM_popvector3(L);
-	ResourceData* resourceData = luaM_popresource(L);
-	if(resourceData != NULL && Resource<SoundEffect>::IsType(resourceData)) {
-		ISoundEngine::Get().Play(Resource<SoundEffect>(resourceData).Get(), pos);
+	Resource<SoundEffect> effect = luaM_popresource<SoundEffect>(L);
+	if(effect.IsNotNull()) {
+		ISoundEngine::Get().Play(effect.Get(), pos);
 	} else {
 		luaM_printerror(L, "Expected: Sound.PlayAtPos(SoundEffect, Vector3)");
 	}

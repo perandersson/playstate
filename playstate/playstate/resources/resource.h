@@ -100,6 +100,11 @@ namespace playstate
 			return mData == 0;
 		}
 
+		bool IsNotNull() const
+		{
+			return mData != 0;
+		}
+
 		bool IsDefault() const
 		{
 			if(mData == 0)

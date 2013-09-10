@@ -110,7 +110,7 @@ namespace playstate
 		*container = resourceData;
 	}
 
-	ResourceData* luaM_popresource(lua_State* L)
+	ResourceData* luaM_getresourcedata(lua_State* L)
 	{
 		assert_not_null(L);
 		ResourceData* result = NULL;
@@ -118,9 +118,14 @@ namespace playstate
 			ResourceData** container = (ResourceData**)lua_touserdata(L, -1);
 			result = *container;
 		}
-		
-		lua_pop(L, 1);
 		return result;
+	}
+
+	ResourceData* luaM_popresourcedata(lua_State* L)
+	{
+		ResourceData* ptr = luaM_getresourcedata(L);
+		lua_pop(L, 1);
+		return ptr;
 	}
 	
 	ScriptCollection* luaM_popcollection(lua_State* L)

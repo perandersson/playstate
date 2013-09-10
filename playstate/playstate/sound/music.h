@@ -41,7 +41,6 @@ namespace playstate
 	extern int Music_Load(lua_State* L);
 	extern int Music_GetDuration(lua_State* L);
 	static luaL_Reg Music_Methods[] = {
-		{ "Load", Music_Load },
 		{ "GetDuration", Music_GetDuration },
 		{ NULL, NULL }
 	};

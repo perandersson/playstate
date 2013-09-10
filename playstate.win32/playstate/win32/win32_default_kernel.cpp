@@ -77,6 +77,7 @@ void Win32DefaultKernel::RegisterScript()
 	// Move this into the kernel
 	ScriptSystem& ss = ScriptSystem::Get();
 	ss.RegisterType("Window", IWindow_Methods);
+	ss.RegisterType("Resource", Resource_Methods);
 	ss.RegisterType("IWindowClosedListener", IWindowClosedListener_Methods);
 	ss.RegisterType("IGame", IGame_Methods);
 	ss.RegisterType("Game", Game_Methods);
@@ -86,7 +87,6 @@ void Win32DefaultKernel::RegisterScript()
 	ss.RegisterType("SceneNode", SceneNode_Methods);
 	ss.RegisterType("SceneGroup", SceneGroup_Methods);
 	ss.RegisterType("Component", Component_Methods);
-	ss.RegisterType("Model", Model_Methods);
 	ss.RegisterType("RenderStaticModel", RenderStaticModel_Methods);
 	ss.RegisterType("RenderDynamicModel", RenderDynamicModel_Methods);
 	ss.RegisterType("ActiveCamera", ActiveCamera_Methods);

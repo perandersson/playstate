@@ -1,10 +1,6 @@
 #include "../memory/memory.h"
 #include "model.h"
-#include "../resources/resource_manager.h"
-#include "../script/luam.h"
-
 #include <cassert>
-
 using namespace playstate;
 
 Model::Model(const AABB& boundingBox, uint32 numMeshes, ModelMesh* meshes)
@@ -48,15 +44,4 @@ const ModelMesh* Model::GetMeshes() const
 ModelMesh* Model::GetMeshes()
 {
 	return mMeshes;
-}
-
-namespace playstate
-{
-	int Model_Load(lua_State* L)
-	{
-		playstate::string path = lua_tostring(L, -1); lua_pop(L, 1);
-		ResourceData* data = IResourceManager::Get().GetResourceData(path);
-		luaM_pushresource(L, data);
-		return 1;
-	}
 }

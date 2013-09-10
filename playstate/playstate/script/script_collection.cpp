@@ -93,7 +93,7 @@ ResourceData* ScriptCollection::FindResourceData(const playstate::character* key
 {
 	ResourceData* result = defaultObject;
 	if(FindKey(key)) {
-		result = luaM_popresource(mLuaState);
+		result = luaM_popresourcedata(mLuaState);
 	}
 	return result;
 }

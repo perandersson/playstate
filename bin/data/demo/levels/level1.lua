@@ -6,7 +6,7 @@ level1 = SceneGroup()
 local i = 0
 local j = 0
 
-local chinalampModel = Model.Load("/demo/models/chinalamp/China_lampEX.obj")
+local chinalampModel = Resource.Load("/demo/models/chinalamp/China_lampEX.obj")
 for i=0, 19 do
 	for j=0, 19 do
 		local node = SceneNode()
@@ -35,7 +35,7 @@ for i=0, 19 do
 end
 
 -- Add ground
-local ground1 = Model.Load("/demo/models/ground1/ground1.obj")
+local ground1 = Resource.Load("/demo/models/ground1/ground1.obj")
 for i=0, 19 do
 	for j=0, 19 do
 		local node = SceneNode()

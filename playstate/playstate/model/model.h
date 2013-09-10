@@ -37,14 +37,4 @@ namespace playstate
 		uint32 mNumMeshes;
 		ModelMesh* mMeshes;
 	};
-	
-	//
-	// Script integration
-	//
-
-	extern int Model_Load(lua_State* L);
-	static luaL_Reg Model_Methods[] = {
-		{ "Load", Model_Load },
-		{ NULL, NULL }
-	};
 }

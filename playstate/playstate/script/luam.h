@@ -60,8 +60,10 @@ namespace playstate
 	extern void luaM_pushresource(lua_State* L, ResourceData* resourceData);
 
 	//
-	// Pops the resource from the top of the stack
-	extern ResourceData* luaM_popresource(lua_State* L);
+	// Retrieves the resource from the top of the stack
+	extern ResourceData* luaM_getresourcedata(lua_State* L);
+
+	extern ResourceData* luaM_popresourcedata(lua_State* L);
 
 	//
 	// Pops a script collection from the top of the stack
@@ -112,6 +114,16 @@ namespace playstate
 			return dynamic_cast<T*>(ptr);
 		}
 		return NULL;
+	}
+
+	template<class T>
+	Resource<T> luaM_popresource(lua_State* L) {
+		ResourceData* resource = luaM_popresourcedata(L);
+		if(resource != NULL && Resource<T>::IsType(resource)) {
+			return Resource<T>(resource);
+		}
+		
+		return Resource<T>();
 	}
 
 	//
