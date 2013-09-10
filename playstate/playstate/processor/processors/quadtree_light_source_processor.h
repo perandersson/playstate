@@ -1,6 +1,6 @@
 #pragma once
 #include "../light_source_processor.h"
-#include "../../scene/tree/quadtree.h"
+#include "../../scene/tree/quadtree_node.h"
 
 namespace playstate
 {
@@ -20,6 +20,6 @@ namespace playstate
 
 	private:
 		LinkedList<LightSource> mLightSources;
-		QuadTree mQuadTree;
+		QuadTreeNode mQuadTree;
 	};
 }

@@ -25,7 +25,10 @@ void QuadTreeRenderProcessor::DetachRenderable(Renderable* renderable)
 	assert_not_null(renderable);
 
 	mRenderables.Remove(renderable);
-	mQuadTree.Remove(renderable);
+
+	QuadTreeNode* tree = static_cast<QuadTreeNode*>(renderable->GetTree());
+	if(tree != NULL)
+		tree->Remove(renderable);
 }
 
 class QuadTreeRenderableEventHandlerVisitor : public ISpatialTreeVisitor

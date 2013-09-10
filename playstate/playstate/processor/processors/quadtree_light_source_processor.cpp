@@ -26,7 +26,10 @@ void QuadTreeLightSourceProcessor::DetachLightSource(LightSource* lightSource)
 	assert_not_null(lightSource);
 
 	mLightSources.Remove(lightSource);
-	mQuadTree.Remove(lightSource);
+
+	QuadTreeNode* tree = static_cast<QuadTreeNode*>(lightSource->GetTree());
+	if(tree != NULL)
+		tree->Remove(lightSource);
 }
 
 class LightSourceEventHandlerVisitor : public ISpatialTreeVisitor

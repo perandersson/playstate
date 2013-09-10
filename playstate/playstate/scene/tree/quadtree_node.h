@@ -6,11 +6,22 @@
 
 namespace playstate
 {
-	class QuadTree;
 	class QuadTreeNode : public ISpatialTree
 	{
 	public:
-		QuadTreeNode(QuadTree* tree, QuadTreeNode* parent, const AABB& boundingBox, uint32 depth, uint32 maxDepth);
+		static const uint32 SizeUntilSplit = 25U;
+		static const uint32 SizeUntilAbsorb = 6U;
+
+		// The QuadTree corners
+		enum Corners {
+			TOP_LEFT = 0,
+			TOP_RIGHT,
+			BOTTOM_LEFT,
+			BOTTOM_RIGHT
+		};
+	public:
+		QuadTreeNode(const AABB& boundingBox, uint32 maxDepth);
+		QuadTreeNode(QuadTreeNode* parent, const AABB& boundingBox, uint32 depth, uint32 maxDepth);
 		virtual ~QuadTreeNode();
 		
 		//
@@ -26,6 +37,12 @@ namespace playstate
 		}
 
 		//
+		// @return TRUE if this node is the root node
+		inline bool IsRootNode() const {
+			return mParent == NULL;
+		}
+
+		//
 		// @return TRUE if this node is marked as "alive". An alive node is allowed to contain spatial node children.
 		// @remark The alive status is recursive, i.e. you don't need to check this nodes children as well.
 		inline bool IsAlive() const {
@@ -37,7 +54,7 @@ namespace playstate
 		inline bool AtMaxDepth() const {
 			return mDepth >= mMaxDepth;
 		}
-
+		
 	private:
 		//
 		// @return TRUE if we have to many spatial node children in this quadtree node. 
@@ -67,6 +84,15 @@ namespace playstate
 		// Iterate over all the children with the supplied visitor
 		void IterateAndVisit(ISpatialTreeVisitor* visitor) const;
 
+		//
+		// Try to add the node in a reversed fasion. It is assumed that invalidated nodes (i.e. a node that is moved)
+		// is most likely to be placed in the QuadTreeNode it's already added in.
+		void AddToRoot(SpatialNode* node);
+
+		//
+		// Add the supplied node to this node. 
+		void AddToThisNode(SpatialNode* node);
+
 	public:
 		virtual bool Add(SpatialNode* node);
 		virtual void Remove(SpatialNode* node);
@@ -75,7 +101,6 @@ namespace playstate
 		virtual void Find(const AABB& boundingBox, ISpatialTreeVisitor* visitor) const;
 
 	private:
-		QuadTree* mQuadTree;
 		QuadTreeNode* mParent;
 		QuadTreeNode* mCorners[4];
 		LinkedList<SpatialNode> mChildren;

@@ -3,21 +3,27 @@
 #include "light_source_processor.h"
 using namespace playstate;
 
-LightSource::LightSource() : SpatialNode()
+LightSource::LightSource() : SpatialNode(), mAttachedToProcessor(NULL)
 {
 }
 
 LightSource::~LightSource()
 {
+	Detach();
 }
 
 void LightSource::Attach(ILightSourceProcessor* processor)
 {
+	assert_not_null(processor);
 	processor->AttachLightSource(this);
+	mAttachedToProcessor = processor;
 }
 
 void LightSource::Detach()
 {
-	LightSourceLink.Unlink();
-	DetachFromTree();
+	if(mAttachedToProcessor != NULL) {
+		mAttachedToProcessor->DetachLightSource(this);
+	}
+
+	mAttachedToProcessor = NULL;
 }

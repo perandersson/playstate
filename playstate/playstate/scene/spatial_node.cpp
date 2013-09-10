@@ -35,7 +35,7 @@ void SpatialNode::AttachToTree(ISpatialTree* tree)
 
 void SpatialNode::DetachFromTree()
 {
-	SpatialNodeLink.Unlink();
+	mTree = NULL;
 }
 
 void SpatialNode::SetPosition(const Vector3& position)

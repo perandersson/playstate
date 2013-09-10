@@ -26,5 +26,8 @@ namespace playstate
 		//
 		// Detaches this light source from the scene
 		void Detach();
+
+	private:
+		ILightSourceProcessor* mAttachedToProcessor;
 	};
 }
