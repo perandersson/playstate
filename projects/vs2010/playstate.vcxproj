@@ -52,6 +52,7 @@
     <ClCompile Include="..\..\playstate\playstate\model\model.cpp" />
     <ClCompile Include="..\..\playstate\playstate\model\wavefront\wavefront_resource_loader.cpp" />
     <ClCompile Include="..\..\playstate\playstate\processor\light_source.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\processor\processors\linked_list_render_processor.cpp" />
     <ClCompile Include="..\..\playstate\playstate\processor\processors\linked_list_update_processor.cpp" />
     <ClCompile Include="..\..\playstate\playstate\processor\processors\octree_render_processor.cpp" />
     <ClCompile Include="..\..\playstate\playstate\processor\processors\quadtree_light_source_processor.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="..\..\playstate\playstate\playstate.h" />
     <ClInclude Include="..\..\playstate\playstate\processor\light_source.h" />
     <ClInclude Include="..\..\playstate\playstate\processor\light_source_processor.h" />
+    <ClInclude Include="..\..\playstate\playstate\processor\processors\linked_list_render_processor.h" />
     <ClInclude Include="..\..\playstate\playstate\processor\processors\linked_list_update_processor.h" />
     <ClInclude Include="..\..\playstate\playstate\processor\processors\octree_render_processor.h" />
     <ClInclude Include="..\..\playstate\playstate\processor\processors\quadtree_light_source_processor.h" />

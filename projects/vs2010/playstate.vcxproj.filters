@@ -467,6 +467,9 @@
     <ClCompile Include="..\..\playstate\playstate\scene\tree\quadtree.cpp">
       <Filter>Source Files\scene\tree</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\processor\processors\linked_list_render_processor.cpp">
+      <Filter>Source Files\processor\processors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\playstate\playstate\camera\camera.h">
@@ -918,6 +921,9 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\scene\tree\quadtree.h">
       <Filter>Source Files\scene\tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\processor\processors\linked_list_render_processor.h">
+      <Filter>Source Files\processor\processors</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
