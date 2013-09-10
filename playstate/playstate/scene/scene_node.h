@@ -3,6 +3,7 @@
 #include "../linked_list.h"
 #include "../component/component.h"
 #include "../math/matrix4x4.h"
+#include "../script/luam.h"
 
 namespace playstate
 {

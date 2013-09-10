@@ -8,6 +8,7 @@ extern "C"
 }
 
 #include "../types.h"
+#include "script_collection.h"
 
 namespace playstate
 {
@@ -61,6 +62,10 @@ namespace playstate
 	//
 	// Pops the resource from the top of the stack
 	extern ResourceData* luaM_popresource(lua_State* L);
+
+	//
+	// Pops a script collection from the top of the stack
+	extern ScriptCollection* luaM_popcollection(lua_State* L);
 
 	//
 	// Pops a Vector3 from the Lua stack.

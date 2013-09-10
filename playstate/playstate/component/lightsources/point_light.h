@@ -3,6 +3,7 @@
 #include "../component.h"
 #include "../../processor/light_source.h"
 #include "../../math/color.h"
+#include "../../script/luam.h"
 
 namespace playstate
 {

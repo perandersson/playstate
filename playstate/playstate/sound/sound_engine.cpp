@@ -2,6 +2,7 @@
 #include "sound_engine.h"
 #include "sound_effect.h"
 #include "../resources/resource_manager.h"
+#include "../script/luam.h"
 using namespace playstate;
 
 template<> playstate::ISoundEngine* playstate::Singleton<playstate::ISoundEngine>::gSingleton = NULL;

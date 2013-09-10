@@ -81,18 +81,23 @@ namespace playstate
 	int RenderDynamicModel_Factory(lua_State* L)
 	{
 		if(lua_gettop(L) < 1) {
-			luaM_printerror(L, "Expected: RenderDynamicModel.__init(ResourceData)");
+			luaM_printerror(L, "Expected: RenderDynamicModel.__init(ResourceData<DynamicModel>)");
 			lua_pushnil(L);
 			return 1;
 		}
 		
 		ResourceData* resourceData = luaM_popresource(L);
 		if(resourceData != NULL) {
-			Resource<DynamicModel> model(resourceData);
-			RenderDynamicModel* renderStaticModel = new RenderDynamicModel(model);
-			luaM_pushobject(L, "RenderDynamicModel", renderStaticModel);
+			if(Resource<DynamicModel>::IsType(resourceData)) {
+				Resource<DynamicModel> model(resourceData);
+				RenderDynamicModel* renderStaticModel = new RenderDynamicModel(model);
+				luaM_pushobject(L, "RenderDynamicModel", renderStaticModel);
+			} else {
+				luaM_printerror(L, "Expected: RenderDynamicModel.__init(ResourceData<DynamicModel>)");
+				lua_pushnil(L);
+			}
 		} else {
-			luaM_printerror(L, "Expected: RenderDynamicModel.__init(ResourceData)");
+			luaM_printerror(L, "Expected: RenderDynamicModel.__init(ResourceData<DynamicModel>)");
 			lua_pushnil(L);
 		}
 		return 1;

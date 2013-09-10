@@ -7,6 +7,7 @@
 #include "../input/input_system.h"
 #include "../font/truetype/truetype_font_resource_loader.h"
 #include "../sound/openal/openal_sound_effect_resource_loader.h"
+#include "../model/md5/md5_mesh_resource_loader.h"
 #include "../timer/timer_factory.h"
 using namespace playstate;
 
@@ -109,6 +110,7 @@ bool GameRunner::Initialize()
 	resourceManager.RegisterResourceType(new WavefrontResourceLoader(resourceManager, fileSystem, renderSystem), ".obj");
 	resourceManager.RegisterResourceType(new TrueTypeFontResourceLoader(fileSystem), ".ttf");
 	resourceManager.RegisterResourceType(new OpenALSoundEffectResourceLoader(fileSystem), ".wav");
+	resourceManager.RegisterResourceType(new MD5MeshResourceLoader(fileSystem, resourceManager, renderSystem), ".md5mesh");
 
 	int32 width = mConfiguration->FindInt("window.width");
 	int32 height = mConfiguration->FindInt("window.height");
@@ -164,9 +166,7 @@ namespace playstate
 {
 	int Game_Start(lua_State* L)
 	{
-		int configRef = luaL_ref(L, LUA_REGISTRYINDEX);
-		ScriptedConfiguration* configuration = new ScriptedConfiguration(new ScriptCollection(L, configRef));
-
+		ScriptedConfiguration* configuration = new ScriptedConfiguration(luaM_popcollection(L));
 		ScriptableGame* game = luaM_getobject<ScriptableGame>(L);
 		if(game != NULL) {
 			GameRunner runner(game, configuration);

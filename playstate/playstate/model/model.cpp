@@ -1,6 +1,7 @@
 #include "../memory/memory.h"
 #include "model.h"
 #include "../resources/resource_manager.h"
+#include "../script/luam.h"
 
 #include <cassert>
 

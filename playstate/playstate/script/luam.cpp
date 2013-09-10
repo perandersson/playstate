@@ -122,6 +122,19 @@ namespace playstate
 		lua_pop(L, 1);
 		return result;
 	}
+	
+	ScriptCollection* luaM_popcollection(lua_State* L)
+	{
+		if(lua_istable(L, -1))
+		{
+			int ref = luaL_ref(L, LUA_REGISTRYINDEX);
+			ScriptCollection* collection = new ScriptCollection(L, ref);
+			return collection;
+		}
+
+		lua_pop(L, 1);
+		return new ScriptCollection();
+	}
 
 	Vector3 luaM_popvector3(lua_State* L)
 	{

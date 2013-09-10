@@ -1,5 +1,6 @@
 #include "../memory/memory.h"
 #include "timer_factory.h"
+#include "../script/luam.h"
 
 template<> playstate::ITimerFactory* playstate::Singleton<playstate::ITimerFactory>::gSingleton = NULL;
 

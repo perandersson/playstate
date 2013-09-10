@@ -1,6 +1,7 @@
 #include "../memory/memory.h"
 #include "script_collection.h"
 #include "../functions.h"
+#include "luam.h"
 using namespace playstate;
 
 ScriptCollection::ScriptCollection()
@@ -64,6 +65,44 @@ playstate::string ScriptCollection::FindString(const playstate::character* key, 
 	playstate::string result = defaultVal;
 	if(FindKey(key)) {
 		result = lua_tostring(mLuaState, -1);
+		lua_pop(mLuaState, 1);
+	}
+	return result;
+}
+
+
+Color ScriptCollection::FindColor(const char* key, Color defaultColor) const
+{
+	Color result = defaultColor;
+	if(FindKey(key)) {
+		result = luaM_popcolor(mLuaState);
+	}
+	return result;
+}
+
+Vector2 ScriptCollection::FindVector2(const char* key, Vector2 defaultVector) const
+{
+	Vector2 result = defaultVector;
+	if(FindKey(key)) {
+		result = luaM_popvector2(mLuaState);
+	}
+	return result;
+}
+
+ResourceData* ScriptCollection::FindResourceData(const playstate::character* key, ResourceData* defaultObject) const
+{
+	ResourceData* result = defaultObject;
+	if(FindKey(key)) {
+		result = luaM_popresource(mLuaState);
+	}
+	return result;
+}
+
+Scriptable* ScriptCollection::FindScriptablePtr(const playstate::character* key, Scriptable* defaultObject) const
+{
+	Scriptable* result = defaultObject;
+	if(FindKey(key)) {
+		result = luaM_getinstance(mLuaState); 
 		lua_pop(mLuaState, 1);
 	}
 	return result;

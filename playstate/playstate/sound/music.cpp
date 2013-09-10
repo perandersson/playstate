@@ -1,6 +1,7 @@
 #include "../memory/memory.h"
 #include "music.h"
 #include "../resources/resource_manager.h"
+#include "../script/luam.h"
 using namespace playstate;
 
 Music::Music(float32 duration)

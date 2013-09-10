@@ -108,7 +108,6 @@ namespace playstate
 	//
 
 	extern int SceneGroup_Factory(lua_State* L);
-	extern int SceneGroup_Init(lua_State* L);
 	extern int SceneGroup_Load(lua_State* L);
 	extern int SceneGroup_AddChild(lua_State* L);
 	extern int SceneGroup_RemoveChild(lua_State* L);
@@ -118,7 +117,6 @@ namespace playstate
 	extern int SceneGroup_SetPosition(lua_State* L);
 	static luaL_Reg SceneGroup_Methods[] = {
 		{ LUA_CONSTRUCTOR, SceneGroup_Factory },
-		{ LUA_INHERIT_CONSTRUCTOR, SceneGroup_Init },
 		{ "Load", SceneGroup_Load },
 		{ "AddChild", SceneGroup_AddChild },
 		{ "RemoveChild", SceneGroup_RemoveChild },

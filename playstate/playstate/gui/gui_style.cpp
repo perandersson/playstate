@@ -22,33 +22,6 @@ GuiStyle::~GuiStyle()
 {
 }
 
-Color GuiStyle::FindColor(const char* key, Color defaultColor) const
-{
-	Color result = defaultColor;
-	if(FindKey(key)) {
-		result = luaM_popcolor(mLuaState);
-	}
-	return result;
-}
-
-Vector2 GuiStyle::FindVector2(const char* key, Vector2 defaultVector) const
-{
-	Vector2 result = defaultVector;
-	if(FindKey(key)) {
-		result = luaM_popvector2(mLuaState);
-	}
-	return result;
-}
-
-ResourceData* GuiStyle::FindResourceData(const playstate::character* key, ResourceData* defaultObject) const
-{
-	ResourceData* result = defaultObject;
-	if(FindKey(key)) {
-		result = luaM_popresource(mLuaState);
-	}
-	return result;
-}
-
 GuiStyle& GuiStyle::operator = (const GuiStyle& s)
 {
 	ScriptCollection::operator=(s);

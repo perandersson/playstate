@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../types.h"
-#include "luam.h"
 #include "script_method.h"
 
 extern "C"

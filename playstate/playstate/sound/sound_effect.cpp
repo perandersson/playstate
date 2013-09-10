@@ -1,6 +1,7 @@
 #include "../memory/memory.h"
 #include "sound_effect.h"
 #include "../resources/resource_manager.h"
+#include "../script/luam.h"
 using namespace playstate;
 
 SoundEffect::SoundEffect(SoundFormat::Enum format, float32 duration)

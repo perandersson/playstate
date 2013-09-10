@@ -4,6 +4,7 @@
 #include "../types.h"
 #include "../math/point.h"
 #include "../script/scriptable.h"
+#include "../script/luam.h"
 
 #include "window_closed_listener.h"
 #include "window_resized_listener.h"

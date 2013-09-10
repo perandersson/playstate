@@ -190,32 +190,20 @@ void SceneGroup::FireEvent(uint32 typeID, uint32 messageID, type_mask typeMask)
 
 int playstate::SceneGroup_Factory(lua_State* L)
 {
-	std::auto_ptr<IUpdateProcessor> up(new LinkedListUpdateProcessor());
-	std::auto_ptr<ILightSourceProcessor> lp(new QuadTreeLightSourceProcessor());
-	std::auto_ptr<IRenderProcessor> rp(new QuadTreeRenderProcessor());
+	std::auto_ptr<IUpdateProcessor> up;//(new LinkedListUpdateProcessor());
+	std::auto_ptr<ILightSourceProcessor> lp;//(new QuadTreeLightSourceProcessor());
+	std::auto_ptr<IRenderProcessor> rp;//(new QuadTreeRenderProcessor());
+	if(lua_gettop(L) > 1) {
+		std::auto_ptr<ScriptCollection> collection(luaM_popcollection(L));
+	} else {
+		up = std::auto_ptr<IUpdateProcessor>(new LinkedListUpdateProcessor());
+		lp = std::auto_ptr<ILightSourceProcessor>(new QuadTreeLightSourceProcessor());
+		rp = std::auto_ptr<IRenderProcessor>(new QuadTreeRenderProcessor());
+	}
 
 	SceneGroup* sceneGroup = new SceneGroup(up, rp, lp);
 	luaM_pushobject(L, "SceneGroup", sceneGroup);
 	return 1;
-}
-
-int playstate::SceneGroup_Init(lua_State* L)
-{
-	if(lua_istable(L, -1) == 0) {
-		lua_pop(L, 1);
-		return 0;
-	}
-
-	std::auto_ptr<IUpdateProcessor> up(new LinkedListUpdateProcessor());
-	std::auto_ptr<ILightSourceProcessor> lp(new QuadTreeLightSourceProcessor());
-	std::auto_ptr<IRenderProcessor> rp(new QuadTreeRenderProcessor());
-
-	SceneGroup* sceneGroup = new SceneGroup(up, rp, lp);
-	luaM_setinstance(L, sceneGroup);
-		
-	const int ref = luaL_ref(L, LUA_REGISTRYINDEX);
-	sceneGroup->RegisterObject(L, ref);
-	return 0;
 }
 
 int playstate::SceneGroup_Load(lua_State* L)
