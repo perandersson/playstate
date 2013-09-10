@@ -3,7 +3,7 @@
 using namespace playstate;
 
 QuadTreeRenderProcessor::QuadTreeRenderProcessor() 
-	: mQuadTree(AABB(Vector3(500.f, 0, 500.f), 1100.0f, 1100.0f, 1100.0f), 3), mRenderables(offsetof(Renderable, RenderableLink))
+	: mQuadTree(AABB(Vector3(0, 0, 0), 1100.0f, 1100.0f, 1100.0f), 3), mRenderables(offsetof(Renderable, RenderableLink))
 {
 }
 
