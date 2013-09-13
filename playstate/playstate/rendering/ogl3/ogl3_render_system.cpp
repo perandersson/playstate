@@ -169,8 +169,7 @@ void OGL3RenderSystem::ApplyRenderTargets()
 		_current_frameBufferObject = mFrameBufferId;
 	}
 
-	GLsizei width = 0;
-	GLsizei height = 0;
+	Size size;
 
 	if(mDepthRenderTarget != NULL) {
 		if(_current_depthRenderTarget != mDepthRenderTarget) {
@@ -195,8 +194,7 @@ void OGL3RenderSystem::ApplyRenderTargets()
 	for(int i = 0; i < MaxDrawBuffers; ++i) {
 		RenderTarget2D* rt = mRenderTargets[i];
 		if(rt != NULL) {
-			width = rt->GetWidth();
-			height = rt->GetHeight();
+			size = rt->GetSize();
 			drawBuffers[numDrawBuffers++] = GL_COLOR_ATTACHMENT0 + i;
 			if(_current_renderTargets[i] != rt) {
 				_current_renderTargets[i] = rt;
@@ -256,7 +254,7 @@ void OGL3RenderSystem::ApplyRenderTargets()
         break;
     }
 	
-	StatePolicyGuard::Viewport(Rect(0, 0, width, height));
+	StatePolicyGuard::Viewport(Rect(0, 0, size.X, size.Y));
 }
 
 const Version& OGL3RenderSystem::GetShaderVersion() const
@@ -354,10 +352,10 @@ VertexBuffer* OGL3RenderSystem::CreateDynamicBuffer(const void* vertices, uint32
 	return new VertexBuffer(GL_TRIANGLES, arrayFactory, bufferID, numVertices, vertexSize);
 }
 
-RenderTarget2D* OGL3RenderSystem::CreateRenderTarget2D(uint32 width, uint32 height, TextureFormat::Enum format)
+RenderTarget2D* OGL3RenderSystem::CreateRenderTarget2D(const Size& size, TextureFormat::Enum format)
 {
-	assert(width > 0.0f && "You cannot create a render target with 0 width");
-	assert(height > 0.0f && "You cannot create a render target with 0 height");
+	assert(size.X > 0.0f && "You cannot create a render target with 0 width");
+	assert(size.Y > 0.0f && "You cannot create a render target with 0 height");
 
 	GLint _format = GL_RGBA;
 	GLint _internalFormat = GL_RGBA;
@@ -409,7 +407,7 @@ RenderTarget2D* OGL3RenderSystem::CreateRenderTarget2D(uint32 width, uint32 heig
 	GLuint textureId = 0;
 	glGenTextures(1, &textureId);
 	glBindTexture(GL_TEXTURE_2D, textureId);
-	glTexImage2D(GL_TEXTURE_2D, 0, _internalFormat, width, height, 0, _format, GL_FLOAT, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, _internalFormat, size.X, size.Y, 0, _format, GL_FLOAT, NULL);
 	glFlush();
 
 	if(boundTextureId != 0)
@@ -420,5 +418,5 @@ RenderTarget2D* OGL3RenderSystem::CreateRenderTarget2D(uint32 width, uint32 heig
 		THROW_EXCEPTION(RenderingException, "Could not create 2D render target. Reason: %d", status);
 	}
 
-	return new RenderTarget2D(textureId, width, height, format);
+	return new RenderTarget2D(textureId, size, format);
 }

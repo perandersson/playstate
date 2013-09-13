@@ -3,8 +3,8 @@
 #include "render_system.h"
 using namespace playstate;
 
-RenderTarget2D::RenderTarget2D(GLuint textureId, uint32 width, uint32 height, TextureFormat::Enum format) 
-	: Texture2D(textureId, width, height, format)
+RenderTarget2D::RenderTarget2D(GLuint textureId, const Size& size, TextureFormat::Enum format) 
+	: Texture2D(textureId, size, format)
 {
 }
 

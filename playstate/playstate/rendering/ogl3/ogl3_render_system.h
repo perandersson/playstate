@@ -28,7 +28,7 @@ namespace playstate
 		virtual VertexBuffer* CreateStaticBuffer(const PositionNormalTextureData* vertices, uint32 numVertices);
 		virtual VertexBuffer* CreateStaticBuffer(const void* vertices, uint32 vertexSize, const IVertexArrayObjectFactory& arrayFactory, uint32 numVertices);
 		virtual VertexBuffer* CreateDynamicBuffer(const void* vertices, uint32 vertexSize, const IVertexArrayObjectFactory& arrayFactory, uint32 numVertices);
-		virtual RenderTarget2D* CreateRenderTarget2D(uint32 width, uint32 height, TextureFormat::Enum format);
+		virtual RenderTarget2D* CreateRenderTarget2D(const Size& size, TextureFormat::Enum format);
 		virtual void SetRenderTarget(RenderTarget2D* renderTarget, GLenum attachmentIndex);
 		virtual void SetDepthRenderTarget(RenderTarget2D* renderTarget);
 		virtual void ApplyRenderTargets();

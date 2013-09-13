@@ -26,7 +26,7 @@ namespace playstate
 		typedef std::hash_map<playstate::character, FontCharInfo*> FontCharInfoMap;
 
 	public:
-		Font(GLuint textureId, uint32 width, uint32 height, const FontCharInfoMap& infoMap, float32 spaceWidth, float32 lineHeight);
+		Font(GLuint textureId, const Size& size, const FontCharInfoMap& infoMap, float32 spaceWidth, float32 lineHeight);
 		virtual ~Font();
 
 		//

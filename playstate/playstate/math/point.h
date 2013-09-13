@@ -44,5 +44,6 @@ namespace playstate
 		static Point Zero;
 	};
 
+	typedef Point Size;
 }
 

@@ -15,11 +15,11 @@ DeferredRenderPipeline::DeferredRenderPipeline(IRenderSystem& renderSystem, IWin
 	
 	const Point& windowSize = window.GetSize();
 
-	mDiffuseRenderTarget = mRenderSystem.CreateRenderTarget2D(windowSize.X, windowSize.Y, TextureFormat::RGBA);
-	mPositionsRenderTarget = mRenderSystem.CreateRenderTarget2D(windowSize.X, windowSize.Y, TextureFormat::RGBA16F);
-	mNormalsRenderTarget = mRenderSystem.CreateRenderTarget2D(windowSize.X, windowSize.Y, TextureFormat::RGB10_A2);
-	mDepthRenderTarget = mRenderSystem.CreateRenderTarget2D(windowSize.X, windowSize.Y, TextureFormat::DEPTH24);
-	mLightRenderTarget = mRenderSystem.CreateRenderTarget2D(windowSize.X, windowSize.Y, TextureFormat::RGBA);
+	mDiffuseRenderTarget = mRenderSystem.CreateRenderTarget2D(windowSize, TextureFormat::RGBA);
+	mPositionsRenderTarget = mRenderSystem.CreateRenderTarget2D(windowSize, TextureFormat::RGBA16F);
+	mNormalsRenderTarget = mRenderSystem.CreateRenderTarget2D(windowSize, TextureFormat::RGB10_A2);
+	mDepthRenderTarget = mRenderSystem.CreateRenderTarget2D(windowSize, TextureFormat::DEPTH24);
+	mLightRenderTarget = mRenderSystem.CreateRenderTarget2D(windowSize, TextureFormat::RGBA);
 
 	mDeferredShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(playstate::string("/demo/effects/deferred/deferred.lua")));
 	mDeferredShader->SetRenderTarget(mDiffuseRenderTarget, 0);
@@ -216,11 +216,11 @@ void DeferredRenderPipeline::OnWindowResized(const Point& newSize)
 	delete mDepthRenderTarget;
 	delete mLightRenderTarget;
 
-	mDiffuseRenderTarget = mRenderSystem.CreateRenderTarget2D(newSize.X, newSize.Y, TextureFormat::RGBA);
-	mPositionsRenderTarget = mRenderSystem.CreateRenderTarget2D(newSize.X, newSize.Y, TextureFormat::RGBA16F);
-	mNormalsRenderTarget = mRenderSystem.CreateRenderTarget2D(newSize.X, newSize.Y, TextureFormat::RGB10_A2);
-	mDepthRenderTarget = mRenderSystem.CreateRenderTarget2D(newSize.X, newSize.Y, TextureFormat::DEPTH24);
-	mLightRenderTarget = mRenderSystem.CreateRenderTarget2D(newSize.X, newSize.Y, TextureFormat::RGBA);
+	mDiffuseRenderTarget = mRenderSystem.CreateRenderTarget2D(newSize, TextureFormat::RGBA);
+	mPositionsRenderTarget = mRenderSystem.CreateRenderTarget2D(newSize, TextureFormat::RGBA16F);
+	mNormalsRenderTarget = mRenderSystem.CreateRenderTarget2D(newSize, TextureFormat::RGB10_A2);
+	mDepthRenderTarget = mRenderSystem.CreateRenderTarget2D(newSize, TextureFormat::DEPTH24);
+	mLightRenderTarget = mRenderSystem.CreateRenderTarget2D(newSize, TextureFormat::RGBA);
 
 	mDeferredShader->SetRenderTarget(mDiffuseRenderTarget, 0);
 	mDeferredShader->SetRenderTarget(mPositionsRenderTarget, 1);

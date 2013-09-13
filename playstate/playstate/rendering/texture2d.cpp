@@ -6,8 +6,8 @@
 #include <FreeImage.h>
 using namespace playstate;
 
-Texture2D::Texture2D(GLuint textureId, uint32 width, uint32 height, TextureFormat::Enum format) 
-	: Texture(textureId, format), mWidth(width), mHeight(height),
+Texture2D::Texture2D(GLuint textureId, const Size& size, TextureFormat::Enum format) 
+	: Texture(textureId, format), mSize(size),
 	mMinFilter(MinFilter::UNKNOWN), mMagFilter(MagFilter::UNKNOWN), mWS(TextureWrap::UNKNOWN), mWT(TextureWrap::UNKNOWN)
 {
 }
@@ -113,7 +113,7 @@ ResourceObject* Texture2DResourceLoader::Load(IFile& file)
 		textureFormat = TextureFormat::RGBA;
 	}
 	
-	return new Texture2D(textureId, width, height, textureFormat);
+	return new Texture2D(textureId, Size(width, height), textureFormat);
 }
 
 ResourceObject* Texture2DResourceLoader::GetDefaultResource()

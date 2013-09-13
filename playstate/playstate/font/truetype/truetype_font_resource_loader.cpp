@@ -101,7 +101,7 @@ ResourceObject* TrueTypeFontResourceLoader::Load(IFile& file)
 											   valid 'target', 'format' or 'type' parameters", file.GetPath().c_str());
 	}
 
-	return new Font(textureId, textureWidth, textureHeight, infoMap, px / 2.0f, face->height >> 6);
+	return new Font(textureId, Size(textureWidth, textureHeight), infoMap, px / 2.0f, face->height >> 6);
 }
 
 void TrueTypeFontResourceLoader::CopyToBuffer(uint32 x, uint32 y, uint32 width, uint32 height, playstate::byte* target, const playstate::byte* src)

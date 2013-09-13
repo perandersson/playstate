@@ -3,6 +3,7 @@
 #include "texture.h"
 #include "../resources/resource_loader.h"
 #include "state/state_policy.h"
+#include "../math/point.h"
 
 extern "C"
 {
@@ -20,19 +21,13 @@ namespace playstate
 	class Texture2D : public Texture
 	{
 	public:
-		Texture2D(GLuint textureId, uint32 width, uint32 height, TextureFormat::Enum format);
+		Texture2D(GLuint textureId, const Size& size, TextureFormat::Enum format);
 		virtual ~Texture2D();
 		
 		//
 		// @return This textures width in pixels
-		inline uint32 GetWidth() const {
-			return mWidth;
-		}
-
-		//
-		// @return This textures height in pixels
-		inline uint32 GetHeight() const {
-			return mHeight;
+		inline const Size& GetSize() const {
+			return mSize;
 		}
 
 		//
@@ -48,8 +43,7 @@ namespace playstate
 		void UpdateFilters(MinFilter::Enum minFilter, MagFilter::Enum magFilter, TextureWrap::Enum ws, TextureWrap::Enum wt);
 
 	protected:
-		uint32 mWidth;
-		uint32 mHeight;
+		Size mSize;
 		
 		MinFilter::Enum mMinFilter;
 		MagFilter::Enum mMagFilter;

@@ -11,7 +11,7 @@ namespace playstate
 	class RenderTarget2D : public Texture2D
 	{
 	public:
-		RenderTarget2D(GLuint textureId, uint32 width, uint32 height, TextureFormat::Enum format);
+		RenderTarget2D(GLuint textureId, const Size& size, TextureFormat::Enum format);
 		virtual ~RenderTarget2D();
 		//
 		// Binds this render target to the supplied draw buffer. 

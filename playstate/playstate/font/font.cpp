@@ -3,8 +3,8 @@
 #include "../resources/resource_manager.h"
 using namespace playstate;
 
-Font::Font(GLuint textureId, uint32 width, uint32 height, const FontCharInfoMap& infoMap, float32 spaceWidth, float32 lineHeight) 
-	: Texture2D(textureId, width, height, TextureFormat::R), mInfo(infoMap), mSpaceWidth(spaceWidth), mLineHeight(lineHeight)
+Font::Font(GLuint textureId, const Size& size, const FontCharInfoMap& infoMap, float32 spaceWidth, float32 lineHeight) 
+	: Texture2D(textureId, size, TextureFormat::R), mInfo(infoMap), mSpaceWidth(spaceWidth), mLineHeight(lineHeight)
 {
 }
 

@@ -9,6 +9,7 @@
 #include "../math/vector2.h"
 #include "../math/color.h"
 #include "../math/rect.h"
+#include "../math/point.h"
 #include "exception/rendering_exception.h"
 #include "../version.h"
 #include "factories/gfx_program_factory.h"
@@ -77,11 +78,10 @@ namespace playstate
 		//
 		// Creates a new render target based on the supplied width, height and format.
 		//
-		// @param width The render targets width
-		// @param height The render targets height
+		// @param size The render targets size in pixels (width and height)
 		// @param format What types of components should be in use for this render target
 		// @throws RenderingException If an error occured while creating the render target
-		virtual RenderTarget2D* CreateRenderTarget2D(uint32 width, uint32 height, TextureFormat::Enum format) = 0;
+		virtual RenderTarget2D* CreateRenderTarget2D(const Size& size, TextureFormat::Enum format) = 0;
 		
 		//
 		// Sets the supplied render target to the given attachment index number.
