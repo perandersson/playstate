@@ -1,5 +1,6 @@
 #pragma once
-#include "../sound_effect.h"
+
+#include <playstate/sound/sound_effect.h>
 
 #include <AL/al.h>
 #include <AL/alc.h>

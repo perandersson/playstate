@@ -30,9 +30,6 @@
     <Filter Include="Source Files\search\sorter">
       <UniqueIdentifier>{43669749-45b4-410f-b5fd-cd648db89e87}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\rendering">
-      <UniqueIdentifier>{75ababe8-5eb1-49fd-81bf-83bf508d1f1d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\test">
       <UniqueIdentifier>{5404395d-9516-4d28-b7b2-955774f1974d}</UniqueIdentifier>
     </Filter>
@@ -85,9 +82,6 @@
     </ClCompile>
     <ClCompile Include="..\..\playstate.tests\playstate\test\test_runner.cpp">
       <Filter>Source Files\test</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\playstate.tests\playstate\rendering\render_target_2d_test.cpp">
-      <Filter>Source Files\rendering</Filter>
     </ClCompile>
     <ClCompile Include="..\..\playstate.tests\playstate\search\render_block_result_set.cpp">
       <Filter>Source Files\search</Filter>

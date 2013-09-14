@@ -1,6 +1,6 @@
 #pragma once
-#include "../../resources/resource_loader.h"
-#include "../../filesystem/file_system.h"
+#include <playstate/resources/resource_loader.h>
+#include <playstate/filesystem/file_system.h>
 #include "openal_sound_engine.h"
 
 namespace playstate

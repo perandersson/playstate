@@ -117,9 +117,6 @@
     <Filter Include="Source Files\sound">
       <UniqueIdentifier>{c3c96470-e8c1-41b7-9b86-8ae22ab7bb0b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\sound\openal">
-      <UniqueIdentifier>{dd245e63-fe86-435d-9810-ef24c65dfb6a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\sound\exception">
       <UniqueIdentifier>{dd791f9d-566f-4533-a4e2-c006eee07538}</UniqueIdentifier>
     </Filter>
@@ -365,26 +362,11 @@
     <ClCompile Include="..\..\playstate\playstate\sound\sound_engine.cpp">
       <Filter>Source Files\sound</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\sound\openal\openal_sound_engine.cpp">
-      <Filter>Source Files\sound\openal</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\sound\sound_effect.cpp">
       <Filter>Source Files\sound</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\sound\openal\openal_sound_effect_resource_loader.cpp">
-      <Filter>Source Files\sound\openal</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\sound\openal\openal_sound_effect.cpp">
-      <Filter>Source Files\sound\openal</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\sound\openal\openal_music.cpp">
-      <Filter>Source Files\sound\openal</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\sound\exception\sound_exception.cpp">
       <Filter>Source Files\sound\exception</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\sound\openal\openal_music_resource_loader.cpp">
-      <Filter>Source Files\sound\openal</Filter>
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\component\renderable\render_dynamic_model.cpp">
       <Filter>Source Files\component\renderable</Filter>
@@ -781,26 +763,11 @@
     <ClInclude Include="..\..\playstate\playstate\sound\sound_engine.h">
       <Filter>Source Files\sound</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\sound\openal\openal_sound_engine.h">
-      <Filter>Source Files\sound\openal</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\sound\sound_effect.h">
       <Filter>Source Files\sound</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\sound\openal\openal_sound_effect_resource_loader.h">
-      <Filter>Source Files\sound\openal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\sound\openal\openal_sound_effect.h">
-      <Filter>Source Files\sound\openal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\sound\openal\openal_music.h">
-      <Filter>Source Files\sound\openal</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\sound\exception\sound_exception.h">
       <Filter>Source Files\sound\exception</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\sound\openal\openal_music_resource_loader.h">
-      <Filter>Source Files\sound\openal</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\component\renderable\render_dynamic_model.h">
       <Filter>Source Files\component\renderable</Filter>

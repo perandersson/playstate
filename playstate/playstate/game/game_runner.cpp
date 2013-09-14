@@ -6,10 +6,10 @@
 #include "../rendering/graphics_driver.h"
 #include "../input/input_system.h"
 #include "../font/truetype/truetype_font_resource_loader.h"
-#include "../sound/openal/openal_sound_effect_resource_loader.h"
 #include "../model/md5/md5_mesh_resource_loader.h"
 #include "../timer/timer_factory.h"
 #include "../image/image_resource_loader.h"
+#include "../sound/sound_engine.h"
 using namespace playstate;
 
 namespace playstate
@@ -110,7 +110,6 @@ bool GameRunner::Initialize()
 	resourceManager.RegisterResourceType(new ImageResourceLoader(renderSystem, fileSystem), ".png");
 	resourceManager.RegisterResourceType(new WavefrontResourceLoader(resourceManager, fileSystem, renderSystem), ".obj");
 	resourceManager.RegisterResourceType(new TrueTypeFontResourceLoader(fileSystem, renderSystem), ".ttf");
-	resourceManager.RegisterResourceType(new OpenALSoundEffectResourceLoader(fileSystem), ".wav");
 	//resourceManager.RegisterResourceType(new MD5MeshResourceLoader(fileSystem, resourceManager, renderSystem), ".md5mesh");
 
 	int32 width = mConfiguration->FindInt("window.width");

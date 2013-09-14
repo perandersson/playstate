@@ -1,7 +1,7 @@
-#include "../../memory/memory.h"
+#include <playstate/memory/memory.h>
 #include "openal_sound_effect_resource_loader.h"
 #include "openal_sound_effect.h"
-#include "../../logging/logger.h"
+#include <playstate/logging/logger.h>
 using namespace playstate;
 
 OpenALSoundEffectResourceLoader::OpenALSoundEffectResourceLoader(IFileSystem& fileSystem)

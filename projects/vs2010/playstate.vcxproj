@@ -92,11 +92,6 @@
     <ClCompile Include="..\..\playstate\playstate\search\sorter\render_block_array_sorter.cpp" />
     <ClCompile Include="..\..\playstate\playstate\sound\exception\sound_exception.cpp" />
     <ClCompile Include="..\..\playstate\playstate\sound\music.cpp" />
-    <ClCompile Include="..\..\playstate\playstate\sound\openal\openal_music.cpp" />
-    <ClCompile Include="..\..\playstate\playstate\sound\openal\openal_music_resource_loader.cpp" />
-    <ClCompile Include="..\..\playstate\playstate\sound\openal\openal_sound_effect.cpp" />
-    <ClCompile Include="..\..\playstate\playstate\sound\openal\openal_sound_effect_resource_loader.cpp" />
-    <ClCompile Include="..\..\playstate\playstate\sound\openal\openal_sound_engine.cpp" />
     <ClCompile Include="..\..\playstate\playstate\sound\sound_effect.cpp" />
     <ClCompile Include="..\..\playstate\playstate\sound\sound_engine.cpp" />
     <ClCompile Include="..\..\playstate\playstate\thread\thread_factory.cpp" />
@@ -229,11 +224,6 @@
     <ClInclude Include="..\..\playstate\playstate\singleton.h" />
     <ClInclude Include="..\..\playstate\playstate\sound\exception\sound_exception.h" />
     <ClInclude Include="..\..\playstate\playstate\sound\music.h" />
-    <ClInclude Include="..\..\playstate\playstate\sound\openal\openal_music.h" />
-    <ClInclude Include="..\..\playstate\playstate\sound\openal\openal_music_resource_loader.h" />
-    <ClInclude Include="..\..\playstate\playstate\sound\openal\openal_sound_effect.h" />
-    <ClInclude Include="..\..\playstate\playstate\sound\openal\openal_sound_effect_resource_loader.h" />
-    <ClInclude Include="..\..\playstate\playstate\sound\openal\openal_sound_engine.h" />
     <ClInclude Include="..\..\playstate\playstate\sound\sound_effect.h" />
     <ClInclude Include="..\..\playstate\playstate\sound\sound_engine.h" />
     <ClInclude Include="..\..\playstate\playstate\thread\lock.h" />

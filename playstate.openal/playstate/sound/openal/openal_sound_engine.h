@@ -1,6 +1,7 @@
 #pragma once
-#include "../sound_engine.h"
-#include "../../linked_list.h"
+
+#include <playstate/sound/sound_engine.h>
+#include <playstate/linked_list.h>
 #include "openal_music.h"
 #include "openal_sound_effect.h"
 

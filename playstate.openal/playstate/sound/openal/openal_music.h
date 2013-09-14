@@ -1,8 +1,7 @@
 #pragma once
-#include "../music.h"
-#include "../../filesystem/file.h"
-#include "../exception/sound_exception.h"
-#include "../../linked_list.h"
+#include <playstate/sound/music.h>
+#include <playstate/sound/exception/sound_exception.h>
+#include <playstate/linked_list.h>
 
 #include <AL/al.h>
 

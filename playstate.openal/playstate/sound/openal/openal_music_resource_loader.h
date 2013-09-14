@@ -1,5 +1,5 @@
 #pragma once
-#include "../../resources/resource_loader.h"
+#include <playstate/resources/resource_loader.h>
 #include "openal_sound_engine.h"
 
 namespace playstate

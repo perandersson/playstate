@@ -1,7 +1,7 @@
-#include "../../memory/memory.h"
+#include <playstate/memory/memory.h>
 #include "openal_music_resource_loader.h"
 #include "openal_music.h"
-#include "../../logging/logger.h"
+#include <playstate/logging/logger.h>
 
 #include <vorbis/codec.h>
 #include <vorbis/vorbisenc.h>

@@ -104,7 +104,8 @@
       <AdditionalDependencies>playstate_d.lib;lua.lib;FreeImage.lib;glmock_d.lib;freetype2411MT_D.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>"$(SolutionDir)../../bin/playstate.tests_d.exe"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug Without Test|Win32'">
@@ -153,7 +154,8 @@
       <AdditionalDependencies>playstate.lib;lua.lib;glew32.lib;FreeImage.lib;OpenGL32.lib;GLU32.lib;glmock.lib;freetype2411MT.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>"$(SolutionDir)../../bin/playstate.tests.exe"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Without Test|Win32'">
@@ -190,7 +192,6 @@
     <ClCompile Include="..\..\playstate.tests\playstate\math\vector2_test.cpp" />
     <ClCompile Include="..\..\playstate.tests\playstate\math\vector3_test.cpp" />
     <ClCompile Include="..\..\playstate.tests\playstate\memory\memory_pool_test.cpp" />
-    <ClCompile Include="..\..\playstate.tests\playstate\rendering\render_target_2d_test.cpp" />
     <ClCompile Include="..\..\playstate.tests\playstate\scene\scene_node_test.cpp" />
     <ClCompile Include="..\..\playstate.tests\playstate\scene\scene_test.cpp" />
     <ClCompile Include="..\..\playstate.tests\playstate\search\light_source_result_set.cpp" />

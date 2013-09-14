@@ -12,10 +12,11 @@
 #include <playstate/sound/sound_effect.h>
 #include <playstate/sound/music.h>
 #include <playstate/sound/openal/openal_music_resource_loader.h>
-#include <playstate/ogl3/ogl3_render_system.h>
+#include <playstate/rendering/ogl3/ogl3_render_system.h>
 #include <playstate/processor/processors/linked_list_render_processor.h>
 #include <playstate/processor/processors/quadtree_render_processor.h>
 #include <playstate/image/image_resource_loader.h>
+#include <playstate/sound/openal/openal_sound_effect_resource_loader.h>
 
 using namespace playstate;
 using namespace playstate::win32;
@@ -58,6 +59,8 @@ Win32DefaultKernel::~Win32DefaultKernel()
 void Win32DefaultKernel::Initialize()
 {
 	RegisterScript();
+	
+	mThreadedResourceManager->RegisterResourceType(new OpenALSoundEffectResourceLoader(*mFileSystem), playstate::string(SAFE_STRING(".wav")));
 	mThreadedResourceManager->RegisterResourceType(new OpenALMusicResourceLoader(*mSoundEngine), playstate::string(SAFE_STRING(".ogg")));
 }
 

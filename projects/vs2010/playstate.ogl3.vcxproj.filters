@@ -9,111 +9,111 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\playstate">
-      <UniqueIdentifier>{77cea4e5-2255-4e21-b0f8-9bfad394ff86}</UniqueIdentifier>
+    <Filter Include="Source Files\rendering">
+      <UniqueIdentifier>{1ff5bba3-23d9-440a-98a9-56c292384b23}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\playstate\ogl3">
+    <Filter Include="Source Files\rendering\ogl3">
       <UniqueIdentifier>{440301f6-6c4b-49ae-ac37-a0a3bdf8ed71}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\playstate\ogl3\components">
+    <Filter Include="Source Files\rendering\ogl3\components">
       <UniqueIdentifier>{97f3717f-688d-42a3-b663-354b65250ac4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\playstate.ogl3\playstate\ogl3\gfx_program_factory.cpp">
-      <Filter>Source Files\playstate\ogl3</Filter>
+    <ClCompile Include="..\..\playstate.ogl3\playstate\rendering\ogl3\gfx_program_factory.cpp">
+      <Filter>Source Files\rendering\ogl3</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_gfx_program.cpp">
-      <Filter>Source Files\playstate\ogl3</Filter>
+    <ClCompile Include="..\..\playstate.ogl3\playstate\rendering\ogl3\ogl3_gfx_program.cpp">
+      <Filter>Source Files\rendering\ogl3</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_index_buffer.cpp">
-      <Filter>Source Files\playstate\ogl3</Filter>
+    <ClCompile Include="..\..\playstate.ogl3\playstate\rendering\ogl3\ogl3_index_buffer.cpp">
+      <Filter>Source Files\rendering\ogl3</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_render_system.cpp">
-      <Filter>Source Files\playstate\ogl3</Filter>
+    <ClCompile Include="..\..\playstate.ogl3\playstate\rendering\ogl3\ogl3_render_system.cpp">
+      <Filter>Source Files\rendering\ogl3</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_render_target_2d.cpp">
-      <Filter>Source Files\playstate\ogl3</Filter>
+    <ClCompile Include="..\..\playstate.ogl3\playstate\rendering\ogl3\ogl3_render_target_2d.cpp">
+      <Filter>Source Files\rendering\ogl3</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_state_policy.cpp">
-      <Filter>Source Files\playstate\ogl3</Filter>
+    <ClCompile Include="..\..\playstate.ogl3\playstate\rendering\ogl3\ogl3_state_policy.cpp">
+      <Filter>Source Files\rendering\ogl3</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_texture2d.cpp">
-      <Filter>Source Files\playstate\ogl3</Filter>
+    <ClCompile Include="..\..\playstate.ogl3\playstate\rendering\ogl3\ogl3_texture2d.cpp">
+      <Filter>Source Files\rendering\ogl3</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_vertex_buffer.cpp">
-      <Filter>Source Files\playstate\ogl3</Filter>
+    <ClCompile Include="..\..\playstate.ogl3\playstate\rendering\ogl3\ogl3_vertex_buffer.cpp">
+      <Filter>Source Files\rendering\ogl3</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_vertex_declaration_factory.cpp">
-      <Filter>Source Files\playstate\ogl3</Filter>
+    <ClCompile Include="..\..\playstate.ogl3\playstate\rendering\ogl3\ogl3_vertex_declaration_factory.cpp">
+      <Filter>Source Files\rendering\ogl3</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate.ogl3\playstate\ogl3\components\default_gfx_program_component.cpp">
-      <Filter>Source Files\playstate\ogl3\components</Filter>
+    <ClCompile Include="..\..\playstate.ogl3\playstate\rendering\ogl3\components\default_gfx_program_component.cpp">
+      <Filter>Source Files\rendering\ogl3\components</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate.ogl3\playstate\ogl3\components\float_gfx_program_component.cpp">
-      <Filter>Source Files\playstate\ogl3\components</Filter>
+    <ClCompile Include="..\..\playstate.ogl3\playstate\rendering\ogl3\components\float_gfx_program_component.cpp">
+      <Filter>Source Files\rendering\ogl3\components</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate.ogl3\playstate\ogl3\components\gfx_program_component_not_found.cpp">
-      <Filter>Source Files\playstate\ogl3\components</Filter>
+    <ClCompile Include="..\..\playstate.ogl3\playstate\rendering\ogl3\components\gfx_program_component_not_found.cpp">
+      <Filter>Source Files\rendering\ogl3\components</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate.ogl3\playstate\ogl3\components\int_gfx_program_component.cpp">
-      <Filter>Source Files\playstate\ogl3\components</Filter>
+    <ClCompile Include="..\..\playstate.ogl3\playstate\rendering\ogl3\components\int_gfx_program_component.cpp">
+      <Filter>Source Files\rendering\ogl3\components</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate.ogl3\playstate\ogl3\components\matrix_gfx_program_component.cpp">
-      <Filter>Source Files\playstate\ogl3\components</Filter>
+    <ClCompile Include="..\..\playstate.ogl3\playstate\rendering\ogl3\components\matrix_gfx_program_component.cpp">
+      <Filter>Source Files\rendering\ogl3\components</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate.ogl3\playstate\ogl3\components\sampler2d_gfx_program_component.cpp">
-      <Filter>Source Files\playstate\ogl3\components</Filter>
+    <ClCompile Include="..\..\playstate.ogl3\playstate\rendering\ogl3\components\sampler2d_gfx_program_component.cpp">
+      <Filter>Source Files\rendering\ogl3\components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\playstate.ogl3\playstate\ogl3\gfx_program_factory.h">
-      <Filter>Source Files\playstate\ogl3</Filter>
+    <ClInclude Include="..\..\playstate.ogl3\playstate\rendering\ogl3\gfx_program_factory.h">
+      <Filter>Source Files\rendering\ogl3</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_gfx_program.h">
-      <Filter>Source Files\playstate\ogl3</Filter>
+    <ClInclude Include="..\..\playstate.ogl3\playstate\rendering\ogl3\ogl3_gfx_program.h">
+      <Filter>Source Files\rendering\ogl3</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_index_buffer.h">
-      <Filter>Source Files\playstate\ogl3</Filter>
+    <ClInclude Include="..\..\playstate.ogl3\playstate\rendering\ogl3\ogl3_index_buffer.h">
+      <Filter>Source Files\rendering\ogl3</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_render_system.h">
-      <Filter>Source Files\playstate\ogl3</Filter>
+    <ClInclude Include="..\..\playstate.ogl3\playstate\rendering\ogl3\ogl3_primitive_type.h">
+      <Filter>Source Files\rendering\ogl3</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_render_target_2d.h">
-      <Filter>Source Files\playstate\ogl3</Filter>
+    <ClInclude Include="..\..\playstate.ogl3\playstate\rendering\ogl3\ogl3_render_system.h">
+      <Filter>Source Files\rendering\ogl3</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_state_policy.h">
-      <Filter>Source Files\playstate\ogl3</Filter>
+    <ClInclude Include="..\..\playstate.ogl3\playstate\rendering\ogl3\ogl3_render_target_2d.h">
+      <Filter>Source Files\rendering\ogl3</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_texture2d.h">
-      <Filter>Source Files\playstate\ogl3</Filter>
+    <ClInclude Include="..\..\playstate.ogl3\playstate\rendering\ogl3\ogl3_state_policy.h">
+      <Filter>Source Files\rendering\ogl3</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_vertex_buffer.h">
-      <Filter>Source Files\playstate\ogl3</Filter>
+    <ClInclude Include="..\..\playstate.ogl3\playstate\rendering\ogl3\ogl3_texture2d.h">
+      <Filter>Source Files\rendering\ogl3</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_vertex_declaration_factory.h">
-      <Filter>Source Files\playstate\ogl3</Filter>
+    <ClInclude Include="..\..\playstate.ogl3\playstate\rendering\ogl3\ogl3_vertex_buffer.h">
+      <Filter>Source Files\rendering\ogl3</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate.ogl3\playstate\ogl3\components\default_gfx_program_component.h">
-      <Filter>Source Files\playstate\ogl3\components</Filter>
+    <ClInclude Include="..\..\playstate.ogl3\playstate\rendering\ogl3\ogl3_vertex_declaration_factory.h">
+      <Filter>Source Files\rendering\ogl3</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate.ogl3\playstate\ogl3\components\float_gfx_program_component.h">
-      <Filter>Source Files\playstate\ogl3\components</Filter>
+    <ClInclude Include="..\..\playstate.ogl3\playstate\rendering\ogl3\components\default_gfx_program_component.h">
+      <Filter>Source Files\rendering\ogl3\components</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate.ogl3\playstate\ogl3\components\gfx_program_component_not_found.h">
-      <Filter>Source Files\playstate\ogl3\components</Filter>
+    <ClInclude Include="..\..\playstate.ogl3\playstate\rendering\ogl3\components\float_gfx_program_component.h">
+      <Filter>Source Files\rendering\ogl3\components</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate.ogl3\playstate\ogl3\components\int_gfx_program_component.h">
-      <Filter>Source Files\playstate\ogl3\components</Filter>
+    <ClInclude Include="..\..\playstate.ogl3\playstate\rendering\ogl3\components\gfx_program_component_not_found.h">
+      <Filter>Source Files\rendering\ogl3\components</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate.ogl3\playstate\ogl3\components\matrix_gfx_program_component.h">
-      <Filter>Source Files\playstate\ogl3\components</Filter>
+    <ClInclude Include="..\..\playstate.ogl3\playstate\rendering\ogl3\components\int_gfx_program_component.h">
+      <Filter>Source Files\rendering\ogl3\components</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate.ogl3\playstate\ogl3\components\sampler2d_gfx_program_component.h">
-      <Filter>Source Files\playstate\ogl3\components</Filter>
+    <ClInclude Include="..\..\playstate.ogl3\playstate\rendering\ogl3\components\matrix_gfx_program_component.h">
+      <Filter>Source Files\rendering\ogl3\components</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_primitive_type.h">
-      <Filter>Source Files\playstate\ogl3</Filter>
+    <ClInclude Include="..\..\playstate.ogl3\playstate\rendering\ogl3\components\sampler2d_gfx_program_component.h">
+      <Filter>Source Files\rendering\ogl3\components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

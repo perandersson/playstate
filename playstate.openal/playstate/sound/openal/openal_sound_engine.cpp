@@ -1,8 +1,8 @@
-#include "../../memory/memory.h"
+#include <playstate/memory/memory.h>
 #include "openal_sound_engine.h"
-#include "../music.h"
+#include "openal_music.h"
 #include "openal_sound_effect.h"
-#include "../../logging/logger.h"
+#include <playstate/logging/logger.h>
 using namespace playstate;
 
 OpenALSoundEngine::OpenALSoundEngine()

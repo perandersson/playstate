@@ -1,4 +1,4 @@
-#include "../../memory/memory.h"
+#include <playstate/memory/memory.h>
 #include "openal_sound_effect.h"
 using namespace playstate;
 

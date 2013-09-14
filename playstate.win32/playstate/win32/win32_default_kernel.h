@@ -6,7 +6,7 @@
 #include <string>
 
 #include <playstate/logging/console/console_logger.h>
-#include <playstate/sound/openal/openal_sound_engine.h>
+#include <playstate/sound/sound_engine.h>
 
 // TODO: Interface these services
 #include <playstate/resources/threaded/threaded_resource_manager.h>
@@ -22,8 +22,11 @@
 
 namespace playstate
 {
+	class OpenALSoundEngine;
+
 	namespace win32
 	{
+
 		//
 		// The default kernel for the windows version of this game engine. Use this unless you are absolutely sure what you are doing
 		class Win32DefaultKernel : public IKernel
