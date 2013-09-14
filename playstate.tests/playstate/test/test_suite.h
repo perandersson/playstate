@@ -2,7 +2,6 @@
 #include <string>
 #include <list>
 #include <vector>
-#include <glmock.h>
 
 namespace playstate
 {

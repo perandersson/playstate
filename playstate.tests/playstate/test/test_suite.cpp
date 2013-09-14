@@ -27,13 +27,13 @@ void TestSuite::RunUnitTests(ITestCallback* callback)
 			test->Run(this);
 		} catch(TestException e) {
 			callback->TestFailure(this, test, e.File.c_str(), e.Message.c_str(), e.Line);
-		} catch(glmock::IValidationException e) {
+		}/* catch(glmock::IValidationException e) {
 			for(unsigned int i = 0; i < e.Count; ++i) {
 				char tmp[512];
 				sprintf(tmp, "'%s' when calling '%s'", e.Errors[i].Error, e.Errors[i].Command);
 				callback->TestFailure(this, test, test->File.c_str(), tmp, test->Line);
 			}
-		}
+		}*/
 		callback->EndUnitTest(this, test);
 	}
 
