@@ -6,6 +6,7 @@
 #include "../types.h"
 #include "state/state_policy.h"
 #include "texture2d.h"
+#include "render_target_2d.h"
 
 namespace playstate
 {
@@ -30,6 +31,7 @@ namespace playstate
 		
 		virtual void SetTexture(ITexture2D* texture) = 0;
 		virtual void SetTexture(Resource<ITexture2D>& texture) = 0;
+		virtual void SetTexture(IRenderTarget2D* texture) = 0;
 
 		virtual void SetColorRGBA(const Color& color) = 0;
 		virtual void SetColorRGB(const Color& color) = 0;

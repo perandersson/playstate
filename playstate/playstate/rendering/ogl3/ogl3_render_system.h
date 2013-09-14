@@ -11,6 +11,8 @@
 
 namespace playstate
 {
+	class OGL3RenderTarget2D;
+
 	class OGL3RenderSystem : public IRenderSystem, public IWindowResizedListener
 	{
 	public:
@@ -31,9 +33,9 @@ namespace playstate
 		virtual IVertexBuffer* CreateStaticBuffer(const PositionNormalTextureData* vertices, uint32 numVertices);
 		virtual IVertexBuffer* CreateStaticBuffer(const void* vertices, uint32 vertexSize, const VertexDeclaration& vertexDeclaration, uint32 numVertices);
 		virtual IVertexBuffer* CreateDynamicBuffer(const void* vertices, uint32 vertexSize, const VertexDeclaration& vertexDeclaration, uint32 numVertices);
-		virtual RenderTarget2D* CreateRenderTarget2D(const Size& size, TextureFormat::Enum format);
-		virtual void SetRenderTarget(RenderTarget2D* renderTarget, GLenum attachmentIndex);
-		virtual void SetDepthRenderTarget(RenderTarget2D* renderTarget);
+		virtual IRenderTarget2D* CreateRenderTarget2D(const Size& size, TextureFormat::Enum format);
+		virtual void SetRenderTarget(IRenderTarget2D* renderTarget, GLenum attachmentIndex);
+		virtual void SetDepthRenderTarget(IRenderTarget2D* renderTarget);
 		virtual ITexture2D* CreateTexture2D(const Size& size, TextureFormat::Enum format, const byte* bytes);
 		virtual void ApplyRenderTargets();
 
@@ -64,7 +66,7 @@ namespace playstate
 		LinkedList<OGL3GfxProgram> mGfxPrograms;
 
 		GLuint mFrameBufferId;
-		RenderTarget2D* mRenderTargets[MaxDrawBuffers];
-		RenderTarget2D* mDepthRenderTarget;
+		OGL3RenderTarget2D* mRenderTargets[MaxDrawBuffers];
+		OGL3RenderTarget2D* mDepthRenderTarget;
 	};
 }

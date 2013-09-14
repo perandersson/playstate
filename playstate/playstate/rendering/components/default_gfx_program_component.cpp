@@ -63,6 +63,11 @@ void DefaultGfxProgramComponent::SetTexture(Resource<ITexture2D>& texture)
 	SetTexture(texture.Get());
 }
 
+void DefaultGfxProgramComponent::SetTexture(IRenderTarget2D* texture)
+{
+	assert(false && "Invalid component type");
+}
+
 void DefaultGfxProgramComponent::SetMatrix(const Matrix4x4& matrix)
 {
 	assert(false && "Invalid component type");

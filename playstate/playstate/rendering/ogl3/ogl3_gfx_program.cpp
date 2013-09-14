@@ -8,6 +8,7 @@
 #include "ogl3_vertex_buffer.h"
 #include "ogl3_index_buffer.h"
 #include "ogl3_state_policy.h"
+#include "ogl3_render_target_2d.h"
 using namespace playstate;
 
 namespace {
@@ -308,9 +309,9 @@ void OGL3GfxProgram::SetScissorRect(const Rect& rect)
 		StatePolicyGuard::SetScissorRect(mScissorRect);
 }
 
-void OGL3GfxProgram::SetDepthRenderTarget(RenderTarget2D* renderTarget)
+void OGL3GfxProgram::SetDepthRenderTarget(IRenderTarget2D* renderTarget)
 {
-	mDepthRenderTarget = renderTarget;
+	mDepthRenderTarget = static_cast<OGL3RenderTarget2D*>(renderTarget);
 
 	if(mApplied) {
 		mApplyRenderTarget = true;
@@ -318,10 +319,10 @@ void OGL3GfxProgram::SetDepthRenderTarget(RenderTarget2D* renderTarget)
 	}
 }
 
-void OGL3GfxProgram::SetRenderTarget(RenderTarget2D* renderTarget, uint32 index)
+void OGL3GfxProgram::SetRenderTarget(IRenderTarget2D* renderTarget, uint32 index)
 {
 	assert(index < MaxDrawBuffers && "You are not allowed to use that many render targets at once");
-	mRenderTargets[index] = renderTarget;
+	mRenderTargets[index] = static_cast<OGL3RenderTarget2D*>(renderTarget);
 
 	if(mApplied) {
 		mApplyRenderTarget = true;

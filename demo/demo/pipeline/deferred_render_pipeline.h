@@ -50,12 +50,12 @@ private:
 	Resource<ITexture2D> mPointLightTexture;
 	Resource<ITexture2D> mWhiteTexture;
 
-	RenderTarget2D* mDiffuseRenderTarget;
-	RenderTarget2D* mPositionsRenderTarget;
-	RenderTarget2D* mNormalsRenderTarget;
-	RenderTarget2D* mDepthRenderTarget;
+	IRenderTarget2D* mDiffuseRenderTarget;
+	IRenderTarget2D* mPositionsRenderTarget;
+	IRenderTarget2D* mNormalsRenderTarget;
+	IRenderTarget2D* mDepthRenderTarget;
 
-	RenderTarget2D* mLightRenderTarget;
+	IRenderTarget2D* mLightRenderTarget;
 	RenderBlockResultSet mRenderBlockResultSet;
 	LightSourceResultSet mLightSourceResultSet;
 

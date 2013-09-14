@@ -80,14 +80,14 @@ namespace playstate
 		// @param size The render targets size in pixels (width and height)
 		// @param format What types of components should be in use for this render target
 		// @throws RenderingException If an error occured while creating the render target
-		virtual RenderTarget2D* CreateRenderTarget2D(const Size& size, TextureFormat::Enum format) = 0;
+		virtual IRenderTarget2D* CreateRenderTarget2D(const Size& size, TextureFormat::Enum format) = 0;
 		
 		//
 		// Sets the supplied render target to the given attachment index number.
 		// This is used by GLSL to know where to render the result.
 		// @param renderTarget
 		// @param attachmentIndex
-		virtual void SetRenderTarget(RenderTarget2D* renderTarget, GLenum attachmentIndex) = 0;
+		virtual void SetRenderTarget(IRenderTarget2D* renderTarget, GLenum attachmentIndex) = 0;
 
 		//
 		// Creates a texture based on the supplied data
@@ -100,7 +100,7 @@ namespace playstate
 		//
 		// Sets the depth render target
 		// @param renderTarget
-		virtual void SetDepthRenderTarget(RenderTarget2D* renderTarget) = 0;
+		virtual void SetDepthRenderTarget(IRenderTarget2D* renderTarget) = 0;
 
 		virtual void ApplyRenderTargets() = 0;
 	};

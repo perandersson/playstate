@@ -22,10 +22,13 @@ namespace playstate
 			TextureWrap::Enum ws, TextureWrap::Enum wt);
 		virtual ~Sampler2DGfxProgramComponent();
 
+		void SetInternalTexture(OGL3Texture2D* texture);
+
 	// IGfxProgramComponent
 	public:
 		virtual void Apply();
 		virtual void SetTexture(ITexture2D* texture);
+		virtual void SetTexture(IRenderTarget2D* texture);
 		virtual void MarkAsDirty();
 
 	private:

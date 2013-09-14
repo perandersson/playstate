@@ -5,6 +5,8 @@
 
 namespace playstate
 {
+	class OGL3RenderTarget2D;
+
 	class OGL3GfxProgram : public IGfxProgram
 	{
 		typedef std::hash_map<playstate::string, IGfxProgramComponent*> ComponentMap;
@@ -50,8 +52,8 @@ namespace playstate
 		virtual void SetClearColor(const Color& color);
 		virtual void EnableScissorTest(bool enable);
 		virtual void SetScissorRect(const Rect& rect);
-		virtual void SetDepthRenderTarget(RenderTarget2D* renderTarget);
-		virtual void SetRenderTarget(RenderTarget2D* renderTarget, uint32 index);
+		virtual void SetDepthRenderTarget(IRenderTarget2D* renderTarget);
+		virtual void SetRenderTarget(IRenderTarget2D* renderTarget, uint32 index);
 
 	private:
 		IRenderSystem& mRenderSystem;
@@ -79,8 +81,8 @@ namespace playstate
 		bool mScissorTest;
 		Rect mScissorRect;
 
-		RenderTarget2D* mDepthRenderTarget;
-		RenderTarget2D* mRenderTargets[MaxDrawBuffers];
+		OGL3RenderTarget2D* mDepthRenderTarget;
+		OGL3RenderTarget2D* mRenderTargets[MaxDrawBuffers];
 		bool mApplyRenderTarget;
 	};
 }

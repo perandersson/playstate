@@ -5,12 +5,13 @@
 #include "ogl3_vertex_buffer.h"
 #include "ogl3_index_buffer.h"
 #include "ogl3_state_policy.h"
+#include "ogl3_render_target_2d.h"
 using namespace playstate;
 
 namespace {
 	GLuint _current_frameBufferObject = 0;
-	RenderTarget2D* _current_depthRenderTarget = NULL;
-	RenderTarget2D* _current_renderTargets[MaxDrawBuffers] = {NULL};
+	OGL3RenderTarget2D* _current_depthRenderTarget = NULL;
+	OGL3RenderTarget2D* _current_renderTargets[MaxDrawBuffers] = {NULL};
 }
 
 OGL3RenderSystem::OGL3RenderSystem(IWindow& window, ScriptSystem& scriptSystem) 
@@ -137,15 +138,15 @@ void OGL3RenderSystem::OnWindowResized(const Point& newSize)
 	}
 }
 
-void OGL3RenderSystem::SetRenderTarget(RenderTarget2D* renderTarget, GLenum attachmentIndex)
+void OGL3RenderSystem::SetRenderTarget(IRenderTarget2D* renderTarget, GLenum attachmentIndex)
 {
 	assert(attachmentIndex < MaxDrawBuffers && "You are not allowed to attach to many render targets");
-	mRenderTargets[attachmentIndex] = renderTarget;
+	mRenderTargets[attachmentIndex] = static_cast<OGL3RenderTarget2D*>(renderTarget);
 }
 
-void OGL3RenderSystem::SetDepthRenderTarget(RenderTarget2D* renderTarget)
+void OGL3RenderSystem::SetDepthRenderTarget(IRenderTarget2D* renderTarget)
 {
-	mDepthRenderTarget = renderTarget;
+	mDepthRenderTarget = static_cast<OGL3RenderTarget2D*>(renderTarget);
 }
 
 void OGL3RenderSystem::ApplyRenderTargets()
@@ -202,7 +203,7 @@ void OGL3RenderSystem::ApplyRenderTargets()
 	GLenum drawBuffers[MaxDrawBuffers] = {0};
 	uint32 numDrawBuffers = 0;
 	for(int i = 0; i < MaxDrawBuffers; ++i) {
-		RenderTarget2D* rt = mRenderTargets[i];
+		OGL3RenderTarget2D* rt = mRenderTargets[i];
 		if(rt != NULL) {
 			size = rt->GetSize();
 			drawBuffers[numDrawBuffers++] = GL_COLOR_ATTACHMENT0 + i;
@@ -450,14 +451,14 @@ GLenum OGL3RenderSystem::GetInternalFormat(TextureFormat::Enum format)
 	return _internalFormat;
 }
 
-RenderTarget2D* OGL3RenderSystem::CreateRenderTarget2D(const Size& size, TextureFormat::Enum format)
+IRenderTarget2D* OGL3RenderSystem::CreateRenderTarget2D(const Size& size, TextureFormat::Enum format)
 {
 	assert(size.X > 0.0f && "You cannot create a render target with 0 width");
 	assert(size.Y > 0.0f && "You cannot create a render target with 0 height");
 
 	GLenum _minMag = GL_LINEAR;
-	GLenum _format = GetFormat(format);
-	GLenum _internalFormat = GetInternalFormat(format);
+	const GLenum _format = GetFormat(format);
+	const GLenum _internalFormat = GetInternalFormat(format);
 
 	switch(format)
 	{
@@ -486,13 +487,13 @@ RenderTarget2D* OGL3RenderSystem::CreateRenderTarget2D(const Size& size, Texture
 		THROW_EXCEPTION(RenderingException, "Could not create 2D render target. Reason: %d", status);
 	}
 
-	return new RenderTarget2D(textureId, size, format);
+	return new OGL3RenderTarget2D(textureId, size, format);
 }
 
 ITexture2D* OGL3RenderSystem::CreateTexture2D(const Size& size, TextureFormat::Enum format, const byte* bytes)
 {
-	GLenum _format = GetFormat(format);
-	GLenum _internalFormat = GetInternalFormat(format);
+	const GLenum _format = GetFormat(format);
+	const GLenum _internalFormat = GetInternalFormat(format);
 
 	GLuint textureID = 0;	
 	glGenTextures(1, &textureID);
@@ -500,9 +501,9 @@ ITexture2D* OGL3RenderSystem::CreateTexture2D(const Size& size, TextureFormat::E
 	glTexImage2D(GL_TEXTURE_2D, 0, _internalFormat, size.Width, size.Height, 0, _format, GL_UNSIGNED_BYTE, bytes);
 	glFlush();
 
-	GLenum err = glGetError();
-	if(err == GL_INVALID_ENUM) {
-		THROW_EXCEPTION(RenderingException, "Could not create texture");
+	GLenum status = glGetError();
+	if(status != GL_NO_ERROR) {
+		THROW_EXCEPTION(RenderingException, "Could not create 2D texture. Reason: %d", status);
 	}
 
 	OGL3Texture2D* texture = new OGL3Texture2D(textureID, size, format);

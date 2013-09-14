@@ -54,6 +54,10 @@ void GfxProgramComponentNotFound::SetTexture(Resource<ITexture2D>& texture)
 {
 }
 
+void GfxProgramComponentNotFound::SetTexture(IRenderTarget2D* texture)
+{
+}
+
 void GfxProgramComponentNotFound::SetMatrix(const Matrix4x4& matrix)
 {
 }

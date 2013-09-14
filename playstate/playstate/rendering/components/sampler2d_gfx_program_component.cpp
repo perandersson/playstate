@@ -3,6 +3,7 @@
 #include "../texture2d.h"
 #include "../ogl3/ogl3_gfx_program.h"
 #include "../ogl3/ogl3_texture2d.h"
+#include "../ogl3/ogl3_render_target_2d.h"
 
 #include <cassert>
 
@@ -34,6 +35,17 @@ void Sampler2DGfxProgramComponent::Apply()
 	mDirty = 0;
 }
 
+void Sampler2DGfxProgramComponent::SetInternalTexture(OGL3Texture2D* texture)
+{
+	const uint32 prevTextureUUID = mTexture != NULL ? mTexture->GetUUID() : 0;
+	if(texture->GetUUID() != prevTextureUUID)
+		BIT_SET(mDirty, TEXTURE_BIT);
+	mTexture = texture;
+
+	if(mProgram.IsApplied())
+		Sampler2DGfxProgramComponent::Apply();
+}
+
 void Sampler2DGfxProgramComponent::SetTexture(ITexture2D* texture)
 {
 	if(texture == NULL) {
@@ -41,13 +53,17 @@ void Sampler2DGfxProgramComponent::SetTexture(ITexture2D* texture)
 		return;
 	}
 
-	const uint32 prevTextureUUID = mTexture != NULL ? mTexture->GetUUID() : 0;
-	if(static_cast<OGL3Texture2D*>(texture)->GetUUID() != prevTextureUUID)
-		BIT_SET(mDirty, TEXTURE_BIT);
-	mTexture = static_cast<OGL3Texture2D*>(texture);
+	SetInternalTexture(static_cast<OGL3Texture2D*>(texture));
+}
 
-	if(mProgram.IsApplied())
-		Sampler2DGfxProgramComponent::Apply();
+void Sampler2DGfxProgramComponent::SetTexture(IRenderTarget2D* texture)
+{
+	if(texture == NULL) {
+		mTexture = NULL;
+		return;
+	}
+
+	SetInternalTexture(static_cast<OGL3RenderTarget2D*>(texture)->GetTexture());
 }
 
 void Sampler2DGfxProgramComponent::MarkAsDirty()

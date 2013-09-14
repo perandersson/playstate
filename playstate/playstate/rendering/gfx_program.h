@@ -15,7 +15,7 @@ namespace playstate
 	class ITexture2D;
 	class IVertexBuffer;
 	class IIndexBuffer;
-	class RenderTarget2D;
+	class IRenderTarget2D;
 	class IRenderSystem;
 	
 	const uint32 MaxDrawBuffers = 6;
@@ -127,12 +127,12 @@ namespace playstate
 		//
 		// Enables rendering to the supplied render target.
 		// @param renderTarget
-		virtual void SetDepthRenderTarget(RenderTarget2D* renderTarget) = 0;
+		virtual void SetDepthRenderTarget(IRenderTarget2D* renderTarget) = 0;
 
 		//
 		// Enables rendering to the supplied render target at the supplied index value.
 		// @param renderTarget
 		// @param index
-		virtual void SetRenderTarget(RenderTarget2D* renderTarget, uint32 index) = 0;
+		virtual void SetRenderTarget(IRenderTarget2D* renderTarget, uint32 index) = 0;
 	};
 }
