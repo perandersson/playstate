@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\playstate.ogl3\playstate\ogl3\components\default_gfx_program_component.cpp" />
+    <ClCompile Include="..\..\playstate.ogl3\playstate\ogl3\components\float_gfx_program_component.cpp" />
+    <ClCompile Include="..\..\playstate.ogl3\playstate\ogl3\components\gfx_program_component_not_found.cpp" />
+    <ClCompile Include="..\..\playstate.ogl3\playstate\ogl3\components\int_gfx_program_component.cpp" />
+    <ClCompile Include="..\..\playstate.ogl3\playstate\ogl3\components\matrix_gfx_program_component.cpp" />
+    <ClCompile Include="..\..\playstate.ogl3\playstate\ogl3\components\sampler2d_gfx_program_component.cpp" />
+    <ClCompile Include="..\..\playstate.ogl3\playstate\ogl3\gfx_program_factory.cpp" />
+    <ClCompile Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_gfx_program.cpp" />
+    <ClCompile Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_index_buffer.cpp" />
+    <ClCompile Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_render_system.cpp" />
+    <ClCompile Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_render_target_2d.cpp" />
+    <ClCompile Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_state_policy.cpp" />
+    <ClCompile Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_texture2d.cpp" />
+    <ClCompile Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_vertex_buffer.cpp" />
+    <ClCompile Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_vertex_declaration_factory.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\playstate.ogl3\playstate\ogl3\components\default_gfx_program_component.h" />
+    <ClInclude Include="..\..\playstate.ogl3\playstate\ogl3\components\float_gfx_program_component.h" />
+    <ClInclude Include="..\..\playstate.ogl3\playstate\ogl3\components\gfx_program_component_not_found.h" />
+    <ClInclude Include="..\..\playstate.ogl3\playstate\ogl3\components\int_gfx_program_component.h" />
+    <ClInclude Include="..\..\playstate.ogl3\playstate\ogl3\components\matrix_gfx_program_component.h" />
+    <ClInclude Include="..\..\playstate.ogl3\playstate\ogl3\components\sampler2d_gfx_program_component.h" />
+    <ClInclude Include="..\..\playstate.ogl3\playstate\ogl3\gfx_program_factory.h" />
+    <ClInclude Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_gfx_program.h" />
+    <ClInclude Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_index_buffer.h" />
+    <ClInclude Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_primitive_type.h" />
+    <ClInclude Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_render_system.h" />
+    <ClInclude Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_render_target_2d.h" />
+    <ClInclude Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_state_policy.h" />
+    <ClInclude Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_texture2d.h" />
+    <ClInclude Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_vertex_buffer.h" />
+    <ClInclude Include="..\..\playstate.ogl3\playstate\ogl3\ogl3_vertex_declaration_factory.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E888E0B4-3F42-4DE8-9D69-35495868B33E}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>playstateogl3</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)../../bin/</OutDir>
+    <IntDir>$(SolutionDir)../../bin/$(Configuration)/$(ProjectName)/intermediate/</IntDir>
+    <TargetName>$(ProjectName)_d</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)../../bin/</OutDir>
+    <IntDir>$(SolutionDir)../../bin/$(Configuration)/$(ProjectName)/intermediate/</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../playstate;../../libraries/lua-5.2.1;../../libraries/glew-1.9.0/include;../../libraries/FreeImage;../../libraries/freetype-2.4.11/include;../../libraries/openal-soft;../../libraries/libogg;../../libraries/libvorbis;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../playstate;../../libraries/lua-5.2.1;../../libraries/glew-1.9.0/include;../../libraries/FreeImage;../../libraries/freetype-2.4.11/include;../../libraries/openal-soft;../../libraries/libogg;../../libraries/libvorbis;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+    </Lib>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

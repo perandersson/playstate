@@ -1,37 +1,19 @@
 #pragma once
 #include "../types.h"
-#include <gl/glew.h>
 
 namespace playstate
 {
-	//
-	// 
 	class PrimitiveType
 	{
 	public:
-		PrimitiveType(uint32 elementCount, GLenum type);
-		~PrimitiveType();
+		enum Enum {
+			POINT,
+			TRIANGLE,
+			LINE_LOOP,
 
-		inline uint32 GetElementCount() const {
-			return mElementCount;
-		}
+			NUM_ENUMS
+		};
 
-		inline uint32 GetType() const {
-			return mType;
-		}
-
-	private:
-		uint32 mElementCount;
-		GLenum mType;
-
-	public:
-		static const PrimitiveType Point;
-		static const PrimitiveType Triangle;
-		static const PrimitiveType LineLoop;
+		static uint32 GetElementCount(Enum type);
 	};
-
-#ifndef PrimitiveTypeEnum
-#define PrimitiveTypeEnum const PrimitiveType&
-#endif
-
 }

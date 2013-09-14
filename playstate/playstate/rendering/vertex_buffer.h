@@ -23,7 +23,7 @@ namespace playstate
 
 		//
 		// @return What primitive type this buffer is containing.
-		virtual const PrimitiveType& GetPrimitiveType() const = 0;
+		virtual PrimitiveType::Enum GetPrimitiveType() const = 0;
 	};
 }
 

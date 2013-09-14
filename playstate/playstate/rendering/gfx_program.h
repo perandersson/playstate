@@ -4,9 +4,6 @@
 #include "../math/matrix4x4.h"
 #include "../math/rect.h"
 #include "gfx_program_component.h"
-#include "components/gfx_program_component_not_found.h"
-#include "state/state_policy.h"
-#include "../script/script_collection.h"
 
 #include <string>
 
@@ -17,8 +14,107 @@ namespace playstate
 	class IIndexBuffer;
 	class IRenderTarget2D;
 	class IRenderSystem;
+
+	//
+	// Source factor used by blending
+	// @see http://www.opengl.org/sdk/docs/man3/xhtml/glBlendFunc.xml
+	class SrcFactor
+	{
+	public:
+		enum Enum {
+			ZERO = 0,
+			ONE,
+			SRC_COLOR,
+			ONE_MINUS_SRC_COLOR,
+			SRC_ALPHA,
+			ONE_MINUS_SRC_ALPHA,
+			DST_ALPHA,
+			ONE_MINUS_DST_ALPHA,
+			DST_COLOR,
+			ONE_MINUS_DST_COLOR,
+			CONSTANT_COLOR,
+			ONE_MINUS_CONSTANT_COLOR,
+			CONSTANT_ALPHA,
+			ONE_MINUS_CONSTANT_ALPHA,
+
+			NUM_SRC_FACTORS
+		};
+
+		static const Enum Default = ONE;
+	};
+
+	//
+	// Destination factor used by blending
+	// @see http://www.opengl.org/sdk/docs/man3/xhtml/glBlendFunc.xml
+	class DestFactor
+	{
+	public:
+		enum Enum {
+			ZERO = 0,
+			ONE,
+			SRC_COLOR,
+			ONE_MINUS_SRC_COLOR,
+			SRC_ALPHA,
+			ONE_MINUS_SRC_ALPHA,
+			DST_ALPHA,
+			ONE_MINUS_DST_ALPHA,
+			DST_COLOR,
+			ONE_MINUS_DST_COLOR,
+			CONSTANT_COLOR,
+			ONE_MINUS_CONSTANT_COLOR,
+			CONSTANT_ALPHA,
+			ONE_MINUS_CONSTANT_ALPHA,
+
+			NUM_DEST_FACTORS
+		};
+
+		static const Enum Default = ZERO;
+	};
+
+	class CullFaces
+	{
+	public:
+		enum Enum {
+			DISABLED = 0,
+			CW,
+			CCW,
+
+			NUM_CULL_FACES
+		};
+
+		static const Enum Default = CCW;
+	};
 	
-	const uint32 MaxDrawBuffers = 6;
+	class DepthFunc
+	{
+	public:
+		enum Enum {
+			NEVER = 0,
+			LESS,
+			EQUAL,
+			LEQUAL,
+			GREATER,
+			NOTEQUAL,
+			GEQUAL,
+			ALWAYS,
+
+			NUM_DEPTH_FUNCS
+		};
+
+		static const Enum Default = LEQUAL;
+	};
+
+	class ClearTypes
+	{
+	public:
+		enum Enum {
+			COLOR = BIT(1),
+			DEPTH = BIT(2)
+		};
+	};
+	
+	static const uint32 MaxDrawBuffers = 6;
+	static const uint32 MaxActiveTextures = 16; 
 
 	class IGfxProgram
 	{

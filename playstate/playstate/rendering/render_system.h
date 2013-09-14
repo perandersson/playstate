@@ -14,8 +14,6 @@
 #include "../version.h"
 #include "datatypes/standard_vertex_buffer_types.h"
 
-#include <gl/glew.h>
-
 namespace playstate
 {
 	//
@@ -87,7 +85,7 @@ namespace playstate
 		// This is used by GLSL to know where to render the result.
 		// @param renderTarget
 		// @param attachmentIndex
-		virtual void SetRenderTarget(IRenderTarget2D* renderTarget, GLenum attachmentIndex) = 0;
+		virtual void SetRenderTarget(IRenderTarget2D* renderTarget, uint32 attachmentIndex) = 0;
 
 		//
 		// Creates a texture based on the supplied data

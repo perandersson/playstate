@@ -12,7 +12,7 @@
 #include <playstate/sound/sound_effect.h>
 #include <playstate/sound/music.h>
 #include <playstate/sound/openal/openal_music_resource_loader.h>
-#include <playstate/rendering/ogl3/ogl3_render_system.h>
+#include <playstate/ogl3/ogl3_render_system.h>
 #include <playstate/processor/processors/linked_list_render_processor.h>
 #include <playstate/processor/processors/quadtree_render_processor.h>
 #include <playstate/image/image_resource_loader.h>

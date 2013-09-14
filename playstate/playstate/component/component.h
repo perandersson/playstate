@@ -10,7 +10,6 @@ namespace playstate
 
 	//
 	// Base class for components in the game engine. 
-	// Example of a component is the RenderStaticModel class.
 	class Component
 	{
 	public:
@@ -72,6 +71,8 @@ namespace playstate
 	protected:		
 		//
 		// Method called when this component is added to a scene node.
+		// It's from this method that we attach this component to the available
+		// functionality existing in the engine. One such functionality is the {@code playstate::Updatable} class.
 		virtual void OnComponentAdded();
 
 		//

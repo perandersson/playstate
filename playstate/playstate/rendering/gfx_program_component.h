@@ -4,7 +4,6 @@
 #include "../math/vector2.h"
 #include "../math/color.h"
 #include "../types.h"
-#include "state/state_policy.h"
 #include "texture2d.h"
 #include "render_target_2d.h"
 

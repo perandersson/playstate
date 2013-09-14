@@ -1,6 +1,6 @@
 local wrap = {}
-wrap.CLAMP_TO_EDGE = tonumber("812F", 16) -- #define GL_CLAMP_TO_EDGE 0x812F
-wrap.CLAMP_TO_BORDER = tonumber("812D", 16) -- #define GL_CLAMP_TO_BORDER 0x812D
-wrap.MIRRORED_REPEAT = tonumber("8370", 16) --#define GL_MIRRORED_REPEAT 0x8370
-wrap.REPEAT = tonumber("2901", 16) -- #define GL_REPEAT 0x2901
+wrap.CLAMP_TO_EDGE = 0
+wrap.CLAMP_TO_BORDER = 1
+wrap.MIRRORED_REPEAT = 2
+wrap.REPEAT = 3
 return wrap
