@@ -5,14 +5,14 @@ using namespace playstate;
 GuiGeometryBuilder::GuiGeometryBuilder(IRenderSystem& renderSystem)
 	: mRenderSystem(renderSystem), mMemoryPool(6, 24), mBuildingBlocks(5, 5), mNumVertices(0), mStartIndex(0), mCurrentTexture(NULL)
 {
-	mVertexBuffer = mRenderSystem.CreateDynamicBuffer(NULL, sizeof(WidgetGeometryData), WidgetGeometryDataVAOFactory, 0);
+	mIVertexBuffer = mRenderSystem.CreateDynamicBuffer(NULL, sizeof(WidgetGeometryData), WidgetGeometryDataVAOFactory, 0);
 }
 
 GuiGeometryBuilder::~GuiGeometryBuilder()
 {
-	if(mVertexBuffer != NULL) {
-		delete mVertexBuffer;
-		mVertexBuffer = NULL;
+	if(mIVertexBuffer != NULL) {
+		delete mIVertexBuffer;
+		mIVertexBuffer = NULL;
 	}
 }
 
@@ -161,22 +161,22 @@ void GuiGeometryBuilder::AddText(Font* font, const Vector2& position, const Colo
 	mNumVertices += 6 * size;
 }
 
-VertexBuffer* GuiGeometryBuilder::PrepareVertexBuffer()
+IVertexBuffer* GuiGeometryBuilder::PrepareIVertexBuffer()
 {
 	const uint32 size = mMemoryPool.GetSize();
 	if(size > 0) {
 		WidgetGeometryData* data = mMemoryPool.GetFirstElement();
-		mVertexBuffer->Update(data, size);
+		mIVertexBuffer->Update(data, size);
 		mMemoryPool.Reset();
 	}
 
-	return mVertexBuffer;
+	return mIVertexBuffer;
 }
 
 void GuiGeometryBuilder::BuildAndPushBuildingBlocks()
 {
 	WidgetBuildingBlock* block = mBuildingBlocks.Allocate();
-	block->VertexBuffer = mVertexBuffer;
+	block->IVertexBuffer = mIVertexBuffer;
 	block->Texture = mCurrentTexture;
 	block->StartIndex = mStartIndex;
 	block->NumVertices = mNumVertices;
@@ -189,7 +189,7 @@ WidgetBuildingBlock* GuiGeometryBuilder::GetBuildingBlocks()
 {
 	if(mNumVertices > 0) {
 		BuildAndPushBuildingBlocks();
-		PrepareVertexBuffer();
+		PrepareIVertexBuffer();
 	}
 
 	return mBuildingBlocks.GetFirstElement();

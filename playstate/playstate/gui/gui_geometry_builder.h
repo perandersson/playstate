@@ -10,7 +10,7 @@ namespace playstate
 {
 	struct WidgetBuildingBlock
 	{
-		VertexBuffer* VertexBuffer;
+		IVertexBuffer* IVertexBuffer;
 		Texture2D* Texture;
 		uint32 StartIndex;
 		uint32 NumVertices;
@@ -56,11 +56,11 @@ namespace playstate
 			const Color& bottomLeftColor, const Color& bottomRightColor, Texture2D* texture);
 
 		void BuildAndPushBuildingBlocks();
-		VertexBuffer* PrepareVertexBuffer();
+		IVertexBuffer* PrepareIVertexBuffer();
 
 	private:
 		IRenderSystem& mRenderSystem;
-		VertexBuffer* mVertexBuffer;
+		IVertexBuffer* mIVertexBuffer;
 		MemoryPool<WidgetGeometryData> mMemoryPool;
 		MemoryPool<WidgetBuildingBlock> mBuildingBlocks;
 

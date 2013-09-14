@@ -325,9 +325,9 @@ void WavefrontResourceLoader::LoadMesh(std::istringstream& stream, std::vector<W
 
 
 	/*	
-void WavefrontResourceLoader::CreateWavefrontModelMesh(IVertexBuffer* vertexBuffer, std::vector<ModelMesh*>& meshes, const WavefrontMaterial* material) const
+void WavefrontResourceLoader::CreateWavefrontModelMesh(IIVertexBuffer* IVertexBuffer, std::vector<ModelMesh*>& meshes, const WavefrontMaterial* material) const
 {
-	ModelMesh* mesh = new ModelMesh(vertexBuffer, NULL, material->DiffuseTexture, material->DiffuseColor);
+	ModelMesh* mesh = new ModelMesh(IVertexBuffer, NULL, material->DiffuseTexture, material->DiffuseColor);
 	meshes.push_back(mesh);
 
 	if(!material->AmbientTexture.empty())

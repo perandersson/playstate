@@ -2,6 +2,9 @@
 #include "../../game/configuration.h"
 #include "ogl3_render_system.h"
 #include "ogl3_gfx_program.h"
+#include "ogl3_vertex_buffer.h"
+#include "ogl3_index_buffer.h"
+#include "ogl3_state_policy.h"
 using namespace playstate;
 
 namespace {
@@ -118,7 +121,7 @@ void OGL3RenderSystem::OnWindowResized(const Point& newSize)
 	mScreenViewport.Height = newSize.Y;
 
 	// Mark system as dirty
-	StatePolicyGuard::MarkAsDirty();
+	OGL3StatePolicyGuard::MarkAsDirty();
 
 	// Mark gfx programs as dirty
 	OGL3GfxProgram* program = mGfxPrograms.First();
@@ -263,12 +266,12 @@ const Version& OGL3RenderSystem::GetShaderVersion() const
 	return mShaderVersion;
 }
 
-VertexBuffer* OGL3RenderSystem::GetUniformVertexBuffer() const
+IVertexBuffer* OGL3RenderSystem::GetUniformVertexBuffer() const
 {
 	return mUniformVertexBuffer;
 }
 
-IndexBuffer* OGL3RenderSystem::CreateStaticBuffer(const uint32* indices, uint32 numIndices)
+IIndexBuffer* OGL3RenderSystem::CreateStaticBuffer(const uint32* indices, uint32 numIndices)
 {
 	GLuint indexBuffer;
 	glGenBuffers(1, &indexBuffer);
@@ -281,41 +284,41 @@ IndexBuffer* OGL3RenderSystem::CreateStaticBuffer(const uint32* indices, uint32 
 		THROW_EXCEPTION(RenderingException, "Could not create index buffer. Reason: %d", status);
 	}
 
-	return new IndexBuffer(indexBuffer, numIndices);
+	return new OGL3IndexBuffer(indexBuffer, numIndices);
 }
 
 
-VertexBuffer* OGL3RenderSystem::CreateStaticBuffer(const PositionData* vertices, uint32 numVertices)
+IVertexBuffer* OGL3RenderSystem::CreateStaticBuffer(const PositionData* vertices, uint32 numVertices)
 {
 	return CreateStaticBuffer(vertices, sizeof(PositionData), PositionDataVAOFactory, numVertices);
 }
 
-VertexBuffer* OGL3RenderSystem::CreateStaticBuffer(const PositionTexCoordData* vertices, uint32 numVertices)
+IVertexBuffer* OGL3RenderSystem::CreateStaticBuffer(const PositionTexCoordData* vertices, uint32 numVertices)
 {
 	return CreateStaticBuffer(vertices, sizeof(PositionTexCoordData), PositionTexCoordDataVAOFactory, numVertices);
 }
 
-VertexBuffer* OGL3RenderSystem::CreateStaticBuffer(const PositionTexCoordColorData* vertices, uint32 numVertices)
+IVertexBuffer* OGL3RenderSystem::CreateStaticBuffer(const PositionTexCoordColorData* vertices, uint32 numVertices)
 {
 	return CreateStaticBuffer(vertices, sizeof(PositionTexCoordColorData), PositionTexCoordColorDataVAOFactory, numVertices);
 }
 
-VertexBuffer* OGL3RenderSystem::CreateStaticBuffer(const PositionNormalData* vertices, uint32 numVertices)
+IVertexBuffer* OGL3RenderSystem::CreateStaticBuffer(const PositionNormalData* vertices, uint32 numVertices)
 {
 	return CreateStaticBuffer(vertices, sizeof(PositionNormalData), PositionNormalDataVAOFactory, numVertices);
 }
 
-VertexBuffer* OGL3RenderSystem::CreateStaticBuffer(const PositionColorData* vertices, uint32 numVertices)
+IVertexBuffer* OGL3RenderSystem::CreateStaticBuffer(const PositionColorData* vertices, uint32 numVertices)
 {
 	return CreateStaticBuffer(vertices, sizeof(PositionColorData), PositionColorDataVAOFactory, numVertices);
 }
 
-VertexBuffer* OGL3RenderSystem::CreateStaticBuffer(const PositionNormalTextureData* vertices, uint32 numVertices)
+IVertexBuffer* OGL3RenderSystem::CreateStaticBuffer(const PositionNormalTextureData* vertices, uint32 numVertices)
 {
 	return CreateStaticBuffer(vertices, sizeof(PositionNormalTextureData), PositionNormalTextureDataVAOFactory, numVertices);
 }
 
-VertexBuffer* OGL3RenderSystem::CreateStaticBuffer(const void* vertices, uint32 vertexSize, const IVertexArrayObjectFactory& arrayFactory, uint32 numVertices)
+IVertexBuffer* OGL3RenderSystem::CreateStaticBuffer(const void* vertices, uint32 vertexSize, const IVertexArrayObjectFactory& arrayFactory, uint32 numVertices)
 {
 	assert(numVertices > 0 && "There is no point in creating a static buffer with 0 elements");
 
@@ -331,10 +334,10 @@ VertexBuffer* OGL3RenderSystem::CreateStaticBuffer(const void* vertices, uint32 
 		THROW_EXCEPTION(RenderingException, "Could not create vertex buffer. Reason: %d", status);
 	}
 
-	return new VertexBuffer(GL_TRIANGLES, arrayFactory, bufferID, numVertices, vertexSize);
+	return new OGL3VertexBuffer(PrimitiveType::Triangle, arrayFactory, bufferID, numVertices, vertexSize);
 }
 
-VertexBuffer* OGL3RenderSystem::CreateDynamicBuffer(const void* vertices, uint32 vertexSize, const IVertexArrayObjectFactory& arrayFactory, uint32 numVertices)
+IVertexBuffer* OGL3RenderSystem::CreateDynamicBuffer(const void* vertices, uint32 vertexSize, const IVertexArrayObjectFactory& arrayFactory, uint32 numVertices)
 {
 	GLuint bufferID;
 	glGenBuffers(1, &bufferID);
@@ -350,7 +353,7 @@ VertexBuffer* OGL3RenderSystem::CreateDynamicBuffer(const void* vertices, uint32
 		THROW_EXCEPTION(RenderingException, "Could not create vertex buffer. Reason: %d", status);
 	}
 
-	return new VertexBuffer(GL_TRIANGLES, arrayFactory, bufferID, numVertices, vertexSize);
+	return new OGL3VertexBuffer(PrimitiveType::Triangle, arrayFactory, bufferID, numVertices, vertexSize);
 }
 
 RenderTarget2D* OGL3RenderSystem::CreateRenderTarget2D(const Size& size, TextureFormat::Enum format)

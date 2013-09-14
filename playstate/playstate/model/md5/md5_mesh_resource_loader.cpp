@@ -57,13 +57,13 @@ ResourceObject* MD5MeshResourceLoader::Load(IFile& file)
 			MD5Mesh* mesh = ReadMesh(dataStream);
 			assert(mesh != NULL);
 
-			VertexBuffer* vertexBuffer = GenerateVertexBuffer(mesh, joints);
-			IndexBuffer* indexBuffer = GenerateIndexBuffer(mesh);
+			IVertexBuffer* IVertexBuffer = GenerateIVertexBuffer(mesh, joints);
+			IIndexBuffer* IIndexBuffer = GenerateIIndexBuffer(mesh);
 			
 			// Save neccessary Bone and BB information (so that we can use them from our application as well).
 			ModelMesh& modelMesh = meshes[meshCount++];
-			modelMesh.Vertices = vertexBuffer;
-			modelMesh.Indices = indexBuffer;
+			modelMesh.Vertices = IVertexBuffer;
+			modelMesh.Indices = IIndexBuffer;
 			modelMesh.SpecularCoefficient = 0.0f;
 			modelMesh.Alpha = 1.0f;
 			modelMesh.Id = UUID::To32Bit();
@@ -160,10 +160,10 @@ MD5MeshResourceLoader::MD5MeshJoint* MD5MeshResourceLoader::ReadJoints(std::istr
 	return joints;
 }
 
-VertexBuffer* MD5MeshResourceLoader::GenerateVertexBuffer(MD5Mesh* mesh, MD5MeshJoint* joints)
+IVertexBuffer* MD5MeshResourceLoader::GenerateIVertexBuffer(MD5Mesh* mesh, MD5MeshJoint* joints)
 {
 	const uint32 numVertices = mesh->NumVertices;
-	MD5MeshVertexData* vertexBufferData = new MD5MeshVertexData[mesh->NumVertices];
+	MD5MeshVertexData* IVertexBufferData = new MD5MeshVertexData[mesh->NumVertices];
 
 	//
 	// Positions
@@ -171,7 +171,7 @@ VertexBuffer* MD5MeshResourceLoader::GenerateVertexBuffer(MD5Mesh* mesh, MD5Mesh
 
 	for(uint32 i = 0; i < numVertices; ++i) {
 		MD5MeshVertex& meshVertex = mesh->Vertices[i];
-		MD5MeshVertexData& data = vertexBufferData[i];
+		MD5MeshVertexData& data = IVertexBufferData[i];
 		data.bone = 0;
 		data.weight = 0.0f;
 		data.Position = Vector3::Zero;
@@ -192,28 +192,28 @@ VertexBuffer* MD5MeshResourceLoader::GenerateVertexBuffer(MD5Mesh* mesh, MD5Mesh
 	//
 	const uint32 numTriangles = mesh->NumTriangles;
 	for(uint32 i = 0; i < numTriangles; ++i) {
-		const Vector3& v0 = vertexBufferData[ mesh->Triangles[i].P1 ].Position;
-		const Vector3& v1 = vertexBufferData[ mesh->Triangles[i].P2 ].Position;
-		const Vector3& v2 = vertexBufferData[ mesh->Triangles[i].P3 ].Position;
+		const Vector3& v0 = IVertexBufferData[ mesh->Triangles[i].P1 ].Position;
+		const Vector3& v1 = IVertexBufferData[ mesh->Triangles[i].P2 ].Position;
+		const Vector3& v2 = IVertexBufferData[ mesh->Triangles[i].P3 ].Position;
 
 		const Vector3 normal = (v2 - v0).CrossProduct(v1 - v0);
 		
-		vertexBufferData[ mesh->Triangles[i].P1 ].Normal += normal;
-		vertexBufferData[ mesh->Triangles[i].P2 ].Normal += normal;
-		vertexBufferData[ mesh->Triangles[i].P3 ].Normal += normal;
+		IVertexBufferData[ mesh->Triangles[i].P1 ].Normal += normal;
+		IVertexBufferData[ mesh->Triangles[i].P2 ].Normal += normal;
+		IVertexBufferData[ mesh->Triangles[i].P3 ].Normal += normal;
 	}
 
 	for(uint32 i = 0; i < numVertices; ++i) {
-		MD5MeshVertexData& data = vertexBufferData[i];
+		MD5MeshVertexData& data = IVertexBufferData[i];
 		data.Normal.Normalize();
 	}
 
-	VertexBuffer* vb = mRenderSystem.CreateStaticBuffer(vertexBufferData, sizeof(MD5MeshVertexData), MD5MeshVertexDataVAOFactory, mesh->NumVertices);
-	delete[] vertexBufferData;
+	IVertexBuffer* vb = mRenderSystem.CreateStaticBuffer(IVertexBufferData, sizeof(MD5MeshVertexData), MD5MeshVertexDataVAOFactory, mesh->NumVertices);
+	delete[] IVertexBufferData;
 	return vb;
 }
 
-IndexBuffer* MD5MeshResourceLoader::GenerateIndexBuffer(MD5Mesh* mesh)
+IIndexBuffer* MD5MeshResourceLoader::GenerateIIndexBuffer(MD5Mesh* mesh)
 {
 	//uint32* indices = new uint32[mesh->NumTriangles * 3];
 //	memcpy(indices, mesh->Triangles, sizeof(uint32) * mesh->NumTriangles * 3);

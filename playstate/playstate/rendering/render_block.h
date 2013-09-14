@@ -9,8 +9,8 @@
 
 namespace playstate
 {
-	class VertexBuffer;
-	class IndexBuffer;
+	class IVertexBuffer;
+	class IIndexBuffer;
 	class Texture2D;
 
 	//
@@ -19,8 +19,8 @@ namespace playstate
 	struct RenderBlock
 	{
 		uint32 Id;
-		VertexBuffer* VertexBuffer;
-		IndexBuffer* IndexBuffer;
+		IVertexBuffer* VertexBuffer;
+		IIndexBuffer* IndexBuffer;
 		Matrix4x4 ModelMatrix;
 		Texture2D* DiffuseTexture;
 		Color DiffuseColor;

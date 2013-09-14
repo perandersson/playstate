@@ -98,7 +98,7 @@ void DeferredRenderPipeline::DrawUserInterface(Canvas& canvas)
 				textureComponent->SetTexture(mWhiteTexture);
 			else
 				textureComponent->SetTexture(block.Texture);
-			mUserInterfaceShader->Render(block.VertexBuffer, NULL, block.StartIndex, block.NumVertices);	
+			mUserInterfaceShader->Render(block.IVertexBuffer, NULL, block.StartIndex, block.NumVertices);	
 		}
 	}
 	mGeometryBuilder.Reset();

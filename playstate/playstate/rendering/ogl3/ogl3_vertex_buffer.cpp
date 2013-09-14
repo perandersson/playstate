@@ -1,24 +1,18 @@
-#include "../memory/memory.h"
-#include "vertex_buffer.h"
-#include "../math/vector3.h"
-#include "../math/vector2.h"
-#include "../math/color.h"
-#include "state/state_policy.h"
+#include "../../memory/memory.h"
+#include "ogl3_vertex_buffer.h"
+#include "../../math/vector3.h"
+#include "../../math/vector2.h"
+#include "../../math/color.h"
+#include "ogl3_state_policy.h"
 using namespace playstate;
 
-VertexBuffer::VertexBuffer(GLenum primitiveType, const IVertexArrayObjectFactory& factory, GLuint bufferID, uint32 numVertices, uint32 vertexSize) 
+OGL3VertexBuffer::OGL3VertexBuffer(const PrimitiveType& primitiveType, const IVertexArrayObjectFactory& factory, GLuint bufferID, uint32 numVertices, uint32 vertexSize) 
 	: mPrimitiveType(primitiveType), mVertexArrayID(0), mFactory(factory), mBufferID(bufferID), mNumVertices(numVertices), mVertexSize(vertexSize)
 {
 	assert(mVertexSize > 0 && "The size of one vertex cannot be 0");
-
-	if(mPrimitiveType == GL_TRIANGLES) {
-		mOnePrimitiveCount = 3;
-	} else if(mPrimitiveType == GL_LINE_LOOP) {
-		mOnePrimitiveCount = 1;
-	}
 }
 
-VertexBuffer::~VertexBuffer()
+OGL3VertexBuffer::~OGL3VertexBuffer()
 {
 	if(mBufferID != 0) {
 		glDeleteBuffers(1, &mBufferID);
@@ -31,7 +25,7 @@ VertexBuffer::~VertexBuffer()
 	}
 }
 
-void VertexBuffer::Bind()
+void OGL3VertexBuffer::Bind()
 {
 	// This has to be done during bind time on the main render thread. That's because
 	// VertexArrayObjects are not shared between render contexts. (SERIOUSLY DUDES!!!!)
@@ -46,29 +40,29 @@ void VertexBuffer::Bind()
 	}
 }
 
-void VertexBuffer::Render() const
+void OGL3VertexBuffer::Render() const
 {
 	Render(0);
 }
 
-void VertexBuffer::Render(uint32 startIndex) const
+void OGL3VertexBuffer::Render(uint32 startIndex) const
 {
 	Render(startIndex, mNumVertices);
 }
 
-void VertexBuffer::Render(uint32 startIndex, uint32 count) const
+void OGL3VertexBuffer::Render(uint32 startIndex, uint32 count) const
 {
 	// Prevent you from drawing more vertices than exist in the buffer
 	if(count > mNumVertices - startIndex) {
 		count = mNumVertices - startIndex;
 	}
 
-	glDrawArrays(mPrimitiveType, startIndex, count);
+	glDrawArrays(mPrimitiveType.GetInnerType(), startIndex, count);
 }
 
-void VertexBuffer::Update(const void* vertices, uint32 numVertices)
+void OGL3VertexBuffer::Update(const void* vertices, uint32 numVertices)
 {
-	StatePolicyGuard::BindVertexBuffer(this);
+	OGL3StatePolicyGuard::BindVertexBuffer(this);
 	glBindBuffer(GL_ARRAY_BUFFER, mBufferID);
 
 	// Copy the data to the buffer. This can be used if we are simply overridding the existing data.
@@ -79,4 +73,9 @@ void VertexBuffer::Update(const void* vertices, uint32 numVertices)
 	GLenum error = glGetError();
 	if(error != GL_NO_ERROR)
 		THROW_EXCEPTION(RenderingException, "Could not update vertex buffer with new data. Reason: '%d'", error);
+}
+
+const PrimitiveType& OGL3VertexBuffer::GetPrimitiveType() const
+{
+	return mPrimitiveType;
 }

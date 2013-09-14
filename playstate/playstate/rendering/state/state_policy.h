@@ -169,11 +169,7 @@ namespace playstate
 		static void SetActiveTexture(uint32 id);
 		static void BindTexture(GLenum type, GLuint texture);
 		
-		static void Viewport(const Rect& viewport);
-	
-		static void BindVertexBuffer(VertexBuffer* vertexBuffer);
-		static void BindIndexBuffer(IndexBuffer* indexBuffer);
-	
+		static void Viewport(const Rect& viewport);	
 	};
 
 	class StatePolicyGuard
@@ -201,9 +197,6 @@ namespace playstate
 
 		static void Viewport(const Rect& viewport);
 	
-		static void BindVertexBuffer(VertexBuffer* vertexBuffer);
-		static void BindIndexBuffer(IndexBuffer* indexBuffer);
-
 		//
 		// Mark all states as dirty.
 		static void MarkAsDirty();

@@ -5,6 +5,9 @@
 #include "../components/matrix_gfx_program_component.h"
 #include "../components/sampler2d_gfx_program_component.h"
 #include "ogl3_render_system.h"
+#include "ogl3_vertex_buffer.h"
+#include "ogl3_index_buffer.h"
+#include "ogl3_state_policy.h"
 using namespace playstate;
 
 namespace {
@@ -190,17 +193,17 @@ IGfxProgramComponent* OGL3GfxProgram::FindComponent(const playstate::string& nam
 	return it->second;
 }
 
-void OGL3GfxProgram::Render(VertexBuffer* buffer)
+void OGL3GfxProgram::Render(IVertexBuffer* buffer)
 {
 	Render(buffer, NULL, 0);
 }
 
-void OGL3GfxProgram::Render(VertexBuffer* buffer, IndexBuffer* indexBuffer)
+void OGL3GfxProgram::Render(IVertexBuffer* buffer, IIndexBuffer* IIndexBuffer)
 {
-	Render(buffer, indexBuffer, 0);
+	Render(buffer, IIndexBuffer, 0);
 }
 
-void OGL3GfxProgram::Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint32 startElement)
+void OGL3GfxProgram::Render(IVertexBuffer* buffer, IIndexBuffer* indexBuffer, uint32 startElement)
 {
 	assert(_current_program == this && "You are trying to render a vertex and/or index buffer on a non-bound gfx program");
 	assert_not_null(buffer);
@@ -208,15 +211,15 @@ void OGL3GfxProgram::Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint
 	ApplyBuffers(buffer, indexBuffer);
 		
 	if(indexBuffer != NULL)
-		indexBuffer->Render(buffer, startElement);
+		static_cast<OGL3IndexBuffer*>(indexBuffer)->Render(buffer, startElement);
 	else
-		buffer->Render(startElement);
+		static_cast<OGL3VertexBuffer*>(buffer)->Render(startElement);
 
 	//GLenum err = glGetError();
 	//assert(err == GL_NO_ERROR);
 }
 
-void OGL3GfxProgram::Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint32 startElement, uint32 numElements)
+void OGL3GfxProgram::Render(IVertexBuffer* buffer, IIndexBuffer* indexBuffer, uint32 startElement, uint32 numElements)
 {
 	assert(_current_program == this && "You are trying to render a vertex and/or index buffer on a non-bound gfx program");
 	assert_not_null(buffer);
@@ -225,24 +228,23 @@ void OGL3GfxProgram::Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint
 	ApplyBuffers(buffer, indexBuffer);
 		
 	if(indexBuffer != NULL)
-		indexBuffer->Render(buffer, startElement, numElements);
+		static_cast<OGL3IndexBuffer*>(indexBuffer)->Render(buffer, startElement, numElements);
 	else
-		buffer->Render(startElement, numElements);
+		static_cast<OGL3VertexBuffer*>(buffer)->Render(startElement, numElements);
 
 	GLenum err = glGetError();
 	assert(err == GL_NO_ERROR);
 }
 
-void OGL3GfxProgram::ApplyBuffers(VertexBuffer* buffer, IndexBuffer* indexBuffer)
+void OGL3GfxProgram::ApplyBuffers(IVertexBuffer* buffer, IIndexBuffer* indexBuffer)
 {
 	if(mApplyRenderTarget) {
 		mApplyRenderTarget = false;
 		mRenderSystem.ApplyRenderTargets();
 	}
 
-	StatePolicyGuard::BindVertexBuffer(buffer);
-	StatePolicyGuard::BindIndexBuffer(indexBuffer);
-
+	OGL3StatePolicyGuard::BindVertexBuffer(static_cast<OGL3VertexBuffer*>(buffer));
+	OGL3StatePolicyGuard::BindIndexBuffer(static_cast<OGL3IndexBuffer*>(indexBuffer));
 	
 	GLenum err = glGetError();
 	assert(err == GL_NO_ERROR);

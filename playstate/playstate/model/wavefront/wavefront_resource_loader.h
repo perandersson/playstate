@@ -32,7 +32,7 @@ namespace playstate
 		struct WavefrontMesh
 		{
 			playstate::string Material;
-			VertexBuffer* Vertices;
+			IVertexBuffer* Vertices;
 		};
 
 		typedef std::hash_map<playstate::string, WavefrontMaterial*> Materials;

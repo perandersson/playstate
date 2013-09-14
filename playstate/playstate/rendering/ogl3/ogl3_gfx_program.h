@@ -23,7 +23,7 @@ namespace playstate
 		void MarkAsDirty();
 	
 		void ApplyComponents();
-		void ApplyBuffers(VertexBuffer* buffer, IndexBuffer* indexBuffer);
+		void ApplyBuffers(IVertexBuffer* buffer, IIndexBuffer* IIndexBuffer);
 		void Prepare(const ScriptCollection& collection);
 		
 		//
@@ -38,10 +38,10 @@ namespace playstate
 		virtual void Clear(uint32 clearBits);
 		virtual IGfxProgramComponent* FindComponent(const char* name);
 		virtual IGfxProgramComponent* FindComponent(const playstate::string& name);
-		virtual void Render(VertexBuffer* buffer);
-		virtual void Render(VertexBuffer* buffer, IndexBuffer* indexBuffer);
-		virtual void Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint32 startIndex);
-		virtual void Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint32 startIndex, uint32 numVertices);
+		virtual void Render(IVertexBuffer* buffer);
+		virtual void Render(IVertexBuffer* buffer, IIndexBuffer* indexBuffer);
+		virtual void Render(IVertexBuffer* buffer, IIndexBuffer* indexBuffer, uint32 startIndex);
+		virtual void Render(IVertexBuffer* buffer, IIndexBuffer* indexBuffer, uint32 startIndex, uint32 numVertices);
 		virtual void EnableDepthTest(bool enable);
 		virtual void SetDepthFunc(DepthFunc::Enum depthFunc);
 		virtual void EnableBlend(bool enable);

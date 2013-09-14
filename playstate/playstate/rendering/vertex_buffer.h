@@ -1,50 +1,29 @@
 #pragma once
 
 #include "../types.h"
-#include "exception/rendering_exception.h"
-#include "../math/color.h"
-#include "../math/vector3.h"
-#include "../math/vector2.h"
-#include "vertex_array_object_factory.h"
-#include <gl/glew.h>
+#include "primitive_types.h"
 
 namespace playstate
 {
 	//
 	// Container for a vertex buffer.
-	class VertexBuffer
+	class IVertexBuffer
 	{
 	public:
-		VertexBuffer(GLenum primitiveType, const IVertexArrayObjectFactory& factory, GLuint bufferID, uint32 numVertices, uint32 vertexSize);
-		~VertexBuffer();
+		virtual ~IVertexBuffer() {}
 
+	public:
 		//
 		// Updates this vertex buffer with new data. The type of vertex data is not allowed to be changed.
 		// 
 		// @param vertices The data buffer containing all the vertices
 		// @param numVertices How many vertices are located in the supplied memory block
 		// @throws playstate::RenderingException If the update process fails.
-		void Update(const void* vertices, uint32 numVertices);
+		virtual void Update(const void* vertices, uint32 numVertices) = 0;
 
-		inline GLenum GetPrimitiveType() const {
-			return mPrimitiveType;
-		}
-
-		void Bind();
-		void Render() const;
-		void Render(uint32 startIndex) const;
-		void Render(uint32 startIndex, uint32 count) const;
-
-	private:
-		GLuint mVertexArrayID;
-		GLuint mBufferID;
-		const IVertexArrayObjectFactory& mFactory;
-
-	private:
-		GLenum mPrimitiveType;
-		uint32 mOnePrimitiveCount;
-		uint32 mNumVertices; 
-		uint32 mVertexSize;
+		//
+		// @return What primitive type this buffer is containing.
+		virtual const PrimitiveType& GetPrimitiveType() const = 0;
 	};
 }
 

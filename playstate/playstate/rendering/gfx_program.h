@@ -13,8 +13,8 @@
 namespace playstate
 {
 	class Texture2D;
-	class VertexBuffer;
-	class IndexBuffer;
+	class IVertexBuffer;
+	class IIndexBuffer;
 	class RenderTarget2D;
 	class IRenderSystem;
 	
@@ -47,14 +47,14 @@ namespace playstate
 		// Draw the supplied buffer object using this graphics program.
 		//
 		// @param buffer
-		virtual void Render(VertexBuffer* buffer) = 0;
+		virtual void Render(IVertexBuffer* buffer) = 0;
 
 		//
 		// Draw the supplied buffer object using the supplied index buffer using this graphics program.
 		//
 		// @param buffer
-		// @param indexBuffer
-		virtual void Render(VertexBuffer* buffer, IndexBuffer* indexBuffer) = 0;
+		// @param IIndexBuffer
+		virtual void Render(IVertexBuffer* buffer, IIndexBuffer* IIndexBuffer) = 0;
 		
 		//
 		// Draw the supplied buffer object using the supplied index buffer using this graphics program.
@@ -62,7 +62,7 @@ namespace playstate
 		// @param buffer The vertex buffer we want to draw. Cannot be {@code NULL}.
 		// @param indexBuffer The indices of the supplied buffer we want to draw. Can be {@code NULL}
 		// @param startIndex The index of the first vertex we want to draw
-		virtual void Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint32 startIndex) = 0;
+		virtual void Render(IVertexBuffer* buffer, IIndexBuffer* indexBuffer, uint32 startIndex) = 0;
 		
 		//
 		// Draw the supplied buffer object using the supplied index buffer using this graphics program.
@@ -71,7 +71,7 @@ namespace playstate
 		// @param indexBuffer The indices of the supplied buffer we want to draw. Can be {@code NULL}
 		// @param startIndex The index of the first vertex we want to draw
 		// @param numVertices how many vertices we want to draw
-		virtual void Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint32 startIndex, uint32 numVertices) = 0;
+		virtual void Render(IVertexBuffer* buffer, IIndexBuffer* indexBuffer, uint32 startIndex, uint32 numVertices) = 0;
 
 		//
 		// Flags if this program should enable or disable Z-writing.

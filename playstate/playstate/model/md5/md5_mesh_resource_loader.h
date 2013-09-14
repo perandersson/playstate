@@ -96,8 +96,8 @@ namespace playstate
 	private:
 		MD5Mesh* ReadMesh(std::istringstream& stream);
 		MD5MeshJoint* ReadJoints(std::istringstream& stream, uint32 numJoints);
-		VertexBuffer* GenerateVertexBuffer(MD5Mesh* mesh, MD5MeshJoint* joints);
-		IndexBuffer* GenerateIndexBuffer(MD5Mesh* mesh);
+		IVertexBuffer* GenerateIVertexBuffer(MD5Mesh* mesh, MD5MeshJoint* joints);
+		IIndexBuffer* GenerateIIndexBuffer(MD5Mesh* mesh);
 
 	private:
 		IFileSystem& mFileSystem;

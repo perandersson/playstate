@@ -85,24 +85,6 @@ void StatePolicy::Viewport(const Rect& viewport)
 	glViewport(viewport.X, viewport.Y, viewport.Width, viewport.Height);
 }
 
-void StatePolicy::BindVertexBuffer(VertexBuffer* vertexBuffer)
-{
-	if(vertexBuffer != NULL) {
-		vertexBuffer->Bind();
-	} else {
-		// Unbind?
-	}
-}
-
-void StatePolicy::BindIndexBuffer(IndexBuffer* indexBuffer)
-{
-	if(indexBuffer != NULL) {
-		indexBuffer->Bind();
-	} else {
-		//_indexBuffer->Unbind();
-	}
-}
-
 ////
 
 namespace {
@@ -125,9 +107,6 @@ namespace {
 
 	uint32 _activeTexture = 0;
 	uint32 _bindTextures[MaxActiveTextures] = {0};
-
-	const VertexBuffer* _vertexBuffer = 0;
-	const IndexBuffer* _indexBuffer = 0;
 
 	Rect _viewport;
 }
@@ -257,22 +236,6 @@ void StatePolicyGuard::Viewport(const Rect& viewport)
 	StatePolicy::Viewport(viewport);
 	_viewport = viewport;
 }
-	
-void StatePolicyGuard::BindVertexBuffer(VertexBuffer* vertexBuffer)
-{
-	if(_vertexBuffer != vertexBuffer) {
-		_vertexBuffer = vertexBuffer;
-		StatePolicy::BindVertexBuffer(vertexBuffer);
-	}
-}
-
-void StatePolicyGuard::BindIndexBuffer(IndexBuffer* indexBuffer)
-{
-	if(_indexBuffer != indexBuffer) {
-		StatePolicy::BindIndexBuffer(indexBuffer);
-		_indexBuffer = indexBuffer;
-	}
-}
 
 void StatePolicyGuard::MarkAsDirty()
 {
@@ -295,7 +258,4 @@ void StatePolicyGuard::MarkAsDirty()
 	}
 	
 	_viewport = Rect();
-
-	_vertexBuffer = 0;
-	_indexBuffer = 0;
 }

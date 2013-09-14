@@ -39,21 +39,21 @@ namespace playstate
 
 		//
 		// @return A vertex buffer representing a uniform [-1, 1] buffer.
-		virtual VertexBuffer* GetUniformVertexBuffer() const = 0;
+		virtual IVertexBuffer* GetUniformVertexBuffer() const = 0;
 
 		//
 		// Creates an index buffer based on a supplied of indices
 		// @return A bindable and renderable index buffer
 		// @throws RenderingException
-		virtual IndexBuffer* CreateStaticBuffer(const uint32* indices, uint32 numIndices) = 0;
+		virtual IIndexBuffer* CreateStaticBuffer(const uint32* indices, uint32 numIndices) = 0;
 
 		
-		virtual VertexBuffer* CreateStaticBuffer(const PositionData* vertices, uint32 numVertices) = 0;
-		virtual VertexBuffer* CreateStaticBuffer(const PositionTexCoordData* vertices, uint32 numVertices) = 0;
-		virtual VertexBuffer* CreateStaticBuffer(const PositionTexCoordColorData* vertices, uint32 numVertices) = 0;
-		virtual VertexBuffer* CreateStaticBuffer(const PositionNormalData* vertices, uint32 numVertices) = 0;
-		virtual VertexBuffer* CreateStaticBuffer(const PositionColorData* vertices, uint32 numVertices) = 0;
-		virtual VertexBuffer* CreateStaticBuffer(const PositionNormalTextureData* vertices, uint32 numVertices) = 0;
+		virtual IVertexBuffer* CreateStaticBuffer(const PositionData* vertices, uint32 numVertices) = 0;
+		virtual IVertexBuffer* CreateStaticBuffer(const PositionTexCoordData* vertices, uint32 numVertices) = 0;
+		virtual IVertexBuffer* CreateStaticBuffer(const PositionTexCoordColorData* vertices, uint32 numVertices) = 0;
+		virtual IVertexBuffer* CreateStaticBuffer(const PositionNormalData* vertices, uint32 numVertices) = 0;
+		virtual IVertexBuffer* CreateStaticBuffer(const PositionColorData* vertices, uint32 numVertices) = 0;
+		virtual IVertexBuffer* CreateStaticBuffer(const PositionNormalTextureData* vertices, uint32 numVertices) = 0;
 
 		//
 		// Creates a static (non-updatable) buffer based on a supplied data stream
@@ -62,7 +62,7 @@ namespace playstate
 		// @param vertexSize The size of one data element. {@code sizeof(PositionData)} is one such size
 		// @param arrayFactory
 		// @param numVertices
-		virtual VertexBuffer* CreateStaticBuffer(const void* vertices, uint32 vertexSize, const IVertexArrayObjectFactory& arrayFactory, uint32 numVertices) = 0;
+		virtual IVertexBuffer* CreateStaticBuffer(const void* vertices, uint32 vertexSize, const IVertexArrayObjectFactory& arrayFactory, uint32 numVertices) = 0;
 
 		//
 		// Creates a dynamic buffer based on the supplied data stream. You are allowed to update the data contained inside the returned
@@ -72,7 +72,7 @@ namespace playstate
 		// @param dataTypeSize The size of one data element. {@code sizeof(PositionData)} is one such size
 		// @param arrayFactory
 		// @param numVertices
-		virtual VertexBuffer* CreateDynamicBuffer(const void* vertices, uint32 vertexSize, const IVertexArrayObjectFactory& arrayFactory, uint32 numVertices) = 0;
+		virtual IVertexBuffer* CreateDynamicBuffer(const void* vertices, uint32 vertexSize, const IVertexArrayObjectFactory& arrayFactory, uint32 numVertices) = 0;
 		
 		//
 		// Creates a new render target based on the supplied width, height and format.

@@ -9,8 +9,8 @@ namespace playstate
 {
 	struct ModelMesh
 	{
-		VertexBuffer* Vertices;
-		IndexBuffer* Indices;
+		IVertexBuffer* Vertices;
+		IIndexBuffer* Indices;
 		Resource<Texture2D> DiffuseTexture;
 		Resource<Texture2D> AmbientTexture;
 		Resource<Texture2D> SpecularTexture;
