@@ -1,12 +1,12 @@
 #include "../../memory/memory.h"
 #include "float_gfx_program_component.h"
-#include "../gfx_program.h"
+#include "../ogl3/ogl3_gfx_program.h"
 
 #include <cassert>
 
 using namespace playstate;
 
-FloatGfxProgramComponent::FloatGfxProgramComponent(GfxProgram& program, GLint componentId, GLenum type)
+FloatGfxProgramComponent::FloatGfxProgramComponent(OGL3GfxProgram& program, GLint componentId, GLenum type)
 	: mProgram(program), mComponentId(componentId), mType(type), mCount(0)
 {
 	mValues[0] = 0.0f;

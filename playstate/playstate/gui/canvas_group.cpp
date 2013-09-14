@@ -1,6 +1,7 @@
 #include "../memory/memory.h"
 #include "canvas_group.h"
 #include "../processor/processors/linked_list_update_processor.h"
+#include "../script/script_system.h"
 using namespace playstate;
 
 CanvasGroup::CanvasGroup(std::auto_ptr<IUpdateProcessor> updateProcessor)

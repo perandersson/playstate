@@ -1,10 +1,12 @@
 #pragma once
-#include "../../script/script_system.h"
+
+#include "../../types.h"
 
 namespace playstate
 {
-	class GfxProgram;
+	class OGL3GfxProgram;
 	class IRenderSystem;
+	class ScriptSystem;
 	class GfxProgramFactory
 	{
 	public:
@@ -13,7 +15,7 @@ namespace playstate
 
 		//
 		// Creates a new gfx program based on the supplied file
-		GfxProgram* Create(const playstate::string& fileName);
+		OGL3GfxProgram* Create(const playstate::string& fileName);
 
 	private:
 		IRenderSystem& mRenderSystem;

@@ -5,12 +5,12 @@
 
 namespace playstate
 {
-	class GfxProgram;
+	class OGL3GfxProgram;
 
 	class IntGfxProgramComponent : public DefaultGfxProgramComponent
 	{
 	public:
-		IntGfxProgramComponent(GfxProgram& program, GLint componentId, GLenum type);
+		IntGfxProgramComponent(OGL3GfxProgram& program, GLint componentId, GLenum type);
 		virtual ~IntGfxProgramComponent();
 
 	// IGfxProgramComponent
@@ -23,7 +23,7 @@ namespace playstate
 		virtual void MarkAsDirty();
 
 	private:
-		GfxProgram& mProgram;
+		OGL3GfxProgram& mProgram;
 		GLint mComponentId;
 		GLenum mType;
 		

@@ -43,10 +43,10 @@ private:
 	IWindow& mWindow;
 	IFileSystem& mFileSystem;
 
-	std::auto_ptr<GfxProgram> mDeferredShader;
-	std::auto_ptr<GfxProgram> mTexturedShader;
-	std::auto_ptr<GfxProgram> mPointLightShader;
-	std::auto_ptr<GfxProgram> mUserInterfaceShader;
+	std::auto_ptr<IGfxProgram> mDeferredShader;
+	std::auto_ptr<IGfxProgram> mTexturedShader;
+	std::auto_ptr<IGfxProgram> mPointLightShader;
+	std::auto_ptr<IGfxProgram> mUserInterfaceShader;
 	Resource<Texture2D> mPointLightTexture;
 	Resource<Texture2D> mWhiteTexture;
 

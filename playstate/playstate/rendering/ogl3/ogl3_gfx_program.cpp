@@ -1,28 +1,17 @@
-#include "../memory/memory.h"
-
-#include "gfx_program.h"
-#include "texture2d.h"
-#include "vertex_buffer.h"
-#include "index_buffer.h"
-#include "render_system.h"
-#include "render_target_2d.h"
-#include "../resources/exception/load_resource_exception.h"
-#include "components/float_gfx_program_component.h"
-#include "components/int_gfx_program_component.h"
-#include "components/matrix_gfx_program_component.h"
-#include "components/sampler2d_gfx_program_component.h"
-
-#include <algorithm>
-#include <hash_map>
-#include <cassert>
-
+#include "../../memory/memory.h"
+#include "ogl3_gfx_program.h"
+#include "../components/float_gfx_program_component.h"
+#include "../components/int_gfx_program_component.h"
+#include "../components/matrix_gfx_program_component.h"
+#include "../components/sampler2d_gfx_program_component.h"
+#include "ogl3_render_system.h"
 using namespace playstate;
 
 namespace {
-	GfxProgram* _current_program = 0;
+	OGL3GfxProgram* _current_program = 0;
 }
 
-GfxProgram::GfxProgram(IRenderSystem& renderSystem)
+OGL3GfxProgram::OGL3GfxProgram(IRenderSystem& renderSystem)
 	: mProgramId(0), mApplied(false),
 	mDepthTest(true), mDepthFunc(DepthFunc::Default),
 	mBlend(false), mSrcFactor(SrcFactor::Default), mDestFactor(DestFactor::Default), 
@@ -33,7 +22,7 @@ GfxProgram::GfxProgram(IRenderSystem& renderSystem)
 	memset(mRenderTargets, 0, sizeof(mRenderTargets));
 }
 
-GfxProgram::GfxProgram(GLuint programId, IRenderSystem& renderSystem, const ScriptCollection& collection) 
+OGL3GfxProgram::OGL3GfxProgram(GLuint programId, IRenderSystem& renderSystem, const ScriptCollection& collection) 
 	:  mProgramId(programId), mApplied(false),
 	mDepthTest(true), mDepthFunc(DepthFunc::Default),
 	mBlend(false), mSrcFactor(SrcFactor::Default), mDestFactor(DestFactor::Default), 
@@ -45,7 +34,7 @@ GfxProgram::GfxProgram(GLuint programId, IRenderSystem& renderSystem, const Scri
 	Prepare(collection);
 }
 
-GfxProgram::~GfxProgram()
+OGL3GfxProgram::~OGL3GfxProgram()
 {
 	ComponentMap::iterator it = mComponents.begin();
 	ComponentMap::const_iterator end = mComponents.end();
@@ -66,35 +55,7 @@ GfxProgram::~GfxProgram()
 	}
 }
 
-void GfxProgram::Apply()
-{
-	if(_current_program != NULL) {
-		_current_program->mApplied = false;
-	}
-	mApplied = true;
-	_current_program = this;
-
-	StatePolicyGuard::UseProgram(mProgramId);
-	StatePolicyGuard::EnableBlend(mBlend);
-	StatePolicyGuard::SetCullFaces(mCullFaces);
-	StatePolicyGuard::EnableDepthTest(mDepthTest);
-	if(mBlend)
-		StatePolicyGuard::SetBlendFunc(mSrcFactor, mDestFactor);
-	StatePolicyGuard::SetDepthFunc(mDepthFunc);
-	StatePolicyGuard::EnableScissorTest(mScissorTest);
-	StatePolicyGuard::SetScissorRect(mScissorRect);
-	
-	for(int i = 0; i < MaxDrawBuffers; ++i) {
-		mRenderSystem.SetRenderTarget(mRenderTargets[i], i);
-	}
-	mRenderSystem.SetDepthRenderTarget(mDepthRenderTarget);
-	mRenderSystem.ApplyRenderTargets();
-	mApplyRenderTarget = false;
-
-	ApplyComponents();
-}
-
-void GfxProgram::MarkAsDirty()
+void OGL3GfxProgram::MarkAsDirty()
 {
 	ComponentMap::iterator it = mComponents.begin();
 	ComponentMap::const_iterator end = mComponents.end();
@@ -105,26 +66,7 @@ void GfxProgram::MarkAsDirty()
 	mApplied = false;
 }
 
-void GfxProgram::Clear(uint32 clearBits)
-{
-	GLenum clear = 0;
-	if(BIT_ISSET(clearBits, ClearTypes::COLOR)) {
-		clear = GL_COLOR_BUFFER_BIT;
-	}
-
-	if(BIT_ISSET(clearBits, ClearTypes::DEPTH)) {
-		clear |= GL_DEPTH_BUFFER_BIT;
-	}
-
-	StatePolicyGuard::SetClearDepth(mClearDepth);
-	StatePolicyGuard::SetClearColor(mClearColor);
-
-	if(clear != 0) {
-		glClear(clear);
-	}
-}
-
-void GfxProgram::Prepare(const ScriptCollection& collection)
+void OGL3GfxProgram::Prepare(const ScriptCollection& collection)
 {
 	GLint numUniforms = 0;
 	glGetProgramiv(mProgramId, GL_ACTIVE_UNIFORMS, &numUniforms);
@@ -177,7 +119,7 @@ void GfxProgram::Prepare(const ScriptCollection& collection)
 	}
 }
 
-void GfxProgram::ApplyComponents()
+void OGL3GfxProgram::ApplyComponents()
 {
 	ComponentMap::iterator it = mComponents.begin();
 	ComponentMap::const_iterator end = mComponents.end();
@@ -186,12 +128,59 @@ void GfxProgram::ApplyComponents()
 	}
 }
 
-IGfxProgramComponent* GfxProgram::FindComponent(const char* name)
+void OGL3GfxProgram::Apply()
+{
+	if(_current_program != NULL) {
+		_current_program->mApplied = false;
+	}
+	mApplied = true;
+	_current_program = this;
+
+	StatePolicyGuard::UseProgram(mProgramId);
+	StatePolicyGuard::EnableBlend(mBlend);
+	StatePolicyGuard::SetCullFaces(mCullFaces);
+	StatePolicyGuard::EnableDepthTest(mDepthTest);
+	if(mBlend)
+		StatePolicyGuard::SetBlendFunc(mSrcFactor, mDestFactor);
+	StatePolicyGuard::SetDepthFunc(mDepthFunc);
+	StatePolicyGuard::EnableScissorTest(mScissorTest);
+	StatePolicyGuard::SetScissorRect(mScissorRect);
+	
+	for(int i = 0; i < MaxDrawBuffers; ++i) {
+		mRenderSystem.SetRenderTarget(mRenderTargets[i], i);
+	}
+	mRenderSystem.SetDepthRenderTarget(mDepthRenderTarget);
+	mRenderSystem.ApplyRenderTargets();
+	mApplyRenderTarget = false;
+
+	ApplyComponents();
+}
+
+void OGL3GfxProgram::Clear(uint32 clearBits)
+{
+	GLenum clear = 0;
+	if(BIT_ISSET(clearBits, ClearTypes::COLOR)) {
+		clear = GL_COLOR_BUFFER_BIT;
+	}
+
+	if(BIT_ISSET(clearBits, ClearTypes::DEPTH)) {
+		clear |= GL_DEPTH_BUFFER_BIT;
+	}
+
+	StatePolicyGuard::SetClearDepth(mClearDepth);
+	StatePolicyGuard::SetClearColor(mClearColor);
+
+	if(clear != 0) {
+		glClear(clear);
+	}
+}
+
+IGfxProgramComponent* OGL3GfxProgram::FindComponent(const char* name)
 {
 	return FindComponent(playstate::string(name));
 }
 
-IGfxProgramComponent* GfxProgram::FindComponent(const playstate::string& name)
+IGfxProgramComponent* OGL3GfxProgram::FindComponent(const playstate::string& name)
 {
 	IGfxProgramComponent* component = NULL;
 	ComponentMap::iterator it = mComponents.find(name);
@@ -201,17 +190,17 @@ IGfxProgramComponent* GfxProgram::FindComponent(const playstate::string& name)
 	return it->second;
 }
 
-void GfxProgram::Render(VertexBuffer* buffer)
+void OGL3GfxProgram::Render(VertexBuffer* buffer)
 {
 	Render(buffer, NULL, 0);
 }
 
-void GfxProgram::Render(VertexBuffer* buffer, IndexBuffer* indexBuffer)
+void OGL3GfxProgram::Render(VertexBuffer* buffer, IndexBuffer* indexBuffer)
 {
 	Render(buffer, indexBuffer, 0);
 }
 
-void GfxProgram::Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint32 startElement)
+void OGL3GfxProgram::Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint32 startElement)
 {
 	assert(_current_program == this && "You are trying to render a vertex and/or index buffer on a non-bound gfx program");
 	assert_not_null(buffer);
@@ -227,7 +216,7 @@ void GfxProgram::Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint32 s
 	//assert(err == GL_NO_ERROR);
 }
 
-void GfxProgram::Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint32 startElement, uint32 numElements)
+void OGL3GfxProgram::Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint32 startElement, uint32 numElements)
 {
 	assert(_current_program == this && "You are trying to render a vertex and/or index buffer on a non-bound gfx program");
 	assert_not_null(buffer);
@@ -244,7 +233,7 @@ void GfxProgram::Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint32 s
 	assert(err == GL_NO_ERROR);
 }
 
-void GfxProgram::ApplyBuffers(VertexBuffer* buffer, IndexBuffer* indexBuffer)
+void OGL3GfxProgram::ApplyBuffers(VertexBuffer* buffer, IndexBuffer* indexBuffer)
 {
 	if(mApplyRenderTarget) {
 		mApplyRenderTarget = false;
@@ -259,28 +248,28 @@ void GfxProgram::ApplyBuffers(VertexBuffer* buffer, IndexBuffer* indexBuffer)
 	assert(err == GL_NO_ERROR);
 }
 
-void GfxProgram::EnableDepthTest(bool enable)
+void OGL3GfxProgram::EnableDepthTest(bool enable)
 {
 	mDepthTest = enable;
 	if(mApplied)
 		StatePolicyGuard::EnableDepthTest(enable);
 }
 
-void GfxProgram::SetDepthFunc(DepthFunc::Enum depthFunc)
+void OGL3GfxProgram::SetDepthFunc(DepthFunc::Enum depthFunc)
 {
 	mDepthFunc = depthFunc;
 	if(mApplied)
 		StatePolicyGuard::SetDepthFunc(depthFunc);
 }
 
-void GfxProgram::EnableBlend(bool enable)
+void OGL3GfxProgram::EnableBlend(bool enable)
 {
 	mBlend = enable;
 	if(mApplied)
 		StatePolicyGuard::EnableBlend(enable);
 }
 
-void GfxProgram::SetBlendFunc(SrcFactor::Enum sfactor, DestFactor::Enum dfactor)
+void OGL3GfxProgram::SetBlendFunc(SrcFactor::Enum sfactor, DestFactor::Enum dfactor)
 {
 	mSrcFactor = sfactor;
 	mDestFactor = dfactor;
@@ -289,35 +278,35 @@ void GfxProgram::SetBlendFunc(SrcFactor::Enum sfactor, DestFactor::Enum dfactor)
 		StatePolicyGuard::SetBlendFunc(sfactor, dfactor);
 }
 
-void GfxProgram::SetClearColor(const Color& color)
+void OGL3GfxProgram::SetClearColor(const Color& color)
 {
 	mClearColor = color;
 	if(mApplied)
 		StatePolicyGuard::SetClearColor(color);
 }
 
-void GfxProgram::SetCullFaces(CullFaces::Enum cullFaces)
+void OGL3GfxProgram::SetCullFaces(CullFaces::Enum cullFaces)
 {
 	mCullFaces = cullFaces;
 	if(mApplied)
 		StatePolicyGuard::SetCullFaces(cullFaces);
 }
 
-void GfxProgram::EnableScissorTest(bool enable)
+void OGL3GfxProgram::EnableScissorTest(bool enable)
 {
 	mScissorTest = enable;
 	if(mApplied)
 		StatePolicyGuard::EnableScissorTest(mScissorTest);
 }
 
-void GfxProgram::SetScissorRect(const Rect& rect)
+void OGL3GfxProgram::SetScissorRect(const Rect& rect)
 {
 	mScissorRect = rect;
 	if(mApplied)
 		StatePolicyGuard::SetScissorRect(mScissorRect);
 }
 
-void GfxProgram::SetDepthRenderTarget(RenderTarget2D* renderTarget)
+void OGL3GfxProgram::SetDepthRenderTarget(RenderTarget2D* renderTarget)
 {
 	mDepthRenderTarget = renderTarget;
 
@@ -327,7 +316,7 @@ void GfxProgram::SetDepthRenderTarget(RenderTarget2D* renderTarget)
 	}
 }
 
-void GfxProgram::SetRenderTarget(RenderTarget2D* renderTarget, uint32 index)
+void OGL3GfxProgram::SetRenderTarget(RenderTarget2D* renderTarget, uint32 index)
 {
 	assert(index < MaxDrawBuffers && "You are not allowed to use that many render targets at once");
 	mRenderTargets[index] = renderTarget;
@@ -336,9 +325,4 @@ void GfxProgram::SetRenderTarget(RenderTarget2D* renderTarget, uint32 index)
 		mApplyRenderTarget = true;
 		mRenderSystem.SetRenderTarget(renderTarget, index);
 	}
-}
-
-bool GfxProgram::IsApplied() const
-{
-	return mApplied;
 }

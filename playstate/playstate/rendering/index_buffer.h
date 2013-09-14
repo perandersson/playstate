@@ -6,22 +6,16 @@
 
 namespace playstate
 {
-	class StatePolicy;
-	class GfxProgram;
 	class VertexBuffer;
 
 	//
 	// 
 	class IndexBuffer
 	{
-		friend class StatePolicy;
-		friend class GfxProgram;
-
 	public:
 		IndexBuffer(GLuint indexBufferId, uint32 numElements);
 		~IndexBuffer();
 
-	private:
 		void Render(VertexBuffer* buffer) const;
 		void Render(VertexBuffer* buffer, uint32 firstElement) const;
 		void Render(VertexBuffer* buffer, uint32 firstElement, uint32 numElements) const;

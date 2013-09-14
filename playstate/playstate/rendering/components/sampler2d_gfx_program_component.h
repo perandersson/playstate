@@ -6,7 +6,7 @@
 
 namespace playstate
 {
-	class GfxProgram;
+	class OGL3GfxProgram;
 
 	class Sampler2DGfxProgramComponent : public DefaultGfxProgramComponent
 	{
@@ -17,7 +17,7 @@ namespace playstate
 		};
 
 	public:
-		Sampler2DGfxProgramComponent(GfxProgram& program, GLint componentId, uint32 activeTexture, MinFilter::Enum minFilter, MagFilter::Enum magFilter,
+		Sampler2DGfxProgramComponent(OGL3GfxProgram& program, GLint componentId, uint32 activeTexture, MinFilter::Enum minFilter, MagFilter::Enum magFilter,
 			TextureWrap::Enum ws, TextureWrap::Enum wt);
 		virtual ~Sampler2DGfxProgramComponent();
 
@@ -28,7 +28,7 @@ namespace playstate
 		virtual void MarkAsDirty();
 
 	private:
-		GfxProgram& mProgram;
+		OGL3GfxProgram& mProgram;
 		GLint mComponentId;
 		uint32 mDirty;
 

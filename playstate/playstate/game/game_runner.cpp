@@ -110,7 +110,7 @@ bool GameRunner::Initialize()
 	resourceManager.RegisterResourceType(new WavefrontResourceLoader(resourceManager, fileSystem, renderSystem), ".obj");
 	resourceManager.RegisterResourceType(new TrueTypeFontResourceLoader(fileSystem), ".ttf");
 	resourceManager.RegisterResourceType(new OpenALSoundEffectResourceLoader(fileSystem), ".wav");
-	resourceManager.RegisterResourceType(new MD5MeshResourceLoader(fileSystem, resourceManager, renderSystem), ".md5mesh");
+	//resourceManager.RegisterResourceType(new MD5MeshResourceLoader(fileSystem, resourceManager, renderSystem), ".md5mesh");
 
 	int32 width = mConfiguration->FindInt("window.width");
 	int32 height = mConfiguration->FindInt("window.height");

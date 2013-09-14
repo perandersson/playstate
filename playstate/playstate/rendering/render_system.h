@@ -12,7 +12,6 @@
 #include "../math/point.h"
 #include "exception/rendering_exception.h"
 #include "../version.h"
-#include "factories/gfx_program_factory.h"
 #include "datatypes/standard_vertex_buffer_types.h"
 
 #include <gl/glew.h>
@@ -32,7 +31,7 @@ namespace playstate
 		//		If the configuration flag: "graphics.developmentmode" = true then this method will 
 		//		return a default instance instead. (So that you can, while running the game, fix the problems with the shaders)
 		// @return
-		virtual GfxProgram* LoadGfxProgram(const playstate::string& fileName) = 0;
+		virtual IGfxProgram* LoadGfxProgram(const playstate::string& fileName) = 0;
 
 		//
 		// @return The shader-version on the current computer.

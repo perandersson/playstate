@@ -1,12 +1,12 @@
 #include "../../memory/memory.h"
 #include "int_gfx_program_component.h"
-#include "../gfx_program.h"
+#include "../ogl3/ogl3_gfx_program.h"
 
 #include <cassert>
 
 using namespace playstate;
 
-IntGfxProgramComponent::IntGfxProgramComponent(GfxProgram& program, GLint componentId, GLenum type)
+IntGfxProgramComponent::IntGfxProgramComponent(OGL3GfxProgram& program, GLint componentId, GLenum type)
 	: mProgram(program), mComponentId(componentId), mType(type), mCount(1)
 {
 	mValues[0] = 0;

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../types.h"
-#include "../linked_list.h"
 #include "../math/matrix4x4.h"
 #include "../math/rect.h"
 #include "gfx_program_component.h"
@@ -21,35 +20,19 @@ namespace playstate
 	
 	const uint32 MaxDrawBuffers = 6;
 
-	class GfxProgram
+	class IGfxProgram
 	{
-		typedef std::hash_map<playstate::string, IGfxProgramComponent*> ComponentMap;
-
 	public:
-		LinkedListLink<GfxProgram> Link;
-
-	public:
-		GfxProgram(IRenderSystem& renderSystem);
-		GfxProgram(GLuint programId, IRenderSystem& renderSystem, const ScriptCollection& collection);
-		~GfxProgram();
+		virtual ~IGfxProgram() {}
 
 		//
 		// Sets this graphics program as the active one the graphics card.
-		void Apply();
-
-		//
-		// Marks this graphics program as dirty. This is used by the game engine to re-bind all this program's resources and components.
-		// @remark It's not neccessary for you to do this by you're self. This is done by the game engine. This is usually done on a window- resize.
-		void MarkAsDirty();
-
-		//
-		// @return TRUE if this program is the one active on the graphics card; FALSE otherwise.
-		bool IsApplied() const;
+		virtual void Apply() = 0;
 
 		//
 		// Clear the view-port based on this programs assigned clear colors.
 		// @param clearBits
-		void Clear(uint32 clearBits);
+		virtual void Clear(uint32 clearBits) = 0;
 	
 		//
 		// Retrieves a component based on it's uniform variable name in one of the shaders.
@@ -57,21 +40,21 @@ namespace playstate
 		// @param name The name of the component
 		// @return The component if found; A pointer to an GfxProgramComponentNotFound instance (to prevent crashes and unneccessary null checks) if
 		//	no component is found.
-		IGfxProgramComponent* FindComponent(const char* name);
-		IGfxProgramComponent* FindComponent(const playstate::string& name);
+		virtual IGfxProgramComponent* FindComponent(const char* name) = 0;
+		virtual IGfxProgramComponent* FindComponent(const playstate::string& name) = 0;
 
 		//
 		// Draw the supplied buffer object using this graphics program.
 		//
 		// @param buffer
-		void Render(VertexBuffer* buffer);
+		virtual void Render(VertexBuffer* buffer) = 0;
 
 		//
 		// Draw the supplied buffer object using the supplied index buffer using this graphics program.
 		//
 		// @param buffer
 		// @param indexBuffer
-		void Render(VertexBuffer* buffer, IndexBuffer* indexBuffer);
+		virtual void Render(VertexBuffer* buffer, IndexBuffer* indexBuffer) = 0;
 		
 		//
 		// Draw the supplied buffer object using the supplied index buffer using this graphics program.
@@ -79,7 +62,7 @@ namespace playstate
 		// @param buffer The vertex buffer we want to draw. Cannot be {@code NULL}.
 		// @param indexBuffer The indices of the supplied buffer we want to draw. Can be {@code NULL}
 		// @param startIndex The index of the first vertex we want to draw
-		void Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint32 startIndex);
+		virtual void Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint32 startIndex) = 0;
 		
 		//
 		// Draw the supplied buffer object using the supplied index buffer using this graphics program.
@@ -88,25 +71,25 @@ namespace playstate
 		// @param indexBuffer The indices of the supplied buffer we want to draw. Can be {@code NULL}
 		// @param startIndex The index of the first vertex we want to draw
 		// @param numVertices how many vertices we want to draw
-		void Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint32 startIndex, uint32 numVertices);
+		virtual void Render(VertexBuffer* buffer, IndexBuffer* indexBuffer, uint32 startIndex, uint32 numVertices) = 0;
 
 		//
 		// Flags if this program should enable or disable Z-writing.
 		//
 		// @default true
 		// @param enable
-		void EnableDepthTest(bool enable);
+		virtual void EnableDepthTest(bool enable) = 0;
 
 		//
 		// Sets the depth function used by the shader during rendering
 		// @param depthFunc
-		void SetDepthFunc(DepthFunc::Enum depthFunc);
+		virtual void SetDepthFunc(DepthFunc::Enum depthFunc) = 0;
 
 		//
 		// Flags that this program should enable blending when render. Blending if disabled by default.
 		// If the program isnt used then you notify it to use it the next time it's applied
 		// @param enable
-		void EnableBlend(bool enable);
+		virtual void EnableBlend(bool enable) = 0;
 
 		//
 		// Glags that this program should use the supplied source blend function while render.
@@ -115,76 +98,41 @@ namespace playstate
 		// @default SrcFactor::ONE, DestFactor::ZERO
 		// @param sfactor
 		// @param dfactor.
-		void SetBlendFunc(SrcFactor::Enum sfactor, DestFactor::Enum dfactor);
+		virtual void SetBlendFunc(SrcFactor::Enum sfactor, DestFactor::Enum dfactor) = 0;
 
 		//
 		// Enable and set cull faces for the geometry drawn by this shader.
 		//
 		// @default CullFaces::CCW
 		// @param cullFaces
-		void SetCullFaces(CullFaces::Enum cullFaces);
+		virtual void SetCullFaces(CullFaces::Enum cullFaces) = 0;
 
 		//
 		// Sets the color this shader should use then clearing the screen.
 		//
 		// @default [0, 0, 0, 0]
 		// @param color
-		void SetClearColor(const Color& color);
+		virtual void SetClearColor(const Color& color) = 0;
 		
 		//
 		// Enables/Disables sicssor test.
 		//
 		// @param enable
-		void EnableScissorTest(bool enable);
+		virtual void EnableScissorTest(bool enable) = 0;
 
 		//
 		// Set
-		void SetScissorRect(const Rect& rect);
+		virtual void SetScissorRect(const Rect& rect) = 0;
 
 		//
 		// Enables rendering to the supplied render target.
 		// @param renderTarget
-		void SetDepthRenderTarget(RenderTarget2D* renderTarget);
+		virtual void SetDepthRenderTarget(RenderTarget2D* renderTarget) = 0;
 
 		//
 		// Enables rendering to the supplied render target at the supplied index value.
 		// @param renderTarget
 		// @param index
-		void SetRenderTarget(RenderTarget2D* renderTarget, uint32 index);
-
-	private:
-		void ApplyComponents();
-		void ApplyBuffers(VertexBuffer* buffer, IndexBuffer* indexBuffer);
-		void Prepare(const ScriptCollection& collection);
-
-	private:
-		IRenderSystem& mRenderSystem;
-		
-		GLuint mProgramId;
-
-		ComponentMap mComponents;
-		GfxProgramComponentNotFound mComponentNotFound;
-		bool mApplied;
-
-	// States
-	private:
-		bool mDepthTest;
-		DepthFunc::Enum mDepthFunc;
-
-		bool mBlend;
-		SrcFactor::Enum mSrcFactor; 
-		DestFactor::Enum mDestFactor;
-
-		Color mClearColor;
-		float32 mClearDepth;
-
-		CullFaces::Enum mCullFaces;
-
-		bool mScissorTest;
-		Rect mScissorRect;
-
-		RenderTarget2D* mDepthRenderTarget;
-		RenderTarget2D* mRenderTargets[MaxDrawBuffers];
-		bool mApplyRenderTarget;
+		virtual void SetRenderTarget(RenderTarget2D* renderTarget, uint32 index) = 0;
 	};
 }

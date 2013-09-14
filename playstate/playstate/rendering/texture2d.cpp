@@ -3,6 +3,7 @@
 #include "render_system.h"
 #include "../filesystem/file_system.h"
 #include "../resources/resource_manager.h"
+#include "../script/luam.h"
 #include <FreeImage.h>
 using namespace playstate;
 

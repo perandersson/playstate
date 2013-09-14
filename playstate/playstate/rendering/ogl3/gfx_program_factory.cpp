@@ -1,7 +1,8 @@
 ﻿#include "../../memory/memory.h"
 #include "gfx_program_factory.h"
-#include "../gfx_program.h"
+#include "../ogl3/ogl3_gfx_program.h"
 #include "../exception/gfx_program_exception.h"
+#include "../../script/script_system.h"
 using namespace playstate;
 
 GfxProgramFactory::GfxProgramFactory(IRenderSystem& renderSystem, ScriptSystem& scriptSystem)
@@ -13,7 +14,7 @@ GfxProgramFactory::~GfxProgramFactory()
 {
 }
 
-GfxProgram* GfxProgramFactory::Create(const playstate::string& fileName)
+OGL3GfxProgram* GfxProgramFactory::Create(const playstate::string& fileName)
 {
 	std::auto_ptr<Script> script = mScriptSystem.CompileFile(fileName);
 	ScriptCollection c = script->ReadCollection();
@@ -115,7 +116,7 @@ GfxProgram* GfxProgramFactory::Create(const playstate::string& fileName)
 
 	// Load all attributes
 
-	GfxProgram* g = new GfxProgram(program, mRenderSystem, c);
+	OGL3GfxProgram* g = new OGL3GfxProgram(program, mRenderSystem, c);
 	
 	bool blend = c.FindBool("Blend", false);
 	bool depthTest = c.FindBool("DepthTest", true);

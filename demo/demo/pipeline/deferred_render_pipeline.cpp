@@ -21,26 +21,26 @@ DeferredRenderPipeline::DeferredRenderPipeline(IRenderSystem& renderSystem, IWin
 	mDepthRenderTarget = mRenderSystem.CreateRenderTarget2D(windowSize, TextureFormat::DEPTH24);
 	mLightRenderTarget = mRenderSystem.CreateRenderTarget2D(windowSize, TextureFormat::RGBA);
 
-	mDeferredShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(playstate::string("/demo/effects/deferred/deferred.lua")));
+	mDeferredShader = std::auto_ptr<IGfxProgram>(mRenderSystem.LoadGfxProgram(playstate::string("/demo/effects/deferred/deferred.lua")));
 	mDeferredShader->SetRenderTarget(mDiffuseRenderTarget, 0);
 	mDeferredShader->SetRenderTarget(mPositionsRenderTarget, 1);
 	mDeferredShader->SetRenderTarget(mNormalsRenderTarget, 2);
 	mDeferredShader->SetDepthRenderTarget(mDepthRenderTarget);
 	
 	mPointLightTexture = resourceManager.GetResource<Texture2D>("/demo/effects/deferred/light.png");
-	mPointLightShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(playstate::string("/demo/effects/deferred/deferred_point_light.lua")));
+	mPointLightShader = std::auto_ptr<IGfxProgram>(mRenderSystem.LoadGfxProgram(playstate::string("/demo/effects/deferred/deferred_point_light.lua")));
 	mPointLightShader->FindComponent("DiffuseTexture")->SetTexture(mDiffuseRenderTarget);
 	mPointLightShader->FindComponent("PositionsTexture")->SetTexture(mPositionsRenderTarget);
 	mPointLightShader->FindComponent("NormalsTexture")->SetTexture(mNormalsRenderTarget);
 	mPointLightShader->SetRenderTarget(mLightRenderTarget, 0);
 	
-	mTexturedShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(playstate::string("/demo/effects/deferred/deferred_result.lua")));
+	mTexturedShader = std::auto_ptr<IGfxProgram>(mRenderSystem.LoadGfxProgram(playstate::string("/demo/effects/deferred/deferred_result.lua")));
 	mTexturedShader->FindComponent("DiffuseTexture")->SetTexture(mDiffuseRenderTarget);
 	mTexturedShader->FindComponent("PositionsTexture")->SetTexture(mPositionsRenderTarget);
 	mTexturedShader->FindComponent("NormalsTexture")->SetTexture(mNormalsRenderTarget);
 	mTexturedShader->FindComponent("LightTexture")->SetTexture(mLightRenderTarget);
 
-	mUserInterfaceShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(playstate::string("/demo/effects/gui/gui.lua")));
+	mUserInterfaceShader = std::auto_ptr<IGfxProgram>(mRenderSystem.LoadGfxProgram(playstate::string("/demo/effects/gui/gui.lua")));
 	mUserInterfaceShader->EnableScissorTest(true);
 	mUserInterfaceShader->SetScissorRect(Rect(0, 0, windowSize.X, windowSize.Y));
 	mWhiteTexture = resourceManager.GetResource<Texture2D>("/engine/textures/white.png");
@@ -123,7 +123,7 @@ void DeferredRenderPipeline::DrawGeometry(Scene& scene, const Camera& camera)
 		IGfxProgramComponent* diffuseColor = mDeferredShader->FindComponent("DiffuseColor");
 		
 		// Draw scene objects
-		GfxProgram* deferredShader = mDeferredShader.get();
+		IGfxProgram* deferredShader = mDeferredShader.get();
 		uint32 size = mRenderBlockResultSet.GetSize();
 		RenderBlock** blocks = mRenderBlockResultSet.GetRenderBlocks();
 		for(uint32 index = 0; index < size; ++index) {
@@ -248,25 +248,25 @@ void DeferredRenderPipeline::FileChanged(const IFile& file, FileChangeAction::En
 	// Update shaders when changing file
 
 	if(file.GetPath() == deferred) {
-		mDeferredShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(deferred));
+		mDeferredShader = std::auto_ptr<IGfxProgram>(mRenderSystem.LoadGfxProgram(deferred));
 		mDeferredShader->SetRenderTarget(mDiffuseRenderTarget, 0);
 		mDeferredShader->SetRenderTarget(mPositionsRenderTarget, 1);
 		mDeferredShader->SetRenderTarget(mNormalsRenderTarget, 2);
 		mDeferredShader->SetDepthRenderTarget(mDepthRenderTarget);
 	} else if(file.GetPath() == deferred_point_light) {
-		mPointLightShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(deferred_point_light));
+		mPointLightShader = std::auto_ptr<IGfxProgram>(mRenderSystem.LoadGfxProgram(deferred_point_light));
 		mPointLightShader->FindComponent("DiffuseTexture")->SetTexture(mDiffuseRenderTarget);
 		mPointLightShader->FindComponent("PositionsTexture")->SetTexture(mPositionsRenderTarget);
 		mPointLightShader->FindComponent("NormalsTexture")->SetTexture(mNormalsRenderTarget);
 		mPointLightShader->SetRenderTarget(mLightRenderTarget, 0);
 	} else if(file.GetPath() == deferred_result) {
-		mTexturedShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(deferred_result));
+		mTexturedShader = std::auto_ptr<IGfxProgram>(mRenderSystem.LoadGfxProgram(deferred_result));
 		mTexturedShader->FindComponent("DiffuseTexture")->SetTexture(mDiffuseRenderTarget);
 		mTexturedShader->FindComponent("PositionsTexture")->SetTexture(mPositionsRenderTarget);
 		mTexturedShader->FindComponent("NormalsTexture")->SetTexture(mNormalsRenderTarget);
 		mTexturedShader->FindComponent("LightTexture")->SetTexture(mLightRenderTarget);
 	} else if(file.GetPath() == gui) {
-		mUserInterfaceShader = std::auto_ptr<GfxProgram>(mRenderSystem.LoadGfxProgram(gui));
+		mUserInterfaceShader = std::auto_ptr<IGfxProgram>(mRenderSystem.LoadGfxProgram(gui));
 	}
 }
 

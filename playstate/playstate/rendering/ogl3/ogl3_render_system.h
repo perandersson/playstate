@@ -5,6 +5,8 @@
 #include "../../window/window_resized_listener.h"
 #include "../../window/window.h"
 #include "../../script/script_system.h"
+#include "ogl3_gfx_program.h"
+#include "gfx_program_factory.h"
 
 namespace playstate
 {
@@ -16,7 +18,7 @@ namespace playstate
 
 	// RenderSystem
 	public:
-		virtual GfxProgram* LoadGfxProgram(const playstate::string& fileName);
+		virtual IGfxProgram* LoadGfxProgram(const playstate::string& fileName);
 		virtual const Version& GetShaderVersion() const;
 		virtual VertexBuffer* GetUniformVertexBuffer() const;
 		virtual IndexBuffer* CreateStaticBuffer(const uint32* indices, uint32 numIndices);		
@@ -52,7 +54,7 @@ namespace playstate
 		Rect mScreenViewport;
 
 		GfxProgramFactory* mProgramFactory;
-		LinkedList<GfxProgram> mGfxPrograms;
+		LinkedList<OGL3GfxProgram> mGfxPrograms;
 
 		GLuint mFrameBufferId;
 		RenderTarget2D* mRenderTargets[MaxDrawBuffers];

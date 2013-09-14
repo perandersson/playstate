@@ -1,13 +1,13 @@
 #include "../../memory/memory.h"
 #include "sampler2d_gfx_program_component.h"
 #include "../texture2d.h"
-#include "../gfx_program.h"
+#include "../ogl3/ogl3_gfx_program.h"
 
 #include <cassert>
 
 using namespace playstate;
 
-Sampler2DGfxProgramComponent::Sampler2DGfxProgramComponent(GfxProgram& program, GLint componentId, uint32 activeTexture, MinFilter::Enum minFilter, MagFilter::Enum magFilter,
+Sampler2DGfxProgramComponent::Sampler2DGfxProgramComponent(OGL3GfxProgram& program, GLint componentId, uint32 activeTexture, MinFilter::Enum minFilter, MagFilter::Enum magFilter,
 	TextureWrap::Enum ws, TextureWrap::Enum wt) : mProgram(program), mComponentId(componentId), mDirty(UNIFORM_BIT), mActiveTexture(activeTexture), mTexture(NULL),
 	mMinFilter(minFilter), mMagFilter(magFilter), mWS(ws), mWT(wt)
 {

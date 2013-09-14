@@ -10,16 +10,10 @@
 
 namespace playstate
 {
-	class StatePolicy;
-	class GfxProgram;
-
 	//
 	// Container for a vertex buffer.
 	class VertexBuffer
 	{
-		friend class StatePolicy;
-		friend class GfxProgram;
-
 	public:
 		VertexBuffer(GLenum primitiveType, const IVertexArrayObjectFactory& factory, GLuint bufferID, uint32 numVertices, uint32 vertexSize);
 		~VertexBuffer();
@@ -36,7 +30,6 @@ namespace playstate
 			return mPrimitiveType;
 		}
 
-	private:
 		void Bind();
 		void Render() const;
 		void Render(uint32 startIndex) const;

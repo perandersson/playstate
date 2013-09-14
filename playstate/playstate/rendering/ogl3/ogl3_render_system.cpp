@@ -1,6 +1,7 @@
 #include "../../memory/memory.h"
 #include "../../game/configuration.h"
 #include "ogl3_render_system.h"
+#include "ogl3_gfx_program.h"
 using namespace playstate;
 
 namespace {
@@ -13,7 +14,7 @@ OGL3RenderSystem::OGL3RenderSystem(IWindow& window, ScriptSystem& scriptSystem)
 	: IRenderSystem(),
 	mWindow(window), mProgramFactory(NULL), 
 	mUniformVertexBuffer(NULL), 
-	mFrameBufferId(0), mDepthRenderTarget(NULL), mGfxPrograms(offsetof(GfxProgram, Link))
+	mFrameBufferId(0), mDepthRenderTarget(NULL), mGfxPrograms(offsetof(OGL3GfxProgram, Link))
 {
 	memset(mRenderTargets, 0, sizeof(mRenderTargets));
 	mProgramFactory = new GfxProgramFactory(*this, scriptSystem);
@@ -92,16 +93,16 @@ Version OGL3RenderSystem::getVersion(GLenum name) const
 	return Version(major, minor);
 }
 
-GfxProgram* OGL3RenderSystem::LoadGfxProgram(const playstate::string& fileName)
+IGfxProgram* OGL3RenderSystem::LoadGfxProgram(const playstate::string& fileName)
 {
-	GfxProgram* program = NULL;
+	OGL3GfxProgram* program = NULL;
 	try {
 		program = mProgramFactory->Create(fileName);
 	} catch(Exception& e) {
 		bool developmentMode = IConfiguration::Get().FindBool("graphics.developmentmode", true);
 		if(developmentMode) {
 			ILogger::Get().Error("Could not compile graphics program: '%s'. Reason: '%s'", fileName.c_str(), e.GetMessage().c_str());
-			program = new GfxProgram(*this);
+			program = new OGL3GfxProgram(*this);
 		} else {
 			throw e;
 		}
@@ -120,7 +121,7 @@ void OGL3RenderSystem::OnWindowResized(const Point& newSize)
 	StatePolicyGuard::MarkAsDirty();
 
 	// Mark gfx programs as dirty
-	GfxProgram* program = mGfxPrograms.First();
+	OGL3GfxProgram* program = mGfxPrograms.First();
 	while(program != NULL) {
 		program->MarkAsDirty();
 		program = program->Link.Tail;

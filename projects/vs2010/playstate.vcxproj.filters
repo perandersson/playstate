@@ -51,9 +51,6 @@
     <Filter Include="Source Files\rendering\state">
       <UniqueIdentifier>{558ba079-8c8d-4699-a1e6-18dc8f3d0253}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\rendering\factories">
-      <UniqueIdentifier>{2052c7f2-46c2-4d26-a63d-9a7b1bf98e23}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\rendering\exception">
       <UniqueIdentifier>{77517685-692f-4f80-b390-94871dd6c1f5}</UniqueIdentifier>
     </Filter>
@@ -209,9 +206,6 @@
     <ClCompile Include="..\..\playstate\playstate\processor\updatable.cpp">
       <Filter>Source Files\processor</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\rendering\gfx_program.cpp">
-      <Filter>Source Files\rendering</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\rendering\index_buffer.cpp">
       <Filter>Source Files\rendering</Filter>
     </ClCompile>
@@ -229,9 +223,6 @@
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\rendering\state\state_policy.cpp">
       <Filter>Source Files\rendering\state</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\rendering\factories\gfx_program_factory.cpp">
-      <Filter>Source Files\rendering\factories</Filter>
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\rendering\exception\gfx_program_exception.cpp">
       <Filter>Source Files\rendering\exception</Filter>
@@ -470,6 +461,12 @@
     <ClCompile Include="..\..\playstate\playstate\processor\processors\linked_list_render_processor.cpp">
       <Filter>Source Files\processor\processors</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\rendering\ogl3\ogl3_gfx_program.cpp">
+      <Filter>Source Files\rendering\ogl3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\rendering\ogl3\gfx_program_factory.cpp">
+      <Filter>Source Files\rendering\ogl3</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\playstate\playstate\camera\camera.h">
@@ -591,9 +588,6 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\rendering\state\state_policy.h">
       <Filter>Source Files\rendering\state</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\rendering\factories\gfx_program_factory.h">
-      <Filter>Source Files\rendering\factories</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\rendering\exception\gfx_program_exception.h">
       <Filter>Source Files\rendering\exception</Filter>
@@ -924,6 +918,12 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\processor\processors\linked_list_render_processor.h">
       <Filter>Source Files\processor\processors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\ogl3\ogl3_gfx_program.h">
+      <Filter>Source Files\rendering\ogl3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\ogl3\gfx_program_factory.h">
+      <Filter>Source Files\rendering\ogl3</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
