@@ -125,7 +125,7 @@ void WavefrontResourceLoader::LoadMaterials(IFile& file, Materials& materials) c
 			playstate::string ambientTexture;
 			std::getline(dataStream, ambientTexture);
 			if(ambientTexture.length() > 0) {
-				currentMaterial->AmbientTexture = mResourceManager.GetResource<Texture2D>(ambientTexture);
+				currentMaterial->AmbientTexture = mResourceManager.GetResource<ITexture2D>(ambientTexture);
 			}
 			continue;
 		} else if(word == "map_Kd") {
@@ -137,42 +137,42 @@ void WavefrontResourceLoader::LoadMaterials(IFile& file, Materials& materials) c
 				if(textureFile->Exists()) {
 					path = textureFile->GetPath();
 				}
-				currentMaterial->DiffuseTexture = mResourceManager.GetResource<Texture2D>(path);
+				currentMaterial->DiffuseTexture = mResourceManager.GetResource<ITexture2D>(path);
 			}
 			continue;
 		} else if(word == "map_Ks") {
 			playstate::string specularTexture;
 			dataStream >> specularTexture;
 			if(specularTexture.length() > 0) {
-				currentMaterial->SpecularTexture = mResourceManager.GetResource<Texture2D>(specularTexture);
+				currentMaterial->SpecularTexture = mResourceManager.GetResource<ITexture2D>(specularTexture);
 			}
 			continue;
 		} else if(word == "map_Ns") {
 			playstate::string specularHighlightTexture;
 			std::getline(dataStream, specularHighlightTexture);
 			if(specularHighlightTexture.length() > 0) {
-				currentMaterial->SpecularHighlightTexture = mResourceManager.GetResource<Texture2D>(specularHighlightTexture);
+				currentMaterial->SpecularHighlightTexture = mResourceManager.GetResource<ITexture2D>(specularHighlightTexture);
 			}
 			continue;
 		} else if((word == "map_d") || (word == "map_Tr")) {
 			playstate::string alphaTexture;
 			std::getline(dataStream, alphaTexture);
 			if(alphaTexture.length() > 0) {
-				currentMaterial->AlphaTexture = mResourceManager.GetResource<Texture2D>(alphaTexture);
+				currentMaterial->AlphaTexture = mResourceManager.GetResource<ITexture2D>(alphaTexture);
 			}
 			continue;
 		} else if(word == "bump") {
 			playstate::string bumpMap;
 			std::getline(dataStream, bumpMap);
 			if(bumpMap.length() > 0) {
-				currentMaterial->BumpMap = mResourceManager.GetResource<Texture2D>(bumpMap);
+				currentMaterial->BumpMap = mResourceManager.GetResource<ITexture2D>(bumpMap);
 			}
 			continue;
 		} else if(word == "disp") {
 			playstate::string displacementMap;
 			std::getline(dataStream, displacementMap);
 			if(displacementMap.length() > 0) {
-				currentMaterial->DisplacementMap = mResourceManager.GetResource<Texture2D>(displacementMap);
+				currentMaterial->DisplacementMap = mResourceManager.GetResource<ITexture2D>(displacementMap);
 			}
 			continue;
 		} else if(word == "decal") {

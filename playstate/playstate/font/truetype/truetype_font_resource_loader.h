@@ -2,6 +2,7 @@
 
 #include "../../resources/resource_loader.h"
 #include "../../filesystem/file_system.h"
+#include "../../rendering/render_system.h"
 
 #include <ft2build.h>
 #include <freetype/freetype.h>
@@ -12,7 +13,7 @@ namespace playstate
 	class TrueTypeFontResourceLoader : public IResourceLoader
 	{
 	public:
-		TrueTypeFontResourceLoader(IFileSystem& fileSystem);
+		TrueTypeFontResourceLoader(IFileSystem& fileSystem, IRenderSystem& renderSystem);
 		virtual ~TrueTypeFontResourceLoader();
 	
 	// IResourceLoader
@@ -27,6 +28,7 @@ namespace playstate
 
 	private:
 		IFileSystem& mFileSystem;
+		IRenderSystem& mRenderSystem;
 		FT_Library mLibrary;
 	};
 }

@@ -90,6 +90,14 @@ namespace playstate
 		virtual void SetRenderTarget(RenderTarget2D* renderTarget, GLenum attachmentIndex) = 0;
 
 		//
+		// Creates a texture based on the supplied data
+		// 
+		// @param size The size of the texture
+		// @param format The format of the texture
+		// @param bytes The actual raw texture data.
+		virtual ITexture2D* CreateTexture2D(const Size& size, TextureFormat::Enum format, const byte* bytes) = 0;
+
+		//
 		// Sets the depth render target
 		// @param renderTarget
 		virtual void SetDepthRenderTarget(RenderTarget2D* renderTarget) = 0;

@@ -47,8 +47,8 @@ private:
 	std::auto_ptr<IGfxProgram> mTexturedShader;
 	std::auto_ptr<IGfxProgram> mPointLightShader;
 	std::auto_ptr<IGfxProgram> mUserInterfaceShader;
-	Resource<Texture2D> mPointLightTexture;
-	Resource<Texture2D> mWhiteTexture;
+	Resource<ITexture2D> mPointLightTexture;
+	Resource<ITexture2D> mWhiteTexture;
 
 	RenderTarget2D* mDiffuseRenderTarget;
 	RenderTarget2D* mPositionsRenderTarget;

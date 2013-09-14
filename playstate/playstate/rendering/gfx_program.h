@@ -12,7 +12,7 @@
 
 namespace playstate
 {
-	class Texture2D;
+	class ITexture2D;
 	class IVertexBuffer;
 	class IIndexBuffer;
 	class RenderTarget2D;

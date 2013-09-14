@@ -11,7 +11,7 @@ namespace playstate
 	struct WidgetBuildingBlock
 	{
 		IVertexBuffer* IVertexBuffer;
-		Texture2D* Texture;
+		ITexture2D* Texture;
 		uint32 StartIndex;
 		uint32 NumVertices;
 	};
@@ -53,7 +53,7 @@ namespace playstate
 
 	private:
 		void AddQuad(const Vector2& position, const Vector2& size, const Color& topLeftColor, const Color& topRightColor,
-			const Color& bottomLeftColor, const Color& bottomRightColor, Texture2D* texture);
+			const Color& bottomLeftColor, const Color& bottomRightColor, ITexture2D* texture);
 
 		void BuildAndPushBuildingBlocks();
 		IVertexBuffer* PrepareIVertexBuffer();
@@ -66,7 +66,7 @@ namespace playstate
 
 		uint32 mStartIndex;
 		uint32 mNumVertices;
-		Texture2D* mCurrentTexture;
+		ITexture2D* mCurrentTexture;
 	};
 
 }

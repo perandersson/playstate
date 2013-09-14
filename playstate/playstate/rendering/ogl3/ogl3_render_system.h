@@ -34,6 +34,7 @@ namespace playstate
 		virtual RenderTarget2D* CreateRenderTarget2D(const Size& size, TextureFormat::Enum format);
 		virtual void SetRenderTarget(RenderTarget2D* renderTarget, GLenum attachmentIndex);
 		virtual void SetDepthRenderTarget(RenderTarget2D* renderTarget);
+		virtual ITexture2D* CreateTexture2D(const Size& size, TextureFormat::Enum format, const byte* bytes);
 		virtual void ApplyRenderTargets();
 
 	// IWindowResizedListener
@@ -45,6 +46,9 @@ namespace playstate
 		//
 		// @return The version of the type specified by the name parameter
 		Version getVersion(GLenum name) const;
+
+		GLenum GetFormat(TextureFormat::Enum format);
+		GLenum GetInternalFormat(TextureFormat::Enum format);
 
 	private:
 		IWindow& mWindow;

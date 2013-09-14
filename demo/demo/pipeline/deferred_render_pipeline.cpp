@@ -27,7 +27,7 @@ DeferredRenderPipeline::DeferredRenderPipeline(IRenderSystem& renderSystem, IWin
 	mDeferredShader->SetRenderTarget(mNormalsRenderTarget, 2);
 	mDeferredShader->SetDepthRenderTarget(mDepthRenderTarget);
 	
-	mPointLightTexture = resourceManager.GetResource<Texture2D>("/demo/effects/deferred/light.png");
+	mPointLightTexture = resourceManager.GetResource<ITexture2D>("/demo/effects/deferred/light.png");
 	mPointLightShader = std::auto_ptr<IGfxProgram>(mRenderSystem.LoadGfxProgram(playstate::string("/demo/effects/deferred/deferred_point_light.lua")));
 	mPointLightShader->FindComponent("DiffuseTexture")->SetTexture(mDiffuseRenderTarget);
 	mPointLightShader->FindComponent("PositionsTexture")->SetTexture(mPositionsRenderTarget);
@@ -43,7 +43,7 @@ DeferredRenderPipeline::DeferredRenderPipeline(IRenderSystem& renderSystem, IWin
 	mUserInterfaceShader = std::auto_ptr<IGfxProgram>(mRenderSystem.LoadGfxProgram(playstate::string("/demo/effects/gui/gui.lua")));
 	mUserInterfaceShader->EnableScissorTest(true);
 	mUserInterfaceShader->SetScissorRect(Rect(0, 0, windowSize.X, windowSize.Y));
-	mWhiteTexture = resourceManager.GetResource<Texture2D>("/engine/textures/white.png");
+	mWhiteTexture = resourceManager.GetResource<ITexture2D>("/engine/textures/white.png");
 
 	mFileSystem.AddFileChangedListener(playstate::string("/demo/effects/deferred/deferred.lua"), this);
 	mFileSystem.AddFileChangedListener(playstate::string("/demo/effects/deferred/deferred_point_light.lua"), this);

@@ -5,8 +5,8 @@
 #include "../../rendering/state/state_policy.h"
 using namespace playstate;
 
-TrueTypeFontResourceLoader::TrueTypeFontResourceLoader(IFileSystem& fileSystem)
-	: mFileSystem(fileSystem), mLibrary(NULL)
+TrueTypeFontResourceLoader::TrueTypeFontResourceLoader(IFileSystem& fileSystem, IRenderSystem& renderSystem)
+	: mFileSystem(fileSystem), mRenderSystem(renderSystem), mLibrary(NULL)
 {
 	if(FT_Init_FreeType(&mLibrary)) {
 		THROW_EXCEPTION(LoadResourceException, "Could not initialize freetype library");
@@ -89,20 +89,9 @@ ResourceObject* TrueTypeFontResourceLoader::Load(IFile& file)
 		FT_Done_Glyph(glyph);
 	}
 	FT_Done_Face(face);
-	
-	GLuint textureId = 0;	
-	glGenTextures(1, &textureId);
-	StatePolicyGuard::BindTexture(GL_TEXTURE_2D, textureId);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_R8, textureWidth, textureHeight, 0, GL_RED, GL_UNSIGNED_BYTE, bytes.Get());
 
-	GLenum err = glGetError();
-	if(err == GL_INVALID_ENUM) {
-		THROW_EXCEPTION(LoadResourceException, "Could not load TrueType font '%s'. \
-											   The OpenGL generated resource didn't have \
-											   valid 'target', 'format' or 'type' parameters", file.GetPath().c_str());
-	}
-
-	return new Font(textureId, Size(textureWidth, textureHeight), infoMap, px / 2.0f, face->height >> 6);
+	ITexture2D* texture = mRenderSystem.CreateTexture2D(Size(textureWidth, textureHeight), TextureFormat::R, bytes.Get());
+	return new Font(texture, infoMap, px / 2.0f, face->height >> 6);
 }
 
 void TrueTypeFontResourceLoader::CopyToBuffer(uint32 x, uint32 y, uint32 width, uint32 height, playstate::byte* target, const playstate::byte* src)

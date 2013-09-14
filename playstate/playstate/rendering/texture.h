@@ -19,6 +19,8 @@ namespace playstate
 			RGBA16,
 			RGB10_A2,
 			RGBA16F,
+			BGR,
+			BGRA,
 			DEPTH24,
 			DEPTH24_STENCIL8,
 		};

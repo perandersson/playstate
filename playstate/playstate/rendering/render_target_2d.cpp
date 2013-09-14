@@ -4,7 +4,7 @@
 using namespace playstate;
 
 RenderTarget2D::RenderTarget2D(GLuint textureId, const Size& size, TextureFormat::Enum format) 
-	: Texture2D(textureId, size, format)
+	: OGL3Texture2D(textureId, size, format)
 {
 }
 

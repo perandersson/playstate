@@ -42,38 +42,28 @@ ResourceObject* ImageResourceLoader::Load(IFile& file)
 	if((bits == 0) || (width == 0) || (height == 0)) {
 		return NULL;
 	}
-	
-	GLuint textureId = 0;	
-	glGenTextures(1, &textureId);
-	StatePolicy::BindTexture(GL_TEXTURE_2D, textureId);
-	GLint format = GL_BGR;
-	GLint internalFormat = GL_RGB;
-	GLint components = 3;
+
+	TextureFormat::Enum format = TextureFormat::BGR;
 	if(bpp == 32) {
-		format = GL_BGRA;
-		internalFormat = GL_RGBA;
-		components = 4;
+		format = TextureFormat::BGRA;
 	}
-	
-	// TODO Add support for 8-bit textures.
-	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, bits);
 
-	FreeImage_Unload(dib);
-	FreeImage_CloseMemory(hmem);
+	ITexture2D* texture = NULL;
+	try {
+		texture = mRenderSystem.CreateTexture2D(Size(width, height), format, bits);
+		
+		FreeImage_Unload(dib);
+		FreeImage_CloseMemory(hmem);
+	} catch(RenderingException& e) {
+		
+		FreeImage_Unload(dib);
+		FreeImage_CloseMemory(hmem);
 
-	glFlush();
-
-	GLenum error = glGetError();
-	if(error != GL_NO_ERROR) {
-		THROW_EXCEPTION(RenderingException, "Could not load texture: '%s'. Reason: %d", file.GetPath(), error);
+		THROW_EXCEPTION(RenderingException, "Could not load texture: '%s'. Reason: '%s'", 
+			file.GetPath(), e.GetMessage().c_str());
 	}
-	
-	TextureFormat::Enum textureFormat = TextureFormat::RGB;
-	if(internalFormat == GL_RGBA) {
-		textureFormat = TextureFormat::RGBA;
-	}
-	
-	return new Texture2D(textureId, Size(width, height), textureFormat);
+		
+	return texture;
 }
 
 ResourceObject* ImageResourceLoader::GetDefaultResource()
@@ -90,12 +80,4 @@ ResourceObject* ImageResourceLoader::GetDefaultResource()
 bool ImageResourceLoader::IsThreadable() const
 {
 	return true;
-}
-
-int playstate::Texture2D_Load(lua_State* L)
-{
-	playstate::string path = lua_tostring(L, -1); lua_pop(L, 1);
-	Resource<Texture2D> texture = IResourceManager::Get().GetResource<Texture2D>(path);
-	luaM_pushresource(L, texture.GetResourceData());
-	return 1;
 }

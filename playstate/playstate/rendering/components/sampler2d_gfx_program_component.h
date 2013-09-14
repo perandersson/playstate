@@ -7,6 +7,7 @@
 namespace playstate
 {
 	class OGL3GfxProgram;
+	class OGL3Texture2D;
 
 	class Sampler2DGfxProgramComponent : public DefaultGfxProgramComponent
 	{
@@ -24,7 +25,7 @@ namespace playstate
 	// IGfxProgramComponent
 	public:
 		virtual void Apply();
-		virtual void SetTexture(Texture2D* texture);
+		virtual void SetTexture(ITexture2D* texture);
 		virtual void MarkAsDirty();
 
 	private:
@@ -32,7 +33,7 @@ namespace playstate
 		GLint mComponentId;
 		uint32 mDirty;
 
-		Texture2D* mTexture;
+		OGL3Texture2D* mTexture;
 		GLuint mActiveTexture;
 
 		MinFilter::Enum mMinFilter;

@@ -46,11 +46,11 @@ void GfxProgramComponentNotFound::SetInt(int a, int b, int c, int d)
 {
 }
 
-void GfxProgramComponentNotFound::SetTexture(Texture2D* texture)
+void GfxProgramComponentNotFound::SetTexture(ITexture2D* texture)
 {
 }
 
-void GfxProgramComponentNotFound::SetTexture(Resource<Texture2D>& texture)
+void GfxProgramComponentNotFound::SetTexture(Resource<ITexture2D>& texture)
 {
 }
 

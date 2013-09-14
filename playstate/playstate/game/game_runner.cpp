@@ -109,7 +109,7 @@ bool GameRunner::Initialize()
 	// Register resource types
 	resourceManager.RegisterResourceType(new ImageResourceLoader(renderSystem, fileSystem), ".png");
 	resourceManager.RegisterResourceType(new WavefrontResourceLoader(resourceManager, fileSystem, renderSystem), ".obj");
-	resourceManager.RegisterResourceType(new TrueTypeFontResourceLoader(fileSystem), ".ttf");
+	resourceManager.RegisterResourceType(new TrueTypeFontResourceLoader(fileSystem, renderSystem), ".ttf");
 	resourceManager.RegisterResourceType(new OpenALSoundEffectResourceLoader(fileSystem), ".wav");
 	//resourceManager.RegisterResourceType(new MD5MeshResourceLoader(fileSystem, resourceManager, renderSystem), ".md5mesh");
 

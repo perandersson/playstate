@@ -2,6 +2,7 @@
 #include "sampler2d_gfx_program_component.h"
 #include "../texture2d.h"
 #include "../ogl3/ogl3_gfx_program.h"
+#include "../ogl3/ogl3_texture2d.h"
 
 #include <cassert>
 
@@ -33,17 +34,17 @@ void Sampler2DGfxProgramComponent::Apply()
 	mDirty = 0;
 }
 
-void Sampler2DGfxProgramComponent::SetTexture(Texture2D* texture)
+void Sampler2DGfxProgramComponent::SetTexture(ITexture2D* texture)
 {
 	if(texture == NULL) {
-		mTexture = texture;
+		mTexture = NULL;
 		return;
 	}
 
 	const uint32 prevTextureUUID = mTexture != NULL ? mTexture->GetUUID() : 0;
-	if(texture->GetUUID() != prevTextureUUID)
+	if(static_cast<OGL3Texture2D*>(texture)->GetUUID() != prevTextureUUID)
 		BIT_SET(mDirty, TEXTURE_BIT);
-	mTexture = texture;
+	mTexture = static_cast<OGL3Texture2D*>(texture);
 
 	if(mProgram.IsApplied())
 		Sampler2DGfxProgramComponent::Apply();

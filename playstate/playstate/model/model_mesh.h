@@ -11,13 +11,13 @@ namespace playstate
 	{
 		IVertexBuffer* Vertices;
 		IIndexBuffer* Indices;
-		Resource<Texture2D> DiffuseTexture;
-		Resource<Texture2D> AmbientTexture;
-		Resource<Texture2D> SpecularTexture;
-		Resource<Texture2D> SpecularHighlightTexture;
-		Resource<Texture2D> AlphaTexture;
-		Resource<Texture2D> BumpMapTexture;
-		Resource<Texture2D> DisplacementTexture;
+		Resource<ITexture2D> DiffuseTexture;
+		Resource<ITexture2D> AmbientTexture;
+		Resource<ITexture2D> SpecularTexture;
+		Resource<ITexture2D> SpecularHighlightTexture;
+		Resource<ITexture2D> AlphaTexture;
+		Resource<ITexture2D> BumpMapTexture;
+		Resource<ITexture2D> DisplacementTexture;
 		Color AmbientColor;
 		Color DiffuseColor;
 		Color SpecularColor;

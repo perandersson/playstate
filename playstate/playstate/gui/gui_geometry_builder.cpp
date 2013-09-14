@@ -38,7 +38,7 @@ void GuiGeometryBuilder::AddGradientQuad(const Vector2& position, const Vector2&
 }
 
 void GuiGeometryBuilder::AddQuad(const Vector2& position, const Vector2& size, const Color& topLeftColor, const Color& topRightColor,
-			const Color& bottomLeftColor, const Color& bottomRightColor, Texture2D* texture)
+			const Color& bottomLeftColor, const Color& bottomRightColor, ITexture2D* texture)
 {
 	if(mNumVertices > 0 && mCurrentTexture != texture) {
 		BuildAndPushBuildingBlocks();
@@ -90,10 +90,10 @@ void GuiGeometryBuilder::AddText(Font* font, const Vector2& position, const Colo
 
 void GuiGeometryBuilder::AddText(Font* font, const Vector2& position, const Color& color, const playstate::string& text, const Vector2& maxSize)
 {
-	if(mNumVertices > 0 && mCurrentTexture != font) {
+	if(mNumVertices > 0 && mCurrentTexture != font->GetTexture()) {
 		BuildAndPushBuildingBlocks();
 	}
-	mCurrentTexture = font;
+	mCurrentTexture = font->GetTexture();
 
 	Vector2 currentPos = position;
 	bool newline = false;

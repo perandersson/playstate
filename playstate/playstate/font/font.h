@@ -20,14 +20,21 @@ namespace playstate
 		Vector2 TopLeftTexCoord;
 	};
 
-	class Font : public Texture2D
+	class Font : public ResourceObject
 	{
 	public:
 		typedef std::hash_map<playstate::character, FontCharInfo*> FontCharInfoMap;
 
 	public:
-		Font(GLuint textureId, const Size& size, const FontCharInfoMap& infoMap, float32 spaceWidth, float32 lineHeight);
+		Font(ITexture2D* texture, const FontCharInfoMap& infoMap, float32 spaceWidth, float32 lineHeight);
 		virtual ~Font();
+
+		//
+		// @return The texture representation of this font
+		inline ITexture2D* GetTexture() const {
+			return mTexture;
+		}
+
 
 		//
 		// Calculates and returns the length of the supplied string
@@ -69,6 +76,7 @@ namespace playstate
 		}
 
 	private:
+		ITexture2D* mTexture;
 		FontCharInfoMap mInfo;
 		FontCharInfo mCharInfoNotFound;
 		float32 mSpaceWidth;

@@ -362,51 +362,109 @@ IVertexBuffer* OGL3RenderSystem::CreateDynamicBuffer(const void* vertices, uint3
 	return new OGL3VertexBuffer(PrimitiveType::Triangle, vertexDeclaration, bufferID, numVertices, vertexSize);
 }
 
-RenderTarget2D* OGL3RenderSystem::CreateRenderTarget2D(const Size& size, TextureFormat::Enum format)
+GLenum OGL3RenderSystem::GetFormat(TextureFormat::Enum format)
 {
-	assert(size.X > 0.0f && "You cannot create a render target with 0 width");
-	assert(size.Y > 0.0f && "You cannot create a render target with 0 height");
-
 	GLint _format = GL_RGBA;
-	GLint _internalFormat = GL_RGBA;
-	GLenum _minMag = GL_LINEAR;
-
 	switch(format)
 	{
 	case TextureFormat::RGB:
 		_format = GL_RGB;
-		_internalFormat = GL_RGB;
 		break;
 	case TextureFormat::RGBA:
 		break;
 	case TextureFormat::RGBA8:
 		_format = GL_RGBA;
-		_internalFormat = GL_RGBA8;
 		break;
 	case TextureFormat::RGBA12:
 		_format = GL_RGBA;
-		_internalFormat = GL_RGBA12;
 		break;
 	case TextureFormat::RGBA16:
 		_format = GL_RGBA;
-		_internalFormat = GL_RGBA16;
 		break;
 	case TextureFormat::RGB10_A2:
 		_format = GL_RGBA;
-		_internalFormat = GL_RGB10_A2;
 		break;
 	case TextureFormat::RGBA16F:
 		_format = GL_RGBA;
-		_internalFormat = GL_RGBA16F;
 		break;
 	case TextureFormat::DEPTH24:
 		_format = GL_DEPTH_COMPONENT;
-		_internalFormat = GL_DEPTH_COMPONENT24;
-		_minMag = GL_NEAREST;
 		break;
 	case TextureFormat::DEPTH24_STENCIL8:
 		_format = GL_DEPTH_STENCIL;
+		break;
+	case TextureFormat::R:
+		_format = GL_RED;
+		break;
+	case TextureFormat::BGR:
+		_format = GL_BGR;
+		break;
+	case TextureFormat::BGRA:
+		_format = GL_BGRA;
+		break;
+	}
+	return _format;
+}
+
+GLenum OGL3RenderSystem::GetInternalFormat(TextureFormat::Enum format)
+{
+	GLint _internalFormat = GL_RGBA;
+	switch(format)
+	{
+	case TextureFormat::RGB:
+		_internalFormat = GL_RGB;
+		break;
+	case TextureFormat::RGBA:
+		break;
+	case TextureFormat::RGBA8:
+		_internalFormat = GL_RGBA8;
+		break;
+	case TextureFormat::RGBA12:
+		_internalFormat = GL_RGBA12;
+		break;
+	case TextureFormat::RGBA16:
+		_internalFormat = GL_RGBA16;
+		break;
+	case TextureFormat::RGB10_A2:
+		_internalFormat = GL_RGB10_A2;
+		break;
+	case TextureFormat::RGBA16F:
+		_internalFormat = GL_RGBA16F;
+		break;
+	case TextureFormat::DEPTH24:
+		_internalFormat = GL_DEPTH_COMPONENT24;
+		break;
+	case TextureFormat::DEPTH24_STENCIL8:
 		_internalFormat = GL_DEPTH24_STENCIL8;
+		break;
+	case TextureFormat::R:
+		_internalFormat = GL_R8;
+		break;
+	case TextureFormat::BGR:
+		_internalFormat = GL_RGB;
+		break;
+	case TextureFormat::BGRA:
+		_internalFormat = GL_RGBA;
+		break;
+	}
+	return _internalFormat;
+}
+
+RenderTarget2D* OGL3RenderSystem::CreateRenderTarget2D(const Size& size, TextureFormat::Enum format)
+{
+	assert(size.X > 0.0f && "You cannot create a render target with 0 width");
+	assert(size.Y > 0.0f && "You cannot create a render target with 0 height");
+
+	GLenum _minMag = GL_LINEAR;
+	GLenum _format = GetFormat(format);
+	GLenum _internalFormat = GetInternalFormat(format);
+
+	switch(format)
+	{
+	case TextureFormat::DEPTH24:
+		_minMag = GL_NEAREST;
+		break;
+	case TextureFormat::DEPTH24_STENCIL8:
 		_minMag = GL_NEAREST;
 		break;
 	}
@@ -429,4 +487,24 @@ RenderTarget2D* OGL3RenderSystem::CreateRenderTarget2D(const Size& size, Texture
 	}
 
 	return new RenderTarget2D(textureId, size, format);
+}
+
+ITexture2D* OGL3RenderSystem::CreateTexture2D(const Size& size, TextureFormat::Enum format, const byte* bytes)
+{
+	GLenum _format = GetFormat(format);
+	GLenum _internalFormat = GetInternalFormat(format);
+
+	GLuint textureID = 0;	
+	glGenTextures(1, &textureID);
+	StatePolicyGuard::BindTexture(GL_TEXTURE_2D, textureID);
+	glTexImage2D(GL_TEXTURE_2D, 0, _internalFormat, size.Width, size.Height, 0, _format, GL_UNSIGNED_BYTE, bytes);
+	glFlush();
+
+	GLenum err = glGetError();
+	if(err == GL_INVALID_ENUM) {
+		THROW_EXCEPTION(RenderingException, "Could not create texture");
+	}
+
+	OGL3Texture2D* texture = new OGL3Texture2D(textureID, size, format);
+	return texture;
 }

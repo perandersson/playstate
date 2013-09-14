@@ -53,12 +53,12 @@ void DefaultGfxProgramComponent::SetInt(int32 a, int32 b, int32 c, int32 d)
 	assert(false && "Invalid component type");
 }
 
-void DefaultGfxProgramComponent::SetTexture(Texture2D* texture)
+void DefaultGfxProgramComponent::SetTexture(ITexture2D* texture)
 {
 	assert(false && "Invalid component type");
 }
 
-void DefaultGfxProgramComponent::SetTexture(Resource<Texture2D>& texture)
+void DefaultGfxProgramComponent::SetTexture(Resource<ITexture2D>& texture)
 {
 	SetTexture(texture.Get());
 }

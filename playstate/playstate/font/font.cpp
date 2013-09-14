@@ -3,9 +3,10 @@
 #include "../resources/resource_manager.h"
 using namespace playstate;
 
-Font::Font(GLuint textureId, const Size& size, const FontCharInfoMap& infoMap, float32 spaceWidth, float32 lineHeight) 
-	: Texture2D(textureId, size, TextureFormat::R), mInfo(infoMap), mSpaceWidth(spaceWidth), mLineHeight(lineHeight)
+Font::Font(ITexture2D* texture, const FontCharInfoMap& infoMap, float32 spaceWidth, float32 lineHeight) 
+	: mTexture(texture), mInfo(infoMap), mSpaceWidth(spaceWidth), mLineHeight(lineHeight)
 {
+	assert(texture != NULL && "You are not allowed to create a NULL texture font");
 }
 
 Font::~Font()
@@ -15,6 +16,9 @@ Font::~Font()
 	for(; it != end; ++it) {
 		delete it->second;
 	}
+
+	delete mTexture;
+	mTexture = NULL;
 }
 
 Vector2 Font::GetSizeOfString(const playstate::string& str) const

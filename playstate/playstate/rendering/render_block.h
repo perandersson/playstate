@@ -11,7 +11,7 @@ namespace playstate
 {
 	class IVertexBuffer;
 	class IIndexBuffer;
-	class Texture2D;
+	class ITexture2D;
 
 	//
 	// This block contains all the data neccessary for the pipeline
@@ -22,7 +22,7 @@ namespace playstate
 		IVertexBuffer* VertexBuffer;
 		IIndexBuffer* IndexBuffer;
 		Matrix4x4 ModelMatrix;
-		Texture2D* DiffuseTexture;
+		ITexture2D* DiffuseTexture;
 		Color DiffuseColor;
 		//Texture2D* AmbientTexture;
 		//Texture2D* SpecularTexture;

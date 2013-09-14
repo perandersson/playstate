@@ -1,15 +1,15 @@
-#include "../memory/memory.h"
-#include "texture2d.h"
-#include "state/state_policy.h"
+#include "../../memory/memory.h"
+#include "ogl3_texture2d.h"
+#include "../state/state_policy.h"
 using namespace playstate;
 
-Texture2D::Texture2D(GLuint textureID, const Size& size, TextureFormat::Enum format) 
+OGL3Texture2D::OGL3Texture2D(GLuint textureID, const Size& size, TextureFormat::Enum format) 
 	: mTextureID(textureID), mUUID(UUID::To32Bit()), mFormat(format), mSize(size),
 	mMinFilter(MinFilter::UNKNOWN), mMagFilter(MagFilter::UNKNOWN), mWS(TextureWrap::UNKNOWN), mWT(TextureWrap::UNKNOWN)
 {
 }
 
-Texture2D::~Texture2D()
+OGL3Texture2D::~OGL3Texture2D()
 {
 	if(mTextureID != 0) {
 		StatePolicyGuard::InvalidateTexture(mTextureID);
@@ -18,13 +18,13 @@ Texture2D::~Texture2D()
 	}
 }
 
-void Texture2D::Bind(uint32 activeTexture)
+void OGL3Texture2D::Bind(uint32 activeTexture)
 {
 	StatePolicyGuard::SetActiveTexture(activeTexture);
 	StatePolicyGuard::BindTexture(GL_TEXTURE_2D, mTextureID);
 }
 
-void Texture2D::UpdateFilters(MinFilter::Enum minFilter, MagFilter::Enum magFilter, TextureWrap::Enum ws, TextureWrap::Enum wt)
+void OGL3Texture2D::UpdateFilters(MinFilter::Enum minFilter, MagFilter::Enum magFilter, TextureWrap::Enum ws, TextureWrap::Enum wt)
 {
 	if(mMinFilter != minFilter) {
 		mMinFilter = minFilter;
@@ -47,7 +47,12 @@ void Texture2D::UpdateFilters(MinFilter::Enum minFilter, MagFilter::Enum magFilt
 	}
 }
 
-TextureFormat::Enum Texture2D::GetFormat() const
+TextureFormat::Enum OGL3Texture2D::GetFormat() const
 {
 	return mFormat;
+}
+
+const Size& OGL3Texture2D::GetSize() const
+{
+	return mSize;
 }

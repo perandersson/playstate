@@ -21,8 +21,8 @@ namespace playstate
 		virtual void SetInt(int32 a, int32 b, int32 c);
 		virtual void SetInt(int32 a, int32 b, int32 c, int32 d);
 		
-		virtual void SetTexture(Texture2D* texture);
-		virtual void SetTexture(Resource<Texture2D>& texture);
+		virtual void SetTexture(ITexture2D* texture);
+		virtual void SetTexture(Resource<ITexture2D>& texture);
 
 		virtual void SetMatrix(const Matrix4x4& matrix);
 		virtual void SetColorRGBA(const Color& color);
