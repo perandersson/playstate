@@ -118,7 +118,8 @@ TEST_SUITE(Scene)
 		group->AddChild(node2);
 		scene.AddSceneGroup(group);
 	
-		const FindQuery query = { NULL, 0 };
+		const Camera camera;
+		const FindQuery query = { &camera, 0 };
 	
 		RenderBlockResultSet resultSet;
 		ASSERT_TRUE(scene.Find(query, &resultSet));

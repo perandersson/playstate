@@ -104,8 +104,7 @@
       <AdditionalDependencies>playstate_d.lib;lua.lib;FreeImage.lib;glmock_d.lib;freetype2411MT_D.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>"$(SolutionDir)../../bin/playstate.tests_d.exe"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug Without Test|Win32'">
@@ -154,8 +153,7 @@
       <AdditionalDependencies>playstate.lib;lua.lib;glew32.lib;FreeImage.lib;OpenGL32.lib;GLU32.lib;glmock.lib;freetype2411MT.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>"$(SolutionDir)../../bin/playstate.tests_d.exe"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Without Test|Win32'">
