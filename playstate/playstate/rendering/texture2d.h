@@ -1,16 +1,7 @@
 #pragma once
 
 #include "texture.h"
-#include "../resources/resource_loader.h"
-#include "state/state_policy.h"
 #include "../math/point.h"
-
-extern "C"
-{
-   #include <lua.h>
-   #include <lauxlib.h>
-   #include <lualib.h>
-}
 
 namespace playstate
 {
@@ -69,40 +60,6 @@ namespace playstate
 		MagFilter::Enum mMagFilter;
 		TextureWrap::Enum mWS;
 		TextureWrap::Enum mWT;
-	};
-
-	class IRenderSystem;
-
-	//
-	// 
-	class Texture2DResourceLoader : public IResourceLoader
-	{
-	public:
-		Texture2DResourceLoader(IRenderSystem& renderSystem, IFileSystem& fileSystem);
-		~Texture2DResourceLoader();
-		
-	// IResourceLoader
-	public:
-		virtual ResourceObject* Load(IFile& file);
-		virtual ResourceObject* GetDefaultResource();
-		virtual bool IsThreadable() const;
-		
-	private:
-		IRenderSystem& mRenderSystem;
-		IFileSystem& mFileSystem;
-
-		ResourceObject* mDefaultResource;
-	};
-
-	
-	//
-	// Script integration
-	//
-
-	extern int Texture2D_Load(lua_State* L);
-	static luaL_Reg Texture2D_Methods[] = {
-		{ "Load", Texture2D_Load },
-		{ NULL, NULL }
 	};
 }
 

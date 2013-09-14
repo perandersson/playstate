@@ -141,6 +141,9 @@
     <Filter Include="Source Files\timer">
       <UniqueIdentifier>{0249f50c-8053-461e-b388-75a7a9d9ae8e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\image">
+      <UniqueIdentifier>{f3cdde29-73e1-4031-863e-0d7f550e098f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\playstate\playstate\camera\camera.cpp">
@@ -472,6 +475,9 @@
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\rendering\ogl3\ogl3_vertex_declaration_factory.cpp">
       <Filter>Source Files\rendering\ogl3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\image\image_resource_loader.cpp">
+      <Filter>Source Files\image</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -945,6 +951,9 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\rendering\ogl3\ogl3_texture2d.h">
       <Filter>Source Files\rendering\ogl3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\image\image_resource_loader.h">
+      <Filter>Source Files\image</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

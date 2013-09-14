@@ -2,6 +2,7 @@
 #include "truetype_font_resource_loader.h"
 #include "../../math/color.h"
 #include "../font.h"
+#include "../../rendering/state/state_policy.h"
 using namespace playstate;
 
 TrueTypeFontResourceLoader::TrueTypeFontResourceLoader(IFileSystem& fileSystem)
