@@ -7,14 +7,19 @@
 #include <FreeImage.h>
 using namespace playstate;
 
-Texture2D::Texture2D(GLuint textureId, const Size& size, TextureFormat::Enum format) 
-	: Texture(textureId, format), mSize(size),
+Texture2D::Texture2D(GLuint textureID, const Size& size, TextureFormat::Enum format) 
+	: mTextureID(textureID), mUUID(UUID::To32Bit()), mFormat(format), mSize(size),
 	mMinFilter(MinFilter::UNKNOWN), mMagFilter(MagFilter::UNKNOWN), mWS(TextureWrap::UNKNOWN), mWT(TextureWrap::UNKNOWN)
 {
 }
 
 Texture2D::~Texture2D()
 {
+	if(mTextureID != 0) {
+		StatePolicyGuard::InvalidateTexture(mTextureID);
+		glDeleteTextures(1, &mTextureID);
+		mTextureID = 0;
+	}
 }
 
 void Texture2D::Bind(uint32 activeTexture)
@@ -44,6 +49,11 @@ void Texture2D::UpdateFilters(MinFilter::Enum minFilter, MagFilter::Enum magFilt
 		mWT = wt;
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, mWT);
 	}
+}
+
+TextureFormat::Enum Texture2D::GetFormat() const
+{
+	return mFormat;
 }
 
 Texture2DResourceLoader::Texture2DResourceLoader(IRenderSystem& renderSystem, IFileSystem& fileSystem) : 

@@ -58,13 +58,13 @@ namespace playstate
 	
 	int IWindow_GetWidth(lua_State* L)
 	{
-		lua_pushinteger(L, IWindow::Get().GetSize().X);
+		lua_pushinteger(L, IWindow::Get().GetSize().Width);
 		return 1;
 	}
 
 	int IWindow_GetHeight(lua_State* L)
 	{
-		lua_pushinteger(L, IWindow::Get().GetSize().Y);
+		lua_pushinteger(L, IWindow::Get().GetSize().Height);
 		return 1;
 	}
 

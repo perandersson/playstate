@@ -60,9 +60,9 @@ namespace playstate
 		//
 		// @param vertices
 		// @param vertexSize The size of one data element. {@code sizeof(PositionData)} is one such size
-		// @param arrayFactory
+		// @param vertexDeclaration
 		// @param numVertices
-		virtual IVertexBuffer* CreateStaticBuffer(const void* vertices, uint32 vertexSize, const IVertexArrayObjectFactory& arrayFactory, uint32 numVertices) = 0;
+		virtual IVertexBuffer* CreateStaticBuffer(const void* vertices, uint32 vertexSize, const VertexDeclaration& vertexDeclaration, uint32 numVertices) = 0;
 
 		//
 		// Creates a dynamic buffer based on the supplied data stream. You are allowed to update the data contained inside the returned
@@ -70,9 +70,9 @@ namespace playstate
 		//
 		// @param data
 		// @param dataTypeSize The size of one data element. {@code sizeof(PositionData)} is one such size
-		// @param arrayFactory
+		// @param vertexDeclaration
 		// @param numVertices
-		virtual IVertexBuffer* CreateDynamicBuffer(const void* vertices, uint32 vertexSize, const IVertexArrayObjectFactory& arrayFactory, uint32 numVertices) = 0;
+		virtual IVertexBuffer* CreateDynamicBuffer(const void* vertices, uint32 vertexSize, const VertexDeclaration& vertexDeclaration, uint32 numVertices) = 0;
 		
 		//
 		// Creates a new render target based on the supplied width, height and format.

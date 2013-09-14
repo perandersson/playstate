@@ -52,7 +52,7 @@ Vector2 Canvas::GetMousePositionAsUniform() const
 {
 	Point size = mWindow.GetSize();
 	Point pt = mInputSystem.GetMouseState().GetPosition();
-	return Vector2(pt.X / (float32)size.X, pt.Y / (float32)size.Y);
+	return Vector2(pt.X / (float32)size.Width, pt.Y / (float32)size.Height);
 }
 
 void Canvas::SetSize(const Vector2& size)

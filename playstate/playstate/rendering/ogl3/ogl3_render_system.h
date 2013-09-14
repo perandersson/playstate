@@ -7,6 +7,7 @@
 #include "../../script/script_system.h"
 #include "ogl3_gfx_program.h"
 #include "gfx_program_factory.h"
+#include "ogl3_vertex_declaration_factory.h"
 
 namespace playstate
 {
@@ -28,8 +29,8 @@ namespace playstate
 		virtual IVertexBuffer* CreateStaticBuffer(const PositionNormalData* vertices, uint32 numVertices);
 		virtual IVertexBuffer* CreateStaticBuffer(const PositionColorData* vertices, uint32 numVertices);
 		virtual IVertexBuffer* CreateStaticBuffer(const PositionNormalTextureData* vertices, uint32 numVertices);
-		virtual IVertexBuffer* CreateStaticBuffer(const void* vertices, uint32 vertexSize, const IVertexArrayObjectFactory& arrayFactory, uint32 numVertices);
-		virtual IVertexBuffer* CreateDynamicBuffer(const void* vertices, uint32 vertexSize, const IVertexArrayObjectFactory& arrayFactory, uint32 numVertices);
+		virtual IVertexBuffer* CreateStaticBuffer(const void* vertices, uint32 vertexSize, const VertexDeclaration& vertexDeclaration, uint32 numVertices);
+		virtual IVertexBuffer* CreateDynamicBuffer(const void* vertices, uint32 vertexSize, const VertexDeclaration& vertexDeclaration, uint32 numVertices);
 		virtual RenderTarget2D* CreateRenderTarget2D(const Size& size, TextureFormat::Enum format);
 		virtual void SetRenderTarget(RenderTarget2D* renderTarget, GLenum attachmentIndex);
 		virtual void SetDepthRenderTarget(RenderTarget2D* renderTarget);
@@ -54,6 +55,8 @@ namespace playstate
 		Rect mScreenViewport;
 
 		GfxProgramFactory* mProgramFactory;
+		VertexDeclarationArrayObjectFactory* mVAOFactory;
+
 		LinkedList<OGL3GfxProgram> mGfxPrograms;
 
 		GLuint mFrameBufferId;

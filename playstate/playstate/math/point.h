@@ -12,6 +12,11 @@ namespace playstate
 				int32 X;
 				int32 Y;
 			};
+			struct
+			{
+				int32 Width;
+				int32 Height;
+			};
 			int32 Points[2];
 		};
 

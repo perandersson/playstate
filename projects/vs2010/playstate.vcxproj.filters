@@ -314,9 +314,6 @@
     <ClCompile Include="..\..\playstate\playstate\rendering\graphics_driver.cpp">
       <Filter>Source Files\rendering</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\rendering\texture.cpp">
-      <Filter>Source Files\rendering</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\math\point.cpp">
       <Filter>Source Files\math</Filter>
     </ClCompile>
@@ -473,6 +470,9 @@
     <ClCompile Include="..\..\playstate\playstate\rendering\ogl3\ogl3_index_buffer.cpp">
       <Filter>Source Files\rendering\ogl3</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\rendering\ogl3\ogl3_vertex_declaration_factory.cpp">
+      <Filter>Source Files\rendering\ogl3</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\playstate\playstate\camera\camera.h">
@@ -584,9 +584,6 @@
       <Filter>Source Files\rendering</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\rendering\texture2d.h">
-      <Filter>Source Files\rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\rendering\vertex_array_object_factory.h">
       <Filter>Source Files\rendering</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\rendering\vertex_buffer.h">
@@ -941,6 +938,12 @@
       <Filter>Source Files\rendering\ogl3</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\rendering\ogl3\ogl3_index_buffer.h">
+      <Filter>Source Files\rendering\ogl3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\ogl3\ogl3_vertex_declaration_factory.h">
+      <Filter>Source Files\rendering\ogl3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\rendering\ogl3\ogl3_texture2d.h">
       <Filter>Source Files\rendering\ogl3</Filter>
     </ClInclude>
   </ItemGroup>

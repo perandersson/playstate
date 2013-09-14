@@ -208,7 +208,7 @@ IVertexBuffer* MD5MeshResourceLoader::GenerateIVertexBuffer(MD5Mesh* mesh, MD5Me
 		data.Normal.Normalize();
 	}
 
-	IVertexBuffer* vb = mRenderSystem.CreateStaticBuffer(IVertexBufferData, sizeof(MD5MeshVertexData), MD5MeshVertexDataVAOFactory, mesh->NumVertices);
+	IVertexBuffer* vb = mRenderSystem.CreateStaticBuffer(IVertexBufferData, sizeof(MD5MeshVertexData), MD5MeshVertexDataVertexDeclaration, mesh->NumVertices);
 	delete[] IVertexBufferData;
 	return vb;
 }

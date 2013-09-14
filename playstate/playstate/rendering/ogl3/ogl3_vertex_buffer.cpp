@@ -6,8 +6,10 @@
 #include "ogl3_state_policy.h"
 using namespace playstate;
 
-OGL3VertexBuffer::OGL3VertexBuffer(const PrimitiveType& primitiveType, const IVertexArrayObjectFactory& factory, GLuint bufferID, uint32 numVertices, uint32 vertexSize) 
-	: mPrimitiveType(primitiveType), mVertexArrayID(0), mFactory(factory), mBufferID(bufferID), mNumVertices(numVertices), mVertexSize(vertexSize)
+playstate::VertexDeclarationArrayObjectFactory playstate::OGL3VertexBuffer::mFactory;
+
+OGL3VertexBuffer::OGL3VertexBuffer(const PrimitiveType& primitiveType, const VertexDeclaration& vertexDeclaration, GLuint bufferID, uint32 numVertices, uint32 vertexSize) 
+	: mPrimitiveType(primitiveType), mVertexArrayID(0), mVertexDeclaration(vertexDeclaration), mBufferID(bufferID), mNumVertices(numVertices), mVertexSize(vertexSize)
 {
 	assert(mVertexSize > 0 && "The size of one vertex cannot be 0");
 }
@@ -30,7 +32,7 @@ void OGL3VertexBuffer::Bind()
 	// This has to be done during bind time on the main render thread. That's because
 	// VertexArrayObjects are not shared between render contexts. (SERIOUSLY DUDES!!!!)
 	if(mVertexArrayID == 0)
-		mVertexArrayID = mFactory.CreateVertexArray(mBufferID);
+		mVertexArrayID = mFactory.CreateVertexArray(mVertexDeclaration, mBufferID);
 
 	glBindVertexArray(mVertexArrayID);
 	
@@ -57,7 +59,7 @@ void OGL3VertexBuffer::Render(uint32 startIndex, uint32 count) const
 		count = mNumVertices - startIndex;
 	}
 
-	glDrawArrays(mPrimitiveType.GetInnerType(), startIndex, count);
+	glDrawArrays(mPrimitiveType.GetType(), startIndex, count);
 }
 
 void OGL3VertexBuffer::Update(const void* vertices, uint32 numVertices)

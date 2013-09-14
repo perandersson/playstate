@@ -5,7 +5,7 @@ using namespace playstate;
 GuiGeometryBuilder::GuiGeometryBuilder(IRenderSystem& renderSystem)
 	: mRenderSystem(renderSystem), mMemoryPool(6, 24), mBuildingBlocks(5, 5), mNumVertices(0), mStartIndex(0), mCurrentTexture(NULL)
 {
-	mIVertexBuffer = mRenderSystem.CreateDynamicBuffer(NULL, sizeof(WidgetGeometryData), WidgetGeometryDataVAOFactory, 0);
+	mIVertexBuffer = mRenderSystem.CreateDynamicBuffer(NULL, sizeof(WidgetGeometryData), WidgetGeometryDataVertexDeclaration, 0);
 }
 
 GuiGeometryBuilder::~GuiGeometryBuilder()

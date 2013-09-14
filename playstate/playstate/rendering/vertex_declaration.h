@@ -1,7 +1,7 @@
 #pragma once
 
-#include "vertex_array_object_factory.h"
 #include "../types.h"
+#include <gl/glew.h>
 
 namespace playstate
 {
@@ -44,15 +44,7 @@ namespace playstate
 
 	//
 	// Structure used to define how vertex buffer data is structured on the graphics card. End the declaration array with a 0 element.
-	struct VertexDeclaration 
-	{
-		VertexElementDeclaration Elements[8];
-	};
-
 	//
-	// VertexArrayObject factory that uses a VertexDeclaration structure to define how the data is ordered and in what location.
-	// This should be used as much as possible.
-	// 
 	// You create a vertex declaration like this:
 	// {@code
 	//  struct PositionTexCoordData
@@ -68,29 +60,9 @@ namespace playstate
 	//			0 
 	//		}
 	//	};
-	//	static const VertexDeclarationArrayObjectFactory PositionTexCoordDataVAOFactory(PositionTexCoordDataVertexDeclaration);
 	// }
-	class VertexDeclarationArrayObjectFactory : public IVertexArrayObjectFactory
+	struct VertexDeclaration 
 	{
-	public:
-		VertexDeclarationArrayObjectFactory(const VertexDeclaration& declaration);
-		virtual ~VertexDeclarationArrayObjectFactory();
-
-	// IVertexArrayObjectFactory
-	public:
-		virtual GLuint CreateVertexArray(GLuint bufferId) const;
-
-	private:
-		//
-		// @return TRUE if the supplied type is an integer type (byte, short or integer of any variants)
-		bool IsIntegerType(const VertexElementDeclaration& declaration) const;
-
-		//
-		// @return TRUE if the supplied vertex declaration should be handled as an integer type.
-		bool HandleAsIntegerType(const VertexElementDeclaration& declaration) const;
-
-	private:
-		uint32 mStride;
-		const VertexDeclaration& mDeclaration;
+		VertexElementDeclaration Elements[8];
 	};
 }

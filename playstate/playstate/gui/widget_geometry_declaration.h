@@ -21,5 +21,4 @@ namespace playstate
 			0 
 		}
 	};
-	static VertexDeclarationArrayObjectFactory WidgetGeometryDataVAOFactory(WidgetGeometryDataVertexDeclaration);
 }

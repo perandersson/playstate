@@ -28,8 +28,10 @@ void OGL3IndexBuffer::Render(IVertexBuffer* buffer, uint32 firstElement) const
 
 void OGL3IndexBuffer::Render(IVertexBuffer* buffer, uint32 firstElement, uint32 numElements) const
 {
+	assert(buffer != NULL && "You are not allowed to render an index buffer without a vertex buffer");
+
 	// So far only the uint32 indice type is usable
-	glDrawElements(buffer->GetPrimitiveType().GetInnerType(), numElements, GL_UNSIGNED_INT, (void*)(firstElement * sizeof(uint32)));
+	glDrawElements(buffer->GetPrimitiveType().GetType(), numElements, GL_UNSIGNED_INT, (void*)(firstElement * sizeof(uint32)));
 }
 
 void OGL3IndexBuffer::Bind()

@@ -33,7 +33,6 @@ namespace playstate
 			0
 		}
 	};
-	static const VertexDeclarationArrayObjectFactory MD5MeshVertexDataVAOFactory(MD5MeshVertexDataVertexDeclaration);
 
 	class MD5MeshResourceLoader : public IResourceLoader
 	{

@@ -26,7 +26,6 @@ namespace playstate
 			0 
 		}
 	};
-	static const VertexDeclarationArrayObjectFactory PositionDataVAOFactory(PositionDataVertexDeclaration);
 
 	//////////////////////////////////////////////////////////
 
@@ -43,7 +42,6 @@ namespace playstate
 			0 
 		}
 	};
-	static const VertexDeclarationArrayObjectFactory PositionTexCoordDataVAOFactory(PositionTexCoordDataVertexDeclaration);
 	
 	//////////////////////////////////////////////////////////
 
@@ -62,7 +60,6 @@ namespace playstate
 			0 
 		}
 	};
-	static const VertexDeclarationArrayObjectFactory PositionTexCoordColorDataVAOFactory(PositionTexCoordColorDataVertexDeclaration);
 	
 	//////////////////////////////////////////////////////////
 
@@ -79,7 +76,6 @@ namespace playstate
 			0 
 		}
 	};
-	static const VertexDeclarationArrayObjectFactory PositionNormalDataVAOFactory(PositionNormalDataVertexDeclaration);
 		
 	//////////////////////////////////////////////////////////
 
@@ -98,7 +94,6 @@ namespace playstate
 			0 
 		}
 	};
-	static const VertexDeclarationArrayObjectFactory PositionNormalTextureDataVAOFactory(PositionNormalTextureDataVertexDeclaration);
 	
 	//////////////////////////////////////////////////////////
 
@@ -115,6 +110,5 @@ namespace playstate
 			0 
 		}
 	};
-	static const VertexDeclarationArrayObjectFactory PositionColorDataVAOFactory(PositionColorDataVertexDeclaration);
 
 }

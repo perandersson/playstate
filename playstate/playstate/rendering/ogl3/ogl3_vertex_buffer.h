@@ -6,7 +6,8 @@
 #include "../../math/color.h"
 #include "../../math/vector3.h"
 #include "../../math/vector2.h"
-#include "../vertex_array_object_factory.h"
+#include "../vertex_declaration.h"
+#include "ogl3_vertex_declaration_factory.h"
 #include <gl/glew.h>
 
 namespace playstate
@@ -14,7 +15,8 @@ namespace playstate
 	class OGL3VertexBuffer : public IVertexBuffer
 	{
 	public:
-		OGL3VertexBuffer(const PrimitiveType& primitiveType, const IVertexArrayObjectFactory& factory, GLuint bufferID, uint32 numVertices, uint32 vertexSize);
+		OGL3VertexBuffer(const PrimitiveType& primitiveType, 
+			const VertexDeclaration& vertexDeclaration, GLuint bufferID, uint32 numVertices, uint32 vertexSize);
 		~OGL3VertexBuffer();
 
 		void Bind();
@@ -38,7 +40,8 @@ namespace playstate
 	private:
 		GLuint mVertexArrayID;
 		GLuint mBufferID;
-		const IVertexArrayObjectFactory& mFactory;
+		static VertexDeclarationArrayObjectFactory mFactory;
+		const VertexDeclaration& mVertexDeclaration;
 
 	private:
 		const PrimitiveType& mPrimitiveType;
