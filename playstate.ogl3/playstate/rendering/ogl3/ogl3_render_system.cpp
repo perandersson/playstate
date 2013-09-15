@@ -171,7 +171,8 @@ void OGL3RenderSystem::ApplyRenderTargets()
 		GLenum error = glGetError();
 		if(error != GL_NO_ERROR)
 			THROW_EXCEPTION(RenderingException, "Could not disable bound frame buffer object. Reason: %d", error);
-
+		
+		OGL3StatePolicyGuard::Viewport(mScreenViewport);
 		return;
 	}
 
