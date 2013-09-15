@@ -7,6 +7,7 @@
 #include "../math/color.h"
 #include "../logging/logger.h"
 #include "script_system.h"
+#include <stdarg.h>
 
 namespace playstate
 {
@@ -312,13 +313,19 @@ namespace playstate
 		return point;
 	}
 
-	void luaM_printerror(lua_State* L, const char* msg)
+	void luaM_printerror(lua_State* L, const char* msg, ...)
 	{
+		va_list arglist;
+		va_start(arglist, msg);
+		char tmp[5096];
+		vsprintf_s(tmp, 5096, msg, arglist);
+		va_end(arglist);
+
 		lua_Debug ar;
 		lua_getstack(L, 1, &ar);
 		lua_getinfo(L, "lS", &ar);
 
 		const playstate::string identity = ScriptSystem::Get().GetIdentity();
-		ILogger::Get().Error("%s@%d: %s", identity.c_str(), ar.currentline, msg);
+		ILogger::Get().Error("%s@%d: %s", identity.c_str(), ar.currentline, tmp);
 	}
 }

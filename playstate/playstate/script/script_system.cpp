@@ -42,9 +42,12 @@ int __playstate_lua_require(lua_State* L)
 		int res = luaL_loadstring(L, value.c_str());
 		if(res != 0) {
 			playstate::string err = lua_tostring(L, -1);
+			luaM_printerror(L, err.c_str());
+			lua_pushnil(L);
 		}
 	} else {
-		lua_pushfstring(L, "\n\tCould not include file \"%s\". File not found", package.c_str());
+		luaM_printerror(L, "\n\tCould not include file \"%s\". File not found", package.c_str());
+		lua_pushnil(L);
 	}
 	ScriptSystem::Get().PopIdentity();
 	return 1;

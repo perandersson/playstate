@@ -103,7 +103,7 @@ namespace playstate
 
 	//
 	// Print an lua error like message without shutting down the script execution
-	extern void luaM_printerror(lua_State* L, const char* msg);
+	extern void luaM_printerror(lua_State* L, const char* msg, ...);
 	
 	//
 	// Pops an object parameter from the stack and returns the result
