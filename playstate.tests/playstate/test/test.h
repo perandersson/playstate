@@ -33,6 +33,7 @@ namespace playstate
 	#define ASSERT_NOT_EQUALS(Value, Expected) ASSERT_EXPRESSION(Value == Expected, "Value are equal")
 	#define ASSERT_NOT_NULL(Value) ASSERT_EXPRESSION(Value == NULL, "Value is null")
 	#define ASSERT_NULL(Value) ASSERT_EXPRESSION(Value != NULL, "Value is not null")
+	#define ASSERT_FAIL(Message) ASSERT_EXPRESSION(true, Message)
 
 //	#define GET_OPENGL_MOCK() glmock::Create(suite)
 //	#define VALIDATE_OPENGL_MOCK(mock) glmock::Destroy(mock)

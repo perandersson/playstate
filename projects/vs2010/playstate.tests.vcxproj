@@ -192,8 +192,7 @@
     <ClCompile Include="..\..\playstate.tests\playstate\memory\memory_pool_test.cpp" />
     <ClCompile Include="..\..\playstate.tests\playstate\scene\scene_node_test.cpp" />
     <ClCompile Include="..\..\playstate.tests\playstate\scene\scene_test.cpp" />
-    <ClCompile Include="..\..\playstate.tests\playstate\search\light_source_result_set.cpp" />
-    <ClCompile Include="..\..\playstate.tests\playstate\search\render_block_result_set.cpp" />
+    <ClCompile Include="..\..\playstate.tests\playstate\search\result_set_iterator.cpp" />
     <ClCompile Include="..\..\playstate.tests\playstate\search\sorter\quick_sort_array_sorter_test.cpp" />
     <ClCompile Include="..\..\playstate.tests\playstate\search\sorter\render_block_array_sorter_test.cpp" />
     <ClCompile Include="..\..\playstate.tests\playstate\test\test_exception.cpp" />
