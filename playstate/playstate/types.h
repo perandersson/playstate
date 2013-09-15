@@ -172,8 +172,10 @@ namespace playstate
 		uint32 mLength;
 
 	public:
-		auto_array(uint32 length) : mLength(length) {
-			mMemory = new T[length];
+		auto_array(uint32 length) : mLength(length), mMemory(NULL) {
+			if(length > 0) {
+				mMemory = new T[length];
+			}
 		}
 
 		auto_array(T* memory, uint32 length) 
