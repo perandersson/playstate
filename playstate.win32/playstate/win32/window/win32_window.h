@@ -25,8 +25,8 @@ namespace playstate
 
 		// IWindowManager
 		public:
-			virtual const Point& GetSize() const;
-			virtual void SetSize(const Point& size);
+			virtual const Size& GetSize() const;
+			virtual void SetSize(const Size& size);
 
 			virtual const playstate::string& GetTitle() const;
 			virtual void SetTitle(const playstate::string& title);

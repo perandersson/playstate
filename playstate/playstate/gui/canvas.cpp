@@ -82,15 +82,17 @@ bool Canvas::ProcessCanvas(GuiGeometryBuilder& builder)
 
 Vector2 Canvas::GetMousePositionAsUniform() const
 {
-	Point size = mWindow.GetSize();
+	Size size = mWindow.GetSize();
 	Point pt = mInputSystem.GetMouseState().GetPosition();
 	return Vector2(pt.X / (float32)size.Width, pt.Y / (float32)size.Height);
 }
 
 Point Canvas::GetMousePosition() const
 {
+	const Size size = mWindow.GetSize();
+	const Vector2 diff(mSize.Width / (float32)size.Width, mSize.Height / (float32)size.Height);
 	Point pt = mInputSystem.GetMouseState().GetPosition();
-	return pt;
+	return Point(pt.X * diff.X, pt.Y * diff.Y);
 }
 
 MouseButtons::Enum Canvas::GetMouseClick() const
@@ -98,13 +100,13 @@ MouseButtons::Enum Canvas::GetMouseClick() const
 	return mButtonClicked;
 }
 
-void Canvas::SetSize(const Vector2& size)
+void Canvas::SetSize(const Size& size)
 {
 	mSize = size;
-	mProjectionMatrix = Camera::GetOrtho2D(0.f, size.X, size.Y, 0.f);
+	mProjectionMatrix = Camera::GetOrtho2D(0.f, size.Width, size.Height, 0.f);
 }
 
-const Vector2& Canvas::GetSize() const
+const Size& Canvas::GetSize() const
 {
 	return mSize;
 }
@@ -138,7 +140,7 @@ int playstate::Canvas_RemoveCanvasGroup(lua_State* L)
 
 int playstate::Canvas_SetSize(lua_State* L)
 {
-	Vector2 size = luaM_popvector2(L);
+	Size size = luaM_poppoint(L);
 	GameRunner::Get().GetCanvas().SetSize(size);
 	return 0;
 }

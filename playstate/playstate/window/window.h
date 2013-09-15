@@ -16,13 +16,13 @@ namespace playstate
 	public:
 		//
 		// @return The windows size in pixels
-		virtual const Point& GetSize() const = 0;
+		virtual const Size& GetSize() const = 0;
 
 		//
 		// Resizes this windows with a new supplied size value
 		//
 		// @param size The new window size in pixels.
-		virtual void SetSize(const Point& size) = 0;
+		virtual void SetSize(const Size& size) = 0;
 
 		//
 		// @return This windows title.

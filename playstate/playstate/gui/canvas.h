@@ -37,7 +37,7 @@ namespace playstate
 		Vector2 GetMousePositionAsUniform() const;
 
 		//
-		// @return The mouse position
+		// @return The mouse position. The position is normalized as if the window has the base-line size (Canvas.Size)
 		Point GetMousePosition() const;
 
 		//
@@ -53,11 +53,11 @@ namespace playstate
 		//
 		// Sets the base size for the entire canvas. All positions and sizes are in uniform size internally. 
 		// 
-		void SetSize(const Vector2& size);
+		void SetSize(const Size& size);
 
 		//
 		// @return The size of this canvas
-		const Vector2& GetSize() const;
+		const Size& GetSize() const;
 
 		//
 		// @return The project matrix generated using the supplied canvas size
@@ -75,7 +75,7 @@ namespace playstate
 		IWindow& mWindow;
 		IInputSystem& mInputSystem;
 		LinkedList<CanvasGroup> mGroups;
-		Vector2 mSize;
+		Size mSize;
 		Matrix4x4 mProjectionMatrix;
 		std::auto_ptr<IUpdateProcessor> mUpdateProcessor;
 

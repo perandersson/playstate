@@ -62,12 +62,12 @@ Win32Window::~Win32Window()
 	mAppInstance = NULL;
 }
 
-const Point& Win32Window::GetSize() const 
+const Size& Win32Window::GetSize() const 
 {
 	return mSize;
 }
 
-void Win32Window::SetSize(const Point& size)
+void Win32Window::SetSize(const Size& size)
 {
 	uint32 width = size.X > 0 ? size.X : 1;
 	uint32 height = size.Y > 0 ? size.Y : 1;
