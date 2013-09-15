@@ -46,6 +46,14 @@ namespace playstate
 			return X <= pt.X && Y <= pt.Y;
 		}
 
+		inline Point operator + (const Point& rhs) const {
+			return Point(X + rhs.X, Y + rhs.Y);
+		}
+
+		inline Point operator - (const Point& rhs) const {
+			return Point(X - rhs.X, Y - rhs.Y);
+		}
+
 		static Point Zero;
 	};
 
