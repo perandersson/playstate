@@ -122,25 +122,24 @@ void DeferredRenderPipeline::DrawGeometry(Scene& scene, const Camera& camera)
 		IGfxProgramComponent* diffuseTexture = mDeferredShader->FindComponent("DiffuseTexture");
 		IGfxProgramComponent* diffuseColor = mDeferredShader->FindComponent("DiffuseColor");
 		
-		// Draw scene objects
 		IGfxProgram* deferredShader = mDeferredShader.get();
-		uint32 size = mRenderBlockResultSet.GetSize();
-		RenderBlock** blocks = mRenderBlockResultSet.GetRenderBlocks();
-		for(uint32 index = 0; index < size; ++index) {
-			RenderBlock* block = blocks[index];
+
+		// Draw scene objects
+		ResultSetIterator<RenderBlock> it(mRenderBlockResultSet);
+		ResultSetIterator<RenderBlock>::Type block;
+		while(block = it.Next()) {
 			diffuseTexture->SetTexture(block->DiffuseTexture);
 			diffuseColor->SetColorRGB(block->DiffuseColor);
 			modelMatrix->SetMatrix(block->ModelMatrix);
 			deferredShader->Render(block->VertexBuffer, block->IndexBuffer);
 		}
-		
+
 		// Draw lighting to the lighting render target
 		DrawLighting(scene, camera);
 
 		// Draw the final result onto the screen
 		DrawFinalResultToScreen(scene, camera);
 	}
-	mRenderBlockResultSet.Reset();
 }
 
 void DeferredRenderPipeline::DrawLighting(Scene& scene, const Camera& camera)
@@ -163,10 +162,9 @@ void DeferredRenderPipeline::DrawLighting(Scene& scene, const Camera& camera)
 		IGfxProgramComponent* quadraticAttenuation = mPointLightShader->FindComponent("QuadraticAttenuation");
 		IGfxProgramComponent* lightRadius = mPointLightShader->FindComponent("LightRadius");
 
-		uint32 size = mLightSourceResultSet.GetNumLightSources();
-		LightSource** lightSources = mLightSourceResultSet.GetLightSources();
-		for(uint32 index = 0; index < size; ++index) {
-			LightSource* lightSource = lightSources[index];
+		ResultSetIterator<LightSource> it(mLightSourceResultSet);
+		ResultSetIterator<LightSource>::Type lightSource;
+		while(lightSource = it.Next()) {
 			PointLight* pl = dynamic_cast<PointLight*>(lightSource);
 			if(pl != NULL)   {
 				// TODO Render point lights as six spot-lights with texture "LightTexture" that's specified above.
@@ -183,7 +181,6 @@ void DeferredRenderPipeline::DrawLighting(Scene& scene, const Camera& camera)
 			}
 		}
 	}
-	mLightSourceResultSet.Reset();
 }
 
 Matrix4x4 DeferredRenderPipeline::CalculateBillboardModelMatrix(const Vector3& position, const Camera& camera)

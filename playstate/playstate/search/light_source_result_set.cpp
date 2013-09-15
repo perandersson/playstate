@@ -17,12 +17,12 @@ void LightSourceResultSet::AddResult(LightSource* lightSource)
 	*ptr = lightSource;
 }
 
-uint32 LightSourceResultSet::GetNumLightSources() const
+uint32 LightSourceResultSet::GetNumResults() const
 {
 	return mMemoryPool.GetSize();
 }
 
-LightSource** LightSourceResultSet::GetLightSources()
+IResultSet<LightSource>::Type LightSourceResultSet::GetResultData() const
 {
 	return mMemoryPool.GetFirstElement();
 }

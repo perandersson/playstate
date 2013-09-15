@@ -8,8 +8,8 @@ TEST_SUITE(LightSourceResultSet)
 	{
 		LightSourceResultSet resultSet;
 		
-		ASSERT_EQUALS(resultSet.GetNumLightSources(), 0);
-		ASSERT_NOT_NULL(resultSet.GetLightSources());
+		ASSERT_EQUALS(resultSet.GetNumResults(), 0);
+		ASSERT_NOT_NULL(resultSet.GetResultData());
 	}
 	
 	UNIT_TEST(AddLightSourceToResultSet)
@@ -19,8 +19,8 @@ TEST_SUITE(LightSourceResultSet)
 		
 		unitToTest.AddResult(&lightSource);
 		
-		ASSERT_EQUALS(unitToTest.GetNumLightSources(), 1);
-		ASSERT_NOT_NULL(unitToTest.GetLightSources());
-		ASSERT_EQUALS(unitToTest.GetLightSources()[0], &lightSource);
+		ASSERT_EQUALS(unitToTest.GetNumResults(), 1);
+		ASSERT_NOT_NULL(unitToTest.GetResultData());
+		ASSERT_EQUALS(unitToTest.GetResultData()[0], &lightSource);
 	}
 }

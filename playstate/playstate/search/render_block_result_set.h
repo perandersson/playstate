@@ -14,7 +14,7 @@ namespace playstate
 	
 	//
 	// Specific result-set for render blocks.
-	class RenderBlockResultSet : public IResultSet<RenderBlock*>
+	class RenderBlockResultSet : public IResultSet<RenderBlock>
 	{
 	public:
 		RenderBlockResultSet();
@@ -25,22 +25,16 @@ namespace playstate
 		RenderBlock* Create(uint32 id);
 		
 		//
-		// @return 
-		RenderBlock** GetRenderBlocks();
-
-		//
-		// 
-		void Reset();
-
-		//
-		// @return The size of this result set
-		uint32 GetSize() const;
-
-		//
 		// Sorts this resultset using the supplied array sorter
 		//
 		// @param sorter
 		void Sort(IArraySorter<RenderBlock*>* sorter);
+
+	// IResultSet<T>
+	public:
+		virtual uint32 GetNumResults() const;
+		virtual IResultSet<RenderBlock>::Type GetResultData() const;
+		virtual void Reset();
 
 	private:
 		bool IsResizeRequired() const;

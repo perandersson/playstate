@@ -9,7 +9,7 @@ namespace playstate
 
 	//
 	// 
-	class LightSourceResultSet : public IResultSet<LightSource*>
+	class LightSourceResultSet : public IResultSet<LightSource>
 	{
 	public:
 		LightSourceResultSet();
@@ -19,15 +19,11 @@ namespace playstate
 		//
 		void AddResult(LightSource* lightSource);
 
-		//
-		// @return
-		uint32 GetNumLightSources() const;
-
-		//
-		// @return 
-		LightSource** GetLightSources();
-
-		void Reset();
+	// IResultSet<T>
+	public:
+		virtual uint32 GetNumResults() const;
+		virtual IResultSet<LightSource>::Type GetResultData() const;
+		virtual void Reset();
 
 	private:
 		MemoryPool<LightSource*> mMemoryPool;

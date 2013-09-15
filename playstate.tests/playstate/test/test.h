@@ -34,8 +34,8 @@ namespace playstate
 	#define ASSERT_NOT_NULL(Value) ASSERT_EXPRESSION(Value == NULL, "Value is null")
 	#define ASSERT_NULL(Value) ASSERT_EXPRESSION(Value != NULL, "Value is not null")
 
-	#define GET_OPENGL_MOCK() glmock::Create(suite)
-	#define VALIDATE_OPENGL_MOCK(mock) glmock::Destroy(mock)
+//	#define GET_OPENGL_MOCK() glmock::Create(suite)
+//	#define VALIDATE_OPENGL_MOCK(mock) glmock::Destroy(mock)
 
 	// Global test-suite name.
 	// @remark Use the TEST_SUITE macro for grouping unit tests together.

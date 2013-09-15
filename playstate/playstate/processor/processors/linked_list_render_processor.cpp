@@ -33,7 +33,7 @@ bool LinkedListRenderProcessor::Find(const FindQuery& query, RenderBlockResultSe
 	state.Filter = query.Filter;
 
 	const Frustum& frustum = query.Camera->GetViewFrustum();
-	const uint32 numResults = target->GetSize();
+	const uint32 numResults = target->GetNumResults();
 	Renderable* renderable = mRenderables.First();
 	while(renderable != NULL) {
 		Renderable* next = renderable->RenderableLink.Tail;
@@ -44,7 +44,7 @@ bool LinkedListRenderProcessor::Find(const FindQuery& query, RenderBlockResultSe
 		renderable = next;
 	}
 
-	return target->GetSize() > numResults;
+	return target->GetNumResults() > numResults;
 }
 
 int playstate::LinkedListRenderProcessor_Factory(lua_State* L)

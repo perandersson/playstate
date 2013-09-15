@@ -47,7 +47,7 @@ void RenderBlockResultSet::Sort(IArraySorter<RenderBlock*>* sorter)
 		sorter->Sort(mSortedRenderBlocks, mMemoryPool.GetSize());
 }
 
-RenderBlock** RenderBlockResultSet::GetRenderBlocks()
+IResultSet<RenderBlock>::Type RenderBlockResultSet::GetResultData() const
 {
 	return mSortedRenderBlocks;
 }
@@ -57,7 +57,7 @@ void RenderBlockResultSet::Reset()
 	mMemoryPool.Reset();
 }
 
-uint32 RenderBlockResultSet::GetSize() const
+uint32 RenderBlockResultSet::GetNumResults() const
 {
 	return mMemoryPool.GetSize();
 }
