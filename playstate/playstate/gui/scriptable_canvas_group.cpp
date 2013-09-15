@@ -16,7 +16,7 @@ ScriptableCanvasGroup::~ScriptableCanvasGroup()
 	delete mTick;
 }
 
-void ScriptableCanvasGroup::OnProcessCanvas()
+void ScriptableCanvasGroup::OnProcessCanvas(GuiGeometryBuilder* builder)
 {
 	if(mOnProcessCanvas != NULL)
 		mOnProcessCanvas->Invoke();
@@ -181,5 +181,60 @@ int playstate::CanvasGroup_Toggle(lua_State* L)
 		lua_pushboolean(L, 0);
 	}
 
+	return 1;
+}
+
+int playstate::CanvasGroup_Slider(lua_State* L)
+{
+	int numParams = lua_gettop(L);
+	if(numParams < 7) {
+		luaM_printerror(L, "Expected: self<CanvasGroup>:Slider(Size, Position, Value, LeftValue, RightValue, StepValue)");
+		lua_pushnumber(L, 0.0f);
+		return 1;
+	}
+
+	const float32 stepValue = lua_tonumber(L, -1); 
+	const float32 rightValue = lua_tonumber(L, -2);
+	const float32 leftValue = lua_tonumber(L, -3);
+	const float32 value = lua_tonumber(L, -4);
+	lua_pop(L, 4);
+
+	const Vector2 position = luaM_popvector2(L);
+	const Size size = luaM_poppoint(L);
+	ScriptableCanvasGroup* group = luaM_popobject<ScriptableCanvasGroup>(L);
+	if(group != NULL) {
+		const float32 newValue = group->Slider(size, position, value, leftValue, rightValue, stepValue);
+		lua_pushnumber(L, newValue);
+	} else {
+		luaM_printerror(L, "Expected: self<CanvasGroup>:Slider(Size, Position, Value, LeftValue, RightValue, StepValue)");
+		lua_pushnumber(L, 0.0f);
+	}
+
+	return 1;
+}
+
+int playstate::CanvasGroup_ComboBox(lua_State* L)
+{
+	int numParams = lua_gettop(L);
+	if(numParams < 5) {
+		luaM_printerror(L, "Expected: self<CanvasGroup>:ComboBox(Size, Position, SelectedIndex, Values)");
+		lua_pushinteger(L, 0);
+		return 1;
+	}
+
+	// Load the tabel later
+	lua_pop(L, 1);
+	const uint32 selectedIndex = lua_tointeger(L, -1); lua_pop(L, 1);
+	const Vector2 position = luaM_popvector2(L);
+	const Size size = luaM_poppoint(L);
+
+	ScriptableCanvasGroup* group = luaM_popobject<ScriptableCanvasGroup>(L);
+	if(group != NULL) {
+		const uint32 newValue = group->ComboBox(size, position, selectedIndex);
+		lua_pushinteger(L, newValue);
+	} else {
+		luaM_printerror(L, "Expected: self<CanvasGroup>:ComboBox(Size, Position, SelectedIndex, Values)");
+		lua_pushinteger(L, 0);
+	}
 	return 1;
 }

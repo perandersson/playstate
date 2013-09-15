@@ -13,7 +13,7 @@ namespace playstate
 
 	// CanvasGroup
 	public:
-		virtual void OnProcessCanvas();
+		virtual void OnProcessCanvas(GuiGeometryBuilder* builder);
 		virtual void OnAddedToCanvas();
 		virtual void OnRemovingFromCanvas();
 
@@ -45,6 +45,8 @@ namespace playstate
 	extern int CanvasGroup_EndFrame(lua_State* L);
 	extern int CanvasGroup_Button(lua_State* L);
 	extern int CanvasGroup_Toggle(lua_State* L);
+	extern int CanvasGroup_Slider(lua_State* L);
+	extern int CanvasGroup_ComboBox(lua_State* L);
 	static luaL_Reg CanvasGroup_Methods[] = {
 		{ LUA_INHERIT_CONSTRUCTOR, CanvasGroup_Init },
 		{ "SetStyle", CanvasGroup_SetStyle },
@@ -52,6 +54,8 @@ namespace playstate
 		{ "EndFrame", CanvasGroup_EndFrame },
 		{ "Button", CanvasGroup_Button },
 		{ "Toggle", CanvasGroup_Toggle },
+		{ "Slider", CanvasGroup_Slider },
+		{ "ComboBox", CanvasGroup_ComboBox },
 		{ NULL, NULL }
 	};
 }

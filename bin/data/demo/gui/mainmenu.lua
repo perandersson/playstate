@@ -5,6 +5,8 @@ function MainMenu:__init()
 	CanvasGroup.__init(self)
 	self:SetStyle(require("demo.gui.style"))
 	self.toggled = false
+	self.sliderValue = 0.0
+	self.selectedIndex = 0
 end
 
 function MainMenu:OnProcessCanvas()
@@ -23,7 +25,12 @@ function MainMenu:OnGUI()
 				print("Start only if toggled!")
 			end
 		end
-		self.toggled = self:Toggle({ 140, 20 }, { 0, 70 }, self.toggled, "Enable?")		
+		self.toggled = self:Toggle({ 140, 20 }, { 0, 70 }, self.toggled, "Enable?")
+		self.sliderValue = self:Slider({ 140, 20 }, { 0, 100 }, self.sliderValue,
+			0.0, 1.0, 0.1)
+		self.selectedIndex = self:ComboBox({ 140, 20 }, { 0, 130 }, self.selectedIndex, {
+			"Value1", "Value2", "Value3"
+		})
 	self:EndFrame()
 end
 

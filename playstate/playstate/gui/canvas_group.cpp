@@ -47,10 +47,10 @@ void CanvasGroup::ProcessCanvas(GuiGeometryBuilder* builder)
 	assert_not_null(builder);
 	mPositions = std::stack<Vector2>();
 	mGeometryBuilder = builder;
-	this->OnProcessCanvas();
+	this->OnProcessCanvas(builder);
 }
 
-void CanvasGroup::OnProcessCanvas()
+void CanvasGroup::OnProcessCanvas(GuiGeometryBuilder* builder)
 {
 }
 
@@ -171,3 +171,13 @@ bool CanvasGroup::Toggle(const Size& size, const Vector2& position, bool toggled
 	return toggled;
 }
 
+float32 CanvasGroup::Slider(const Size& size, const Vector2& position, float32 value, float32 leftValue, float32 rightValue,
+			float32 stepValue)
+{
+	return 0.0f;
+}
+
+uint32 CanvasGroup::ComboBox(const Size& size, const Vector2& position, uint32 selectedIndex)
+{
+	return 0;
+}

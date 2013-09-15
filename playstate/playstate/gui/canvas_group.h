@@ -84,10 +84,21 @@ namespace playstate
 		// 
 		bool Toggle(const Size& size, const Vector2& position, bool toggled, const playstate::string& text);
 
+		//
+		// 
+		float32 Slider(const Size& size, const Vector2& position, float32 value, float32 leftValue, float32 rightValue,
+			float32 stepValue);
+
+		//
+		// Creates a combobox and returns the current index
+		// 
+		uint32 ComboBox(const Size& size, const Vector2& position, uint32 selectedIndex);
 	protected:
 		//
 		// Method called when this canvas groups user interface is to be processed.
-		virtual void OnProcessCanvas();
+		//
+		// @param builder The canvas geometry builder used for creating geometry visible in the user interface
+		virtual void OnProcessCanvas(GuiGeometryBuilder* builder);
 
 		//
 		// Method called when this canvas group is added to the canvas
