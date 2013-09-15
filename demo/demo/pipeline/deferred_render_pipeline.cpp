@@ -139,6 +139,9 @@ void DeferredRenderPipeline::DrawGeometry(Scene& scene, const Camera& camera)
 
 		// Draw the final result onto the screen
 		DrawFinalResultToScreen(scene, camera);
+	} else {
+		mTexturedShader->Apply();
+		mTexturedShader->Clear(ClearTypes::COLOR | ClearTypes::DEPTH);
 	}
 }
 
