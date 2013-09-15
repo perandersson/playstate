@@ -154,3 +154,32 @@ int playstate::CanvasGroup_Button(lua_State* L)
 
 	return 1;
 }
+
+int playstate::CanvasGroup_Toggle(lua_State* L)
+{
+	int numParams = lua_gettop(L);
+	if(numParams < 4) {
+		luaM_printerror(L, "Expected: self<CanvasGroup>:Toggle(Size, Position, Toggled, [Text])");
+		lua_pushboolean(L, 0);
+		return 1;
+	}
+	
+	playstate::string text;
+	if(numParams >= 5 && lua_isstring(L, -1))
+		text = lua_tostring(L, -1); lua_pop(L, 1);
+
+	const bool toggled = lua_toboolean(L, -1) == 1; lua_pop(L, 1);
+	const Vector2 position = luaM_popvector2(L);
+	const Size size = luaM_poppoint(L);
+	
+	ScriptableCanvasGroup* group = luaM_popobject<ScriptableCanvasGroup>(L);
+	if(group != NULL) {
+		bool result = group->Toggle(size, position, toggled, text);
+		lua_pushboolean(L, result ? 1 : 0);
+	} else {
+		luaM_printerror(L, "Expected: self<CanvasGroup>:Toggle(Size, Position, Toggled, [Text])");
+		lua_pushboolean(L, 0);
+	}
+
+	return 1;
+}

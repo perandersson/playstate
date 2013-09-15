@@ -97,7 +97,7 @@ void GuiGeometryBuilder::AddText(Font* font, const Vector2& position, const Colo
 
 	Vector2 currentPos = position;
 	bool newline = false;
-	playstate::string::size_type size = text.length();
+	const playstate::string::size_type size = text.length();
 	for(playstate::string::size_type i = 0; i < size; ++i) {
 		playstate::character c = text[i];
 		if(c == '\n') {
@@ -156,9 +156,8 @@ void GuiGeometryBuilder::AddText(Font* font, const Vector2& position, const Colo
 		element->TexCoord.Set(info.BottomRightTexCoord.S, info.BottomRightTexCoord.T);
 
 		currentPos.X += info.Size.X;
+		mNumVertices += 6;
 	}
-
-	mNumVertices += 6 * size;
 }
 
 IVertexBuffer* GuiGeometryBuilder::PrepareIVertexBuffer()

@@ -10,6 +10,7 @@ local style = {
 	
 	-- The offset of the shadow. It can be: 3 or { 3, 3 } or { 3, 3, 3, 3 }
 	ShadowOffset = 3, 
+	ShadowColor = { 0, 0, 0, 0.3 },
 	
 	-- The background color
 	BackColor = { 

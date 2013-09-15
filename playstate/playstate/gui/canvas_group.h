@@ -80,6 +80,10 @@ namespace playstate
 		// 
 		bool Button(const Size& size, const Vector2& position, const playstate::string& text);
 
+		//
+		// 
+		bool Toggle(const Size& size, const Vector2& position, bool toggled, const playstate::string& text);
+
 	protected:
 		//
 		// Method called when this canvas groups user interface is to be processed.
@@ -101,6 +105,8 @@ namespace playstate
 		Color mBackColorTop;
 		Color mBackColorBottom;
 		Color mFrontColor;
+		uint32 mShadowOffset;
+		Color mShadowColor;
 		Resource<Font> mFont;
 
 		std::stack<Vector2> mPositions;

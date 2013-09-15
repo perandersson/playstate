@@ -44,12 +44,14 @@ namespace playstate
 	extern int CanvasGroup_BeginFrame(lua_State* L);
 	extern int CanvasGroup_EndFrame(lua_State* L);
 	extern int CanvasGroup_Button(lua_State* L);
+	extern int CanvasGroup_Toggle(lua_State* L);
 	static luaL_Reg CanvasGroup_Methods[] = {
 		{ LUA_INHERIT_CONSTRUCTOR, CanvasGroup_Init },
 		{ "SetStyle", CanvasGroup_SetStyle },
 		{ "BeginFrame", CanvasGroup_BeginFrame },
 		{ "EndFrame", CanvasGroup_EndFrame },
 		{ "Button", CanvasGroup_Button },
+		{ "Toggle", CanvasGroup_Toggle },
 		{ NULL, NULL }
 	};
 }
