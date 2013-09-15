@@ -8,7 +8,22 @@ namespace playstate
 {
 	class IRenderProcessor;
 
-	class Renderable : public SpatialNode
+	class IRenderable
+	{
+	public:
+		virtual ~IRenderable() {}
+
+	public:
+		//
+		// Performs the pre-render stage. The purpos of this stage is to prepare the render blocks
+		// before rendering. The collected render blocks will then be sent to the render pipeline.
+		//
+		// @param state
+		// @param builder
+		virtual void PreRender(const RenderState& state, RenderBlockResultSet* resultSet) = 0;
+	};
+
+	class Renderable : public IRenderable, public SpatialNode
 	{
 	public:
 		LinkedListLink<Renderable> RenderableLink;
@@ -30,14 +45,6 @@ namespace playstate
 		//
 		// Detaches this renderable instance from the screen.
 		void Detach();
-		
-		//
-		// Performs the pre-render stage. The purpos of this stage is to prepare the render blocks
-		// before rendering. The collected render blocks will then be sent to the render pipeline.
-		//
-		// @param state
-		// @param builder
-		virtual void PreRender(const RenderState& state, RenderBlockResultSet* resultSet) = 0;
 
 		//
 		// Hides this renderable item.

@@ -132,7 +132,8 @@ int playstate::CanvasGroup_Button(lua_State* L)
 	int numParams = lua_gettop(L);
 	if(numParams < 3) {
 		luaM_printerror(L, "Expected: self<CanvasGroup>:Button(Size, Position, [Text])");
-		return 0;
+		lua_pushboolean(L, 0);
+		return 1;
 	}
 
 	playstate::string text;
@@ -144,10 +145,12 @@ int playstate::CanvasGroup_Button(lua_State* L)
 
 	ScriptableCanvasGroup* group = luaM_popobject<ScriptableCanvasGroup>(L);
 	if(group != NULL) {
-		group->Button(size, position, text);
+		bool result = group->Button(size, position, text);
+		lua_pushboolean(L, result ? 1 : 0);
 	} else {
 		luaM_printerror(L, "Expected: self<CanvasGroup>:Button(Size, Position, [Text])");
+		lua_pushboolean(L, 0);
 	}
 
-	return 0;
+	return 1;
 }

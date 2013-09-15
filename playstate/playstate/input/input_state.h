@@ -32,9 +32,11 @@ namespace playstate
 	{
 	public:
 		enum Enum {
-			MK_LEFT,
-			MK_MIDDLE,
-			MK_RIGHT,
+			LEFT = 0,
+			MIDDLE,
+			RIGHT,
+
+			NO_BUTTON
 		};
 	};
 	

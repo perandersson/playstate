@@ -35,6 +35,14 @@ namespace playstate
 		//
 		// Convert mouse coordinates to canvas uniform coordinates [0, 1]
 		Vector2 GetMousePositionAsUniform() const;
+
+		//
+		// @return The mouse position
+		Point GetMousePosition() const;
+
+		//
+		// @return The mouse button that's clicked
+		MouseButtons::Enum GetMouseClick() const;
 		
 		//
 		// Prepares the building blocks for the user interface contained in this canvas.
@@ -70,6 +78,9 @@ namespace playstate
 		Vector2 mSize;
 		Matrix4x4 mProjectionMatrix;
 		std::auto_ptr<IUpdateProcessor> mUpdateProcessor;
+
+		MouseButtons::Enum mLastButtonDown;
+		MouseButtons::Enum mButtonClicked;
 	};
 	
 	// Script integration

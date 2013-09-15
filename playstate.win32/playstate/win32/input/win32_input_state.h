@@ -2,10 +2,19 @@
 
 #include <playstate/input/input_state.h>
 
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
+
 namespace playstate
 {
 	namespace win32
 	{
+		static const DWORD Win32MouseButtons[MouseButtons::NO_BUTTON] = {
+			VK_LBUTTON,
+			VK_MBUTTON,
+			VK_RBUTTON
+		};
+
 		class Win32GamePadState : public IGamePadState
 		{
 		public:

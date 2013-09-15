@@ -65,32 +65,18 @@ Win32MouseState::~Win32MouseState()
 
 bool Win32MouseState::IsDown(MouseButtons::Enum button)
 {
-	switch(button)
-	{
-	case MouseButtons::MK_LEFT:
-		return (GetKeyState(VK_LBUTTON) & 0x80) != 0;
-	case MouseButtons::MK_MIDDLE:
-		return (GetKeyState(VK_MBUTTON) & 0x80) != 0;
-	case MouseButtons::MK_RIGHT:
-		return (GetKeyState(VK_RBUTTON) & 0x80) != 0;
-	default:
+	if(button == MouseButtons::NO_BUTTON)
 		return false;
-	}
+
+	return (GetKeyState(Win32MouseButtons[button]) & 0x80) != 0;
 }
 
 bool Win32MouseState::IsUp(MouseButtons::Enum button)
 {
-	switch(button)
-	{
-	case MouseButtons::MK_LEFT:
-		return (GetKeyState(VK_LBUTTON) & 0x80) == 0;
-	case MouseButtons::MK_MIDDLE:
-		return (GetKeyState(VK_MBUTTON) & 0x80) == 0;
-	case MouseButtons::MK_RIGHT:
-		return (GetKeyState(VK_RBUTTON) & 0x80) == 0;
-	default:
-		return true;
-	}
+	if(button == MouseButtons::NO_BUTTON)
+		return false;
+
+	return (GetKeyState(Win32MouseButtons[button]) & 0x80) == 0;
 }
 
 Point Win32MouseState::GetPosition()

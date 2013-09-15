@@ -1,5 +1,6 @@
 #pragma once
 #include "../types.h"
+#include "point.h"
 
 namespace playstate
 {
@@ -29,6 +30,15 @@ namespace playstate
 			Y = r.Y;
 			Width = r.Width;
 			Height = r.Height;
+		}
+
+		inline bool IsPointInside(const Point& pt) {
+			if(pt.X > (X) && pt.X < (X + Width)) {
+				if(pt.Y > (Y) && pt.Y < (Y + Height)) {
+					return true;
+				}
+			}
+			return false;
 		}
 	};
 }

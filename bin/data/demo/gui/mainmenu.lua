@@ -15,6 +15,7 @@ function MainMenu:OnGUI()
 	self:BeginFrame({ 200, 768 }, { 1024 - 200, 0 }, "Example")
 	if self:Button({ 140, 40 }, { 0, 20 }, "Start Game") then
 		-- Load level
+		print("button clicked?")
 	end
 	self:EndFrame()
 end

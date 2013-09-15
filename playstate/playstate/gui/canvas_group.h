@@ -85,8 +85,12 @@ namespace playstate
 		// Method called when this canvas groups user interface is to be processed.
 		virtual void OnProcessCanvas();
 
+		//
+		// Method called when this canvas group is added to the canvas
 		virtual void OnAddedToCanvas();
 
+		//
+		// Method called right before this canvas group is removed from the canvas
 		virtual void OnRemovingFromCanvas();
 
 	protected:

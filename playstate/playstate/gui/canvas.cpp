@@ -5,7 +5,8 @@
 using namespace playstate;
 
 Canvas::Canvas(IWindow& window, IInputSystem& inputSystem, std::auto_ptr<IUpdateProcessor> updateProcessor)
-	: mWindow(window), mInputSystem(inputSystem), mGroups(offsetof(CanvasGroup, CanvasGroupLink)), mUpdateProcessor(updateProcessor)
+	: mWindow(window), mInputSystem(inputSystem), mGroups(offsetof(CanvasGroup, CanvasGroupLink)), mUpdateProcessor(updateProcessor),
+	mLastButtonDown(MouseButtons::NO_BUTTON), mButtonClicked(MouseButtons::NO_BUTTON)
 {
 }
 
@@ -53,6 +54,19 @@ void Canvas::DetachTickable(ITickable* tickable)
 void Canvas::Update()
 {
 	mUpdateProcessor->Update();
+	IMouseState& state = mInputSystem.GetMouseState();
+	if(state.IsDown(MouseButtons::LEFT))
+		mLastButtonDown = MouseButtons::LEFT;
+	if(state.IsDown(MouseButtons::MIDDLE))
+		mLastButtonDown = MouseButtons::MIDDLE;
+	if(state.IsDown(MouseButtons::RIGHT))
+		mLastButtonDown = MouseButtons::RIGHT;
+	
+	mButtonClicked = MouseButtons::NO_BUTTON;
+	if(state.IsUp(mLastButtonDown)) {
+		mButtonClicked = mLastButtonDown;
+		mLastButtonDown = MouseButtons::NO_BUTTON;
+	}
 }
 
 bool Canvas::ProcessCanvas(GuiGeometryBuilder& builder)
@@ -70,6 +84,17 @@ Vector2 Canvas::GetMousePositionAsUniform() const
 	Point size = mWindow.GetSize();
 	Point pt = mInputSystem.GetMouseState().GetPosition();
 	return Vector2(pt.X / (float32)size.Width, pt.Y / (float32)size.Height);
+}
+
+Point Canvas::GetMousePosition() const
+{
+	Point pt = mInputSystem.GetMouseState().GetPosition();
+	return pt;
+}
+
+MouseButtons::Enum Canvas::GetMouseClick() const
+{
+	return mButtonClicked;
 }
 
 void Canvas::SetSize(const Vector2& size)

@@ -2,6 +2,7 @@
 #include "canvas_group.h"
 #include "../processor/processors/linked_list_update_processor.h"
 #include "../script/script_system.h"
+#include "canvas.h"
 using namespace playstate;
 
 CanvasGroup::CanvasGroup()
@@ -118,5 +119,14 @@ bool CanvasGroup::Button(const Size& size, const Vector2& position, const playst
 		mGeometryBuilder->AddText(mFont.Get(), absolutePosition, mFrontColor, text, size);
 	}
 
+	if(mCanvas->GetMouseClick() == MouseButtons::LEFT) {
+		// Check if mouse is over current position
+		const Point mousePos = mCanvas->GetMousePosition();
+		if(Rect(absolutePosition.X, absolutePosition.Y, size.Width, size.Height).IsPointInside(mousePos)) {
+			return true;
+		}
+	}
+
 	return false;
 }
+
