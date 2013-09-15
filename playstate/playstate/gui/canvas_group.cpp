@@ -4,156 +4,119 @@
 #include "../script/script_system.h"
 using namespace playstate;
 
-CanvasGroup::CanvasGroup(std::auto_ptr<IUpdateProcessor> updateProcessor)
-	: mUpdateProcessor(updateProcessor), mWidgets(offsetof(GuiWidget, GuiWidgetLink))
+CanvasGroup::CanvasGroup()
+	: mCanvas(NULL), mGeometryBuilder(NULL)
 {
-	assert_not_null(mUpdateProcessor.get());
 }
 
 CanvasGroup::~CanvasGroup()
 {
-	mWidgets.DeleteAll();
 }
 
-void CanvasGroup::AttachUpdatable(IUpdatable* updatable)
+void CanvasGroup::AddedToCanvas(Canvas* canvas)
 {
-	assert_not_null(updatable);
-	mUpdateProcessor->AttachUpdatable(updatable);
+	assert(mCanvas == NULL);
+	mCanvas = canvas;
+	this->OnAddedToCanvas();
 }
 
-void CanvasGroup::DetachUpdatable(IUpdatable* updatable)
+void CanvasGroup::RemovingFromCanvas(Canvas* canvas)
 {
-	assert_not_null(updatable);
-	mUpdateProcessor->DetachUpdatable(updatable);
-}
-
-void CanvasGroup::AttachTickable(ITickable* tickable)
-{
-	assert_not_null(tickable);
-	mUpdateProcessor->AttachTickable(tickable);
-}
-
-void CanvasGroup::DetachTickable(ITickable* tickable)
-{
-	assert_not_null(tickable);
-	mUpdateProcessor->DetachTickable(tickable);
-}
-
-void CanvasGroup::Update()
-{
-	mUpdateProcessor->Update();
-}
-
-void CanvasGroup::AddWidget(GuiWidget* widget)
-{
-	assert_not_null(widget);
-	mWidgets.AddLast(widget);
-	widget->WidgetAttachedToCanvasGroup(this);
-}
-
-void CanvasGroup::RemoveWidget(GuiWidget* widget)
-{
-	assert_not_null(widget);
-	widget->DetachingWidgetFromCanvasGroup(this);
-	mWidgets.Remove(widget);
-}
-
-const Vector2& CanvasGroup::GetPosition() const
-{
-	return mPosition;
-}
-
-const Vector2& CanvasGroup::GetSize() const
-{
-	return mSize;
+	assert(mCanvas == canvas && "Why are you removing another canvases canvas group?");
+	this->OnRemovingFromCanvas();
+	mCanvas = NULL;
 }
 
 void CanvasGroup::SetStyle(const GuiStyle& style)
 {
 	mStyle = style;
-	GuiWidget* widget = mWidgets.First();
-	while(widget != NULL) {
-		widget->UpdateStyle(mStyle);
-		widget = widget->GuiWidgetLink.Tail;
-	}
+
+	mBackColorTop = style.FindColor(SAFE_STRING("BackColor.Top"), Color::HexToRGB("#99"));
+	mBackColorBottom = style.FindColor(SAFE_STRING("BackColor.Bottom"), Color::HexToRGB("#22"));
+	mFrontColor = style.FindColor(SAFE_STRING("FrontColor"), Color::White);
+	mFont = style.FindResource<Font>(SAFE_STRING("Font"));
 }
 
-bool CanvasGroup::PreRender(GuiGeometryBuilder& builder)
+void CanvasGroup::ProcessCanvas(GuiGeometryBuilder* builder)
 {
-	GuiWidget* widget = mWidgets.First();
-	while(widget != NULL) {
-		widget->PreRender(builder);
-		widget = widget->GuiWidgetLink.Tail;
-	}
-	return true;
+	assert_not_null(builder);
+	mGeometryBuilder = builder;
+	this->OnProcessCanvas();
+	assert(mPositions.empty() && "You havn't ended all the frames");
 }
 
-int playstate::CanvasGroup_Factory(lua_State* L)
+void CanvasGroup::OnProcessCanvas()
 {
-	std::auto_ptr<IUpdateProcessor> up(new LinkedListUpdateProcessor());
-	CanvasGroup* group = new CanvasGroup(up);
-	luaM_pushobject(L, "CanvasGroup", group);
-	return 1;
 }
 
-int playstate::CanvasGroup_Load(lua_State* L)
+void CanvasGroup::OnAddedToCanvas()
 {
-	const playstate::string fileName = lua_tostring(L, -1); lua_pop(L, 1);
-	try {
-		ScriptSystem& scriptSystem = ScriptSystem::Get();
-		std::auto_ptr<Script> script = scriptSystem.CompileFile(fileName);
-		CanvasGroup* group = script->ReadInstance<CanvasGroup>();
-		if(group == NULL) {
-			ILogger::Get().Error("The file: '%s' did not return a canvas group.", fileName.c_str());
-			lua_pushnil(L);
-		}
-		else
-			luaM_pushobject(L, "CanvasGroup", group);
-		return 1;
-	} catch(ScriptException e) {
-		ILogger::Get().Error("Could not load canvas group: '%s'. Reason: '%s'", fileName.c_str(), e.GetMessage().c_str());
-	}
-		
-	lua_pushnil(L);
-	return 1;
 }
 
-int playstate::CanvasGroup_SetStyle(lua_State* L)
+void CanvasGroup::OnRemovingFromCanvas()
 {
-	if(!lua_istable(L, -1)) {
-		luaM_printerror(L, "Expected: self<CanvasGroup>:SetStyle(table)");
-		return 0;
 	}
 
-	int configRef = luaL_ref(L, LUA_REGISTRYINDEX);
-	GuiStyle style(L, configRef);
-	CanvasGroup* self = luaM_popobject<CanvasGroup>(L);
-	if(self != NULL) {
-		self->SetStyle(style);
-	} else {
-		luaM_printerror(L, "Expected: self<CanvasGroup>:SetStyle(table)");
-		return 0;
-	}
+Vector2 CanvasGroup::GetAbsolutePosition(const Vector2& relativePosition) const
+{
+	if(mPositions.empty())
+		return relativePosition;
 
-	return 0;
+	return mPositions.top() + relativePosition;
 }
 
-int playstate::CanvasGroup_AddWidget(lua_State* L)
+void CanvasGroup::BeginFrame(const Size& size, const Vector2& position, const playstate::string& title)
 {
-	GuiWidget* widget = luaM_popobject<GuiWidget>(L);
-	CanvasGroup* self = luaM_popobject<CanvasGroup>(L);
-	if(self != NULL && widget != NULL) {
-		self->AddWidget(widget);
+	const uint32 shadowOffset = 3;
+	const uint32 titleHeight = 25;
+
+	static const Color shadowColor(0, 0, 0, 0.3);
+
+	static const Color titleTop = Color::HexToRGB("#EEEEEE");
+	static const Color titleBottom = Color::HexToRGB("#777777");
+
+	const Vector2 absolutePosition = GetAbsolutePosition(position);
+
+	// Add shadow
+	mGeometryBuilder->AddQuad(absolutePosition - Vector2(shadowOffset, shadowOffset),
+		size + Size(shadowOffset * 2, shadowOffset * 2), shadowColor);
+
+	// Add title
+	mGeometryBuilder->AddGradientQuad(absolutePosition, Size(size.X, titleHeight), titleTop, titleBottom);
+
+	// Add body
+	mGeometryBuilder->AddGradientQuad(absolutePosition + Vector2(0.0f, titleHeight), size - Size(0.0f, titleHeight), mBackColorTop, mBackColorBottom);
+
+	if(!mFont.IsNull()) {
+		mGeometryBuilder->AddText(mFont.Get(), absolutePosition, mFrontColor, title, Size(size.X, titleHeight));
 	}
-	return 0;
+
+	mPositions.push(absolutePosition);
 }
 
-int playstate::CanvasGroup_RemoveWidget(lua_State* L)
+void CanvasGroup::EndFrame()
 {
-	GuiWidget* widget = luaM_popobject<GuiWidget>(L);
-	CanvasGroup* self = luaM_popobject<CanvasGroup>(L);
-	if(self != NULL && widget != NULL) {
-		self->RemoveWidget(widget);
+	assert(mPositions.size() > 0 && "Why are you ending a non-existing frame?");
+	mPositions.pop();
+}
+
+bool CanvasGroup::Button(const Size& size, const Vector2& position, const playstate::string& text)
+{
+	const uint32 shadowOffset = 3;
+
+	static const Color shadowColor(0, 0, 0, 0.3);
+	const Vector2 absolutePosition = GetAbsolutePosition(position);
+
+	// Add shadow
+	mGeometryBuilder->AddQuad(absolutePosition - Vector2(shadowOffset, shadowOffset),
+		size + Size(shadowOffset * 2, shadowOffset * 2), shadowColor);
+
+	// Add body
+	mGeometryBuilder->AddGradientQuad(absolutePosition, size, mBackColorTop, mBackColorBottom);
+
+	if(!mFont.IsNull()) {
+		mGeometryBuilder->AddText(mFont.Get(), absolutePosition, mFrontColor, text, size);
 	}
-	return 0;
+
+	return false;
 }

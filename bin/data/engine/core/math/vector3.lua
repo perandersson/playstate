@@ -1,4 +1,7 @@
 local Vector3 = {}
+function Vector3.__call(x, y, z)
+	return {x, y, z}
+end
 
 -- Adds two tables containing three indexed elements at pos 1, 2 and 3.
 -- @lhs

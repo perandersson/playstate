@@ -10,6 +10,7 @@
 #include "../timer/timer_factory.h"
 #include "../image/image_resource_loader.h"
 #include "../sound/sound_engine.h"
+#include "../processor/processors/linked_list_update_processor.h"
 using namespace playstate;
 
 namespace playstate
@@ -22,7 +23,7 @@ template<> playstate::GameRunner* playstate::Singleton<playstate::GameRunner>::g
 
 GameRunner::GameRunner(IGame* game, IConfiguration* configuration) 
 	: mGame(game), mConfiguration(configuration), mRenderPipeline(NULL), mRunning(true),
-	mCanvas(IWindow::Get(), IInputSystem::Get()), mTimer(NULL)
+	mCanvas(IWindow::Get(), IInputSystem::Get(), std::auto_ptr<IUpdateProcessor>(new LinkedListUpdateProcessor())), mTimer(NULL)
 {
 	assert_not_null(game);
 	assert_not_null(configuration);

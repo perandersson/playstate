@@ -1,6 +1,9 @@
 local class = require "engine.class"
 local config = require "config"
 
+-- MainMenu class
+local MainMenu = require "demo.gui.mainmenu"
+
 DemoGame = class("DemoGame", IGame)
 
 function DemoGame:__init()
@@ -43,8 +46,7 @@ function DemoGame:LoadContent()
 	print("Load time: " .. Timer.End(timer) .. " seconds")
 
 	-- Load the main menu (this will start the first level later)
-	local mainMenu = CanvasGroup.Load("/demo/menu/mainmenu.lua")
-	Canvas.AddCanvasGroup(mainMenu)
+	Canvas.AddCanvasGroup(MainMenu())
 end
 
 function DemoGame:Update()
@@ -55,9 +57,6 @@ function DemoGame:Update()
 		self.totalTime = 1.0 - self.totalTime
 		self.numFrames = 0
 	end
-	
-	--local x,y = Mouse.GetPosition()
-	--print("x,y = " .. x .. "," .. y)
 end
 
 function DemoGame:UnloadContent()

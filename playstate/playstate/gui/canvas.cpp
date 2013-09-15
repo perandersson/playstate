@@ -4,10 +4,12 @@
 #include "../camera/camera.h"
 using namespace playstate;
 
-Canvas::Canvas(IWindow& window, IInputSystem& inputSystem)
-	: mWindow(window), mInputSystem(inputSystem), mGroups(offsetof(CanvasGroup, CanvasGroupLink))
+Canvas::Canvas(IWindow& window, IInputSystem& inputSystem, std::auto_ptr<IUpdateProcessor> updateProcessor)
+	: mWindow(window), mInputSystem(inputSystem), mGroups(offsetof(CanvasGroup, CanvasGroupLink)), mUpdateProcessor(updateProcessor)
 {
 }
+
+
 
 Canvas::~Canvas()
 {
@@ -18,31 +20,46 @@ void Canvas::AddCanvasGroup(CanvasGroup* group)
 {
 	assert_not_null(group);
 	mGroups.AddLast(group);
+	group->AddedToCanvas(this);
 }
 
 void Canvas::RemoveCanvasGroup(CanvasGroup* group)
 {
 	assert_not_null(group);
+	group->RemovingFromCanvas(this);
 	mGroups.Remove(group);
+}
+
+void Canvas::AttachUpdatable(IUpdatable* updatable)
+{
+	mUpdateProcessor->AttachUpdatable(updatable);
+}
+
+void Canvas::DetachUpdatable(IUpdatable* updatable)
+{
+	mUpdateProcessor->DetachUpdatable(updatable);
+}
+
+void Canvas::AttachTickable(ITickable* tickable)
+{
+	mUpdateProcessor->AttachTickable(tickable);
+}
+
+void Canvas::DetachTickable(ITickable* tickable)
+{
+	mUpdateProcessor->DetachTickable(tickable);
 }
 
 void Canvas::Update()
 {
-	Vector2 mouseCoords = GetMousePositionAsUniform();
-
-	CanvasGroup* group = mGroups.First();
-	while(group != NULL) {
-		CanvasGroup* next = group->CanvasGroupLink.Tail;
-		group->Update();
-		group = next;
-	}
+	mUpdateProcessor->Update();
 }
 
-bool Canvas::PreRender(GuiGeometryBuilder& builder)
+bool Canvas::ProcessCanvas(GuiGeometryBuilder& builder)
 {
 	CanvasGroup* group = mGroups.First();
 	while(group != NULL) {
-		group->PreRender(builder);
+		group->ProcessCanvas(&builder);
 		group = group->CanvasGroupLink.Tail;
 	}
 	return true;

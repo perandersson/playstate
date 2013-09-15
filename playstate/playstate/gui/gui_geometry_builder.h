@@ -24,10 +24,10 @@ namespace playstate
 		GuiGeometryBuilder(IRenderSystem& renderSystem);
 		~GuiGeometryBuilder();
 
-		void AddQuad(const Vector2& position, const Vector2& size);
-		void AddQuad(const Vector2& position, const Vector2& size, const Color& color);
-		void AddGradientQuad(const Vector2& position, const Vector2& size, const Color& topColor, const Color& bottomColor);
-		void AddGradientQuad(const Vector2& position, const Vector2& size, const Color& topLeftColor, const Color& topRightColor,
+		void AddQuad(const Vector2& position, const Size& size);
+		void AddQuad(const Vector2& position, const Size& size, const Color& color);
+		void AddGradientQuad(const Vector2& position, const Size& size, const Color& topColor, const Color& bottomColor);
+		void AddGradientQuad(const Vector2& position, const Size& size, const Color& topLeftColor, const Color& topRightColor,
 			const Color& bottomLeftColor, const Color& bottomRightColor);
 
 		//
@@ -39,7 +39,7 @@ namespace playstate
 		// @param text
 		void AddText(Font* font, const Vector2& position, const Color& color, const playstate::string& text);
 		void AddText(Font* font, const Vector2& position, const Color& color, const playstate::string& text, uint32 maxLenght);
-		void AddText(Font* font, const Vector2& position, const Color& color, const playstate::string& text, const Vector2& maxSize);
+		void AddText(Font* font, const Vector2& position, const Color& color, const playstate::string& text, const Size& maxSize);
 
 		//
 		// @return The first building block
@@ -52,7 +52,7 @@ namespace playstate
 		void Reset();
 
 	private:
-		void AddQuad(const Vector2& position, const Vector2& size, const Color& topLeftColor, const Color& topRightColor,
+		void AddQuad(const Vector2& position, const Size& size, const Color& topLeftColor, const Color& topRightColor,
 			const Color& bottomLeftColor, const Color& bottomRightColor, ITexture2D* texture);
 
 		void BuildAndPushBuildingBlocks();

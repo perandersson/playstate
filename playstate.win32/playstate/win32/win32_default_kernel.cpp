@@ -6,8 +6,7 @@
 #include <playstate/component/renderable/render_static_model.h>
 #include <playstate/component/renderable/render_dynamic_model.h>
 #include <playstate/component/lightsources/point_light.h>
-#include <playstate/gui/widgets/gui_frame_widget.h>
-#include <playstate/gui/widgets/gui_button_widget.h>
+#include <playstate/gui/scriptable_canvas_group.h>
 #include <playstate/font/font.h>
 #include <playstate/sound/sound_effect.h>
 #include <playstate/sound/music.h>
@@ -105,11 +104,6 @@ void Win32DefaultKernel::RegisterScript()
 	ss.RegisterType("SoundListener", SoundListener_Methods);
 	ss.RegisterType("Music", Music_Methods);
 	ss.RegisterType("Timer", ITimer_Methods);
-	ss.RegisterType("GuiFrameWidget", GuiWidget_Methods);
-	ss.RegisterType("GuiFrameWidget", GuiFrameWidget_Methods);
-
-	ss.RegisterType("GuiButtonWidget", GuiWidget_Methods);
-	ss.RegisterType("GuiButtonWidget", GuiButtonWidget_Methods);
 
 	ss.RegisterType("QuadTreeRenderProcessor", QuadTreeRenderProcessor_Methods);
 	ss.RegisterType("LinkedListRenderProcessor", LinkedListRenderProcessor_Methods);

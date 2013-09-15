@@ -16,28 +16,28 @@ GuiGeometryBuilder::~GuiGeometryBuilder()
 	}
 }
 
-void GuiGeometryBuilder::AddQuad(const Vector2& position, const Vector2& size)
+void GuiGeometryBuilder::AddQuad(const Vector2& position, const Size& size)
 {
 	AddQuad(position, size, Color::White);
 }
 
-void GuiGeometryBuilder::AddQuad(const Vector2& position, const Vector2& size, const Color& color)
+void GuiGeometryBuilder::AddQuad(const Vector2& position, const Size& size, const Color& color)
 {
 	AddGradientQuad(position, size, color, color);
 }
 
-void GuiGeometryBuilder::AddGradientQuad(const Vector2& position, const Vector2& size, const Color& topColor, const Color& bottomColor)
+void GuiGeometryBuilder::AddGradientQuad(const Vector2& position, const Size& size, const Color& topColor, const Color& bottomColor)
 {
 	AddGradientQuad(position, size, topColor, topColor, bottomColor, bottomColor);
 }
 
-void GuiGeometryBuilder::AddGradientQuad(const Vector2& position, const Vector2& size, const Color& topLeftColor, const Color& topRightColor,
+void GuiGeometryBuilder::AddGradientQuad(const Vector2& position, const Size& size, const Color& topLeftColor, const Color& topRightColor,
 	const Color& bottomLeftColor, const Color& bottomRightColor)
 {
 	AddQuad(position, size, topLeftColor, topRightColor, bottomLeftColor, bottomRightColor, NULL);
 }
 
-void GuiGeometryBuilder::AddQuad(const Vector2& position, const Vector2& size, const Color& topLeftColor, const Color& topRightColor,
+void GuiGeometryBuilder::AddQuad(const Vector2& position, const Size& size, const Color& topLeftColor, const Color& topRightColor,
 			const Color& bottomLeftColor, const Color& bottomRightColor, ITexture2D* texture)
 {
 	if(mNumVertices > 0 && mCurrentTexture != texture) {
@@ -80,15 +80,15 @@ void GuiGeometryBuilder::AddQuad(const Vector2& position, const Vector2& size, c
 
 void GuiGeometryBuilder::AddText(Font* font, const Vector2& position, const Color& color, const playstate::string& text)
 {
-	AddText(font, position, color, text, Vector2(FLT_MAX, FLT_MAX));
+	AddText(font, position, color, text, Size(UINT_MAX, UINT_MAX));
 }
 
 void GuiGeometryBuilder::AddText(Font* font, const Vector2& position, const Color& color, const playstate::string& text, uint32 maxLenght)
 {
-	AddText(font, position, color, text, Vector2((float32)maxLenght, FLT_MAX));
+	AddText(font, position, color, text, Size(maxLenght, UINT_MAX));
 }
 
-void GuiGeometryBuilder::AddText(Font* font, const Vector2& position, const Color& color, const playstate::string& text, const Vector2& maxSize)
+void GuiGeometryBuilder::AddText(Font* font, const Vector2& position, const Color& color, const playstate::string& text, const Size& maxSize)
 {
 	if(mNumVertices > 0 && mCurrentTexture != font->GetTexture()) {
 		BuildAndPushBuildingBlocks();

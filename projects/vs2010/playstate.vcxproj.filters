@@ -102,12 +102,6 @@
     <Filter Include="Source Files\resources\threaded">
       <UniqueIdentifier>{ed0c42e2-1fe9-4222-b832-239d54153b8c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\gui\events">
-      <UniqueIdentifier>{b558da70-1c55-482a-ba4a-2bca3f5961c9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\gui\widgets">
-      <UniqueIdentifier>{5d70a75f-dfd6-4a44-9dca-aae5e241da20}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\font">
       <UniqueIdentifier>{6041ea1f-4a97-43c0-88fa-178c65ffb061}</UniqueIdentifier>
     </Filter>
@@ -332,18 +326,6 @@
     <ClCompile Include="..\..\playstate\playstate\gui\canvas_group.cpp">
       <Filter>Source Files\gui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\gui\gui_widget.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\gui\gui_event.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\gui\widgets\gui_frame_widget.cpp">
-      <Filter>Source Files\gui\widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\gui\widgets\gui_button_widget.cpp">
-      <Filter>Source Files\gui\widgets</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\gui\gui_style.cpp">
       <Filter>Source Files\gui</Filter>
     </ClCompile>
@@ -403,6 +385,9 @@
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\image\image_resource_loader.cpp">
       <Filter>Source Files\image</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\gui\scriptable_canvas_group.cpp">
+      <Filter>Source Files\gui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -718,26 +703,11 @@
     <ClInclude Include="..\..\playstate\playstate\gui\canvas_group.h">
       <Filter>Source Files\gui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\gui\gui_widget.h">
-      <Filter>Source Files\gui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\gui\gui_event.h">
-      <Filter>Source Files\gui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\gui\events\mouse_event.h">
-      <Filter>Source Files\gui\events</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\gui\widgets\gui_frame_widget.h">
-      <Filter>Source Files\gui\widgets</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\memory\memory_pool.h">
       <Filter>Source Files\memory</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\search\result_set.h">
       <Filter>Source Files\search</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\gui\widgets\gui_button_widget.h">
-      <Filter>Source Files\gui\widgets</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\gui\gui_style.h">
       <Filter>Source Files\gui</Filter>
@@ -819,6 +789,9 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\image\image_resource_loader.h">
       <Filter>Source Files\image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\gui\scriptable_canvas_group.h">
+      <Filter>Source Files\gui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

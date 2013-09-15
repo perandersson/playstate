@@ -83,7 +83,7 @@ void DeferredRenderPipeline::Render(Scene& scene, Canvas& canvas, const Camera& 
 
 void DeferredRenderPipeline::DrawUserInterface(Canvas& canvas)
 {
-	if(canvas.PreRender(mGeometryBuilder)) {
+	if(canvas.ProcessCanvas(mGeometryBuilder)) {
 		mUserInterfaceShader->Apply();
 		mUserInterfaceShader->FindComponent("ProjectionMatrix")->SetMatrix(canvas.GetProjectionMatrix());
 

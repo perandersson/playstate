@@ -59,7 +59,8 @@ function class(className, inheritsClass, classDef)
 			c.__init(new_instance, ...)
 		elseif c.__base and c.__base.__init then
 			c.__base.__init(new_instance, ...)
-		end		
+		end	
+		new_instance.Class = c.Class
 		return new_instance
 	end
 	setmetatable(c, mt)

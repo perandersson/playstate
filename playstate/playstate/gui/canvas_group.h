@@ -2,42 +2,46 @@
 
 #include "../linked_list.h"
 #include "../processor/update_processor.h"
-#include "gui_widget.h"
 #include "../math/vector2.h"
 #include "../math/point.h"
 #include "gui_geometry_builder.h"
 #include "../script/scriptable.h"
 #include "gui_style.h"
 
+#include <stack>
+
 namespace playstate
 {
+	class Canvas;
+
 	//
 	// A CanvasGroup is a container which manages collections of CanvasNodes and their related action types.
 	// 
-	class CanvasGroup : public Scriptable, public IUpdateProcessor
+	class CanvasGroup : public Scriptable
 	{
 	public:
 		LinkedListLink<CanvasGroup> CanvasGroupLink;
 
 	public:
 		CanvasGroup();
-		CanvasGroup(std::auto_ptr<IUpdateProcessor> updateProcessor);
 		virtual ~CanvasGroup();
 
 		//
-		// Adds the supplied node to this canvas group
-		void AddWidget(GuiWidget* widget);
+		// This group is added to the supplied canvas
+		void AddedToCanvas(Canvas* canvas);
 
 		//
-		// Removes this node from the canvas group
-		void RemoveWidget(GuiWidget* widget);
+		// This group is being removed from the supplied canvas
+		void RemovingFromCanvas(Canvas* canvas);
+
+		inline Canvas* GetCanvas() {
+			return mCanvas;
+		}
+
+		inline const Canvas* GetCanvas() const {
+			return mCanvas;
+		}
 		
-		//
-		const Vector2& GetPosition() const;
-
-		//
-		const Vector2& GetSize() const;
-
 		//
 		// Updates the style for all items in this canvas group with the supplied style
 		//
@@ -51,42 +55,50 @@ namespace playstate
 		}
 		
 		//
-		// Builds the geometry needed to draw the user interface
+		// Process this CanvasGroup and prepare it to generate GUI geometry to be drawn.
 		//
-		// @param builder
-		bool PreRender(GuiGeometryBuilder& builder);
+		// @param builder The Geometry Builder
+		void ProcessCanvas(GuiGeometryBuilder* builder);
 
-	// IUpdateProcessor
+		//
+		// Calculates the absolute position for the supplied relative position
+		//
+		// @param relativePosition
+		// @return
+		Vector2 GetAbsolutePosition(const Vector2& relativePosition) const;
+		
 	public:
-		virtual void AttachUpdatable(IUpdatable* updatable);
-		virtual void DetachUpdatable(IUpdatable* updatable);
-		virtual void AttachTickable(ITickable* tickable);
-		virtual void DetachTickable(ITickable* tickable);
-		virtual void Update();
+		//
+		// Begins a frame
+		void BeginFrame(const Size& size, const Vector2& position, const playstate::string& title);
 
-	private:
-		LinkedList<GuiWidget> mWidgets;
-		std::auto_ptr<IUpdateProcessor> mUpdateProcessor;
+		//
+		// Ends the current frame
+		void EndFrame();
 
-	private:
-		Vector2 mPosition;
-		Vector2 mSize;
+		//
+		// 
+		bool Button(const Size& size, const Vector2& position, const playstate::string& text);
+
+	protected:
+		//
+		// Method called when this canvas groups user interface is to be processed.
+		virtual void OnProcessCanvas();
+
+		virtual void OnAddedToCanvas();
+
+		virtual void OnRemovingFromCanvas();
+
+	protected:
+		Canvas* mCanvas;
+		GuiGeometryBuilder* mGeometryBuilder;
+
 		GuiStyle mStyle;
-	};
-	
-	// Script integration
+		Color mBackColorTop;
+		Color mBackColorBottom;
+		Color mFrontColor;
+		Resource<Font> mFont;
 
-	extern int CanvasGroup_Factory(lua_State* L);
-	extern int CanvasGroup_Load(lua_State* L);
-	extern int CanvasGroup_SetStyle(lua_State* L);
-	extern int CanvasGroup_AddWidget(lua_State* L);
-	extern int CanvasGroup_RemoveWidget(lua_State* L);
-	static luaL_Reg CanvasGroup_Methods[] = {
-		{ LUA_CONSTRUCTOR, CanvasGroup_Factory },
-		{ "Load", CanvasGroup_Load },
-		{ "SetStyle", CanvasGroup_SetStyle },
-		{ "AddWidget", CanvasGroup_AddWidget },
-		{ "RemoveWidget", CanvasGroup_RemoveWidget },
-		{ NULL, NULL }
+		std::stack<Vector2> mPositions;
 	};
 }
