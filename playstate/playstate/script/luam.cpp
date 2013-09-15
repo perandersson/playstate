@@ -293,16 +293,13 @@ namespace playstate
 		Point point;
 
 		if(lua_istable(L, -1)) {
+			int32* points = point.Points;
 			lua_pushnil(L);
-			if(lua_next(L, -2)) {
-				point.X = lua_tointeger(L, -1);
+			while(lua_next(L, -2)) {
+				*points++ = lua_tointeger(L, -1);
 				lua_pop(L, 1);
 			}
-	
-			if(lua_next(L, -2)) {
-				point.Y = lua_tointeger(L, -1);
-				lua_pop(L, 1);
-			}
+
 			lua_pop(L, 1);
 		} else if(lua_isnumber(L, -1) && lua_isnumber(L, -2)) {
 			point.X = lua_tointeger(L, -2);
