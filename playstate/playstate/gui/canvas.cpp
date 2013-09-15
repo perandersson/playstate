@@ -73,8 +73,9 @@ bool Canvas::ProcessCanvas(GuiGeometryBuilder& builder)
 {
 	CanvasGroup* group = mGroups.First();
 	while(group != NULL) {
+		CanvasGroup* next = group->CanvasGroupLink.Tail;
 		group->ProcessCanvas(&builder);
-		group = group->CanvasGroupLink.Tail;
+		group = next;
 	}
 	return true;
 }

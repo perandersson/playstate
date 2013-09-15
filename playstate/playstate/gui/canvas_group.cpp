@@ -12,6 +12,7 @@ CanvasGroup::CanvasGroup()
 
 CanvasGroup::~CanvasGroup()
 {
+	mCanvas = NULL;
 }
 
 void CanvasGroup::AddedToCanvas(Canvas* canvas)
@@ -41,9 +42,9 @@ void CanvasGroup::SetStyle(const GuiStyle& style)
 void CanvasGroup::ProcessCanvas(GuiGeometryBuilder* builder)
 {
 	assert_not_null(builder);
+	mPositions = std::stack<Vector2>();
 	mGeometryBuilder = builder;
 	this->OnProcessCanvas();
-	assert(mPositions.empty() && "You havn't ended all the frames");
 }
 
 void CanvasGroup::OnProcessCanvas()
@@ -97,8 +98,8 @@ void CanvasGroup::BeginFrame(const Size& size, const Vector2& position, const pl
 
 void CanvasGroup::EndFrame()
 {
-	assert(mPositions.size() > 0 && "Why are you ending a non-existing frame?");
-	mPositions.pop();
+	if(mPositions.size() > 0)
+		mPositions.pop();
 }
 
 bool CanvasGroup::Button(const Size& size, const Vector2& position, const playstate::string& text)
