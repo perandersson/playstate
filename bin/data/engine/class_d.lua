@@ -34,7 +34,7 @@ function class(className, inheritsClass, classDef)
 	end
 	
 	classDef.ClassName = className
-	c = { Class = classDef }
+	local c = { Class = classDef }
 	
 	-- Inherit class if needed
 	if inheritsClass then
