@@ -31,6 +31,18 @@ void Canvas::RemoveCanvasGroup(CanvasGroup* group)
 	mGroups.Remove(group);
 }
 
+CanvasGroup* Canvas::GetCanvasGroupByName(const playstate::string& name)
+{
+	CanvasGroup* group = mGroups.First();
+	while(group != NULL) {
+		if(group->GetName() == name) {
+			return group;
+		}
+		group = group->CanvasGroupLink.Tail;
+	}
+	return group;
+}
+
 void Canvas::AttachUpdatable(IUpdatable* updatable)
 {
 	mUpdateProcessor->AttachUpdatable(updatable);
@@ -118,22 +130,35 @@ const Matrix4x4& Canvas::GetProjectionMatrix() const
 
 int playstate::Canvas_AddCanvasGroup(lua_State* L)
 {
+	int numParams = lua_gettop(L);
+	if(numParams < 1) {
+		luaM_printerror(L, "Expected: Canvas.AddCanvasGroup(group : CanvasGroup)");
+		return 0;
+	}
+
 	CanvasGroup* group = luaM_popobject<CanvasGroup>(L);
 	if(group != NULL)
 		GameRunner::Get().GetCanvas().AddCanvasGroup(group);
-	else
-		ILogger::Get().Error("Cannot add a CanvasGroup that's nil");
+	else {
+		luaM_printerror(L, "Expected: Canvas.AddCanvasGroup(group : CanvasGroup)");
+	}
 
 	return 0;
 }
 
 int playstate::Canvas_RemoveCanvasGroup(lua_State* L)
 {
+	int numParams = lua_gettop(L);
+	if(numParams < 1) {
+		luaM_printerror(L, "Expected: Canvas.RemoveCanvasGroup(group : CanvasGroup)");
+		return 0;
+	}
+
 	CanvasGroup* group = luaM_popobject<CanvasGroup>(L);
 	if(group != NULL)
 		GameRunner::Get().GetCanvas().RemoveCanvasGroup(group);
 	else
-		ILogger::Get().Error("Cannot remove a CanvasGroup that's nil");
+		luaM_printerror(L, "Expected: Canvas.RemoveCanvasGroup(group : CanvasGroup)");
 
 	return 0;
 }
@@ -142,5 +167,25 @@ int playstate::Canvas_SetSize(lua_State* L)
 {
 	Size size = luaM_poppoint(L);
 	GameRunner::Get().GetCanvas().SetSize(size);
+	return 0;
+}
+
+int playstate::Canvas_Show(lua_State* L)
+{
+	int numParams = lua_gettop(L);
+	if(numParams < 1) {
+		luaM_printerror(L, "Expected: Canvas.Show(name : String)");
+		return 0;
+	}
+
+	const playstate::string name = lua_tostring(L, -1); lua_pop(L, 1);
+	Canvas& canvas = GameRunner::Get().GetCanvas();
+	CanvasGroup* group = canvas.GetCanvasGroupByName(name);
+	if(group != NULL) {
+		//group->Show();
+	} else {
+		luaM_printerror(L, "Could not find a CanvasGroup by the name of: '%s'", name.c_str());
+	}
+	assert_not_implemented();
 	return 0;
 }

@@ -65,22 +65,59 @@ int playstate::CanvasGroup_Init(lua_State* L)
 	return 0;
 }
 
+int playstate::CanvasGroup_SetName(lua_State* L)
+{
+	int numParams = lua_gettop(L);
+	if(numParams < 2) {
+		luaM_printerror(L, "Expected: self<CanvasGroup>:SetName(name : string)");
+		return 0;
+	}
+
+	const playstate::string name = lua_tostring(L, -1); lua_pop(L, 1);
+	ScriptableCanvasGroup* self = luaM_popobject<ScriptableCanvasGroup>(L);
+	if(self != NULL)
+		self->SetName(name);
+	else
+		luaM_printerror(L, "Expected: self<CanvasGroup>:SetName(name : table)");
+
+	return 0;
+}
+
+int playstate::CanvasGroup_GetName(lua_State* L)
+{
+	int numParams = lua_gettop(L);
+	if(numParams < 1) {
+		luaM_printerror(L, "Expected: self<CanvasGroup>:GetName()");
+		lua_pushstring(L, "");
+		return 1;
+	}
+	
+	ScriptableCanvasGroup* self = luaM_popobject<ScriptableCanvasGroup>(L);
+	if(self != NULL) {
+		const playstate::string& name = self->GetName();
+		lua_pushstring(L, name.c_str());
+	} else {
+		luaM_printerror(L, "Expected: self<CanvasGroup>:GetName()");
+		lua_pushstring(L, "");
+	}
+
+	return 1;
+}
+
 int playstate::CanvasGroup_SetStyle(lua_State* L)
 {
 	if(!lua_istable(L, -1)) {
-		luaM_printerror(L, "Expected: self<CanvasGroup>:SetStyle(table)");
+		luaM_printerror(L, "Expected: self<CanvasGroup>:SetStyle(style : table)");
 		return 0;
 	}
 
 	int configRef = luaL_ref(L, LUA_REGISTRYINDEX);
 	GuiStyle style(L, configRef);
 	ScriptableCanvasGroup* self = luaM_popobject<ScriptableCanvasGroup>(L);
-	if(self != NULL) {
+	if(self != NULL)
 		self->SetStyle(style);
-	} else {
-		luaM_printerror(L, "Expected: self<CanvasGroup>:SetStyle(table)");
-		return 0;
-	}
+	else
+		luaM_printerror(L, "Expected: self<CanvasGroup>:SetStyle(style : table)");
 
 	return 0;
 }
@@ -88,24 +125,21 @@ int playstate::CanvasGroup_SetStyle(lua_State* L)
 int playstate::CanvasGroup_BeginFrame(lua_State* L)
 {
 	int numParams = lua_gettop(L);
-	if(numParams < 3) {
-		luaM_printerror(L, "Expected: self<CanvasGroup>:BeginFrame(Size, Position, [Title])");
+	if(numParams < 2) {
+		luaM_printerror(L, "Expected: self<CanvasGroup>:BeginFrame(rect : Rect, [title : string])");
 		return 0;
 	}
 
 	playstate::string title;
-	if(numParams >= 4 && lua_isstring(L, -1))
+	if(numParams >= 3 && lua_isstring(L, -1))
 		title = lua_tostring(L, -1); lua_pop(L, 1);
 
-	const Vector2 position = luaM_popvector2(L);
-	const Size size = luaM_poppoint(L);
-
+	const Rect rect = luaM_poprect(L);
 	ScriptableCanvasGroup* group = luaM_popobject<ScriptableCanvasGroup>(L);
-	if(group != NULL) {
-		group->BeginFrame(size, position, title);
-	} else {
-		luaM_printerror(L, "Expected: self<CanvasGroup>:BeginFrame(Size, Position, [Title])");
-	}
+	if(group != NULL)
+		group->BeginFrame(rect, title);
+	else
+		luaM_printerror(L, "Expected: self<CanvasGroup>:BeginFrame(rect : Rect, [title : string])");
 
 	return 0;
 }
@@ -130,54 +164,51 @@ int playstate::CanvasGroup_EndFrame(lua_State* L)
 int playstate::CanvasGroup_Button(lua_State* L)
 {
 	int numParams = lua_gettop(L);
-	if(numParams < 3) {
-		luaM_printerror(L, "Expected: self<CanvasGroup>:Button(Size, Position, [Text])");
+	if(numParams < 2) {
+		luaM_printerror(L, "Expected: self<CanvasGroup>:Button(rect : Rect, [text : string])");
 		lua_pushboolean(L, 0);
 		return 1;
 	}
 
 	playstate::string text;
-	if(numParams >= 4 && lua_isstring(L, -1))
+	if(numParams >= 3 && lua_isstring(L, -1))
 		text = lua_tostring(L, -1); lua_pop(L, 1);
-
-	const Vector2 position = luaM_popvector2(L);
-	const Size size = luaM_poppoint(L);
-
+	
+	const Rect rect = luaM_poprect(L);
 	ScriptableCanvasGroup* group = luaM_popobject<ScriptableCanvasGroup>(L);
 	if(group != NULL) {
-		bool result = group->Button(size, position, text);
+		bool result = group->Button(rect, text);
 		lua_pushboolean(L, result ? 1 : 0);
 	} else {
-		luaM_printerror(L, "Expected: self<CanvasGroup>:Button(Size, Position, [Text])");
+		luaM_printerror(L, "Expected: self<CanvasGroup>:Button(rect : Rect, [text : string])");
 		lua_pushboolean(L, 0);
 	}
 
 	return 1;
 }
 
-int playstate::CanvasGroup_Toggle(lua_State* L)
+int playstate::CanvasGroup_Checkbox(lua_State* L)
 {
 	int numParams = lua_gettop(L);
-	if(numParams < 4) {
-		luaM_printerror(L, "Expected: self<CanvasGroup>:Toggle(Size, Position, Toggled, [Text])");
+	if(numParams < 3) {
+		luaM_printerror(L, "Expected: self<CanvasGroup>:Checkbox(rect : Rect, toggled : bool, [text : string])");
 		lua_pushboolean(L, 0);
 		return 1;
 	}
 	
 	playstate::string text;
-	if(numParams >= 5 && lua_isstring(L, -1))
+	if(numParams >= 4 && lua_isstring(L, -1))
 		text = lua_tostring(L, -1); lua_pop(L, 1);
 
 	const bool toggled = lua_toboolean(L, -1) == 1; lua_pop(L, 1);
-	const Vector2 position = luaM_popvector2(L);
-	const Size size = luaM_poppoint(L);
+	const Rect rect = luaM_poprect(L);
 	
 	ScriptableCanvasGroup* group = luaM_popobject<ScriptableCanvasGroup>(L);
 	if(group != NULL) {
-		bool result = group->Toggle(size, position, toggled, text);
+		bool result = group->Checkbox(rect, toggled, text);
 		lua_pushboolean(L, result ? 1 : 0);
 	} else {
-		luaM_printerror(L, "Expected: self<CanvasGroup>:Toggle(Size, Position, Toggled, [Text])");
+		luaM_printerror(L, "Expected: self<CanvasGroup>:Checkbox(rect : Rect, toggled : bool, [text : string])");
 		lua_pushboolean(L, 0);
 	}
 
@@ -187,8 +218,8 @@ int playstate::CanvasGroup_Toggle(lua_State* L)
 int playstate::CanvasGroup_Slider(lua_State* L)
 {
 	int numParams = lua_gettop(L);
-	if(numParams < 7) {
-		luaM_printerror(L, "Expected: self<CanvasGroup>:Slider(Size, Position, Value, LeftValue, RightValue, StepValue)");
+	if(numParams < 6) {
+		luaM_printerror(L, "Expected: self<CanvasGroup>:Slider(rect : Rect, value : number, leftValue : number, rightValue : number, stepValue : number)");
 		lua_pushnumber(L, 0.0f);
 		return 1;
 	}
@@ -198,15 +229,14 @@ int playstate::CanvasGroup_Slider(lua_State* L)
 	const float32 leftValue = lua_tonumber(L, -3);
 	const float32 value = lua_tonumber(L, -4);
 	lua_pop(L, 4);
-
-	const Vector2 position = luaM_popvector2(L);
-	const Size size = luaM_poppoint(L);
+	
+	const Rect rect = luaM_poprect(L);
 	ScriptableCanvasGroup* group = luaM_popobject<ScriptableCanvasGroup>(L);
 	if(group != NULL) {
-		const float32 newValue = group->Slider(size, position, value, leftValue, rightValue, stepValue);
+		const float32 newValue = group->Slider(rect, value, leftValue, rightValue, stepValue);
 		lua_pushnumber(L, newValue);
 	} else {
-		luaM_printerror(L, "Expected: self<CanvasGroup>:Slider(Size, Position, Value, LeftValue, RightValue, StepValue)");
+		luaM_printerror(L, "Expected: self<CanvasGroup>:Slider(rect : Rect, value : number, leftValue : number, rightValue : number, stepValue : number)");
 		lua_pushnumber(L, 0.0f);
 	}
 
@@ -216,8 +246,8 @@ int playstate::CanvasGroup_Slider(lua_State* L)
 int playstate::CanvasGroup_ComboBox(lua_State* L)
 {
 	int numParams = lua_gettop(L);
-	if(numParams < 5) {
-		luaM_printerror(L, "Expected: self<CanvasGroup>:ComboBox(Size, Position, SelectedIndex, Values)");
+	if(numParams < 4) {
+		luaM_printerror(L, "Expected: self<CanvasGroup>:ComboBox(rect : Rect, selectedIndex : integer, values : table)");
 		lua_pushinteger(L, 0);
 		return 1;
 	}
@@ -225,15 +255,14 @@ int playstate::CanvasGroup_ComboBox(lua_State* L)
 	// Load the tabel later
 	lua_pop(L, 1);
 	const uint32 selectedIndex = lua_tointeger(L, -1); lua_pop(L, 1);
-	const Vector2 position = luaM_popvector2(L);
-	const Size size = luaM_poppoint(L);
+	const Rect rect = luaM_poprect(L);
 
 	ScriptableCanvasGroup* group = luaM_popobject<ScriptableCanvasGroup>(L);
 	if(group != NULL) {
-		const uint32 newValue = group->ComboBox(size, position, selectedIndex);
+		const uint32 newValue = group->ComboBox(rect, selectedIndex);
 		lua_pushinteger(L, newValue);
 	} else {
-		luaM_printerror(L, "Expected: self<CanvasGroup>:ComboBox(Size, Position, SelectedIndex, Values)");
+		luaM_printerror(L, "Expected: self<CanvasGroup>:ComboBox(rect : Rect, selectedIndex : integer, values : table)");
 		lua_pushinteger(L, 0);
 	}
 	return 1;

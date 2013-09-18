@@ -1,12 +1,16 @@
 local class = require "engine.class"
+local Rect = require "engine.core.math.rect"
 
-MainMenu = class("MainMenu", CanvasGroup, {})
+MainMenu = class("MainMenu", CanvasGroup)
 function MainMenu:__init()
 	CanvasGroup.__init(self)
+	self:SetName("MainMenu")
 	self:SetStyle(require("demo.gui.style"))
-	self.toggled = false
+	self.enabled = false
 	self.sliderValue = 0.0
+	
 	self.selectedIndex = 0
+	self.dropdownValues = { "Value1", "Value2", "Value3" }
 end
 
 function MainMenu:OnProcessCanvas()
@@ -15,22 +19,21 @@ function MainMenu:OnProcessCanvas()
 end
 
 function MainMenu:OnGUI()
-	self:BeginFrame({ 200, 768 }, { 1024 - 200, 0 }, "Example")
-		if self:Button({ 140, 40 }, { 0, 20 }, "Start Game") then
-			if self.toggled then
+	self:BeginFrame(Rect(1024 - 200, 0, 200, 768), "Example")
+		if self:Button(Rect(0, 20, 140, 40), "Start Game") then
+			if self.enabled then
 				self:StartGame()
 				Delete(self)
 				return
 			else
-				print("Start only if toggled!")
+				print("Start only if enabled!")
 			end
 		end
-		self.toggled = self:Toggle({ 140, 20 }, { 0, 70 }, self.toggled, "Enable?")
-		self.sliderValue = self:Slider({ 140, 20 }, { 0, 100 }, self.sliderValue,
+		self.enabled = self:Checkbox(Rect(0, 70, 140, 20), self.enabled, "Enable?")
+		self.sliderValue = self:Slider(Rect(0, 100, 140, 20), self.sliderValue,
 			0.0, 1.0, 0.1)
-		self.selectedIndex = self:ComboBox({ 140, 20 }, { 0, 130 }, self.selectedIndex, {
-			"Value1", "Value2", "Value3"
-		})
+		self.selectedIndex = self:ComboBox(Rect(0, 130, 140, 20), 
+			self.selectedIndex, self.dropdownValues)
 	self:EndFrame()
 end
 

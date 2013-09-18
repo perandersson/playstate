@@ -33,6 +33,11 @@ namespace playstate
 		void RemoveCanvasGroup(CanvasGroup* group);
 
 		//
+		// @param name The name of the canvas group we are looking for
+		// @return The canvas group if found; NULL otherwise
+		CanvasGroup* GetCanvasGroupByName(const playstate::string& name);
+
+		//
 		// Convert mouse coordinates to canvas uniform coordinates [0, 1]
 		Vector2 GetMousePositionAsUniform() const;
 
@@ -88,10 +93,12 @@ namespace playstate
 	extern int Canvas_AddCanvasGroup(lua_State* L);
 	extern int Canvas_RemoveCanvasGroup(lua_State* L);
 	extern int Canvas_SetSize(lua_State* L);
+	extern int Canvas_Show(lua_State* L);
 	static luaL_Reg Canvas_Methods[] = {
 		{ "AddCanvasGroup", Canvas_AddCanvasGroup },
 		{ "RemoveCanvasGroup", Canvas_RemoveCanvasGroup },
 		{ "SetSize", Canvas_SetSize },
+		{ "Show" },
 		{ NULL, NULL }
 	};
 }

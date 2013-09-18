@@ -5,6 +5,7 @@
 #include "../math/vector2.h"
 #include "../math/point.h"
 #include "../math/color.h"
+#include "../math/rect.h"
 #include "../logging/logger.h"
 #include "script_system.h"
 #include <stdarg.h>
@@ -308,6 +309,30 @@ namespace playstate
 		}
 
 		return point;
+	}
+	
+	Rect luaM_poprect(lua_State* L)
+	{
+		Rect rect;
+
+		if(lua_istable(L, -1)) {
+			int32* points = rect.Elements;
+			lua_pushnil(L);
+			while(lua_next(L, -2)) {
+				*points++ = lua_tointeger(L, -1);
+				lua_pop(L, 1);
+			}
+
+			lua_pop(L, 1);
+		} else if(lua_isnumber(L, -1) && lua_isnumber(L, -2) && lua_isnumber(L, -3) && lua_isnumber(L, -4)) {
+			rect.X = lua_tointeger(L, -4);
+			rect.Y = lua_tointeger(L, -3);
+			rect.Width = lua_tointeger(L, -2);
+			rect.Height = lua_tointeger(L, -1);
+			lua_pop(L, 4);
+		}
+
+		return rect;
 	}
 
 	void luaM_printerror(lua_State* L, const char* msg, ...)

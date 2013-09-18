@@ -45,7 +45,7 @@ void CanvasGroup::SetStyle(const GuiStyle& style)
 void CanvasGroup::ProcessCanvas(GuiGeometryBuilder* builder)
 {
 	assert_not_null(builder);
-	mPositions = std::stack<Vector2>();
+	mPositions = std::stack<Point>();
 	mGeometryBuilder = builder;
 	this->OnProcessCanvas(builder);
 }
@@ -62,40 +62,48 @@ void CanvasGroup::OnRemovingFromCanvas()
 {
 }
 
-Vector2 CanvasGroup::GetAbsolutePosition(const Vector2& relativePosition) const
+void CanvasGroup::SetName(const playstate::string& name)
 {
-	if(mPositions.empty())
-		return relativePosition;
-
-	return mPositions.top() + relativePosition;
+	mName = name;
 }
 
-void CanvasGroup::BeginFrame(const Size& size, const Vector2& position, const playstate::string& title)
+Rect CanvasGroup::GetAbsoluteCoordinates(const Rect& rect) const
+{
+	if(mPositions.empty())
+		return rect;
+
+	return rect.GetTranslated(mPositions.top());
+}
+
+void CanvasGroup::BeginFrame(const Rect& rect, const playstate::string& title)
 {
 	const uint32 titleHeight = 25;
 
 	static const Color titleTop = Color::HexToRGB("#EEEEEE");
 	static const Color titleBottom = Color::HexToRGB("#777777");
 
-	const Vector2 absolutePosition = GetAbsolutePosition(position);
+	const Rect coordinates = GetAbsoluteCoordinates(rect);
 
 	// Add shadow
 	if(mShadowOffset > 0) {
-		mGeometryBuilder->AddQuad(absolutePosition - Vector2(mShadowOffset, mShadowOffset),
-			size + Size(mShadowOffset * 2, mShadowOffset * 2), mShadowColor);
+		const Rect shadowCoords(coordinates.Position - Point(mShadowOffset, mShadowOffset),
+			coordinates.Size + Size(mShadowOffset * 2, mShadowOffset * 2));
+		mGeometryBuilder->AddQuad(shadowCoords, mShadowColor);
 	}
 
 	// Add title
-	mGeometryBuilder->AddGradientQuad(absolutePosition, Size(size.X, titleHeight), titleTop, titleBottom);
+	const Rect titleCoords(coordinates.Position, Size(coordinates.Width, titleHeight));
+	mGeometryBuilder->AddGradientQuad(titleCoords, titleTop, titleBottom);
 
 	// Add body
-	mGeometryBuilder->AddGradientQuad(absolutePosition + Vector2(0.0f, titleHeight), size - Size(0.0f, titleHeight), mBackColorTop, mBackColorBottom);
+	const Rect bodyCoords(coordinates.Position + Point(0, titleHeight), coordinates.Size - Size(0.0f, titleHeight));
+	mGeometryBuilder->AddGradientQuad(bodyCoords, mBackColorTop, mBackColorBottom);
 
 	if(!mFont.IsNull()) {
-		mGeometryBuilder->AddText(mFont.Get(), absolutePosition, mFrontColor, title, Size(size.X, titleHeight));
+		mGeometryBuilder->AddText(mFont.Get(), coordinates.Position, mFrontColor, title);
 	}
 
-	mPositions.push(absolutePosition);
+	mPositions.push(coordinates.Position);
 }
 
 void CanvasGroup::EndFrame()
@@ -104,27 +112,27 @@ void CanvasGroup::EndFrame()
 		mPositions.pop();
 }
 
-bool CanvasGroup::Button(const Size& size, const Vector2& position, const playstate::string& text)
+bool CanvasGroup::Button(const Rect& rect, const playstate::string& text)
 {
-	const Vector2 absolutePosition = GetAbsolutePosition(position);
+	const Rect coordinates = GetAbsoluteCoordinates(rect);
 
 	// Add shadow
 	if(mShadowOffset > 0) {
-		mGeometryBuilder->AddQuad(absolutePosition - Vector2(mShadowOffset, mShadowOffset),
-			size + Size(mShadowOffset * 2, mShadowOffset * 2), mShadowColor);
+		const Rect shadowCoords(coordinates.Position - Point(mShadowOffset, mShadowOffset),
+			coordinates.Size + Size(mShadowOffset * 2, mShadowOffset * 2));
+		mGeometryBuilder->AddQuad(shadowCoords, mShadowColor);
 	}
 
 	// Add body
-	mGeometryBuilder->AddGradientQuad(absolutePosition, size, mBackColorTop, mBackColorBottom);
+	mGeometryBuilder->AddGradientQuad(coordinates, mBackColorTop, mBackColorBottom);
 
 	if(text.length() > 0 && !mFont.IsNull()) {
-		mGeometryBuilder->AddText(mFont.Get(), absolutePosition, mFrontColor, text, size);
+		mGeometryBuilder->AddText(mFont.Get(), coordinates.Position, mFrontColor, text);
 	}
 
 	if(mCanvas->GetMouseClick() == MouseButtons::LEFT) {
-		// Check if mouse is over current position
 		const Point mousePos = mCanvas->GetMousePosition();
-		if(Rect(absolutePosition.X, absolutePosition.Y, size.Width, size.Height).IsPointInside(mousePos)) {
+		if(coordinates.IsPointInside(mousePos)) {
 			return true;
 		}
 	}
@@ -132,38 +140,38 @@ bool CanvasGroup::Button(const Size& size, const Vector2& position, const playst
 	return false;
 }
 
-bool CanvasGroup::Toggle(const Size& size, const Vector2& position, bool toggled, const playstate::string& text)
+bool CanvasGroup::Checkbox(const Rect& rect, bool toggled, const playstate::string& text)
 {
-	const Vector2 absolutePosition = GetAbsolutePosition(position);
+	const Rect coordinates = GetAbsoluteCoordinates(rect);
 
 	const uint32 checkboxSize = 20U;
 	const uint32 checkboxBorderOffset = 1U;
 	const uint32 checkboxToggleOffset = checkboxBorderOffset + 3U;
 	
-	// Add border around checkbox
-	mGeometryBuilder->AddQuad(absolutePosition, Size(checkboxSize, checkboxSize), Color::Black);
+	// Add border around checkbox button
+	const Rect checkboxButtonBorder(coordinates.Position, Size(checkboxSize, checkboxSize));
+	mGeometryBuilder->AddQuad(checkboxButtonBorder, Color::Black);
 
-	// Add Checkbox bg
-	mGeometryBuilder->AddQuad(absolutePosition + Vector2(checkboxBorderOffset, checkboxBorderOffset), 
-		Size(checkboxSize - (checkboxBorderOffset * 2), checkboxSize - (checkboxBorderOffset * 2)), mBackColorTop);
+	// Add checkbox button
+	const Rect checkboxButton(coordinates.Position + Point(checkboxBorderOffset, checkboxBorderOffset), 
+		Size(checkboxSize - (checkboxBorderOffset * 2), checkboxSize - (checkboxBorderOffset * 2)));
+	mGeometryBuilder->AddQuad(checkboxButton, mBackColorTop);
 
+	// Add geometry if checkbox is toggled (enabled)
 	if(toggled) {
-		mGeometryBuilder->AddQuad(absolutePosition + Vector2(checkboxToggleOffset, checkboxToggleOffset), 
-			Size(checkboxSize - (checkboxToggleOffset * 2), checkboxSize - (checkboxToggleOffset * 2)), Color::White);
+		const Rect toggledCoords(coordinates.Position + Point(checkboxToggleOffset, checkboxToggleOffset), 
+			Size(checkboxSize - (checkboxToggleOffset * 2), checkboxSize - (checkboxToggleOffset * 2)));
+		mGeometryBuilder->AddQuad(toggledCoords, Color::White);
 	}
 
-	// Add body
-	//mGeometryBuilder->AddGradientQuad(absolutePosition + Vector2(checkboxSize + 5.0f, 0.0f), size, mBackColorTop, mBackColorBottom);
-	
-	// Add text next to the body of the checkbox
+	// Add checkbox text if one is present.
 	if(text.length() > 0 && !mFont.IsNull()) {
-		mGeometryBuilder->AddText(mFont.Get(), absolutePosition + Vector2(checkboxSize + 10.0f, 0.0f), mFrontColor, text, size);
+		mGeometryBuilder->AddText(mFont.Get(), coordinates.Position + Point(checkboxSize + 10, 0), mFrontColor, text);
 	}
 
 	if(mCanvas->GetMouseClick() == MouseButtons::LEFT) {
-		// Check if mouse is over current position
 		const Point mousePos = mCanvas->GetMousePosition();
-		if(Rect(absolutePosition.X, absolutePosition.Y, size.Width, size.Height).IsPointInside(mousePos)) {
+		if(coordinates.IsPointInside(mousePos)) {
 			toggled = !toggled;
 		}
 	}
@@ -171,13 +179,15 @@ bool CanvasGroup::Toggle(const Size& size, const Vector2& position, bool toggled
 	return toggled;
 }
 
-float32 CanvasGroup::Slider(const Size& size, const Vector2& position, float32 value, float32 leftValue, float32 rightValue,
+float32 CanvasGroup::Slider(const Rect& rect, float32 value, float32 leftValue, float32 rightValue,
 			float32 stepValue)
 {
+	const Rect coordinates = GetAbsoluteCoordinates(rect);
 	return 0.0f;
 }
 
-uint32 CanvasGroup::ComboBox(const Size& size, const Vector2& position, uint32 selectedIndex)
+uint32 CanvasGroup::ComboBox(const Rect& rect, uint32 selectedIndex)
 {
+	const Rect coordinates = GetAbsoluteCoordinates(rect);
 	return 0;
 }

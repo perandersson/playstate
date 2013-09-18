@@ -8,11 +8,16 @@ Rect::Rect()
 }
 
 Rect::Rect(const Rect& r)
-	: X(r.X), Y(r.Y), Width(r.Width), Height(r.Height)
+	: Position(r.Position), Size(r.Size)
 {
 }
 
-Rect::Rect(float32 x, float32 y, float32 width, float32 height)
-	: X(x), Y(y), Width(width), Height(height)
+Rect::Rect(const Point& position, const _Size& size)
+	: Position(position), Size(size)
+{
+}
+
+Rect::Rect(int32 x, int32 y, int32 width, int32 height)
+	: Position(x, y), Size(width, height)
 {
 }

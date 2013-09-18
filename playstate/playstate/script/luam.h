@@ -18,6 +18,7 @@ namespace playstate
 	struct Vector2;
 	struct Point;
 	struct Color;
+	struct Rect;
 
 	struct ResourceData;
 
@@ -91,6 +92,8 @@ namespace playstate
 
 	//
 	extern Point luaM_poppoint(lua_State* L);
+
+	extern Rect luaM_poprect(lua_State* L);
 
 	//
 	// @return The number of elements pushed to the stack

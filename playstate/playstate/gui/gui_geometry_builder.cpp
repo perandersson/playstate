@@ -16,29 +16,24 @@ GuiGeometryBuilder::~GuiGeometryBuilder()
 	}
 }
 
-void GuiGeometryBuilder::AddQuad(const Vector2& position, const Size& size)
+void GuiGeometryBuilder::AddQuad(const Rect& rect, const Color& color)
 {
-	AddQuad(position, size, Color::White);
+	AddGradientQuad(rect, color, color);
 }
 
-void GuiGeometryBuilder::AddQuad(const Vector2& position, const Size& size, const Color& color)
+void GuiGeometryBuilder::AddGradientQuad(const Rect& rect, const Color& topColor, const Color& bottomColor)
 {
-	AddGradientQuad(position, size, color, color);
+	AddGradientQuad(rect, topColor, topColor, bottomColor, bottomColor);
 }
 
-void GuiGeometryBuilder::AddGradientQuad(const Vector2& position, const Size& size, const Color& topColor, const Color& bottomColor)
+void GuiGeometryBuilder::AddGradientQuad(const Rect& rect, const Color& topLeftColor, const Color& topRightColor, const Color& bottomLeftColor, 
+	const Color& bottomRightColor)
 {
-	AddGradientQuad(position, size, topColor, topColor, bottomColor, bottomColor);
+	AddQuad(rect, topLeftColor, topRightColor, bottomLeftColor, bottomRightColor, NULL);
 }
 
-void GuiGeometryBuilder::AddGradientQuad(const Vector2& position, const Size& size, const Color& topLeftColor, const Color& topRightColor,
-	const Color& bottomLeftColor, const Color& bottomRightColor)
-{
-	AddQuad(position, size, topLeftColor, topRightColor, bottomLeftColor, bottomRightColor, NULL);
-}
-
-void GuiGeometryBuilder::AddQuad(const Vector2& position, const Size& size, const Color& topLeftColor, const Color& topRightColor,
-			const Color& bottomLeftColor, const Color& bottomRightColor, ITexture2D* texture)
+void GuiGeometryBuilder::AddQuad(const Rect& rect, const Color& topLeftColor, const Color& topRightColor, const Color& bottomLeftColor, 
+	const Color& bottomRightColor, ITexture2D* texture)
 {
 	if(mNumVertices > 0 && mCurrentTexture != texture) {
 		BuildAndPushBuildingBlocks();
@@ -51,51 +46,44 @@ void GuiGeometryBuilder::AddQuad(const Vector2& position, const Size& size, cons
 		p2------p3
 	*/
 
+	const Point& position = rect.Position;
+	const Size& size = rect.Size;
+
 	WidgetGeometryData* element = mMemoryPool.Allocate();
 	element->Position.Set(position.X, position.Y); //p0
 	element->Color = topLeftColor;
 	
 	element = mMemoryPool.Allocate();
-	element->Position.Set(position.X + size.X, position.Y); //p1
+	element->Position.Set(position.X + size.Width, position.Y); //p1
 	element->Color = topRightColor;
 
 	element = mMemoryPool.Allocate();
-	element->Position.Set(position.X, position.Y + size.Y); //p2
+	element->Position.Set(position.X, position.Y + size.Height); //p2
 	element->Color = bottomLeftColor;
 	
 	element = mMemoryPool.Allocate();
-	element->Position.Set(position.X, position.Y + size.Y); //p2
+	element->Position.Set(position.X, position.Y + size.Height); //p2
 	element->Color = bottomLeftColor;
 
 	element = mMemoryPool.Allocate();
-	element->Position.Set(position.X + size.X, position.Y); //p1
+	element->Position.Set(position.X + size.Width, position.Y); //p1
 	element->Color = topRightColor;
 
 	element = mMemoryPool.Allocate();
-	element->Position.Set(position.X + size.X, position.Y + size.Y); //p3
+	element->Position.Set(position.X + size.Width, position.Y + size.Height); //p3
 	element->Color = bottomRightColor;
 
 	mNumVertices += 6;
 }
 
-void GuiGeometryBuilder::AddText(Font* font, const Vector2& position, const Color& color, const playstate::string& text)
-{
-	AddText(font, position, color, text, Size(UINT_MAX, UINT_MAX));
-}
-
-void GuiGeometryBuilder::AddText(Font* font, const Vector2& position, const Color& color, const playstate::string& text, uint32 maxLenght)
-{
-	AddText(font, position, color, text, Size(maxLenght, UINT_MAX));
-}
-
-void GuiGeometryBuilder::AddText(Font* font, const Vector2& position, const Color& color, const playstate::string& text, const Size& maxSize)
+void GuiGeometryBuilder::AddText(Font* font, const Point& position, const Color& color, const playstate::string& text)
 {
 	if(mNumVertices > 0 && mCurrentTexture != font->GetTexture()) {
 		BuildAndPushBuildingBlocks();
 	}
 	mCurrentTexture = font->GetTexture();
 
-	Vector2 currentPos = position;
+	Vector2 currentPos(position.X, position.Y);
 	bool newline = false;
 	const playstate::string::size_type size = text.length();
 	for(playstate::string::size_type i = 0; i < size; ++i) {
