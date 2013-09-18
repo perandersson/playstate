@@ -112,6 +112,11 @@ MouseButtons::Enum Canvas::GetMouseClick() const
 	return mButtonClicked;
 }
 
+MouseButtons::Enum Canvas::GetMouseDown() const
+{
+	return mLastButtonDown;
+}
+
 void Canvas::SetSize(const Size& size)
 {
 	mSize = size;

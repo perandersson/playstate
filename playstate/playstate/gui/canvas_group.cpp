@@ -2,6 +2,7 @@
 #include "canvas_group.h"
 #include "../processor/processors/linked_list_update_processor.h"
 #include "../script/script_system.h"
+#include "../math/math.h"
 #include "canvas.h"
 using namespace playstate;
 
@@ -189,7 +190,38 @@ float32 CanvasGroup::Slider(const Rect& rect, float32 value, float32 leftValue, 
 			float32 stepValue)
 {
 	const Rect coordinates = GetAbsoluteCoordinates(rect);
-	return 0.0f;
+
+	// Slider contains
+
+	// Add body
+	mGeometryBuilder->AddGradientQuad(coordinates, mBackColorTop, mBackColorBottom);
+
+	// Add slider value
+	const float valueDt = (leftValue + (rightValue - leftValue));
+
+	const float32 valueOffset = rightValue - (rightValue - leftValue);
+	const float32 dt = (value - valueOffset) / (rightValue - valueOffset);
+	const Rect filledValueCoords(coordinates.Position, Size(coordinates.Width * dt, coordinates.Height));
+	mGeometryBuilder->AddQuad(filledValueCoords, Color::White);
+	
+	if(mCanvas->GetMouseDown() == MouseButtons::LEFT) {
+		const Point mousePos = mCanvas->GetMousePosition();
+		if(coordinates.IsPointInside(mousePos)) {
+			// Calculate value based on the mouse coordinates in relation to this control
+			const float32 pixelsFromControlWidth = mousePos.X - coordinates.X;
+			const float32 mouseDt = pixelsFromControlWidth / (float32)coordinates.Width;
+
+			// Lerp between leftValue and rightValue
+			value = Math::Lerp(leftValue, rightValue, mouseDt);
+		}
+	}
+
+	char tmp[50];
+	sprintf(tmp, "%.2f", value);
+
+	mGeometryBuilder->AddText(mFont.Get(), coordinates.Position + Point(coordinates.Width / 2.0f, 0), mFrontColor, tmp);
+
+	return value;
 }
 
 uint32 CanvasGroup::ComboBox(const Rect& rect, uint32 selectedIndex)

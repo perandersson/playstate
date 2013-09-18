@@ -62,10 +62,10 @@ namespace playstate
 		// Checks if the supplied point is inside this rectangle instance
 		// 
 		// @param pt The point we want to check
-		// @return TRUE if the supplied point is inside this rect (i.e. NOT intersecting on the border but is INSIDE).
+		// @return TRUE if the supplied point is inside this rect
 		inline bool IsPointInside(const Point& pt) const {
-			if(pt.X > (X) && pt.X < (X + Width)) {
-				if(pt.Y > (Y) && pt.Y < (Y + Height)) {
+			if(pt.X >= (X) && pt.X <= (X + Width)) {
+				if(pt.Y >= (Y) && pt.Y <= (Y + Height)) {
 					return true;
 				}
 			}

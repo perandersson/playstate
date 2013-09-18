@@ -50,6 +50,10 @@ namespace playstate
 		MouseButtons::Enum GetMouseClick() const;
 		
 		//
+		// @return The mouse button that's pressed down
+		MouseButtons::Enum GetMouseDown() const;
+		
+		//
 		// Prepares the building blocks for the user interface contained in this canvas.
 		//
 		// @param builder

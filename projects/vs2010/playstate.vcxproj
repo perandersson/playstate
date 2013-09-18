@@ -38,6 +38,7 @@
     <ClCompile Include="..\..\playstate\playstate\logging\console\console_logger.cpp" />
     <ClCompile Include="..\..\playstate\playstate\logging\logger.cpp" />
     <ClCompile Include="..\..\playstate\playstate\math\color.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\math\math.cpp" />
     <ClCompile Include="..\..\playstate\playstate\math\matrix4x4.cpp" />
     <ClCompile Include="..\..\playstate\playstate\math\plane.cpp" />
     <ClCompile Include="..\..\playstate\playstate\math\point.cpp" />
@@ -136,6 +137,7 @@
     <ClInclude Include="..\..\playstate\playstate\logging\console\console_logger.h" />
     <ClInclude Include="..\..\playstate\playstate\logging\logger.h" />
     <ClInclude Include="..\..\playstate\playstate\math\color.h" />
+    <ClInclude Include="..\..\playstate\playstate\math\math.h" />
     <ClInclude Include="..\..\playstate\playstate\math\matrix4x4.h" />
     <ClInclude Include="..\..\playstate\playstate\math\plane.h" />
     <ClInclude Include="..\..\playstate\playstate\math\point.h" />
