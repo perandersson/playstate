@@ -189,6 +189,28 @@ int playstate::CanvasGroup_Button(lua_State* L)
 	return 1;
 }
 
+int playstate::CanvasGroup_Label(lua_State* L)
+{
+	int numParams = lua_gettop(L);
+	if(numParams < 3) {
+		luaM_printerror(L, "Expected: self<CanvasGroup>:Label(rect : Rect, text : string)");
+		return 0;
+	}
+
+	playstate::string text = lua_tostring(L, -1); lua_pop(L, 1);
+	const Rect rect = luaM_poprect(L);
+
+	ScriptableCanvasGroup* group = luaM_popobject<ScriptableCanvasGroup>(L);
+	if(group != NULL) {
+		group->Label(rect, text);
+	} else {
+		luaM_printerror(L, "Expected: self<CanvasGroup>:Label(rect : Rect, text : string)");
+		lua_pushboolean(L, 0);
+	}
+
+	return 0;
+}
+
 int playstate::CanvasGroup_Checkbox(lua_State* L)
 {
 	int numParams = lua_gettop(L);
@@ -227,10 +249,10 @@ int playstate::CanvasGroup_Slider(lua_State* L)
 		return 1;
 	}
 
-	const float32 stepValue = lua_tonumber(L, -1); 
-	const float32 rightValue = lua_tonumber(L, -2);
-	const float32 leftValue = lua_tonumber(L, -3);
-	const float32 value = lua_tonumber(L, -4);
+	const float32 stepValue = luaM_tofloat(L, -1); 
+	const float32 rightValue = luaM_tofloat(L, -2);
+	const float32 leftValue = luaM_tofloat(L, -3);
+	const float32 value = luaM_tofloat(L, -4);
 	lua_pop(L, 4);
 	
 	const Rect rect = luaM_poprect(L);

@@ -96,7 +96,7 @@ void CanvasGroup::BeginFrame(const Rect& rect, const playstate::string& title)
 	mGeometryBuilder->AddGradientQuad(titleCoords, titleTop, titleBottom);
 
 	// Add body
-	const Rect bodyCoords(coordinates.Position + Point(0, titleHeight), coordinates.Size - Size(0.0f, titleHeight));
+	const Rect bodyCoords(coordinates.Position + Point(0, titleHeight), coordinates.Size - Size(0, titleHeight));
 	mGeometryBuilder->AddGradientQuad(bodyCoords, mBackColorTop, mBackColorBottom);
 
 	if(!mFont.IsNull()) {
@@ -138,6 +138,12 @@ bool CanvasGroup::Button(const Rect& rect, const playstate::string& text)
 	}
 
 	return false;
+}
+
+void CanvasGroup::Label(const Rect& rect, const playstate::string& text)
+{
+	const Rect coordinates = GetAbsoluteCoordinates(rect);
+	mGeometryBuilder->AddText(mFont.Get(), coordinates.Position, mFrontColor, text);
 }
 
 bool CanvasGroup::Checkbox(const Rect& rect, bool toggled, const playstate::string& text)

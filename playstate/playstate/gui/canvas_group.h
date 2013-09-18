@@ -89,6 +89,10 @@ namespace playstate
 		//
 		// 
 		bool Button(const Rect& rect, const playstate::string& text);
+		
+		//
+		// Creates a label
+		void Label(const Rect& rect, const playstate::string& text);
 
 		//
 		// 
@@ -103,6 +107,7 @@ namespace playstate
 		// Creates a combobox and returns the current index
 		// 
 		uint32 ComboBox(const Rect& rect, uint32 selectedIndex);
+
 	protected:
 		//
 		// Method called when this canvas groups user interface is to be processed.

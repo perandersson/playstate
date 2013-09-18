@@ -46,6 +46,7 @@ namespace playstate
 	extern int CanvasGroup_BeginFrame(lua_State* L);
 	extern int CanvasGroup_EndFrame(lua_State* L);
 	extern int CanvasGroup_Button(lua_State* L);
+	extern int CanvasGroup_Label(lua_State* L);
 	extern int CanvasGroup_Checkbox(lua_State* L);
 	extern int CanvasGroup_Slider(lua_State* L);
 	extern int CanvasGroup_ComboBox(lua_State* L);
@@ -58,6 +59,7 @@ namespace playstate
 		{ "BeginFrame", CanvasGroup_BeginFrame },
 		{ "EndFrame", CanvasGroup_EndFrame },
 		{ "Button", CanvasGroup_Button },
+		{ "Label", CanvasGroup_Label },
 		{ "Checkbox", CanvasGroup_Checkbox },
 		{ "Slider", CanvasGroup_Slider },
 		{ "ComboBox", CanvasGroup_ComboBox },
