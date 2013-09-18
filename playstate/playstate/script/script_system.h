@@ -66,6 +66,12 @@ namespace playstate
 		//
 		void HandleGC();
 
+		//
+		// Enables/Disables debug mode for the script system.
+		void SetDebugMode(bool debugMode);
+
+		//
+		// 
 		void PushIdentity(const playstate::string& identity);
 		void PopIdentity();
 		playstate::string GetIdentity() const;

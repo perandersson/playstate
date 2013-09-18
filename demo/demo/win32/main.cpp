@@ -71,6 +71,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 	{
 		// Register game specific scripts.
 		ScriptSystem& ss = ScriptSystem::Get();
+		ss.SetDebugMode(true);
 		ss.RegisterType("DeferredRenderPipeline", DeferredRenderPipeline_Methods);
 
 		// Attach a file change listener for .lua files

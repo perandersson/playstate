@@ -14,11 +14,6 @@ function MainMenu:__init()
 end
 
 function MainMenu:OnProcessCanvas()
-	-- Proxy method
-	self:OnGUI()
-end
-
-function MainMenu:OnGUI()
 	self:BeginFrame(Rect(1024 - 200, 0, 200, 768), "Example")
 		if self:Button(Rect(0, 20, 140, 40), "Start Game") then
 			if self.enabled then

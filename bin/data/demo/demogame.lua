@@ -5,7 +5,6 @@ local config = require "config"
 local MainMenu = require "demo.gui.mainmenu"
 
 DemoGame = class("DemoGame", IGame)
-
 function DemoGame:__init()
 	IGame.__init(self)
 	

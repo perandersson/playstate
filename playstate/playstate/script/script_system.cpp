@@ -173,6 +173,11 @@ void ScriptSystem::HandleGC()
 	lua_gc(mLuaState, LUA_GCSTOP, 0);
 }
 
+void ScriptSystem::SetDebugMode(bool debugMode)
+{
+	SetGlobalVar("DebugMode", debugMode);
+}
+
 void ScriptSystem::PushIdentity(const playstate::string& identity)
 {
 	mIdentities.push(identity);
