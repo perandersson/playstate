@@ -131,8 +131,9 @@ int playstate::CanvasGroup_BeginFrame(lua_State* L)
 	}
 
 	playstate::string title;
-	if(numParams >= 3 && lua_isstring(L, -1))
+	if(numParams >= 3 && lua_isstring(L, -1)) {
 		title = lua_tostring(L, -1); lua_pop(L, 1);
+	}
 
 	const Rect rect = luaM_poprect(L);
 	ScriptableCanvasGroup* group = luaM_popobject<ScriptableCanvasGroup>(L);
@@ -171,8 +172,9 @@ int playstate::CanvasGroup_Button(lua_State* L)
 	}
 
 	playstate::string text;
-	if(numParams >= 3 && lua_isstring(L, -1))
+	if(numParams >= 3 && lua_isstring(L, -1)) {
 		text = lua_tostring(L, -1); lua_pop(L, 1);
+	}
 	
 	const Rect rect = luaM_poprect(L);
 	ScriptableCanvasGroup* group = luaM_popobject<ScriptableCanvasGroup>(L);
@@ -197,8 +199,9 @@ int playstate::CanvasGroup_Checkbox(lua_State* L)
 	}
 	
 	playstate::string text;
-	if(numParams >= 4 && lua_isstring(L, -1))
+	if(numParams >= 4 && lua_isstring(L, -1)) {
 		text = lua_tostring(L, -1); lua_pop(L, 1);
+	}
 
 	const bool toggled = lua_toboolean(L, -1) == 1; lua_pop(L, 1);
 	const Rect rect = luaM_poprect(L);
