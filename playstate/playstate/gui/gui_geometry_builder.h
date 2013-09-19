@@ -59,6 +59,16 @@ namespace playstate
 		void AddText(Font* font, const Point& position, const Color& color, const playstate::string& text);
 
 		//
+		// Adds an aligned text into the geometry buffer at the supplied position
+		//
+		// @param font
+		// @param position
+		// @param color
+		// @param text
+		// @param align
+		void AddText(Font* font, const Point& position, const Color& color, const playstate::string& text, FontAlign::Enum align);
+
+		//
 		// @return The first building block
 		WidgetBuildingBlock* GetBuildingBlocks();
 

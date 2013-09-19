@@ -799,5 +799,8 @@
     <ClInclude Include="..\..\playstate\playstate\math\math.h">
       <Filter>Source Files\math</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\font\font_align.h">
+      <Filter>Source Files\font</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -78,18 +78,35 @@ void GuiGeometryBuilder::AddQuad(const Rect& rect, const Color& topLeftColor, co
 
 void GuiGeometryBuilder::AddText(Font* font, const Point& position, const Color& color, const playstate::string& text)
 {
+	AddText(font, position, color, text, FontAlign::LEFT);
+}
+
+void GuiGeometryBuilder::AddText(Font* font, const Point& position, const Color& color, const playstate::string& text, FontAlign::Enum align)
+{
 	if(mNumVertices > 0 && mCurrentTexture != font->GetTexture()) {
 		BuildAndPushBuildingBlocks();
 	}
 	mCurrentTexture = font->GetTexture();
 
 	Vector2 currentPos(position.X, position.Y);
-	bool newline = false;
+	if(align == FontAlign::CENTER) {
+		float32 width = 0.f;
+		const playstate::string::size_type size = text.length();
+		for(playstate::string::size_type i = 0; i < size; ++i) {
+			playstate::character c = text[i];
+			const FontCharInfo& info = font->GetFontCharInfo(c);
+			width += info.Size.X;
+		}
+
+		currentPos.X -= width * 0.5f;
+	}
+
+	//bool newline = false;
 	const playstate::string::size_type size = text.length();
 	for(playstate::string::size_type i = 0; i < size; ++i) {
 		playstate::character c = text[i];
 		if(c == '\n') {
-			newline = true;
+//			newline = true;
 			continue;
 		} else if(c == '\r') {
 			continue;
@@ -99,10 +116,10 @@ void GuiGeometryBuilder::AddText(Font* font, const Point& position, const Color&
 		}
 
 		const FontCharInfo& info = font->GetFontCharInfo(c);
-		if(newline) {
-			newline = false;
-			currentPos.Y += font->GetLineHeight();
-		}
+		//if(newline) {
+		//	newline = false;
+		//	currentPos.Y += font->GetLineHeight();
+		//}
 
 		const Vector2& size = info.Size;
 		const Vector2 offsetedPosition = currentPos + Vector2(0, info.Offset.Y);

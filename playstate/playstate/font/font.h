@@ -4,6 +4,7 @@
 #include "../script/luam.h"
 #include "../resources/resource_object.h"
 #include "../rendering/texture2d.h"
+#include "font_align.h"
 
 namespace playstate
 {
