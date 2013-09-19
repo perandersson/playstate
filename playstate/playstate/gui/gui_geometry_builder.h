@@ -67,6 +67,10 @@ namespace playstate
 		// @param text
 		// @param align
 		void AddText(Font* font, const Point& position, const Color& color, const playstate::string& text, FontAlign::Enum align);
+		
+		//
+		// Adds an aligned text into the geometry buffer at the supplied position
+		void AddText(Font* font, const Rect& rect, const Color& color, const playstate::string& text, FontAlign::Enum align);
 
 		//
 		// @return The first building block
@@ -77,6 +81,11 @@ namespace playstate
 		uint32 GetNumBuildingBlocks() const;
 		
 		void Reset();
+
+	private:
+		void AddAdjustedText(Font* font, const Vector2& position, const Color& color, const playstate::string& text);
+		Vector2 GetAdjustedTextPosition(const Font* font, const Point& position, const playstate::string& text, FontAlign::Enum align);
+		Vector2 GetAdjustedTextPosition(const Font* font, const Rect& rect, const playstate::string& text, FontAlign::Enum align);
 
 	private:
 		void AddQuad(const Rect& rect, const Color& topLeftColor, const Color& topRightColor, const Color& bottomLeftColor, const Color& bottomRightColor, ITexture2D* texture);

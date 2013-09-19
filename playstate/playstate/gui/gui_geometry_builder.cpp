@@ -83,30 +83,28 @@ void GuiGeometryBuilder::AddText(Font* font, const Point& position, const Color&
 
 void GuiGeometryBuilder::AddText(Font* font, const Point& position, const Color& color, const playstate::string& text, FontAlign::Enum align)
 {
+	const Vector2 currentPos = GetAdjustedTextPosition(font, position, text, align);
+	AddAdjustedText(font, currentPos, color, text);
+}
+
+void GuiGeometryBuilder::AddText(Font* font, const Rect& rect, const Color& color, const playstate::string& text, FontAlign::Enum align)
+{
+	const Vector2 currentPos = GetAdjustedTextPosition(font, rect, text, align);
+	AddAdjustedText(font, currentPos, color, text);
+}
+
+void GuiGeometryBuilder::AddAdjustedText(Font* font, const Vector2& position, const Color& color, const playstate::string& text)
+{
 	if(mNumVertices > 0 && mCurrentTexture != font->GetTexture()) {
 		BuildAndPushBuildingBlocks();
 	}
 	mCurrentTexture = font->GetTexture();
 
-	Vector2 currentPos(position.X, position.Y);
-	if(align == FontAlign::CENTER) {
-		float32 width = 0.f;
-		const playstate::string::size_type size = text.length();
-		for(playstate::string::size_type i = 0; i < size; ++i) {
-			playstate::character c = text[i];
-			const FontCharInfo& info = font->GetFontCharInfo(c);
-			width += info.Size.X;
-		}
-
-		currentPos.X -= width * 0.5f;
-	}
-
-	//bool newline = false;
+	Vector2 currentPos = position;
 	const playstate::string::size_type size = text.length();
 	for(playstate::string::size_type i = 0; i < size; ++i) {
 		playstate::character c = text[i];
 		if(c == '\n') {
-//			newline = true;
 			continue;
 		} else if(c == '\r') {
 			continue;
@@ -116,10 +114,6 @@ void GuiGeometryBuilder::AddText(Font* font, const Point& position, const Color&
 		}
 
 		const FontCharInfo& info = font->GetFontCharInfo(c);
-		//if(newline) {
-		//	newline = false;
-		//	currentPos.Y += font->GetLineHeight();
-		//}
 
 		const Vector2& size = info.Size;
 		const Vector2 offsetedPosition = currentPos + Vector2(0, info.Offset.Y);
@@ -163,6 +157,42 @@ void GuiGeometryBuilder::AddText(Font* font, const Point& position, const Color&
 		currentPos.X += info.Size.X;
 		mNumVertices += 6;
 	}
+}
+
+Vector2 GuiGeometryBuilder::GetAdjustedTextPosition(const Font* font, const Point& position, const playstate::string& text, FontAlign::Enum align)
+{
+	Vector2 currentPos(position.X, position.Y);
+	if(align == FontAlign::CENTER) {
+		float32 width = 0.f;
+		const playstate::string::size_type size = text.length();
+		for(playstate::string::size_type i = 0; i < size; ++i) {
+			playstate::character c = text[i];
+			const FontCharInfo& info = font->GetFontCharInfo(c);
+			width += info.Size.X;
+		}
+
+		currentPos.X -= width * 0.5f;
+	}
+	return currentPos;
+}
+
+Vector2 GuiGeometryBuilder::GetAdjustedTextPosition(const Font* font, const Rect& rect, const playstate::string& text, FontAlign::Enum align)
+{
+	Vector2 currentPos(rect.X + (float32)(rect.Width / 2.0f), rect.Y + (float32)(rect.Height / 2.0f));
+	if(align == FontAlign::CENTER) {
+		float32 width = 0.f;
+		float32 height = 15.0f;
+		const playstate::string::size_type size = text.length();
+		for(playstate::string::size_type i = 0; i < size; ++i) {
+			playstate::character c = text[i];
+			const FontCharInfo& info = font->GetFontCharInfo(c);
+			width += info.Size.X;
+		}
+
+		currentPos.X -= width * 0.5f;
+		currentPos.Y -= height * 0.5f;
+	}
+	return currentPos;
 }
 
 IVertexBuffer* GuiGeometryBuilder::PrepareIVertexBuffer()

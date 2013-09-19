@@ -218,8 +218,8 @@ float32 CanvasGroup::Slider(const Rect& rect, float32 value, float32 leftValue, 
 
 	char tmp[50];
 	sprintf(tmp, "%.2f", value);
-
-	mGeometryBuilder->AddText(mFont.Get(), coordinates.Position + Point(coordinates.Width / 2.0f, 0), mFrontColor, tmp, FontAlign::CENTER);
+	
+	mGeometryBuilder->AddText(mFont.Get(), coordinates, mFrontColor, tmp, FontAlign::CENTER);
 
 	return value;
 }
