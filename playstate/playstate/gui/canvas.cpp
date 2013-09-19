@@ -117,6 +117,19 @@ MouseButtons::Enum Canvas::GetMouseDown() const
 	return mLastButtonDown;
 }
 
+GuiMouseState::Enum Canvas::GetMouseState(const Rect& rect) const
+{
+	if(rect.IsPointInside(GetMousePosition())) {
+		if(GetMouseDown() == MouseButtons::LEFT) {
+			return GuiMouseState::DOWN;
+		} else {
+			return GuiMouseState::HOVER;
+		}
+	} else {
+		return GuiMouseState::OUTSIDE;
+	}
+}
+
 void Canvas::SetSize(const Size& size)
 {
 	mSize = size;

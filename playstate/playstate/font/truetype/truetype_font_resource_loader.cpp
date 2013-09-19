@@ -87,10 +87,12 @@ ResourceObject* TrueTypeFontResourceLoader::Load(IFile& file)
 
 		FT_Done_Glyph(glyph);
 	}
+	const float32 lineHeight11 = face->height >> 6;
+	const float32 lineHeight = px / 0.63f;
 	FT_Done_Face(face);
 
 	ITexture2D* texture = mRenderSystem.CreateTexture2D(Size(textureWidth, textureHeight), TextureFormat::R, bytes.Get());
-	return new Font(texture, infoMap, px / 2.0f, face->height >> 6);
+	return new Font(texture, infoMap, px / 2.0f, lineHeight);
 }
 
 void TrueTypeFontResourceLoader::CopyToBuffer(uint32 x, uint32 y, uint32 width, uint32 height, playstate::byte* target, const playstate::byte* src)

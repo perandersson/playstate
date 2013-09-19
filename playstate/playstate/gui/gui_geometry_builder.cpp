@@ -100,11 +100,13 @@ void GuiGeometryBuilder::AddAdjustedText(Font* font, const Vector2& position, co
 	}
 	mCurrentTexture = font->GetTexture();
 
+	bool newline = false;
 	Vector2 currentPos = position;
 	const playstate::string::size_type size = text.length();
 	for(playstate::string::size_type i = 0; i < size; ++i) {
 		playstate::character c = text[i];
 		if(c == '\n') {
+			newline = true;
 			continue;
 		} else if(c == '\r') {
 			continue;
@@ -114,6 +116,11 @@ void GuiGeometryBuilder::AddAdjustedText(Font* font, const Vector2& position, co
 		}
 
 		const FontCharInfo& info = font->GetFontCharInfo(c);
+		if(newline) {
+			currentPos.Y += font->GetLineHeight();
+			currentPos.X = position.X;
+			newline = false;
+		}
 
 		const Vector2& size = info.Size;
 		const Vector2 offsetedPosition = currentPos + Vector2(0, info.Offset.Y);
@@ -178,21 +185,41 @@ Vector2 GuiGeometryBuilder::GetAdjustedTextPosition(const Font* font, const Poin
 
 Vector2 GuiGeometryBuilder::GetAdjustedTextPosition(const Font* font, const Rect& rect, const playstate::string& text, FontAlign::Enum align)
 {
-	Vector2 currentPos(rect.X + (float32)(rect.Width / 2.0f), rect.Y + (float32)(rect.Height / 2.0f));
-	if(align == FontAlign::CENTER) {
+	if(align == FontAlign::LEFT) {
+		Vector2 currentPos(rect.X, rect.Y + (float32)(rect.Height / 2.0f));
+		float32 height = 0.f;
+		const playstate::string::size_type size = text.length();
+		for(playstate::string::size_type i = 0; i < size; ++i) {
+			playstate::character c = text[i];
+			const FontCharInfo& info = font->GetFontCharInfo(c);
+			float32 totalSize = info.Size.Y + info.Offset.Y;
+			if(totalSize > height)
+				height = totalSize;
+		}
+
+		currentPos.Y -= height * 0.5f;
+		return currentPos;
+	} else if(align == FontAlign::CENTER) {
+		Vector2 currentPos(rect.X + (float32)(rect.Width / 2.0f), rect.Y + (float32)(rect.Height / 2.0f));
 		float32 width = 0.f;
-		float32 height = 15.0f;
+		float32 height = 0.f;
 		const playstate::string::size_type size = text.length();
 		for(playstate::string::size_type i = 0; i < size; ++i) {
 			playstate::character c = text[i];
 			const FontCharInfo& info = font->GetFontCharInfo(c);
 			width += info.Size.X;
+			float32 totalSize = info.Size.Y + info.Offset.Y;
+			if(totalSize > height)
+				height = totalSize;
 		}
 
 		currentPos.X -= width * 0.5f;
 		currentPos.Y -= height * 0.5f;
+		return currentPos;
 	}
-	return currentPos;
+
+	assert_not_implemented();
+	return Vector2();
 }
 
 IVertexBuffer* GuiGeometryBuilder::PrepareIVertexBuffer()

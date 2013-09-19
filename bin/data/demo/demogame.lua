@@ -34,6 +34,16 @@ function DemoGame:LoadContent()
 	-- Set ambient lighting on the scene.
 	Scene.SetAmbientLight({0.1, 0.1, 0.1})
 	
+	-- Add the player group
+	local playerGroup = SceneGroup.Load("/demo/levels/playergroup.lua")
+	Scene.AddSceneGroup(playerGroup)
+
+	local timer = Timer.Start()
+	-- Start the first level
+	local level1 = SceneGroup.Load("/demo/levels/level1.lua")
+	Scene.AddSceneGroup(level1)
+	print("Load time: " .. Timer.End(timer) .. " seconds")
+	
 	-- Load the main menu (this will start the first level later)
 	Canvas.AddCanvasGroup(MainMenu())
 end

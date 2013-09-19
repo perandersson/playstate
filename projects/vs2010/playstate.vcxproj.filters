@@ -126,6 +126,9 @@
     <Filter Include="Source Files\image">
       <UniqueIdentifier>{f3cdde29-73e1-4031-863e-0d7f550e098f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\gui\control">
+      <UniqueIdentifier>{e0320507-43a7-4e26-8d34-f48711fcb29d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\playstate\playstate\camera\camera.cpp">
@@ -391,6 +394,15 @@
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\math\math.cpp">
       <Filter>Source Files\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\gui\control\slider_control.cpp">
+      <Filter>Source Files\gui\control</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\gui\control\label_control.cpp">
+      <Filter>Source Files\gui\control</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\gui\control\checkbox_control.cpp">
+      <Filter>Source Files\gui\control</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -801,6 +813,18 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\font\font_align.h">
       <Filter>Source Files\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\gui\control\slider_control.h">
+      <Filter>Source Files\gui\control</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\gui\gui_mouse_state.h">
+      <Filter>Source Files\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\gui\control\label_control.h">
+      <Filter>Source Files\gui\control</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\gui\control\checkbox_control.h">
+      <Filter>Source Files\gui\control</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

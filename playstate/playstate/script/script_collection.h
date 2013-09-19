@@ -49,6 +49,11 @@ namespace playstate
 		// Find a resource inside this collection, for example a Font resource.
 		template<class T>
 		Resource<T> FindResource(const playstate::character* key) const;
+		
+		//
+		// Find a resource inside this collection, for example a Font resource.
+		template<class T>
+		Resource<T> FindResource(const playstate::character* key, Resource<T> defaultValue) const;
 
 		//
 		// Find a scriptable instance in this collectiom.
@@ -83,6 +88,16 @@ namespace playstate
 			return Resource<T>();
 	}
 	
+	template<class T>
+	Resource<T> ScriptCollection::FindResource(const playstate::character* key, Resource<T> defaultValue) const
+	{
+		ResourceData* data = FindResourceData(key, defaultValue.GetResourceData());
+		if(data != NULL)
+			return Resource<T>(data);
+		else
+			return Resource<T>();
+	}
+
 	template<class T>
 	T* ScriptCollection::FindScriptable(const playstate::character* key) const {
 		Scriptable* ptr = FindScriptablePtr(key, NULL);

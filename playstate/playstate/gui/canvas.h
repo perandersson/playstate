@@ -7,6 +7,7 @@
 #include "gui_geometry_builder.h"
 #include "../math/matrix4x4.h"
 #include "../processor/update_processor.h"
+#include "gui_mouse_state.h"
 
 namespace playstate
 {
@@ -16,7 +17,6 @@ namespace playstate
 	class Canvas : public IUpdateProcessor
 	{
 	public:
-
 		Canvas(IWindow& window, IInputSystem& inputSystem, std::auto_ptr<IUpdateProcessor> updateProcessor);
 		~Canvas();
 
@@ -52,6 +52,11 @@ namespace playstate
 		//
 		// @return The mouse button that's pressed down
 		MouseButtons::Enum GetMouseDown() const;
+
+		//
+		// @param rect
+		// @return The mouse state depending on supplied rect area
+		GuiMouseState::Enum GetMouseState(const Rect& rect) const;
 		
 		//
 		// Prepares the building blocks for the user interface contained in this canvas.

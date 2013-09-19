@@ -15,7 +15,7 @@ end
 
 function MainMenu:OnProcessCanvas()
 	self:BeginFrame(Rect(1024 - 200, 0, 200, 768), "Example")
-		if self:Button(Rect(0, 20, 140, 40), "Start Game") then
+		if self:Button(Rect(0, 0, 140, 40), "Start Game\nTest") then
 			if self.enabled then
 				self:StartGame()
 				Delete(self)
@@ -24,26 +24,17 @@ function MainMenu:OnProcessCanvas()
 				print("Start only if enabled!")
 			end
 		end
-		self.enabled = self:Checkbox(Rect(0, 70, 140, 20), self.enabled, "Enable?")
-		self:Label(Rect(0, 100, 0, 0), "Hello World Label")
-		self.sliderValue = self:Slider(Rect(0, 100, 140, 20), self.sliderValue,
+		self.enabled = self:Checkbox(Rect(0, 50, 140, 20), self.enabled, "Enable?")
+		self:Label(Rect(0, 80, 0, 0), "Hello World Label")
+		self.sliderValue = self:Slider(Rect(0, 110, 140, 20), self.sliderValue,
 			0.1, 1.0, 0.1)
-		self.selectedIndex = self:ComboBox(Rect(0, 130, 140, 20), 
+		self.selectedIndex = self:ComboBox(Rect(0, 140, 140, 20), 
 			self.selectedIndex, self.dropdownValues)
 		--self:TreeView(...)
 	self:EndFrame()
 end
 
 function MainMenu:StartGame()
-	-- Add the player group
-	local playerGroup = SceneGroup.Load("/demo/levels/playergroup.lua")
-	Scene.AddSceneGroup(playerGroup)
-
-	local timer = Timer.Start()
-	-- Start the first level
-	local level1 = SceneGroup.Load("/demo/levels/level1.lua")
-	Scene.AddSceneGroup(level1)
-	print("Load time: " .. Timer.End(timer) .. " seconds")
 end
 
 return MainMenu

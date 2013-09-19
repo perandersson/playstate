@@ -49,6 +49,14 @@ namespace playstate
 			return *this;
 		}
 
+		inline Rect operator + (const Rect& rhs) const {
+			return Rect(X + rhs.X, Y + rhs.Y, Width + rhs.Width, Height + rhs.Height);
+		}
+		
+		inline Rect operator - (const Rect& rhs) const {
+			return Rect(X - rhs.X, Y - rhs.Y, Width - rhs.Width, Height - rhs.Height);
+		}
+
 		//
 		// Return a translated version of this rectangle instance (i.e. moved)
 		//

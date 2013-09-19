@@ -7,6 +7,9 @@
 #include "gui_geometry_builder.h"
 #include "../script/scriptable.h"
 #include "gui_style.h"
+#include "control/slider_control.h"
+#include "control/label_control.h"
+#include "control/checkbox_control.h"
 
 #include <stack>
 
@@ -123,6 +126,10 @@ namespace playstate
 		// Method called right before this canvas group is removed from the canvas
 		virtual void OnRemovingFromCanvas();
 
+	private:
+		Rect AddShadowRect(const Rect& rect);
+		Rect AddBorderRect(const Rect& rect);
+
 	protected:
 		Canvas* mCanvas;
 		playstate::string mName;
@@ -135,6 +142,10 @@ namespace playstate
 		int32 mShadowOffset;
 		Color mShadowColor;
 		Resource<Font> mFont;
+
+		SliderControl mSliderControl;
+		LabelControl mLabelControl;
+		CheckboxControl mCheckboxControl;
 
 		std::stack<Point> mPositions;
 	};
