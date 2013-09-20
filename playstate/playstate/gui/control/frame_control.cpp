@@ -28,7 +28,7 @@ void FrameControl::SetStyle(const GuiStyle& style)
 	mTitleHeight = (uint32)Math::Max(style.FindInt(SAFE_STRING("Frame.Title.Height"), 25), 0);
 }
 
-void FrameControl::Render(const Canvas& canvas, GuiGeometryBuilder* builder, const Rect& rect, const playstate::string& title)
+Point FrameControl::Render(const Canvas& canvas, GuiGeometryBuilder* builder, const Rect& rect, const playstate::string& title)
 {
 	// Add title
 	uint32 titleOffset = 0;
@@ -42,4 +42,5 @@ void FrameControl::Render(const Canvas& canvas, GuiGeometryBuilder* builder, con
 	// Add body
 	const Rect bodyCoords(rect.Position + Point(0, titleOffset), rect.Size - Size(0, titleOffset));
 	builder->AddGradientQuad(bodyCoords, mBodyColors[0], mBodyColors[1]);
+	return rect.Position + Point(0, titleOffset);
 }

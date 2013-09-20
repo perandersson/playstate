@@ -2,6 +2,7 @@
 local style = { 
 	-- The font for all the text in the GUI
 	Font = Font.Load("/demo/fonts/consolab.ttf"), 
+	FontColor = "#00",
 	
 	ShadowOffset = 3, 
 	ShadowColor = { 0, 0, 0, 0.3 },
@@ -100,14 +101,12 @@ local style = {
 	
 	Button = {
 		Normal = {
-			FontColor = "#00",
 			BackColor = {
 				Top = "#CC",
 				Bottom = "#99"
 			}
 		},
 		Hover = {
-			FontColor = "#00",
 			BackColor = {
 				Top = "#EE",
 				Bottom = "#BB"

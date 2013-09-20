@@ -18,7 +18,7 @@ namespace playstate
 
 		//
 		// Renders a frame
-		void Render(const Canvas& canvas, GuiGeometryBuilder* builder, const Rect& rect, const playstate::string& title);
+		Point Render(const Canvas& canvas, GuiGeometryBuilder* builder, const Rect& rect, const playstate::string& title);
 
 	private:
 		Resource<Font> mFont;

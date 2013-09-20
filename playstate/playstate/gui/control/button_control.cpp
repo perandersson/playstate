@@ -14,19 +14,31 @@ ButtonControl::~ButtonControl()
 
 void ButtonControl::SetStyle(const GuiStyle& style)
 {
-	mFont = style.FindResource<Font>(SAFE_STRING("Font"));
-	mFont = style.FindResource<Font>(SAFE_STRING("Button.Font"), mFont);
+	static const playstate::string FONT_KEY(SAFE_STRING("Button.Font>Font"));
 
-	mButtonColors[0] = style.FindColor(SAFE_STRING("Button.Normal.BackColor.Top"), Color::Black);
-	mButtonColors[1] = style.FindColor(SAFE_STRING("Button.Normal.BackColor.Bottom"), Color::Black);
-	mButtonColors[2] = style.FindColor(SAFE_STRING("Button.Hover.BackColor.Top"), Color::Black);
-	mButtonColors[3] = style.FindColor(SAFE_STRING("Button.Hover.BackColor.Bottom"), Color::Black);
-	mButtonColors[4] = style.FindColor(SAFE_STRING("Button.Down.BackColor.Top"), Color::Black);
-	mButtonColors[5] = style.FindColor(SAFE_STRING("Button.Down.BackColor.Bottom"), Color::Black);
+	mFont = style.FindResource<Font>(FONT_KEY);
 	
-	mFontColors[0] = style.FindColor(SAFE_STRING("Button.Normal.FontColor"), Color::Black);
-	mFontColors[1] = style.FindColor(SAFE_STRING("Button.Hover.FontColor"), Color::Black);
-	mFontColors[2] = style.FindColor(SAFE_STRING("Button.Down.FontColor"), Color::Black);
+	static const playstate::string BACK_NORMAL_TOP_COLOR(SAFE_STRING("Button.Normal.BackColor.Top>Button.Normal.BackColor>Button.BackColor.Top>Button.BackColor>BackColor.Top>BackColor"));
+	static const playstate::string BACK_NORMAL_BOTTOM_COLOR(SAFE_STRING("Button.Normal.BackColor.Bottom>Button.Normal.BackColor>Button.BackColor.Bottom>Button.BackColor>BackColor.Bottom>BackColor"));
+	static const playstate::string BACK_HOVER_TOP_COLOR(SAFE_STRING("Button.Hover.BackColor.Top>Button.Hover.BackColor>Button.BackColor.Top>Button.BackColor>BackColor.Top>BackColor"));
+	static const playstate::string BACK_HOVER_BOTTOM_COLOR(SAFE_STRING("Button.Hover.BackColor.Bottom>Button.Hover.BackColor>Button.BackColor.Bottom>Button.BackColor>BackColor.Bottom>BackColor"));
+	static const playstate::string BACK_DOWN_TOP_COLOR(SAFE_STRING("Button.Down.BackColor.Top>Button.Down.BackColor>Button.BackColor.Top>Button.BackColor>BackColor.Top>BackColor"));
+	static const playstate::string BACK_DOWN_BOTTOM_COLOR(SAFE_STRING("Button.Down.BackColor.Bottom>Button.Down.BackColor>Button.BackColor.Bottom>Button.BackColor>BackColor.Bottom>BackColor"));
+	
+	mButtonColors[0] = style.FindColor(BACK_NORMAL_TOP_COLOR, Color::Black);
+	mButtonColors[1] = style.FindColor(BACK_NORMAL_BOTTOM_COLOR, Color::Black);
+	mButtonColors[2] = style.FindColor(BACK_HOVER_TOP_COLOR, Color::Black);
+	mButtonColors[3] = style.FindColor(BACK_HOVER_BOTTOM_COLOR, Color::Black);
+	mButtonColors[4] = style.FindColor(BACK_DOWN_TOP_COLOR, Color::Black);
+	mButtonColors[5] = style.FindColor(BACK_DOWN_BOTTOM_COLOR, Color::Black);
+	
+	static const playstate::string FONT_COLOR_NORMAL(SAFE_STRING("Button.Normal.FontColor>Button.FontColor>FontColor"));
+	static const playstate::string FONT_COLOR_HOVER(SAFE_STRING("Button.Hover.FontColor>Button.FontColor>FontColor"));
+	static const playstate::string FONT_COLOR_DOWN(SAFE_STRING("Button.Down.FontColor>Button.FontColor>FontColor"));
+	
+	mFontColors[0] = style.FindColor(FONT_COLOR_NORMAL, Color::Black);
+	mFontColors[1] = style.FindColor(FONT_COLOR_HOVER, Color::Black);
+	mFontColors[2] = style.FindColor(FONT_COLOR_DOWN, Color::Black);
 }
 
 bool ButtonControl::Render(const Canvas& canvas, GuiGeometryBuilder* builder, const Rect& rect, const playstate::string& text)

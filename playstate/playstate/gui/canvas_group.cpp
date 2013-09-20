@@ -87,14 +87,8 @@ void CanvasGroup::BeginFrame(const Rect& rect, const playstate::string& title)
 	// Add border
 	AddBorderRect(coordinates);
 
-	// Add title
-	uint32 titleOffset = 0;
-	if(!title.empty()) {
-		titleOffset = 25;
-	}
-
-	mFrameControl.Render(*mCanvas, mGeometryBuilder, coordinates, title);
-	mPositions.push(coordinates.Position + Point(0, titleOffset));
+	Point parentPosition = mFrameControl.Render(*mCanvas, mGeometryBuilder, coordinates, title);
+	mPositions.push(parentPosition);
 }
 
 Rect CanvasGroup::AddShadowRect(const Rect& rect)

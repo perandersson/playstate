@@ -64,6 +64,11 @@ void GameRunner::Start()
 	Release();
 }
 
+void GameRunner::Shutdown()
+{
+	mRunning = false;
+}
+
 void GameRunner::Run()
 {
 	ScriptSystem& scriptSystem = ScriptSystem::Get();
@@ -189,6 +194,12 @@ namespace playstate
 			GameRunner::Get().SetRenderPipeline(pipeline);
 		}
 
+		return 0;
+	}
+
+	int Game_Shutdown(lua_State* L)
+	{
+		GameRunner::Get().Shutdown();
 		return 0;
 	}
 }

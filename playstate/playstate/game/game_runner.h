@@ -27,6 +27,10 @@ namespace playstate
 		void Start();
 
 		//
+		// Shuts the game down and exits the application
+		void Shutdown();
+
+		//
 		// Defines how the scene should be rendered to the screen using the active camera.
 		// 
 		// @param renderPipeline
@@ -67,9 +71,11 @@ namespace playstate
 	
 	extern int Game_Start(lua_State* L);
 	extern int Game_SetRenderPipeline(lua_State* L);
+	extern int Game_Shutdown(lua_State* L);
 	static luaL_Reg Game_Methods[] = {
 		{ "Start", Game_Start },
 		{ "SetRenderPipeline", Game_SetRenderPipeline },
+		{ "Shutdown", Game_Shutdown },
 		{ NULL, NULL }
 	};
 }

@@ -32,90 +32,151 @@ ScriptCollection::~ScriptCollection()
 
 int32 ScriptCollection::FindInt(const playstate::character* key, int32 defaultVal) const
 {
-	int32 result = defaultVal;
-	if(FindKey(key)) {
-		result = (int32)lua_tonumber(mLuaState, -1);
-		lua_pop(mLuaState, 1);
+	return FindInt(playstate::string(key), defaultVal);
+}
+
+int32 ScriptCollection::FindInt(const playstate::string& key, int32 defaultVal) const
+{
+	std::vector<playstate::string> keys = Split(key, '>');
+	std::vector<playstate::string>::size_type size = keys.size();
+	for(uint32 i = 0; i < size; ++i) {
+		if(FindKey(keys[i])) {
+			int32 result = (int32)lua_tonumber(mLuaState, -1);
+			lua_pop(mLuaState, 1);
+			return result;
+		}
 	}
-	return result;
+
+	return defaultVal;
 }
 
 float32 ScriptCollection::FindFloat(const playstate::character* key, float32 defaultVal) const
 {
-	float32 result = defaultVal;
-	if(FindKey(key)) {
-		result = (float32)lua_tonumber(mLuaState, -1);
-		lua_pop(mLuaState, 1);
+	return FindFloat(playstate::string(key), defaultVal);
+}
+
+float32 ScriptCollection::FindFloat(const playstate::string& key, float32 defaultVal) const
+{
+	std::vector<playstate::string> keys = Split(key, '>');
+	std::vector<playstate::string>::size_type size = keys.size();
+	for(uint32 i = 0; i < size; ++i) {
+		if(FindKey(keys[i])) {
+			float32 result = (float32)lua_tonumber(mLuaState, -1);
+			lua_pop(mLuaState, 1);
+			return result;
+		}
 	}
-	return result;
+
+	return defaultVal;
 }
 
 bool ScriptCollection::FindBool(const playstate::character* key, bool defaultVal) const
 {
-	bool result = defaultVal;
-	if(FindKey(key)) {
-		result = lua_toboolean(mLuaState, -1) == 1;
-		lua_pop(mLuaState, 1);
+	return FindBool(playstate::string(key), defaultVal);
+}
+
+bool ScriptCollection::FindBool(const playstate::string& key, bool defaultVal) const
+{
+	std::vector<playstate::string> keys = Split(key, '>');
+	std::vector<playstate::string>::size_type size = keys.size();
+	for(uint32 i = 0; i < size; ++i) {
+		if(FindKey(keys[i])) {
+			bool result = lua_toboolean(mLuaState, -1) == 1;
+			lua_pop(mLuaState, 1);
+			return result;
+		}
 	}
-	return result;
+
+	return defaultVal;
 }
 
 playstate::string ScriptCollection::FindString(const playstate::character* key, const playstate::character* defaultVal) const
 {
-	playstate::string result = defaultVal;
-	if(FindKey(key)) {
-		result = lua_tostring(mLuaState, -1);
-		lua_pop(mLuaState, 1);
-	}
-	return result;
+	return FindString(playstate::string(key), defaultVal);
 }
 
-
-Color ScriptCollection::FindColor(const char* key, Color defaultColor) const
+playstate::string ScriptCollection::FindString(const playstate::string& key, const playstate::character* defaultVal) const
 {
-	Color result = defaultColor;
-	if(FindKey(key)) {
-		result = luaM_popcolor(mLuaState);
+	std::vector<playstate::string> keys = Split(key, '>');
+	std::vector<playstate::string>::size_type size = keys.size();
+	for(uint32 i = 0; i < size; ++i) {
+		if(FindKey(keys[i])) {
+			playstate::string value = lua_tostring(mLuaState, -1);
+			lua_pop(mLuaState, 1);
+			return value;
+		}
 	}
-	return result;
+	return defaultVal;
 }
 
-Vector2 ScriptCollection::FindVector2(const char* key, Vector2 defaultVector) const
+Color ScriptCollection::FindColor(const playstate::character* key, const Color& defaultColor) const
 {
-	Vector2 result = defaultVector;
-	if(FindKey(key)) {
-		result = luaM_popvector2(mLuaState);
-	}
-	return result;
+	return FindColor(playstate::string(key), defaultColor);
 }
 
-ResourceData* ScriptCollection::FindResourceData(const playstate::character* key, ResourceData* defaultObject) const
+Color ScriptCollection::FindColor(const playstate::string& key, const Color& defaultColor) const
 {
-	ResourceData* result = defaultObject;
-	if(FindKey(key)) {
-		result = luaM_popresourcedata(mLuaState);
+	std::vector<playstate::string> keys = Split(key, '>');
+	std::vector<playstate::string>::size_type size = keys.size();
+	for(uint32 i = 0; i < size; ++i) {
+		if(FindKey(keys[i])) {
+			return luaM_popcolor(mLuaState);
+		}
 	}
-	return result;
+	return defaultColor;
 }
 
-Scriptable* ScriptCollection::FindScriptablePtr(const playstate::character* key, Scriptable* defaultObject) const
+Vector2 ScriptCollection::FindVector2(const playstate::character* key, const Vector2& defaultVector) const
 {
-	Scriptable* result = defaultObject;
-	if(FindKey(key)) {
-		result = luaM_getinstance(mLuaState); 
-		lua_pop(mLuaState, 1);
-	}
-	return result;
+	return FindVector2(playstate::string(key), defaultVector);
 }
 
-bool ScriptCollection::FindKey(const playstate::character* key) const
+Vector2 ScriptCollection::FindVector2(const playstate::string& key, const Vector2& defaultVector) const
+{
+	std::vector<playstate::string> keys = Split(key, '>');
+	std::vector<playstate::string>::size_type size = keys.size();
+	for(uint32 i = 0; i < size; ++i) {
+		if(FindKey(keys[i])) {
+			return luaM_popvector2(mLuaState);
+		}
+	}
+	return defaultVector;
+}
+
+ResourceData* ScriptCollection::FindResourceData(const playstate::string& key, ResourceData* defaultObject) const
+{
+	std::vector<playstate::string> keys = Split(key, '>');
+	std::vector<playstate::string>::size_type size = keys.size();
+	for(uint32 i = 0; i < size; ++i) {
+		if(FindKey(keys[i])) {
+			return luaM_popresourcedata(mLuaState);
+		}
+	}
+	return defaultObject;
+}
+
+Scriptable* ScriptCollection::FindScriptablePtr(const playstate::string& key, Scriptable* defaultObject) const
+{
+	std::vector<playstate::string> keys = Split(key, '>');
+	std::vector<playstate::string>::size_type size = keys.size();
+	for(uint32 i = 0; i < size; ++i) {
+		if(FindKey(keys[i])) {
+			Scriptable* result = luaM_getinstance(mLuaState); 
+			lua_pop(mLuaState, 1);
+			return result;
+		}
+	}
+	return defaultObject;
+}
+
+bool ScriptCollection::FindKey(const playstate::string& key) const
 {
 	if(mLuaState == NULL)
 		return false;
 
 	lua_rawgeti(mLuaState, LUA_REGISTRYINDEX, mScriptRef);
 	bool istable = lua_istable(mLuaState, -1);
-	std::vector<playstate::string> parts = Split(playstate::string(key), '.');
+	std::vector<playstate::string> parts = Split(key, '.');
 	for(uint32 i = 0; i < parts.size(); ++i) {
 		const playstate::string& part = parts[i];
 		lua_pushstring(mLuaState, part.c_str());

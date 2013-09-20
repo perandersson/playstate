@@ -2,9 +2,6 @@ local class = require "engine.class"
 local KeyboardKeys = require "engine.core.keyboardkeys"
 
 MovePlayerBehaviour = class("MovePlayerBehaviour", Component)
-MovePlayerBehaviour.Class.Args = {
-	Speed = { Type = "number" }
-}
 function MovePlayerBehaviour:__init(speed)
 	Component.__init(self)
 	self.speed = speed
