@@ -14,8 +14,8 @@ function Editor:__init()
 end
 
 function Editor:OnProcessCanvas()
-	self:BeginFrame(Rect(1024 - 200, 0, 200, 768), "Example")
-		if self:Button(Rect(0, 0, 140, 40), "Start Game") then
+	self:BeginFrame(Rect(1024 - 200, 0, 200, 768), "Title here")
+		if self:Button(Rect(0, 0, 140, 40), "Button Text") then
 			if self.enabled then
 				self:StartGame()
 				Delete(self)

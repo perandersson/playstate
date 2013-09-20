@@ -1,13 +1,11 @@
 
 local style = { 
-	-- The font for all the text in the GUI
 	Font = Font.Load("/demo/fonts/consolab.ttf"), 
 	FontColor = "#00",
 	
 	ShadowOffset = 3, 
 	ShadowColor = { 0, 0, 0, 0.3 },
 	
-	-- The background color
 	BackColor = { 
 		Top = "#99", 
 		Bottom = "#22"
@@ -20,6 +18,7 @@ local style = {
 	Frame = {
 		Title = {
 			Height = 25,
+			FontColor = "#00",
 			BackColor = {
 				Top = "#EE",
 				Bottom = "#BB"
@@ -30,11 +29,8 @@ local style = {
 				Top = "#55",
 				Bottom = "#99"
 			}
-		},
-		FontColor = "#00"
+		}
 	},
-	
-	-- Slider style
 	Slider = {
 		Normal = {
 			BackColor = {
@@ -70,7 +66,6 @@ local style = {
 			}
 		},
 	},
-	
 	Checkbox = {
 		Unchecked = {
 			FontColor = "#00"
@@ -98,7 +93,6 @@ local style = {
 			}
 		}
 	},
-	
 	Button = {
 		Normal = {
 			BackColor = {
@@ -119,10 +113,7 @@ local style = {
 				Bottom = "#77"
 			}
 		},
-	},
-	
-	-- The front color (for example Font colors)
-	FrontColor = "#FF"
+	}
 }
 
 return style

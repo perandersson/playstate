@@ -14,8 +14,10 @@ LabelControl::~LabelControl()
 
 void LabelControl::SetStyle(const GuiStyle& style)
 {
-	mFont = style.FindResource<Font>(SAFE_STRING("Font"));
-	mFont = style.FindResource<Font>(SAFE_STRING("Label.Font"), mFont);
+	static const playstate::string FONT_KEY(SAFE_STRING("Label.Font>Font"));
+
+	mFont = style.FindResource<Font>(FONT_KEY);
+
 	mFontColor = style.FindColor(SAFE_STRING("Lable.FontColor"), Color::White);
 }
 

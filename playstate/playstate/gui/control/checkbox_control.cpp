@@ -14,19 +14,39 @@ CheckboxControl::~CheckboxControl()
 
 void CheckboxControl::SetStyle(const GuiStyle& style)
 {
-	mFont = style.FindResource<Font>(SAFE_STRING("Font"));
-	mFont = style.FindResource<Font>(SAFE_STRING("Checkbox.Font"), mFont);
-	
-	mFontColors[0] = style.FindColor(SAFE_STRING("Checkbox.Unchecked.FontColor"), Color::Black);
-	mFontColors[1] = style.FindColor(SAFE_STRING("Checkbox.Checked.FontColor"), Color::Black);
-	mCheckboxSize = (uint32)Math::Max(style.FindInt(SAFE_STRING("Checkbox.BoxSize"), 20), 0);
+	static const playstate::string FONT_KEY(SAFE_STRING("Checkbox.Font>Font"));
 
-	mCheckboxColors[0] = style.FindColor(SAFE_STRING("Checkbox.Normal.BackColor.Top"), Color::Black);
-	mCheckboxColors[1] = style.FindColor(SAFE_STRING("Checkbox.Normal.BackColor.Bottom"), Color::Black);
-	mCheckboxColors[2] = style.FindColor(SAFE_STRING("Checkbox.Hover.BackColor.Top"), Color::Black);
-	mCheckboxColors[3] = style.FindColor(SAFE_STRING("Checkbox.Hover.BackColor.Bottom"), Color::Black);
-	mCheckboxColors[4] = style.FindColor(SAFE_STRING("Checkbox.Down.BackColor.Top"), Color::Black);
-	mCheckboxColors[5] = style.FindColor(SAFE_STRING("Checkbox.Down.BackColor.Bottom"), Color::Black);
+	mFont = style.FindResource<Font>(FONT_KEY);
+
+	static const playstate::string FONT_COLOR_UNCHECKED(SAFE_STRING("Checkbox.Unchecked.FontColor>Checkbox.FontColor>FontColor"));
+	static const playstate::string FONT_COLOR_CHECKED(SAFE_STRING("Checkbox.Checked.FontColor>Checkbox.FontColor>FontColor"));
+	
+	mFontColors[0] = style.FindColor(FONT_COLOR_UNCHECKED, Color::Black);
+	mFontColors[1] = style.FindColor(FONT_COLOR_CHECKED, Color::Black);
+
+	static const playstate::string CHECKBOX_SIZE(SAFE_STRING("Checkbox.BoxSize"));
+
+	mCheckboxSize = (uint32)Math::Max(style.FindInt(CHECKBOX_SIZE, 20), 0);
+
+	static const playstate::string BACK_NORMAL_TOP_COLOR(
+		SAFE_STRING("Checkbox.Normal.BackColor.Top>Checkbox.Normal.BackColor>Checkbox.BackColor.Top>Checkbox.BackColor>BackColor.Top>BackColor"));
+	static const playstate::string BACK_NORMAL_BOTTOM_COLOR(
+		SAFE_STRING("Checkbox.Normal.BackColor.Bottom>Checkbox.Normal.BackColor>Checkbox.BackColor.Bottom>Checkbox.BackColor>BackColor.Bottom>BackColor"));
+	static const playstate::string BACK_HOVER_TOP_COLOR(
+		SAFE_STRING("Checkbox.Hover.BackColor.Top>Checkbox.Hover.BackColor>Checkbox.BackColor.Top>Checkbox.BackColor>BackColor.Top>BackColor"));
+	static const playstate::string BACK_HOVER_BOTTOM_COLOR(
+		SAFE_STRING("Checkbox.Hover.BackColor.Bottom>Checkbox.Hover.BackColor>Checkbox.BackColor.Bottom>Checkbox.BackColor>BackColor.Bottom>BackColor"));
+	static const playstate::string BACK_DOWN_TOP_COLOR(
+		SAFE_STRING("Checkbox.Down.BackColor.Top>Checkbox.Down.BackColor>Checkbox.BackColor.Top>Checkbox.BackColor>BackColor.Top>BackColor"));
+	static const playstate::string BACK_DOWN_BOTTOM_COLOR(
+		SAFE_STRING("Checkbox.Down.BackColor.Bottom>Checkbox.Down.BackColor>Checkbox.BackColor.Bottom>Checkbox.BackColor>BackColor.Bottom>BackColor"));
+
+	mCheckboxColors[0] = style.FindColor(BACK_NORMAL_TOP_COLOR, Color::Black);
+	mCheckboxColors[1] = style.FindColor(BACK_NORMAL_BOTTOM_COLOR, Color::Black);
+	mCheckboxColors[2] = style.FindColor(BACK_HOVER_TOP_COLOR, Color::Black);
+	mCheckboxColors[3] = style.FindColor(BACK_HOVER_BOTTOM_COLOR, Color::Black);
+	mCheckboxColors[4] = style.FindColor(BACK_DOWN_TOP_COLOR, Color::Black);
+	mCheckboxColors[5] = style.FindColor(BACK_DOWN_BOTTOM_COLOR, Color::Black);
 }
 
 bool CheckboxControl::Render(const Canvas& canvas, GuiGeometryBuilder* builder, const Rect& rect, bool toggled, const playstate::string& text)

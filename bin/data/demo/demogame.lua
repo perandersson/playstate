@@ -3,6 +3,7 @@ local config = require "config"
 
 -- MainMenu class
 local MainMenu = require "demo.gui.mainmenu"
+local Editor = require "engine.editor.editor"
 
 DemoGame = class("DemoGame", IGame)
 function DemoGame:__init()
@@ -36,6 +37,7 @@ function DemoGame:LoadContent()
 	
 	-- Load the main menu (this will start the first level later)
 	Canvas.AddCanvasGroup(MainMenu())
+	Canvas.AddCanvasGroup(Editor())
 end
 
 function DemoGame:Update()

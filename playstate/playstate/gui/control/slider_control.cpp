@@ -14,26 +14,45 @@ SliderControl::~SliderControl()
 
 void SliderControl::SetStyle(const GuiStyle& style)
 {
-	mFont = style.FindResource<Font>(SAFE_STRING("Font"));
-	mFont = style.FindResource<Font>(SAFE_STRING("Slider.Font"), mFont);
+	static const playstate::string FONT_KEY(SAFE_STRING("Frame.Font>Font"));
 
-	mSliderBackColors[0] = style.FindColor(SAFE_STRING("Slider.Normal.BackColor.Top"), Color::Black);
-	mSliderBackColors[1] = style.FindColor(SAFE_STRING("Slider.Normal.BackColor.Bottom"), Color::Black);
-	mSliderFontColor[0] = style.FindColor(SAFE_STRING("Slider.Normal.FontColor"), Color::White);
-	mSliderBarColors[0] = style.FindColor(SAFE_STRING("Slider.Normal.BarColor.Top"), Color::Black);
-	mSliderBarColors[1] = style.FindColor(SAFE_STRING("Slider.Normal.BarColor.Bottom"), Color::Black);
+	mFont = style.FindResource<Font>(FONT_KEY);
 
-	mSliderBackColors[2] = style.FindColor(SAFE_STRING("Slider.Hover.BackColor.Top"), Color::Black);
-	mSliderBackColors[3] = style.FindColor(SAFE_STRING("Slider.Hover.BackColor.Bottom"), Color::Black);
-	mSliderFontColor[1] = style.FindColor(SAFE_STRING("Slider.Hover.FontColor"), Color::White);
-	mSliderBarColors[2] = style.FindColor(SAFE_STRING("Slider.Hover.BarColor.Top"), Color::Black);
-	mSliderBarColors[3] = style.FindColor(SAFE_STRING("Slider.Hover.BarColor.Bottom"), Color::Black);
+	static const playstate::string NORMAL_FONT_COLOR(SAFE_STRING("Slider.Normal.FontColor>Slider.FontColor>FontColor"));
+	static const playstate::string HOVER_FONT_COLOR(SAFE_STRING("Slider.Hover.FontColor>Slider.FontColor>FontColor"));
+	static const playstate::string DOWN_FONT_COLOR(SAFE_STRING("Slider.Down.FontColor>Slider.FontColor>FontColor"));
 
-	mSliderBackColors[4] = style.FindColor(SAFE_STRING("Slider.Down.BackColor.Top"), Color::Black);
-	mSliderBackColors[5] = style.FindColor(SAFE_STRING("Slider.Down.BackColor.Bottom"), Color::Black);
-	mSliderFontColor[2] = style.FindColor(SAFE_STRING("Slider.Down.FontColor"), Color::White);
-	mSliderBarColors[4] = style.FindColor(SAFE_STRING("Slider.Down.BarColor.Top"), Color::Black);
-	mSliderBarColors[5] = style.FindColor(SAFE_STRING("Slider.Down.BarColor.Bottom"), Color::Black);
+	mSliderFontColor[0] = style.FindColor(NORMAL_FONT_COLOR, Color::White);
+	mSliderFontColor[1] = style.FindColor(HOVER_FONT_COLOR, Color::White);
+	mSliderFontColor[2] = style.FindColor(DOWN_FONT_COLOR, Color::White);
+
+	static const playstate::string NORMAL_BACK_TOP_COLOR(SAFE_STRING("Slider.Normal.BackColor.Top>Slider.Normal.BackColor>Slider.BackColor.Top>Slider.BackColor>BackColor"));
+	static const playstate::string NORMAL_BACK_BOTTOM_COLOR(SAFE_STRING("Slider.Normal.BackColor.Bottom>Slider.Normal.BackColor>Slider.BackColor.Bottom>Slider.BackColor>BackColor"));
+	static const playstate::string HOVER_BACK_TOP_COLOR(SAFE_STRING("Slider.Hover.BackColor.Top>Slider.Hover.BackColor>Slider.BackColor.Top>Slider.BackColor>BackColor"));
+	static const playstate::string HOVER_BACK_BOTTOM_COLOR(SAFE_STRING("Slider.Hover.BackColor.Bottom>Slider.Hover.BackColor>Slider.BackColor.Bottom>Slider.BackColor>BackColor"));
+	static const playstate::string DOWN_BACK_TOP_COLOR(SAFE_STRING("Slider.Down.BackColor.Top>Slider.Down.BackColor>Slider.BackColor.Top>Slider.BackColor>BackColor"));
+	static const playstate::string DOWN_BACK_BOTTOM_COLOR(SAFE_STRING("Slider.Down.BackColor.Bottom>Slider.Down.BackColor>Slider.BackColor.Bottom>Slider.BackColor>BackColor"));
+	
+	mSliderBackColors[0] = style.FindColor(NORMAL_BACK_TOP_COLOR, Color::Black);
+	mSliderBackColors[1] = style.FindColor(NORMAL_BACK_BOTTOM_COLOR, Color::Black);
+	mSliderBackColors[2] = style.FindColor(HOVER_BACK_TOP_COLOR, Color::Black);
+	mSliderBackColors[3] = style.FindColor(HOVER_BACK_BOTTOM_COLOR, Color::Black);
+	mSliderBackColors[4] = style.FindColor(DOWN_BACK_TOP_COLOR, Color::Black);
+	mSliderBackColors[5] = style.FindColor(DOWN_BACK_BOTTOM_COLOR, Color::Black);
+
+	static const playstate::string NORMAL_BAR_TOP_COLOR(SAFE_STRING("Slider.Normal.BarColor.Top>Slider.Normal.BarColor>Slider.BarColor.Top>Slider.BarColor"));
+	static const playstate::string NORMAL_BAR_BOTTOM_COLOR(SAFE_STRING("Slider.Normal.BarColor.Bottom>Slider.Normal.BarColor>Slider.BarColor.Bottom>Slider.BarColor"));
+	static const playstate::string HOVER_BAR_TOP_COLOR(SAFE_STRING("Slider.Hover.BarColor.Top>Slider.Hover.BarColor>Slider.BarColor.Top>Slider.BarColor"));
+	static const playstate::string HOVER_BAR_BOTTOM_COLOR(SAFE_STRING("Slider.Hover.BarColor.Bottom>Slider.Hover.BarColor>Slider.BarColor.Bottom>Slider.BarColor"));
+	static const playstate::string DOWN_BAR_TOP_COLOR(SAFE_STRING("Slider.Down.BarColor.Top>Slider.Down.BarColor>Slider.BarColor.Top>Slider.BarColor"));
+	static const playstate::string DOWN_BAR_BOTTOM_COLOR(SAFE_STRING("Slider.Down.BarColor.Bottom>Slider.Down.BarColor>Slider.BarColor.Bottom>Slider.BarColor"));
+
+	mSliderBarColors[0] = style.FindColor(NORMAL_BAR_TOP_COLOR, Color::Black);
+	mSliderBarColors[1] = style.FindColor(NORMAL_BAR_BOTTOM_COLOR, Color::Black);
+	mSliderBarColors[2] = style.FindColor(HOVER_BAR_TOP_COLOR, Color::Black);
+	mSliderBarColors[3] = style.FindColor(HOVER_BAR_BOTTOM_COLOR, Color::Black);
+	mSliderBarColors[4] = style.FindColor(DOWN_BAR_TOP_COLOR, Color::Black);
+	mSliderBarColors[5] = style.FindColor(DOWN_BAR_BOTTOM_COLOR, Color::Black);
 }
 
 float32 SliderControl::Render(const Canvas& canvas, GuiGeometryBuilder* builder, const Rect& rect, float32 value, float32 leftValue, float32 rightValue, float32 stepValue)
