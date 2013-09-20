@@ -29,7 +29,9 @@
     <ClCompile Include="..\..\playstate\playstate\game\scripted_configuration.cpp" />
     <ClCompile Include="..\..\playstate\playstate\gui\canvas.cpp" />
     <ClCompile Include="..\..\playstate\playstate\gui\canvas_group.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\gui\control\button_control.cpp" />
     <ClCompile Include="..\..\playstate\playstate\gui\control\checkbox_control.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\gui\control\frame_control.cpp" />
     <ClCompile Include="..\..\playstate\playstate\gui\control\label_control.cpp" />
     <ClCompile Include="..\..\playstate\playstate\gui\control\slider_control.cpp" />
     <ClCompile Include="..\..\playstate\playstate\gui\gui_style.cpp" />
@@ -129,7 +131,9 @@
     <ClInclude Include="..\..\playstate\playstate\game\scripted_configuration.h" />
     <ClInclude Include="..\..\playstate\playstate\gui\canvas.h" />
     <ClInclude Include="..\..\playstate\playstate\gui\canvas_group.h" />
+    <ClInclude Include="..\..\playstate\playstate\gui\control\button_control.h" />
     <ClInclude Include="..\..\playstate\playstate\gui\control\checkbox_control.h" />
+    <ClInclude Include="..\..\playstate\playstate\gui\control\frame_control.h" />
     <ClInclude Include="..\..\playstate\playstate\gui\control\label_control.h" />
     <ClInclude Include="..\..\playstate\playstate\gui\control\slider_control.h" />
     <ClInclude Include="..\..\playstate\playstate\gui\gui_mouse_state.h" />

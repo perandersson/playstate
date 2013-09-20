@@ -6,9 +6,6 @@ local style = {
 	ShadowOffset = 3, 
 	ShadowColor = { 0, 0, 0, 0.3 },
 	
-	BorderSize = 1,
-	BorderColor = "#00",
-	
 	-- The background color
 	BackColor = { 
 		Top = "#99", 
@@ -19,12 +16,29 @@ local style = {
 		FontColor = "#FF"
 	},
 	
+	Frame = {
+		Title = {
+			Height = 25,
+			BackColor = {
+				Top = "#EE",
+				Bottom = "#BB"
+			}
+		},
+		Body = {
+			BackColor = {
+				Top = "#55",
+				Bottom = "#99"
+			}
+		},
+		FontColor = "#00"
+	},
+	
 	-- Slider style
 	Slider = {
 		Normal = {
 			BackColor = {
-				Top = "#BB",
-				Bottom = "#DD"
+				Top = "#CC",
+				Bottom = "#99"
 			},
 			FontColor = "#00",
 			BarColor = {
@@ -34,8 +48,8 @@ local style = {
 		},
 		Hover = {
 			BackColor = {
-				Top = "#DD",
-				Bottom = "#DD"
+				Top = "#EE",
+				Bottom = "#BB"
 			},
 			FontColor = "#00",
 			BarColor = {
@@ -82,6 +96,30 @@ local style = {
 				Bottom = "#99",
 			}
 		}
+	},
+	
+	Button = {
+		Normal = {
+			FontColor = "#00",
+			BackColor = {
+				Top = "#CC",
+				Bottom = "#99"
+			}
+		},
+		Hover = {
+			FontColor = "#00",
+			BackColor = {
+				Top = "#EE",
+				Bottom = "#BB"
+			}
+		},
+		Down = {
+			FontColor = "#FF",
+			BackColor = {
+				Top = "#99",
+				Bottom = "#77"
+			}
+		},
 	},
 	
 	-- The front color (for example Font colors)

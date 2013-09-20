@@ -10,6 +10,8 @@
 #include "control/slider_control.h"
 #include "control/label_control.h"
 #include "control/checkbox_control.h"
+#include "control/button_control.h"
+#include "control/frame_control.h"
 
 #include <stack>
 
@@ -136,16 +138,14 @@ namespace playstate
 		GuiGeometryBuilder* mGeometryBuilder;
 
 		GuiStyle mStyle;
-		Color mBackColorTop;
-		Color mBackColorBottom;
-		Color mFrontColor;
 		int32 mShadowOffset;
 		Color mShadowColor;
-		Resource<Font> mFont;
 
 		SliderControl mSliderControl;
 		LabelControl mLabelControl;
 		CheckboxControl mCheckboxControl;
+		ButtonControl mButtonControl;
+		FrameControl mFrameControl;
 
 		std::stack<Point> mPositions;
 	};

@@ -15,7 +15,7 @@ end
 
 function MainMenu:OnProcessCanvas()
 	self:BeginFrame(Rect(1024 - 200, 0, 200, 768), "Example")
-		if self:Button(Rect(0, 0, 140, 40), "Start Game\nTest") then
+		if self:Button(Rect(0, 0, 140, 40), "Start Game") then
 			if self.enabled then
 				self:StartGame()
 				Delete(self)

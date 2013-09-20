@@ -34,17 +34,14 @@ void CanvasGroup::SetStyle(const GuiStyle& style)
 {
 	mStyle = style;
 
-	mBackColorTop = style.FindColor(SAFE_STRING("BackColor.Top"), Color::HexToRGB("#99"));
-	mBackColorBottom = style.FindColor(SAFE_STRING("BackColor.Bottom"), Color::HexToRGB("#22"));
-	mFrontColor = style.FindColor(SAFE_STRING("FrontColor"), Color::White);
-	mFont = style.FindResource<Font>(SAFE_STRING("Font"));
-
 	mShadowOffset = style.FindInt(SAFE_STRING("ShadowOffset"), 0);
 	mShadowColor = style.FindColor(SAFE_STRING("ShadowColor"), Color(0, 0, 0, 0.3f));
 
 	mSliderControl.SetStyle(style);
 	mLabelControl.SetStyle(style);
 	mCheckboxControl.SetStyle(style);
+	mButtonControl.SetStyle(style);
+	mFrameControl.SetStyle(style);
 }
 
 void CanvasGroup::ProcessCanvas(GuiGeometryBuilder* builder)
@@ -92,21 +89,11 @@ void CanvasGroup::BeginFrame(const Rect& rect, const playstate::string& title)
 
 	// Add title
 	uint32 titleOffset = 0;
-	if(mFont.IsNotNull() && !title.empty()) {		
-		static const uint32 titleHeight = 25;
-		static const Color titleTop = Color::HexToRGB("#EEEEEE");
-		static const Color titleBottom = Color::HexToRGB("#777777");
-
-		const Rect titleCoords(coordinates.Position, Size(coordinates.Width, titleHeight));
-		mGeometryBuilder->AddGradientQuad(titleCoords, titleTop, titleBottom);
-		mGeometryBuilder->AddText(mFont.Get(), coordinates.Position, mFrontColor, title);
-		titleOffset = titleHeight;
+	if(!title.empty()) {
+		titleOffset = 25;
 	}
 
-	// Add body
-	const Rect bodyCoords(coordinates.Position + Point(0, titleOffset), coordinates.Size - Size(0, titleOffset));
-	mGeometryBuilder->AddGradientQuad(bodyCoords, mBackColorTop, mBackColorBottom);
-
+	mFrameControl.Render(*mCanvas, mGeometryBuilder, coordinates, title);
 	mPositions.push(coordinates.Position + Point(0, titleOffset));
 }
 
@@ -145,21 +132,7 @@ bool CanvasGroup::Button(const Rect& rect, const playstate::string& text)
 	// Border
 	AddBorderRect(coordinates);
 
-	// Add body
-	mGeometryBuilder->AddGradientQuad(coordinates, mBackColorTop, mBackColorBottom);
-
-	if(text.length() > 0 && !mFont.IsNull()) {
-		mGeometryBuilder->AddText(mFont.Get(), coordinates.Position, mFrontColor, text);
-	}
-
-	if(mCanvas->GetMouseClick() == MouseButtons::LEFT) {
-		const Point mousePos = mCanvas->GetMousePosition();
-		if(coordinates.IsPointInside(mousePos)) {
-			return true;
-		}
-	}
-
-	return false;
+	return mButtonControl.Render(*mCanvas, mGeometryBuilder, coordinates, text);;
 }
 
 void CanvasGroup::Label(const Rect& rect, const playstate::string& text)
