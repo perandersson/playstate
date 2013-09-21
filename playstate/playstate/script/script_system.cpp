@@ -36,8 +36,8 @@ int __playstate_lua_require(lua_State* L)
 		package = playstate::string("/") + package;
 	}
 	std::auto_ptr<IFile> file = IFileSystem::Get().OpenFile(package);
-	ScriptSystem::Get().PushIdentity(file->GetPath());
 	if(file->Exists()) {
+		ScriptSystem::Get().PushIdentity(file->GetPath());
 		playstate::string value = file->Read().str();
 		int res = luaL_loadstring(L, value.c_str());
 		if(res != 0) {
@@ -45,11 +45,11 @@ int __playstate_lua_require(lua_State* L)
 			luaM_printerror(L, err.c_str());
 			lua_pushnil(L);
 		}
+		ScriptSystem::Get().PopIdentity();
 	} else {
 		luaM_printerror(L, "\n\tCould not include file \"%s\". File not found", package.c_str());
 		lua_pushnil(L);
 	}
-	ScriptSystem::Get().PopIdentity();
 	return 1;
 }
 
@@ -59,21 +59,25 @@ ScriptSystem::ScriptSystem(IFileSystem& fileSystem, ILogger& logger)
 	mLuaState = luaL_newstate();
 	luaL_openlibs(mLuaState);
 
-	lua_register(mLuaState, "__playstate_lua_require", __playstate_lua_require);
+	luaL_Reg builtInFuncs[] = {
+		{ "__playstate_lua_require", __playstate_lua_require },
+		{ "Delete", __playstate_delete },
+		{ NULL, NULL }
+	};
+	RegisterFunctions(builtInFuncs);
+
 	int res = luaL_dostring(mLuaState, "table.insert(package.searchers, __playstate_lua_require)");
 	if(res != 0) {
 		playstate::string err = lua_tostring(mLuaState, -1);
 		lua_pop(mLuaState, 1);
+		THROW_EXCEPTION(ScriptException, "Could not register necessary 'require' function. Reason: '%s'", err.c_str());
 	}
-
-	lua_register(mLuaState, "Delete", __playstate_delete);
-
 }
 
 ScriptSystem::~ScriptSystem()
 {
 	if(mLuaState != NULL) {
-		//assert(lua_gettop(mLuaState) == 0 && "Lua stack is not 0 which means that we have a memory leak somewhere");
+		assert(lua_gettop(mLuaState) == 0 && "Lua stack is not 0 which means that we have a memory leak somewhere");
 		lua_close(mLuaState);
 		mLuaState = NULL;
 	}
@@ -86,15 +90,16 @@ std::auto_ptr<Script> ScriptSystem::CompileFile(const playstate::string& fileNam
 		mLogger.Error("Could not find script file: '%s'", fileName.c_str());
 		THROW_EXCEPTION(ScriptNotFoundException, "Could not find script file: '%s'", fileName.c_str());
 	}
+	PushIdentity(scriptFile->GetPath());
 
 	uint32 stackCount = lua_gettop(mLuaState);
 	playstate::string value = scriptFile->Read().str();
-	ScriptSystem::Get().PushIdentity(scriptFile->GetPath());
 	int res = luaL_loadstring(mLuaState, value.c_str());
 	if(res != 0) {
 		playstate::string err = lua_tostring(mLuaState, -1);
 		lua_pop(mLuaState, 1);
 		mLogger.Error("Could not load file: %s. Reason: %s", fileName.c_str(), err.c_str());
+		PopIdentity();
 		THROW_EXCEPTION(ScriptException, "Could not load file: %s. Reason: %s", fileName.c_str(), err.c_str());
 	}
 
@@ -103,10 +108,11 @@ std::auto_ptr<Script> ScriptSystem::CompileFile(const playstate::string& fileNam
 		playstate::string err = lua_tostring(mLuaState, -1);
 		lua_pop(mLuaState, 1);
 		mLogger.Error("Could not compile file: %s. Reason: %s", fileName.c_str(), err.c_str());
+		PopIdentity();
 		THROW_EXCEPTION(ScriptException, "Could not compile file: %s. Reason: %s", fileName.c_str(), err.c_str());
 	}
 	uint32 numResults = lua_gettop(mLuaState) - stackCount;
-	ScriptSystem::Get().PopIdentity();
+	PopIdentity();
 
 	Script* cs = new Script(mLuaState, numResults);
 	return std::auto_ptr<Script>(cs);
@@ -125,12 +131,7 @@ void ScriptSystem::RegisterType(const char* className, luaL_Reg* methods)
 	lua_setfield(mLuaState, -2, "__index");
 	luaL_setfuncs(mLuaState, methods, 0);
 	lua_pop(mLuaState, 1);
-	/*
-	if(methods != 0) {
-		luaL_getmetatable(mLuaState, metaName.c_str());
-		lua_pop(mLuaState, 1);
-	}
-	*/
+
 	lua_newtable(mLuaState);
 	luaL_getmetatable(mLuaState, metaName.c_str());
 	lua_setmetatable(mLuaState, -2);
@@ -167,6 +168,14 @@ void ScriptSystem::SetGlobalVar(const char* name, bool value)
 	lua_setglobal(mLuaState, name);
 }
 
+Scriptable* ScriptSystem::GetScriptableByID(script_ref id) const
+{
+	lua_rawgeti(mLuaState, LUA_REGISTRYINDEX, id);
+	Scriptable* ptr = luaM_getinstance(mLuaState);
+	lua_pop(mLuaState, 1);
+	return ptr;
+}
+
 void ScriptSystem::HandleGC()
 {
 	lua_gc(mLuaState, LUA_GCSTEP, 180);
@@ -193,5 +202,5 @@ playstate::string ScriptSystem::GetIdentity() const
 	if(mIdentities.empty())
 		return playstate::string();
 
-	return mIdentities.front();
+	return mIdentities.top();
 }

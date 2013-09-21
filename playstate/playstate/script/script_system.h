@@ -12,7 +12,7 @@
 
 #include "../logging/logger.h"
 
-#include <queue>
+#include <stack>
 
 extern "C"
 {
@@ -62,16 +62,25 @@ namespace playstate
 		// Sets a global value
 		void SetGlobalVar(const char* name, bool value);
 
+		// 
+		// Tries to find a scriptable instance based on it's ID
+		//
+		// @return The scriptable instance
+		Scriptable* GetScriptableByID(script_ref id) const;
+
 		//
 		//
 		void HandleGC();
 
 		//
-		// Enables/Disables debug mode for the script system.
+		// Enables/Disables debug mode for the script system. This enables refreshing of scripts
+		// in runtime
+		//
+		// @param debugMode
 		void SetDebugMode(bool debugMode);
 
 		//
-		// 
+		// Push the identity
 		void PushIdentity(const playstate::string& identity);
 		void PopIdentity();
 		playstate::string GetIdentity() const;
@@ -80,6 +89,6 @@ namespace playstate
 		IFileSystem& mFileSystem;
 		ILogger& mLogger;
 		lua_State* mLuaState;
-		std::queue<playstate::string> mIdentities;
+		std::stack<playstate::string> mIdentities;
 	};
 }
