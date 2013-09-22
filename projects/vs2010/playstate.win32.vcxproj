@@ -15,7 +15,6 @@
     <ClInclude Include="..\..\playstate.win32\playstate\win32\filesystem\win32_file.h" />
     <ClInclude Include="..\..\playstate.win32\playstate\win32\filesystem\win32_filesystem.h" />
     <ClInclude Include="..\..\playstate.win32\playstate\win32\filesystem\win32_file_watcher.h" />
-    <ClInclude Include="..\..\playstate.win32\playstate\win32\input\win32_input_state.h" />
     <ClInclude Include="..\..\playstate.win32\playstate\win32\input\win32_input_system.h" />
     <ClInclude Include="..\..\playstate.win32\playstate\win32\rendering\win32_graphics_driver.h" />
     <ClInclude Include="..\..\playstate.win32\playstate\win32\rendering\win32_render_context.h" />
@@ -33,7 +32,6 @@
     <ClCompile Include="..\..\playstate.win32\playstate\win32\filesystem\win32_file.cpp" />
     <ClCompile Include="..\..\playstate.win32\playstate\win32\filesystem\win32_filesystem.cpp" />
     <ClCompile Include="..\..\playstate.win32\playstate\win32\filesystem\win32_file_watcher.cpp" />
-    <ClCompile Include="..\..\playstate.win32\playstate\win32\input\win32_input_state.cpp" />
     <ClCompile Include="..\..\playstate.win32\playstate\win32\input\win32_input_system.cpp" />
     <ClCompile Include="..\..\playstate.win32\playstate\win32\rendering\win32_graphics_driver.cpp" />
     <ClCompile Include="..\..\playstate.win32\playstate\win32\rendering\win32_render_context.cpp" />

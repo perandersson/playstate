@@ -11,6 +11,23 @@ namespace playstate
 		virtual ~IInputState() {}
 	};
 
+	class GamePadButtons
+	{
+	public:
+		enum Enum {
+			X,
+			Y,
+			A,
+			B,
+			START,
+			SELECT,
+			LTRIGGER,
+			RTRIGGER,
+			LBUMPER,
+			RBUMPER
+		};
+	};
+
 	class KeyboardKeys
 	{
 	public:
@@ -43,24 +60,24 @@ namespace playstate
 	class IKeyboardState : public IInputState
 	{
 	public:
-		virtual bool IsDown(KeyboardKeys::Enum key) = 0;
-		virtual bool IsUp(KeyboardKeys::Enum key) = 0;
+		virtual bool IsDown(KeyboardKeys::Enum key) const = 0;
+		virtual bool IsUp(KeyboardKeys::Enum key) const = 0;
 	};
 
 	class IGamePadState : public IInputState
 	{
 	public:
-		virtual bool IsDown(int key) = 0;
-		virtual bool IsUp(int key) = 0;
-		virtual Vector2 GetLeftThumbStick() = 0;
-		virtual Vector2 GetRightThumbStick() = 0;
+		virtual bool IsDown(GamePadButtons::Enum button) const = 0;
+		virtual bool IsUp(GamePadButtons::Enum button) const = 0;
+		virtual Vector2 GetLeftThumbStick() const = 0;
+		virtual Vector2 GetRightThumbStick() const = 0;
 	};
 
 	class IMouseState : public IInputState
 	{
 	public:
-		virtual bool IsDown(MouseButtons::Enum button) = 0;
-		virtual bool IsUp(MouseButtons::Enum button) = 0;
-		virtual Point GetPosition() = 0;
+		virtual bool IsDown(MouseButtons::Enum button) const = 0;
+		virtual bool IsUp(MouseButtons::Enum button) const = 0;
+		virtual Point GetPosition() const = 0;
 	};
 }

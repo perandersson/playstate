@@ -12,9 +12,9 @@ namespace playstate
 		//
 		// Poll the input system for events
 		virtual void Poll() = 0;
-		virtual IGamePadState& GetGamePadState() = 0;
-		virtual IKeyboardState& GetKeyboardState() = 0;
-		virtual IMouseState& GetMouseState() = 0;
+		virtual const IGamePadState& GetGamePadState() const = 0;
+		virtual const IKeyboardState& GetKeyboardState() const = 0;
+		virtual const IMouseState& GetMouseState() const = 0;
 	};
 	
 	//

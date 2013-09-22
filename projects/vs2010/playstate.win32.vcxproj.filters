@@ -41,9 +41,6 @@
     <ClInclude Include="..\..\playstate.win32\playstate\win32\filesystem\win32_filesystem.h">
       <Filter>Source Files\win32\filesystem</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate.win32\playstate\win32\input\win32_input_state.h">
-      <Filter>Source Files\win32\input</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\playstate.win32\playstate\win32\input\win32_input_system.h">
       <Filter>Source Files\win32\input</Filter>
     </ClInclude>
@@ -90,9 +87,6 @@
     </ClCompile>
     <ClCompile Include="..\..\playstate.win32\playstate\win32\filesystem\win32_filesystem.cpp">
       <Filter>Source Files\win32\filesystem</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\playstate.win32\playstate\win32\input\win32_input_state.cpp">
-      <Filter>Source Files\win32\input</Filter>
     </ClCompile>
     <ClCompile Include="..\..\playstate.win32\playstate\win32\input\win32_input_system.cpp">
       <Filter>Source Files\win32\input</Filter>

@@ -66,7 +66,7 @@ void Canvas::DetachTickable(ITickable* tickable)
 void Canvas::Update()
 {
 	mUpdateProcessor->Update();
-	IMouseState& state = mInputSystem.GetMouseState();
+	const IMouseState& state = mInputSystem.GetMouseState();
 	if(state.IsDown(MouseButtons::LEFT))
 		mLastButtonDown = MouseButtons::LEFT;
 	if(state.IsDown(MouseButtons::MIDDLE))
