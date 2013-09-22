@@ -30,6 +30,8 @@ void Win32InputSystem::Poll()
 			Point cursorPoint((int32)p.x, (int32)p.y);
 			if(cursorPoint >= Point::Zero && cursorPoint <= mWindow.GetSize()) {
 				mPosition = Point(p.x, p.y);
+			} else {
+				mEnabled = false;
 			}
 		}
 	}
