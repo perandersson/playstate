@@ -99,6 +99,12 @@ void Win32Window::SetTitle(const playstate::string& title)
 	SetWindowText(mWindowHandle, title.c_str());
 }
 
+bool Win32Window::HasFocus() const
+{
+	HWND focusedWindowHandle = GetFocus();
+	return mWindowHandle == focusedWindowHandle;
+}
+
 HWND Win32Window::GetWindowHandle() const
 {
 	return mWindowHandle;

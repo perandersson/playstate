@@ -24,7 +24,7 @@ public:
 
 // IWindowResizeListener
 public:
-	virtual void OnWindowResized(const Point& newSize);
+	virtual void OnWindowResized(const Size& newSize);
 
 // IFileChangedListener
 public:

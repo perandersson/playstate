@@ -18,6 +18,9 @@ Win32InputSystem::~Win32InputSystem()
 
 void Win32InputSystem::Poll()
 {	
+	if(!mWindow.HasFocus())
+		return;
+
 	POINT p;
 	if(GetCursorPos(&p)) {
 		if(ScreenToClient(mWindow.GetWindowHandle(), &p)) {

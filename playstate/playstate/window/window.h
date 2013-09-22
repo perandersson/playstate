@@ -29,6 +29,11 @@ namespace playstate
 		virtual const playstate::string& GetTitle() const = 0;
 
 		//
+		// @return TRUE if this window has focus; FALSE otherwise
+		virtual bool HasFocus() const = 0;
+
+
+		//
 		// Updates the title for this window
 		//
 		// @param title The new window title

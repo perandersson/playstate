@@ -13,7 +13,7 @@ DeferredRenderPipeline::DeferredRenderPipeline(IRenderSystem& renderSystem, IWin
 {
 	mWindow.AddWindowResizedListener(this);
 	
-	const Point& windowSize = window.GetSize();
+	const Size& windowSize = window.GetSize();
 
 	mDiffuseRenderTarget = mRenderSystem.CreateRenderTarget2D(windowSize, TextureFormat::RGBA);
 	mPositionsRenderTarget = mRenderSystem.CreateRenderTarget2D(windowSize, TextureFormat::RGBA16F);
@@ -208,7 +208,7 @@ void DeferredRenderPipeline::DrawFinalResultToScreen(Scene& scene, const Camera&
 	mTexturedShader->Render(mRenderSystem.GetUniformVertexBuffer());
 }
 
-void DeferredRenderPipeline::OnWindowResized(const Point& newSize)
+void DeferredRenderPipeline::OnWindowResized(const Size& newSize)
 {
 	delete mDiffuseRenderTarget;
 	delete mPositionsRenderTarget;

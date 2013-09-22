@@ -31,6 +31,8 @@ namespace playstate
 			virtual const playstate::string& GetTitle() const;
 			virtual void SetTitle(const playstate::string& title);
 
+			virtual bool HasFocus() const;
+
 			virtual void AddWindowResizedListener(IWindowResizedListener* listener);
 			virtual void RemoveWindowResizedListener(IWindowResizedListener* listener);
 
