@@ -96,6 +96,11 @@ Matrix4x4 Matrix4x4::Scale(float32 x, float32 y, float32 z)
 					 0, 0, 0, 1);
 }
 
+Matrix4x4 Matrix4x4::Scale(const Vector3& scale)
+{
+	return Scale(scale.X, scale.Y, scale.Z);
+}
+
 Matrix4x4::Matrix4x4() : _11(1), _12(0), _13(0), _14(0), 
 						 _21(0), _22(1), _23(0), _24(0),
 						 _31(0), _32(0), _33(1), _34(0),

@@ -65,5 +65,6 @@ namespace playstate
 		static Matrix4x4 RotationY(float32 angleY);
 		static Matrix4x4 RotationZ(float32 angleZ);
 		static Matrix4x4 Scale(float32 x, float32 y, float32 z);
+		static Matrix4x4 Scale(const Vector3& scale);
 	};
 }

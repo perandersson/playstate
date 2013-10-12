@@ -96,6 +96,23 @@ namespace playstate
 		}
 
 		//
+		// Sets the scale of this node
+		void SetScale(const Vector3& scale);
+
+		//
+		// @return The relative scale of this node
+		inline const Vector3& GetScale() const {
+			return mScale;
+		}
+
+		//
+		// @return The absolute scale of this node
+		inline const Vector3& GetAbsoluteScale() const {
+			return mAbsoluteScale;
+		}
+
+
+		//
 		// @return This nodes model matrix
 		inline const Matrix4x4& GetModelMatrix() const {
 			return mModelMatrix;
@@ -166,6 +183,10 @@ namespace playstate
 		void UpdateRotation(const Vector3& parentRotation);
 
 		//
+		// Updates the absolute scale value based on the parents scale
+		void UpdateScale(const Vector3& parentScale);
+
+		//
 		// Update the model matrix value based on the position and rotation
 		void UpdateModelMatrix();
 				
@@ -174,6 +195,8 @@ namespace playstate
 		Vector3 mAbsoluteRotation;
 		Vector3 mPosition;
 		Vector3 mAbsolutePosition;
+		Vector3 mScale;
+		Vector3 mAbsoluteScale;
 		Matrix4x4 mModelMatrix;
 		type_mask mTypeMask;
 
@@ -196,6 +219,7 @@ namespace playstate
 	extern int SceneNode_SetPosition(lua_State* L);
 	extern int SceneNode_Translate(lua_State* L);
 	extern int SceneNode_SetRotatation(lua_State* L);
+	extern int SceneNode_SetScale(lua_State* L);
 	extern int SceneNode_AddChild(lua_State* L);
 	extern int SceneNode_RemoveChild(lua_State* L);
 	extern int SceneNode_FireEvent(lua_State* L);
@@ -209,6 +233,7 @@ namespace playstate
 		{ "SetPosition", SceneNode_SetPosition },
 		{ "Translate", SceneNode_Translate },
 		{ "SetRotation", SceneNode_SetRotatation },
+		{ "SetScale", SceneNode_SetScale },
 		{ "AddChild", SceneNode_AddChild },
 		{ "RemoveChild", SceneNode_RemoveChild },
 		{ "FireEvent", SceneNode_FireEvent },

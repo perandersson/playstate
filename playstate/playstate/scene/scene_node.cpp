@@ -189,6 +189,34 @@ void SceneNode::UpdateRotation(const Vector3& parentRotation)
 	}
 }
 
+void SceneNode::SetScale(const Vector3& scale)
+{
+	Vector3 diff = scale - mScale;
+	mScale = scale;
+	mAbsoluteScale += diff;
+
+	UpdateModelMatrix();
+
+	SceneNode* child = mChildren.First();
+	while(child != NULL) {
+		child->UpdateScale(mAbsoluteScale);
+		child = child->NodeLink.Tail;
+	}
+}
+
+void SceneNode::UpdateScale(const Vector3& parentScale)
+{
+	mAbsoluteScale = parentScale + mScale;
+
+	UpdateModelMatrix();
+
+	SceneNode* child = mChildren.First();
+	while(child != NULL) {
+		child->UpdateScale(mAbsoluteScale);
+		child = child->NodeLink.Tail;
+	}
+}
+
 void SceneNode::UpdateModelMatrix()
 {
 	Vector3 groupPosition;
@@ -196,10 +224,11 @@ void SceneNode::UpdateModelMatrix()
 		groupPosition = mSceneGroup->GetPosition();
 	}
 
+	mModelMatrix = Matrix4x4::Translation(mAbsolutePosition + groupPosition);
 	if(!mAbsoluteRotation.IsZero())
-		mModelMatrix = Matrix4x4::Rotation(mAbsoluteRotation) * Matrix4x4::Translation(mAbsolutePosition + groupPosition);
-	else
-		mModelMatrix = Matrix4x4::Translation(mAbsolutePosition + groupPosition);
+		mModelMatrix = Matrix4x4::Rotation(mAbsoluteRotation) * mModelMatrix;
+	if(!mAbsoluteScale.IsZero())
+		mModelMatrix = Matrix4x4::Scale(mAbsoluteScale) * mModelMatrix;
 }
 
 void SceneNode::RemoveFromScene()
@@ -356,6 +385,19 @@ namespace playstate
 			node->SetRotation(vec);
 		} else {
 			luaM_printerror(L, "Expected: self<SceneNode>:SetRotatation(Vector3)");
+		}
+
+		return 0;
+	}
+	
+	int SceneNode_SetScale(lua_State* L)
+	{
+		Vector3 vec = luaM_popvector3(L);
+		SceneNode* node = luaM_popobject<SceneNode>(L);
+		if(node != NULL) {
+			node->SetScale(vec);
+		} else {
+			luaM_printerror(L, "Expected: self<SceneNode>:SetScale(Vector3)");
 		}
 
 		return 0;

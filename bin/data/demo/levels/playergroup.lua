@@ -21,6 +21,7 @@ player1:AddComponent(FollowCameraBehaviour())
 player1:AddComponent(RenderStaticModel(playerModel))
 player1:AddComponent(PlayerMovementSoundEffect(footsteps))
 player1:SetPosition(0, 0, 10)
+player1:SetScale(2, 2, 2)
 playerGroup:AddChild(player1)
 
 local playerColor = SceneNode()
