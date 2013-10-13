@@ -52,7 +52,7 @@ int playstate::Sound_SetMasterVolume(lua_State* L)
 		return 0;
 	}
 
-	float32 volume = lua_tonumber(L, -1); lua_pop(L, 1);
+	float32 volume = luaM_tofloat(L, -1); lua_pop(L, 1);
 	ISoundEngine::Get().SetMasterVolume(volume);
 	return 0;
 }
@@ -64,7 +64,7 @@ int playstate::Sound_SetMusicVolume(lua_State* L)
 		return 0;
 	}
 
-	float32 volume = lua_tonumber(L, -1); lua_pop(L, 1);
+	float32 volume = luaM_tofloat(L, -1); lua_pop(L, 1);
 	ISoundEngine::Get().SetMusicVolume(volume);
 	return 0;
 }
@@ -76,7 +76,7 @@ int playstate::Sound_SetSoundEffectVolume(lua_State* L)
 		return 0;
 	}
 
-	float32 volume = lua_tonumber(L, -1); lua_pop(L, 1);
+	float32 volume = luaM_tofloat(L, -1); lua_pop(L, 1);
 	ISoundEngine::Get().SetSoundEffectVolume(volume);
 	return 0;
 }

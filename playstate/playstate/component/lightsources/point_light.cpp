@@ -68,10 +68,10 @@ namespace playstate
 
 	int PointLight_Factory(lua_State* L)
 	{
-		float32 quadricAttenuation = lua_tonumber(L, -1); lua_pop(L, 1);
-		float32 linearAttenuation = lua_tonumber(L, -1); lua_pop(L, 1);
-		float32 constantAttenuation = lua_tonumber(L, -1); lua_pop(L, 1);
-		float32 radius = lua_tonumber(L, -1); lua_pop(L, 1);
+		float32 quadricAttenuation = luaM_tofloat(L, -1); lua_pop(L, 1);
+		float32 linearAttenuation = luaM_tofloat(L, -1); lua_pop(L, 1);
+		float32 constantAttenuation = luaM_tofloat(L, -1); lua_pop(L, 1);
+		float32 radius = luaM_tofloat(L, -1); lua_pop(L, 1);
 		Color color = luaM_popcolor(L);
 
 		ScriptedPointLight* obj = new ScriptedPointLight(color, radius, constantAttenuation, linearAttenuation, quadricAttenuation);

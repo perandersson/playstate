@@ -104,7 +104,7 @@ Point Canvas::GetMousePosition() const
 	const Size size = mWindow.GetSize();
 	const Vector2 diff(mSize.Width / (float32)size.Width, mSize.Height / (float32)size.Height);
 	Point pt = mInputSystem.GetMouseState().GetPosition();
-	return Point(pt.X * diff.X, pt.Y * diff.Y);
+	return Point((int32)(pt.X * diff.X), (int32)(pt.Y * diff.Y));
 }
 
 MouseButtons::Enum Canvas::GetMouseClick() const
@@ -133,7 +133,7 @@ GuiMouseState::Enum Canvas::GetMouseState(const Rect& rect) const
 void Canvas::SetSize(const Size& size)
 {
 	mSize = size;
-	mProjectionMatrix = Camera::GetOrtho2D(0.f, size.Width, size.Height, 0.f);
+	mProjectionMatrix = Camera::GetOrtho2D(0.f, (float32)size.Width, (float32)size.Height, 0.f);
 }
 
 const Size& Canvas::GetSize() const
