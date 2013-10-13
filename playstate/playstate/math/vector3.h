@@ -28,6 +28,7 @@ namespace playstate
 		float32 Length() const;
 		float32 SquaredLength() const;
 		bool IsZero() const;
+		bool IsNotZero() const;
 		float32 DotProduct(const Vector3& vector3) const;
 		float32 GetAngleDegree(const Vector3& vector3) const;
 		float32 GetAngleRadians(const Vector3& vector3) const;

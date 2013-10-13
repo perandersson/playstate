@@ -116,3 +116,10 @@ bool Vector3::IsZero() const
 		abs(Y) <= FLT_EPSILON &&
 		abs(Z) <= FLT_EPSILON;
 }
+
+bool Vector3::IsNotZero() const
+{
+	return abs(X) > FLT_EPSILON ||
+		abs(Y) > FLT_EPSILON ||
+		abs(Z) > FLT_EPSILON;
+}

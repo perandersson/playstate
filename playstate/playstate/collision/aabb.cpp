@@ -42,6 +42,13 @@ void AABB::Translate(const Vector3& direction)
 	Set(GetPosition() + direction, width, height, depth);
 }
 
+void AABB::Scale(const Vector3& scale)
+{
+	MaxPoint.X *= scale.X; MinPoint.X *= scale.X;
+	MaxPoint.Y *= scale.Y; MinPoint.Y *= scale.Y;
+	MaxPoint.Z *= scale.Z; MinPoint.Z *= scale.Z;
+}
+
 void AABB::SetWidth(float32 width)
 {
 	float32 height = MaxPoint.Y - MinPoint.Y;

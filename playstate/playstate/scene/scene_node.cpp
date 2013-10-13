@@ -225,9 +225,9 @@ void SceneNode::UpdateModelMatrix()
 	}
 
 	mModelMatrix = Matrix4x4::Translation(mAbsolutePosition + groupPosition);
-	if(!mAbsoluteRotation.IsZero())
+	if(mAbsoluteRotation.IsNotZero())
 		mModelMatrix = Matrix4x4::Rotation(mAbsoluteRotation) * mModelMatrix;
-	if(!mAbsoluteScale.IsZero())
+	if(mAbsoluteScale.IsNotZero())
 		mModelMatrix = Matrix4x4::Scale(mAbsoluteScale) * mModelMatrix;
 }
 

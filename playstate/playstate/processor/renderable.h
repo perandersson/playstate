@@ -15,7 +15,7 @@ namespace playstate
 
 	public:
 		//
-		// Performs the pre-render stage. The purpos of this stage is to prepare the render blocks
+		// Performs the pre-render stage. The purpos of this stage is to prepare the current instances render blocks
 		// before rendering. The collected render blocks will then be sent to the render pipeline.
 		//
 		// @param state

@@ -16,7 +16,7 @@ RenderStaticModel::~RenderStaticModel()
 void RenderStaticModel::OnComponentAdded()
 {
 	mModel.AddListener(this);
-	SetBoundingBox(mModel->GetBoundingBox(), GetNode()->GetPosition());
+	SetBoundingBox(mModel->GetBoundingBox(), GetNode()->GetPosition(), GetNode()->GetScale());
 	Renderable::Attach(GetNode()->GetGroup());
 }
 
@@ -28,12 +28,12 @@ void RenderStaticModel::OnComponentRemoved()
 
 void RenderStaticModel::OnLoaded(ResourceObject* object)
 {
-	SetBoundingBox(mModel->GetBoundingBox(), GetNode()->GetPosition());
+	SetBoundingBox(mModel->GetBoundingBox(), GetNode()->GetPosition(), GetNode()->GetScale());
 }
 
 void RenderStaticModel::OnUnloading(ResourceObject* object)
 {
-	SetBoundingBox(mModel->GetBoundingBox(), GetNode()->GetPosition());
+	SetBoundingBox(mModel->GetBoundingBox(), GetNode()->GetPosition(), GetNode()->GetScale());
 }
 
 void RenderStaticModel::PreRender(const RenderState& state, RenderBlockResultSet* resultSet)
@@ -50,12 +50,6 @@ void RenderStaticModel::PreRender(const RenderState& state, RenderBlockResultSet
 		}
 		if(BIT_ISSET(state.Filter, RenderStateFilter::TEXTURES)) {
 			block->DiffuseTexture = mesh.DiffuseTexture.Get();
-			//block->AmbientTexture = mesh.AmbientTexture.Get();
-			//block->SpecularTexture = mesh.SpecularTexture.Get();
-			//block->SpecularHighlightTexture = mesh.SpecularHighlightTexture.Get();
-			//block->AlphaTexture = mesh.AlphaTexture.Get();
-			//block->BumpMapTexture = mesh.BumpMapTexture.Get();
-			//block->DisplacementTexture = mesh.DisplacementTexture.Get();
 		}
 		block->DiffuseColor = mesh.DiffuseColor;
 	}

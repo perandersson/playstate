@@ -32,6 +32,10 @@ namespace playstate
 		void Translate(const Vector3& direction);
 
 		//
+		// Scales each coordinate part
+		void Scale(const Vector3& scale);
+
+		//
 		// @param width The new width.
 		void SetWidth(float32 width);
 

@@ -28,6 +28,16 @@ void SpatialNode::SetBoundingBox(const AABB& boundingBox, const Vector3& positio
 		mTree->Invalidate(this);
 }
 
+void SpatialNode::SetBoundingBox(const AABB& boundingBox, const Vector3& position, const Vector3& scale)
+{
+	mBoundingBox = boundingBox;
+	mOrigin = boundingBox.GetPosition();
+	mBoundingBox.Translate(position);
+	mBoundingBox.Scale(scale);
+	if(mTree != NULL)
+		mTree->Invalidate(this);
+}
+
 void SpatialNode::AttachToTree(ISpatialTree* tree)
 {
 	mTree = tree;

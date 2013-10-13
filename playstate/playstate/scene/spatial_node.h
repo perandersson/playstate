@@ -23,6 +23,10 @@ namespace playstate
 		//
 		// Sets the bounding box for this node.
 		void SetBoundingBox(const AABB& boundingBox, const Vector3& position);
+		
+		//
+		// Sets the bounding box for this node.
+		void SetBoundingBox(const AABB& boundingBox, const Vector3& position, const Vector3& scale);
 
 		//
 		// Attaches this node to the supplied tree
