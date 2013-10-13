@@ -31,18 +31,21 @@ namespace playstate
 		virtual ~SceneNode();
 
 		//
-		// Add the supplied component
-		// @param component
+		// Add the supplied component to this node
+		//
+		// @param component The component we want to add to this node.
 		void AddComponent(Component* component);
 
 		//
 		// Remove the supplied component.
+		//
 		// @param component
 		void RemoveComponent(Component* component);
 
 		//
-		// Retrieves a component based on the supplied type. If no component is found then return NULL.
-		// @param type
+		// Retrieves the first component matching the the supplied type. If no component is found then return NULL.
+		//
+		// @param type 
 		// @return The component if found; NULL otherwise
 		Component* GetComponent(type_mask type);
 
@@ -167,11 +170,28 @@ namespace playstate
 	protected:
 		//
 		// Method called when a child is added to this node
+		//
+		// @param node
 		virtual void OnChildAdded(SceneNode* node);
+
+		//
+		// Method invoked when a child is removed from this node
+		//
+		// @param node
 		virtual void OnChildRemoved(SceneNode* node);
 
 		void OnDetachedFromParent(SceneNode* parent);
 		void OnAttachedToParent(SceneNode* parent);
+
+	protected:
+		//
+		// Method invoked when this node is attached to a scene group
+		virtual void OnAttachedToSceneGroup();
+
+		//
+		// Method invoked the moment before this node is removed from the
+		// scene group it's attached to
+		virtual void OnDetachingFromSceneGroup();
 		
 	protected:
 		//

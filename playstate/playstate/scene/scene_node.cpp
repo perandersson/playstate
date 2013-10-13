@@ -244,6 +244,7 @@ void SceneNode::NodeAttachedToSceneGroup(SceneGroup* group)
 
 	mSceneGroup = group;
 	UpdateModelMatrix();
+	this->OnAttachedToSceneGroup();
 	
 	// Nofiy the components that they are attached to the scene via a scene group
 	Component* component = mComponents.First();
@@ -268,6 +269,7 @@ void SceneNode::DetachingNodeFromSceneGroup(SceneGroup* group)
 		return;
 
 	assert(mSceneGroup == group && "Why are you trying to notify this node that it's being detached from someone elses group?");
+	this->OnDetachingFromSceneGroup();
 	
 	// Detach all this nodes children
 	SceneNode* child = mChildren.First();
@@ -286,6 +288,14 @@ void SceneNode::DetachingNodeFromSceneGroup(SceneGroup* group)
 	}
 
 	mSceneGroup = NULL;
+}
+
+void SceneNode::OnAttachedToSceneGroup()
+{
+}
+
+void SceneNode::OnDetachingFromSceneGroup()
+{
 }
 
 namespace playstate
