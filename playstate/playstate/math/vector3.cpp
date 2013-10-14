@@ -12,6 +12,7 @@ const Vector3 Vector3::NegativeUnitX = Vector3(-1.0f, 0.0f, 0.0f);
 const Vector3 Vector3::NegativeUnitY = Vector3(0.0f, -1.0f, 0.0f);
 const Vector3 Vector3::NegativeUnitZ = Vector3(0.0f, 0.0f, -1.0f);
 const Vector3 Vector3::Zero = Vector3(0.0f, 0.0f, 0.0f);
+const Vector3 Vector3::One = Vector3(1.0f, 1.0f, 1.0f);
 
 Vector3::Vector3() : X(0.0f), Y(0.0f), Z(0.0f)
 {

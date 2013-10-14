@@ -4,19 +4,20 @@
 
 using namespace playstate;
 
-playstate::AABB playstate::AABB::Unit(playstate::Vector3(), 1, 1, 1);
+playstate::AABB playstate::AABB::Unit(Vector3::Zero, 1, 1, 1);
 
 AABB::AABB()
 {
 }
 
 AABB::AABB(const Vector3& position, float32 width, float32 height, float32 depth)
+	: Offset(position)
 {
 	Set(position, width, height, depth);
 }
 
 AABB::AABB(const AABB& box)
-	: MinPoint(box.MinPoint), MaxPoint(box.MaxPoint)
+	: MinPoint(box.MinPoint), MaxPoint(box.MaxPoint), Offset(box.Offset)
 {
 }
 
@@ -30,7 +31,7 @@ void AABB::SetPosition(const Vector3& position)
 	float32 height = MaxPoint.Y - MinPoint.Y;
 	float32 depth =  MaxPoint.Z - MinPoint.Z;
 
-	Set(position, width, height, depth);
+	Set(position + Offset, width, height, depth);
 }
 
 void AABB::Translate(const Vector3& direction)
@@ -39,7 +40,7 @@ void AABB::Translate(const Vector3& direction)
 	float32 height = MaxPoint.Y - MinPoint.Y;
 	float32 depth =  MaxPoint.Z - MinPoint.Z;
 
-	Set(GetPosition() + direction, width, height, depth);
+	Set(GetPosition() + Offset + direction, width, height, depth);
 }
 
 void AABB::Scale(const Vector3& scale)
@@ -47,6 +48,17 @@ void AABB::Scale(const Vector3& scale)
 	MaxPoint.X *= scale.X; MinPoint.X *= scale.X;
 	MaxPoint.Y *= scale.Y; MinPoint.Y *= scale.Y;
 	MaxPoint.Z *= scale.Z; MinPoint.Z *= scale.Z;
+}
+
+void AABB::SetPositionRotationScale(const Vector3& position, const Vector3& rotation, const Vector3& scale)
+{
+	const float32 width = MaxPoint.X - MinPoint.X;
+	const float32 height = MaxPoint.Y - MinPoint.Y;
+	const float32 depth =  MaxPoint.Z - MinPoint.Z;
+
+	assert(rotation.IsZero() && "No rotation support yet!");
+
+	Set(position + Offset, width * scale.X, height * scale.Y, depth * scale.Z);
 }
 
 void AABB::SetWidth(float32 width)

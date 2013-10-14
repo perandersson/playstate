@@ -36,6 +36,10 @@ namespace playstate
 		void Scale(const Vector3& scale);
 
 		//
+		// Sets the position, rotation and scale
+		void SetPositionRotationScale(const Vector3& position, const Vector3& rotation, const Vector3& scale);
+
+		//
 		// @param width The new width.
 		void SetWidth(float32 width);
 
@@ -80,6 +84,7 @@ namespace playstate
 	public:
 		Vector3 MaxPoint;
 		Vector3 MinPoint;
+		Vector3 Offset;
 
 	public:
 		static AABB Unit;

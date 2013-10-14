@@ -5,13 +5,15 @@ using namespace playstate;
 
 SceneNode::SceneNode()
 	: mSceneGroup(NULL), mTypeMask(BIT_ALL), mParent(NULL), 
-	mComponents(offsetof(Component, ComponentLink)), mChildren(offsetof(SceneNode, NodeLink))
+	mComponents(offsetof(Component, ComponentLink)), mChildren(offsetof(SceneNode, NodeLink)),
+	mScale(Vector3::One), mAbsoluteScale(Vector3::One)
 {
 }
 
 SceneNode::SceneNode(type_mask typeMask)
 	: mSceneGroup(NULL), mTypeMask(typeMask), mParent(NULL), 
-	mComponents(offsetof(Component, ComponentLink)), mChildren(offsetof(SceneNode, NodeLink))
+	mComponents(offsetof(Component, ComponentLink)), mChildren(offsetof(SceneNode, NodeLink)),
+	mScale(Vector3::One), mAbsoluteScale(Vector3::One)
 {
 }
 

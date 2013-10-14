@@ -48,20 +48,9 @@ namespace playstate
 		// Detaches this node from the tree it's being contained inside.
 		void DetachFromTree();
 		
-	protected:
-		//
-		// Sets this nodes absolute position. Note that the boundingBox might be initially offsetted, which is taken
-		// into account when moving this node.
-		void SetPosition(const Vector3& position);
-
-		//
-		// Sets this nodes absolute rotation
-		void SetRotation(const Vector3& rotation);
-
 	private:
 		ISpatialTree* mTree;
 		AABB mBoundingBox;
-		Vector3 mOrigin;
 	};
 }
 

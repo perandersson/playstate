@@ -14,7 +14,6 @@ SpatialNode::~SpatialNode()
 void SpatialNode::SetBoundingBox(const AABB& boundingBox)
 {
 	mBoundingBox = boundingBox;
-	mOrigin = boundingBox.GetPosition();
 	if(mTree != NULL)
 		mTree->Invalidate(this);
 }
@@ -22,8 +21,7 @@ void SpatialNode::SetBoundingBox(const AABB& boundingBox)
 void SpatialNode::SetBoundingBox(const AABB& boundingBox, const Vector3& position)
 {
 	mBoundingBox = boundingBox;
-	mOrigin = boundingBox.GetPosition();
-	mBoundingBox.Translate(position);
+	mBoundingBox.SetPositionRotationScale(position, Vector3::Zero, Vector3::One);
 	if(mTree != NULL)
 		mTree->Invalidate(this);
 }
@@ -31,9 +29,7 @@ void SpatialNode::SetBoundingBox(const AABB& boundingBox, const Vector3& positio
 void SpatialNode::SetBoundingBox(const AABB& boundingBox, const Vector3& position, const Vector3& scale)
 {
 	mBoundingBox = boundingBox;
-	mOrigin = boundingBox.GetPosition();
-	mBoundingBox.Translate(position);
-	mBoundingBox.Scale(scale);
+	mBoundingBox.SetPositionRotationScale(position, Vector3::Zero, scale);
 	if(mTree != NULL)
 		mTree->Invalidate(this);
 }
@@ -46,16 +42,4 @@ void SpatialNode::AttachToTree(ISpatialTree* tree)
 void SpatialNode::DetachFromTree()
 {
 	mTree = NULL;
-}
-
-void SpatialNode::SetPosition(const Vector3& position)
-{
-	mBoundingBox.SetPosition(mOrigin + position);
-	if(mTree != NULL)
-		mTree->Invalidate(this);
-}
-
-void SpatialNode::SetRotation(const Vector3& rotation)
-{
-	assert_not_implemented();
 }
