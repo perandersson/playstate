@@ -55,6 +55,7 @@
     <ClCompile Include="..\..\playstate\playstate\model\md5\md5_mesh_resource_loader.cpp" />
     <ClCompile Include="..\..\playstate\playstate\model\model.cpp" />
     <ClCompile Include="..\..\playstate\playstate\model\wavefront\wavefront_resource_loader.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\processor\collidable.cpp" />
     <ClCompile Include="..\..\playstate\playstate\processor\light_source.cpp" />
     <ClCompile Include="..\..\playstate\playstate\processor\processors\linked_list_render_processor.cpp" />
     <ClCompile Include="..\..\playstate\playstate\processor\processors\linked_list_update_processor.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="..\..\playstate\playstate\model\model_mesh.h" />
     <ClInclude Include="..\..\playstate\playstate\model\wavefront\wavefront_resource_loader.h" />
     <ClInclude Include="..\..\playstate\playstate\playstate.h" />
+    <ClInclude Include="..\..\playstate\playstate\processor\collidable.h" />
     <ClInclude Include="..\..\playstate\playstate\processor\light_source.h" />
     <ClInclude Include="..\..\playstate\playstate\processor\light_source_processor.h" />
     <ClInclude Include="..\..\playstate\playstate\processor\processors\linked_list_render_processor.h" />

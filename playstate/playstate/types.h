@@ -86,6 +86,10 @@ namespace playstate
 #define BIT_ALL UINT_MAX
 #endif
 
+#ifndef BIT_NONE
+#define BIT_NONE 0
+#endif
+
 /* Constants rounded for 21 decimals. */
 #ifndef M_E
 #define M_E 2.71828182845904523536

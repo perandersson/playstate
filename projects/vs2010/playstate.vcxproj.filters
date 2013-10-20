@@ -410,6 +410,9 @@
     <ClCompile Include="..\..\playstate\playstate\gui\control\frame_control.cpp">
       <Filter>Source Files\gui\control</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\processor\collidable.cpp">
+      <Filter>Source Files\processor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\playstate\playstate\camera\camera.h">
@@ -837,6 +840,9 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\gui\control\frame_control.h">
       <Filter>Source Files\gui\control</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\processor\collidable.h">
+      <Filter>Source Files\processor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
