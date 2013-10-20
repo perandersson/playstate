@@ -32,7 +32,17 @@ namespace playstate
 		virtual ~Collidable();
 
 		void SetCollisionGroups(uint32 groups);
+
+		// 
+		// Enables the supplied collision group ID.
+		//
+		// @param groupID
 		void EnableCollisionGroup(uint32 groupID);
+
+		//
+		// Disables the supplied collision group ID.
+		//
+		// @param groupID
 		void DisableCollisionGroup(uint32 groupID);
 
 		inline uint32 GetCollisionGroups() const {
