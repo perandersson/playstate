@@ -4,6 +4,7 @@
 #include "../component/component.h"
 #include "../math/matrix4x4.h"
 #include "../script/luam.h"
+#include "spatial_node.h"
 
 namespace playstate
 {
@@ -134,8 +135,7 @@ namespace playstate
 		}
 
 		//
-		// Remove this item from the scene. 
-		// This will also delete this object and clean-up all related resources (child nodes for example).
+		// Remove this item from the scene.
 		void RemoveFromScene();
 		
 		//
@@ -209,7 +209,7 @@ namespace playstate
 		//
 		// Update the model matrix value based on the position and rotation
 		void UpdateModelMatrix();
-				
+		
 	private:
 		Vector3 mRotation;
 		Vector3 mAbsoluteRotation;

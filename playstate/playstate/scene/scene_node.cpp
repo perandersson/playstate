@@ -98,6 +98,7 @@ void SceneNode::OnAttachedToParent(SceneNode* parent)
 
 	UpdatePosition(mParent->mAbsolutePosition);
 	UpdateRotation(mParent->mAbsoluteRotation);
+	UpdateScale(mParent->mAbsoluteScale);
 }
 
 void SceneNode::FireEvent(uint32 typeID, uint32 messageID)
@@ -231,6 +232,11 @@ void SceneNode::UpdateModelMatrix()
 		mModelMatrix = Matrix4x4::Rotation(mAbsoluteRotation) * mModelMatrix;
 	if(mAbsoluteScale.IsNotZero())
 		mModelMatrix = Matrix4x4::Scale(mAbsoluteScale) * mModelMatrix;
+
+	Component* component = mComponents.First();
+	while(component != NULL) {
+		component = component->ComponentLink.Tail;
+	}
 }
 
 void SceneNode::RemoveFromScene()

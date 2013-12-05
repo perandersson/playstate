@@ -38,7 +38,7 @@ namespace playstate
 		// Invalidates the supplied node. 
 		//
 		// @remark This usually means that the bounding-box has changed somehow - i.e. it needs 
-		//	to be moved inside the octree tree structure.
+		//	to be moved inside the tree structure.
 		//
 		// @param node The invalidated node
 		virtual void Invalidate(SpatialNode* node) = 0;
