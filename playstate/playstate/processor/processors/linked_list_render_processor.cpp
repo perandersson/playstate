@@ -1,29 +1,28 @@
 #include "../../memory/memory.h"
 #include "linked_list_render_processor.h"
+#include "../../scene/scene_node.h"
 using namespace playstate;
 
 LinkedListRenderProcessor::LinkedListRenderProcessor() 
-	: Scriptable(), mRenderables(offsetof(Renderable, RenderableLink))
+	: Scriptable(), mNodes(offsetof(SceneNode, RenderableNodeLink))
 {
 }
 
 LinkedListRenderProcessor::~LinkedListRenderProcessor()
 {
-	mRenderables.DeleteAll();
+	mNodes.DeleteAll();
 }
 
-void LinkedListRenderProcessor::AttachRenderable(Renderable* renderable)
+void LinkedListRenderProcessor::AttachRenderable(SceneNode* node)
 {
-	assert_not_null(renderable);
-
-	mRenderables.AddLast(renderable);
+	assert_not_null(node);
+	mNodes.AddLast(node);
 }
 
-void LinkedListRenderProcessor::DetachRenderable(Renderable* renderable)
+void LinkedListRenderProcessor::DetachRenderable(SceneNode* node)
 {
-	assert_not_null(renderable);
-
-	mRenderables.Remove(renderable);
+	assert_not_null(node);
+	mNodes.Remove(node);
 }
 
 bool LinkedListRenderProcessor::Find(const FindQuery& query, RenderBlockResultSet* target) const
@@ -34,14 +33,14 @@ bool LinkedListRenderProcessor::Find(const FindQuery& query, RenderBlockResultSe
 
 	const Frustum& frustum = query.Camera->GetViewFrustum();
 	const uint32 numResults = target->GetNumResults();
-	Renderable* renderable = mRenderables.First();
-	while(renderable != NULL) {
-		Renderable* next = renderable->RenderableLink.Tail;
-		AABB::CollisionResult result = frustum.IsColliding(renderable->GetBoundingBox());
+	SceneNode* node = mNodes.First();
+	while(node != NULL) {
+		SceneNode* next = node->RenderableNodeLink.Tail;
+		AABB::CollisionResult result = frustum.IsColliding(node->GetBoundingBox());
 		if(result != AABB::OUTSIDE) {
-			renderable->PreRender(state, target);
+			node->PreRender(state, target);
 		}
-		renderable = next;
+		node = next;
 	}
 
 	return target->GetNumResults() > numResults;

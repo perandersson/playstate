@@ -8,14 +8,14 @@ TEST_SUITE(Scene)
 	class MockRenderProcessor : public IRenderProcessor
 	{
 	public:
-		virtual void AttachRenderable(Renderable* renderable)
+		virtual void AttachRenderable(SceneNode* node)
 		{
-			items.push_back(renderable);
+			items.push_back(node);
 		}
 	
-		virtual void DetachRenderable(Renderable* renderable)
+		virtual void DetachRenderable(SceneNode* node)
 		{
-			std::vector<Renderable*>::iterator it = std::find(items.begin(), items.end(), renderable);
+			std::vector<SceneNode*>::iterator it = std::find(items.begin(), items.end(), node);
 			items.erase(it);
 		}
 
@@ -24,7 +24,7 @@ TEST_SUITE(Scene)
 			return true;
 		}
 
-		std::vector<Renderable*> items;
+		std::vector<SceneNode*> items;
 	};
 
 	class MockUpdateProcessor : public IUpdateProcessor
@@ -67,33 +67,7 @@ TEST_SUITE(Scene)
 			return true;
 		}
 	};
-
-	class MockRenderableComponent : public Component, public Renderable
-	{
-	public:
-		MockRenderableComponent()
-		{
-		}
-
-		virtual ~MockRenderableComponent()
-		{
-		}
-
-		virtual void OnComponentAdded()
-		{
-			Renderable::Attach(GetNode()->GetGroup());
-		}
-
-		virtual void OnComponentRemoved()
-		{
-			Renderable::Detach();
-		}
-
-		virtual void PreRender(const RenderState& state, RenderBlockResultSet* builder)
-		{
-		}
-	};
-
+	
 	UNIT_TEST(Scene_FindNonExistingItems)
 	{
 		Scene scene;
@@ -113,7 +87,6 @@ TEST_SUITE(Scene)
 		SceneGroup* group = new SceneGroup(up, rp, lp);
 		SceneNode* node1 = new SceneNode();
 		group->AddChild(node1);
-		node1->AddComponent(new MockRenderableComponent());
 		SceneNode* node2 = new SceneNode();
 		group->AddChild(node2);
 		scene.AddSceneGroup(group);

@@ -16,12 +16,12 @@ namespace playstate
 				
 	// IRenderProcessor
 	public:
-		virtual void AttachRenderable(Renderable* renderable);
-		virtual void DetachRenderable(Renderable* renderable);
+		virtual void AttachRenderable(SceneNode* node);
+		virtual void DetachRenderable(SceneNode* node);
 		virtual bool Find(const FindQuery& query, RenderBlockResultSet* target) const;
 
 	private:
-		LinkedList<Renderable> mRenderables;
+		LinkedList<SceneNode> mNodes;
 		QuadTree mQuadTree;
 	};
 	

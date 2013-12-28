@@ -15,10 +15,6 @@
     <ClCompile Include="..\..\playstate\playstate\camera\frustum.cpp" />
     <ClCompile Include="..\..\playstate\playstate\collision\aabb.cpp" />
     <ClCompile Include="..\..\playstate\playstate\component\component.cpp" />
-    <ClCompile Include="..\..\playstate\playstate\component\lightsources\point_light.cpp" />
-    <ClCompile Include="..\..\playstate\playstate\component\renderable\render_dynamic_model.cpp" />
-    <ClCompile Include="..\..\playstate\playstate\component\renderable\render_static_model.cpp" />
-    <ClCompile Include="..\..\playstate\playstate\component\scriptable_component.cpp" />
     <ClCompile Include="..\..\playstate\playstate\exception.cpp" />
     <ClCompile Include="..\..\playstate\playstate\filesystem\file_system.cpp" />
     <ClCompile Include="..\..\playstate\playstate\font\font.cpp" />
@@ -40,6 +36,7 @@
     <ClCompile Include="..\..\playstate\playstate\image\image_resource_loader.cpp" />
     <ClCompile Include="..\..\playstate\playstate\input\input_system.cpp" />
     <ClCompile Include="..\..\playstate\playstate\kernel.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\light\point_light.cpp" />
     <ClCompile Include="..\..\playstate\playstate\logging\console\console_logger.cpp" />
     <ClCompile Include="..\..\playstate\playstate\logging\logger.cpp" />
     <ClCompile Include="..\..\playstate\playstate\math\color.cpp" />
@@ -59,10 +56,8 @@
     <ClCompile Include="..\..\playstate\playstate\processor\light_source.cpp" />
     <ClCompile Include="..\..\playstate\playstate\processor\processors\linked_list_render_processor.cpp" />
     <ClCompile Include="..\..\playstate\playstate\processor\processors\linked_list_update_processor.cpp" />
-    <ClCompile Include="..\..\playstate\playstate\processor\processors\octree_render_processor.cpp" />
     <ClCompile Include="..\..\playstate\playstate\processor\processors\quadtree_light_source_processor.cpp" />
     <ClCompile Include="..\..\playstate\playstate\processor\processors\quadtree_render_processor.cpp" />
-    <ClCompile Include="..\..\playstate\playstate\processor\renderable.cpp" />
     <ClCompile Include="..\..\playstate\playstate\processor\tickable.cpp" />
     <ClCompile Include="..\..\playstate\playstate\processor\updatable.cpp" />
     <ClCompile Include="..\..\playstate\playstate\rendering\exception\gfx_program_exception.cpp" />
@@ -76,11 +71,10 @@
     <ClCompile Include="..\..\playstate\playstate\resources\resource_data.cpp" />
     <ClCompile Include="..\..\playstate\playstate\resources\resource_manager.cpp" />
     <ClCompile Include="..\..\playstate\playstate\resources\threaded\threaded_resource_manager.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\scene\renderable_scene_node.cpp" />
     <ClCompile Include="..\..\playstate\playstate\scene\scene.cpp" />
     <ClCompile Include="..\..\playstate\playstate\scene\scene_group.cpp" />
     <ClCompile Include="..\..\playstate\playstate\scene\scene_node.cpp" />
-    <ClCompile Include="..\..\playstate\playstate\scene\spatial_node.cpp" />
-    <ClCompile Include="..\..\playstate\playstate\scene\tree\octree.cpp" />
     <ClCompile Include="..\..\playstate\playstate\scene\tree\quadtree.cpp" />
     <ClCompile Include="..\..\playstate\playstate\script\exception\script_exception.cpp" />
     <ClCompile Include="..\..\playstate\playstate\script\exception\script_not_found_exception.cpp" />
@@ -112,10 +106,6 @@
     <ClInclude Include="..\..\playstate\playstate\collision\aabb.h" />
     <ClInclude Include="..\..\playstate\playstate\collision\bounding_sphere.h" />
     <ClInclude Include="..\..\playstate\playstate\component\component.h" />
-    <ClInclude Include="..\..\playstate\playstate\component\lightsources\point_light.h" />
-    <ClInclude Include="..\..\playstate\playstate\component\renderable\render_dynamic_model.h" />
-    <ClInclude Include="..\..\playstate\playstate\component\renderable\render_static_model.h" />
-    <ClInclude Include="..\..\playstate\playstate\component\scriptable_component.h" />
     <ClInclude Include="..\..\playstate\playstate\config.h" />
     <ClInclude Include="..\..\playstate\playstate\exception.h" />
     <ClInclude Include="..\..\playstate\playstate\filesystem\directory.h" />
@@ -146,6 +136,7 @@
     <ClInclude Include="..\..\playstate\playstate\input\input_state.h" />
     <ClInclude Include="..\..\playstate\playstate\input\input_system.h" />
     <ClInclude Include="..\..\playstate\playstate\kernel.h" />
+    <ClInclude Include="..\..\playstate\playstate\light\point_light.h" />
     <ClInclude Include="..\..\playstate\playstate\linked_list.h" />
     <ClInclude Include="..\..\playstate\playstate\logging\console\console_logger.h" />
     <ClInclude Include="..\..\playstate\playstate\logging\logger.h" />
@@ -171,7 +162,6 @@
     <ClInclude Include="..\..\playstate\playstate\processor\light_source_processor.h" />
     <ClInclude Include="..\..\playstate\playstate\processor\processors\linked_list_render_processor.h" />
     <ClInclude Include="..\..\playstate\playstate\processor\processors\linked_list_update_processor.h" />
-    <ClInclude Include="..\..\playstate\playstate\processor\processors\octree_render_processor.h" />
     <ClInclude Include="..\..\playstate\playstate\processor\processors\quadtree_light_source_processor.h" />
     <ClInclude Include="..\..\playstate\playstate\processor\processors\quadtree_render_processor.h" />
     <ClInclude Include="..\..\playstate\playstate\processor\renderable.h" />
@@ -206,12 +196,11 @@
     <ClInclude Include="..\..\playstate\playstate\resources\resource_manager.h" />
     <ClInclude Include="..\..\playstate\playstate\resources\resource_object.h" />
     <ClInclude Include="..\..\playstate\playstate\resources\threaded\threaded_resource_manager.h" />
+    <ClInclude Include="..\..\playstate\playstate\scene\renderable_scene_node.h" />
     <ClInclude Include="..\..\playstate\playstate\scene\scene.h" />
     <ClInclude Include="..\..\playstate\playstate\scene\scene_group.h" />
     <ClInclude Include="..\..\playstate\playstate\scene\scene_node.h" />
-    <ClInclude Include="..\..\playstate\playstate\scene\spatial_node.h" />
     <ClInclude Include="..\..\playstate\playstate\scene\spatial_tree.h" />
-    <ClInclude Include="..\..\playstate\playstate\scene\tree\octree.h" />
     <ClInclude Include="..\..\playstate\playstate\scene\tree\quadtree.h" />
     <ClInclude Include="..\..\playstate\playstate\script\exception\script_exception.h" />
     <ClInclude Include="..\..\playstate\playstate\script\exception\script_not_found_exception.h" />

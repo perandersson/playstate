@@ -39,7 +39,7 @@ namespace playstate
 
 	typedef uint32 type_mask;
 
-	typedef unsigned int script_ref;
+	typedef uint32 script_ref;
 
 #ifdef _UNICODE
 	typedef std::wstring string;

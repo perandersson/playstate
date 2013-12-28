@@ -1,13 +1,11 @@
 #pragma once
 
-#include "../component.h"
-#include "../../processor/light_source.h"
-#include "../../math/color.h"
-#include "../../script/luam.h"
+#include "../processor/light_source.h"
+#include "../math/color.h"
 
 namespace playstate
 {
-	class PointLight : public Component, public LightSource
+	class PointLight : public LightSource
 	{
 	public:
 		//
@@ -19,9 +17,6 @@ namespace playstate
 		// @param quadricAttenuation
 		PointLight(const Color& color, float32 radius, float32 constantAttenuation,
 			float32 linearAttenuation, float32 quadricAttenuation);
-
-		//
-		// Destructor
 		virtual ~PointLight();
 
 		const Color& GetColor();
@@ -30,10 +25,11 @@ namespace playstate
 		float32 GetLinearAttenuation() const;
 		float32 GetQuadricAttenuation() const;
 
-	// Component
+		
+	// SceneNode
 	public:
-		virtual void OnComponentAdded();
-		virtual void OnComponentRemoved();
+		virtual void OnAttachedToSceneGroup();
+		virtual void OnDetachingFromSceneGroup();
 
 	private:
 		Color mColor;
@@ -42,7 +38,7 @@ namespace playstate
 		float32 mLinearAttenuation;
 		float32 mQuadricAttenuation;
 	};
-
+	
 	//
 	// Script integration
 	//

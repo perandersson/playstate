@@ -3,7 +3,7 @@
 using namespace playstate;
 
 QuadTree::QuadTree(const AABB& boundingBox, uint32 maxDepth)
-	: mParent(NULL), mChildren(offsetof(SpatialNode, SpatialNodeLink)), mBoundingBox(boundingBox), mDepth(0), mMaxDepth(maxDepth), mAlive(false)
+	: mParent(NULL), mChildren(offsetof(SceneNode, SpatialNodeLink)), mBoundingBox(boundingBox), mDepth(0), mMaxDepth(maxDepth), mAlive(false)
 {
 	const Vector3 mid = mBoundingBox.GetPosition();
 	const float partWidth = mBoundingBox.GetWidth() / 2.0f;
@@ -24,7 +24,7 @@ QuadTree::QuadTree(const AABB& boundingBox, uint32 maxDepth)
 }
 
 QuadTree::QuadTree(QuadTree* parent, const AABB& boundingBox, uint32 depth, uint32 maxDepth)
-	: mParent(parent), mChildren(offsetof(SpatialNode, SpatialNodeLink)), mBoundingBox(boundingBox),
+	: mParent(parent), mChildren(offsetof(SceneNode, SpatialNodeLink)), mBoundingBox(boundingBox),
 	mDepth(depth), mMaxDepth(maxDepth), mAlive(false)
 {
 	memset(mCorners, 0, sizeof(mCorners));
@@ -51,7 +51,7 @@ QuadTree::~QuadTree()
 	mChildren.UnlinkAll();
 }
 
-bool QuadTree::Add(SpatialNode* node)
+bool QuadTree::Add(SceneNode* node)
 {
 	// Ignore nodes not completely inside this quadtree node's bounding box.
 	AABB::CollisionResult result = mBoundingBox.IsColliding(node->GetBoundingBox());
@@ -83,9 +83,9 @@ bool QuadTree::Add(SpatialNode* node)
 
 void QuadTree::MoveChildrenDown()
 {
-	SpatialNode* node = mChildren.First();
+	SceneNode* node = mChildren.First();
 	while(node != NULL) {
-		SpatialNode* next = node->SpatialNodeLink.Tail;
+		SceneNode* next = node->SpatialNodeLink.Tail;
 		if(mCorners[TOP_LEFT]->Add(node)) {
 		} else if(mCorners[TOP_RIGHT]->Add(node)) {
 		} else if(mCorners[BOTTOM_LEFT]->Add(node)) {
@@ -127,7 +127,7 @@ bool QuadTree::ResizeRequired() const
 	return numChildren >= SizeUntilSplit;
 }
 
-void QuadTree::Remove(SpatialNode* node)
+void QuadTree::Remove(SceneNode* node)
 {	
 	// Remove the node
 	mChildren.Remove(node);
@@ -160,11 +160,11 @@ void QuadTree::Suspend()
 	mAlive = false;
 }
 
-void QuadTree::Absorb(LinkedList<SpatialNode>& children)
+void QuadTree::Absorb(LinkedList<SceneNode>& children)
 {
-	SpatialNode* node = children.First();
+	SceneNode* node = children.First();
 	while(node != NULL) {
-		SpatialNode* next = node->SpatialNodeLink.Tail;
+		SceneNode* next = node->SpatialNodeLink.Tail;
 		mChildren.AddLast(node);
 		node->AttachToTree(this);
 		node = next;
@@ -187,7 +187,7 @@ uint32 QuadTree::CountChildren() const
 	return size;
 }
 
-void QuadTree::AddToRoot(SpatialNode* node)
+void QuadTree::AddToRoot(SceneNode* node)
 {
 	// Is the node still inside this QuadTreeNode?
 	AABB::CollisionResult result = mBoundingBox.IsColliding(node->GetBoundingBox());
@@ -199,7 +199,7 @@ void QuadTree::AddToRoot(SpatialNode* node)
 	mParent->AddToRoot(node);
 }
 
-void QuadTree::AddToThisNode(SpatialNode* node)
+void QuadTree::AddToThisNode(SceneNode* node)
 {
 	mChildren.AddLast(node);
 	node->AttachToTree(this);
@@ -212,7 +212,7 @@ void QuadTree::AddToThisNode(SpatialNode* node)
 	}
 }
 
-void QuadTree::Invalidate(SpatialNode* node)
+void QuadTree::Invalidate(SceneNode* node)
 {
 	assert_not_null(node);
 
@@ -248,9 +248,9 @@ void QuadTree::Find(const Frustum& frustum, ISpatialTreeVisitor* visitor) const
 		mCorners[BOTTOM_RIGHT]->Find(frustum, visitor);
 	}
 	
-	SpatialNode* node = mChildren.First();
+	SceneNode* node = mChildren.First();
 	while(node != NULL) {
-		SpatialNode* next = node->SpatialNodeLink.Tail;
+		SceneNode* next = node->SpatialNodeLink.Tail;
 		if(frustum.IsColliding(node->GetBoundingBox()) != AABB::OUTSIDE)
 			visitor->Visit(node);
 		node = next;
@@ -266,9 +266,9 @@ void QuadTree::IterateAndVisit(ISpatialTreeVisitor* visitor) const
 		mCorners[BOTTOM_RIGHT]->IterateAndVisit(visitor);
 	}
 	
-	SpatialNode* node = mChildren.First();
+	SceneNode* node = mChildren.First();
 	while(node != NULL) {
-		SpatialNode* next = node->SpatialNodeLink.Tail;
+		SceneNode* next = node->SpatialNodeLink.Tail;
 		visitor->Visit(node);
 		node = next;
 	}

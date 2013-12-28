@@ -1,6 +1,7 @@
 local class = require "engine.class"
 local KeyboardKeys = require "engine.core.keyboardkeys"
 
+-- A C++ variant of this class exists: demo/component/MovePlayerComponent.h
 MovePlayerBehaviour = class("MovePlayerBehaviour", Component)
 function MovePlayerBehaviour:__init(speed)
 	Component.__init(self)

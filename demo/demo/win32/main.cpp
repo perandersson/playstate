@@ -11,6 +11,7 @@ unsigned int fp_control_state = _controlfp(_EM_INEXACT | _EM_INVALID | _EM_UNDER
 #include <playstate/win32/win32_default_kernel.h>
 
 #include "../pipeline/deferred_render_pipeline.h"
+#include "../component/move_player_component.h"
 #include "../demo.h"
 #include <vector>
 #include <set>
@@ -73,6 +74,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 		ScriptSystem& ss = ScriptSystem::Get();
 		ss.SetDebugMode(true);
 		ss.RegisterType("DeferredRenderPipeline", DeferredRenderPipeline_Methods);
+		ss.RegisterType("MovePlayerComponent", MovePlayerComponent_Methods);
 
 		// Attach a file change listener for .lua files
 		LuaSuffixFileListener luaSuffixFileListener(IFileSystem::Get());

@@ -2,7 +2,7 @@
 
 #include "../collision/aabb.h"
 #include "../camera/frustum.h"
-#include "spatial_node.h"
+#include "scene_node.h"
 
 namespace playstate
 {
@@ -13,7 +13,7 @@ namespace playstate
 		// Method invoked when a spatial node has been found in the tree
 		//
 		// @param node The found node.
-		virtual void Visit(SpatialNode* node) = 0;
+		virtual void Visit(SceneNode* node) = 0;
 	};
 
 	class ISpatialTree
@@ -26,13 +26,13 @@ namespace playstate
 		// Add a new spatial node to this tree
 		//
 		// @param node the node
-		virtual bool Add(SpatialNode* node) = 0;
+		virtual bool Add(SceneNode* node) = 0;
 
 		//
 		// Remove the spatial node from this tree
 		//
 		// @param node the node we want to remove from this tree.
-		virtual void Remove(SpatialNode* node) = 0;
+		virtual void Remove(SceneNode* node) = 0;
 
 		//
 		// Invalidates the supplied node. 
@@ -41,7 +41,7 @@ namespace playstate
 		//	to be moved inside the tree structure.
 		//
 		// @param node The invalidated node
-		virtual void Invalidate(SpatialNode* node) = 0;
+		virtual void Invalidate(SceneNode* node) = 0;
 
 		//
 		// Search for nodes based on the supplied frustum. The visitor will be called for each found item.

@@ -3,7 +3,7 @@
 #include "light_source_processor.h"
 using namespace playstate;
 
-LightSource::LightSource() : SpatialNode(), mAttachedToProcessor(NULL)
+LightSource::LightSource() : SceneNode(), mAttachedToProcessor(NULL)
 {
 }
 

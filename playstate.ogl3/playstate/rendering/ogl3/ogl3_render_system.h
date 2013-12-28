@@ -46,7 +46,7 @@ namespace playstate
 
 		//
 		// @return The version of the type specified by the name parameter
-		Version getVersion(GLenum name) const;
+		Version GetVersion(GLenum name) const;
 
 		GLenum GetFormat(TextureFormat::Enum format);
 		GLenum GetInternalFormat(TextureFormat::Enum format);

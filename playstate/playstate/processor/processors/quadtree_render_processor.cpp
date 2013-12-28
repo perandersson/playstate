@@ -3,37 +3,37 @@
 using namespace playstate;
 
 QuadTreeRenderProcessor::QuadTreeRenderProcessor(const AABB& boundingBox, uint32 maxDepth) 
-	: Scriptable(), mQuadTree(boundingBox, maxDepth), mRenderables(offsetof(Renderable, RenderableLink))
+	: Scriptable(), mQuadTree(boundingBox, maxDepth), mNodes(offsetof(SceneNode, RenderableNodeLink))
 {
 }
 
 QuadTreeRenderProcessor::QuadTreeRenderProcessor() 
-	: Scriptable(), mQuadTree(AABB(Vector3(0, 0, 0), 1100.0f, 1100.0f, 1100.0f), 3), mRenderables(offsetof(Renderable, RenderableLink))
+	: Scriptable(), mQuadTree(AABB(Vector3(0, 0, 0), 1100.0f, 1100.0f, 1100.0f), 3), mNodes(offsetof(SceneNode, RenderableNodeLink))
 {
 }
 
 QuadTreeRenderProcessor::~QuadTreeRenderProcessor()
 {
-	mRenderables.DeleteAll();
+	mNodes.DeleteAll();
 }
 
-void QuadTreeRenderProcessor::AttachRenderable(Renderable* renderable)
+void QuadTreeRenderProcessor::AttachRenderable(SceneNode* node)
 {
-	assert_not_null(renderable);
+	assert_not_null(node);
 
-	mRenderables.AddLast(renderable);
-	mQuadTree.Add(renderable);
+	mNodes.AddLast(node);
+	mQuadTree.Add(node);
 }
 
-void QuadTreeRenderProcessor::DetachRenderable(Renderable* renderable)
+void QuadTreeRenderProcessor::DetachRenderable(SceneNode* node)
 {
-	assert_not_null(renderable);
+	assert_not_null(node);
 
-	mRenderables.Remove(renderable);
+	mNodes.Remove(node);
 
-	QuadTree* tree = static_cast<QuadTree*>(renderable->GetTree());
+	QuadTree* tree = static_cast<QuadTree*>(node->GetTree());
 	if(tree != NULL)
-		tree->Remove(renderable);
+		tree->Remove(node);
 }
 
 class QuadTreeRenderableEventHandlerVisitor : public ISpatialTreeVisitor
@@ -55,9 +55,9 @@ public:
 
 // IOctreeVisitor
 public:
-	virtual void Visit(SpatialNode* item)
+	virtual void Visit(SceneNode* item)
 	{
-		static_cast<Renderable*>(item)->PreRender(mRenderState, mResultSetTarget);
+		item->PreRender(mRenderState, mResultSetTarget);
 		mFoundResults = true;
 	}
 

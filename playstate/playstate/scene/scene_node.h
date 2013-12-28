@@ -1,21 +1,28 @@
 #pragma once
 #include "../script/scriptable.h"
+#include "../processor/renderable.h"
 #include "../linked_list.h"
 #include "../component/component.h"
 #include "../math/matrix4x4.h"
+#include "../collision/aabb.h"
 #include "../script/luam.h"
-#include "spatial_node.h"
 
 namespace playstate
 {
 	class SceneGroup;
+	class ISpatialTree;
+	class IRenderProcessor;
 
-	class SceneNode : public Scriptable
+	//
+	// Base class for nodes inside a scene. 
+	class SceneNode : public Scriptable, public IRenderable
 	{
 		friend class SceneGroup;
 
 	public:
 		LinkedListLink<SceneNode> NodeLink;
+		LinkedListLink<SceneNode> SpatialNodeLink;
+		LinkedListLink<SceneNode> RenderableNodeLink;
 
 	public:
 		//
@@ -123,6 +130,37 @@ namespace playstate
 		}
 
 		//
+		// Sets the bounding box for this node.
+		void SetBoundingBox(const AABB& boundingBox);
+		
+		//
+		// Sets the bounding box for this node.
+		void SetBoundingBox(const AABB& boundingBox, const Vector3& position);
+		
+		//
+		// Sets the bounding box for this node.
+		void SetBoundingBox(const AABB& boundingBox, const Vector3& position, const Vector3& scale);
+
+		//
+		// @return The bounding box
+		inline const AABB& GetBoundingBox() const {
+			return mBoundingBox;
+		}
+		
+		//
+		// Attaches this node to the supplied tree
+		void AttachToTree(ISpatialTree* tree);
+		
+		// 
+		// @return The spatial tree this node is attached to
+		inline ISpatialTree* GetTree() {
+			return mTree;
+		}
+		//
+		// Detaches this node from the tree it's being contained inside.
+		void DetachFromTree();
+		
+		//
 		// @return
 		inline type_mask GetTypeMask() const {
 			return mTypeMask;
@@ -166,6 +204,12 @@ namespace playstate
 		inline bool IsAttachedToSceneGroup() const {
 			return mSceneGroup != NULL;
 		}
+
+	// Renderable
+	public:
+		virtual void PreRender(const RenderState& state, RenderBlockResultSet* resultSet);
+		virtual void Show();
+		virtual void Hide();
 
 	protected:
 		//
@@ -218,6 +262,8 @@ namespace playstate
 		Vector3 mScale;
 		Vector3 mAbsoluteScale;
 		Matrix4x4 mModelMatrix;
+		AABB mBoundingBox;
+		ISpatialTree* mTree;
 		type_mask mTypeMask;
 
 	private:
@@ -225,6 +271,10 @@ namespace playstate
 		SceneGroup* mSceneGroup;
 		LinkedList<Component> mComponents;
 		LinkedList<SceneNode> mChildren;
+
+	private:
+		IRenderProcessor* mRenderProcessor;
+		bool mVisible;
 	};
 	
 	//

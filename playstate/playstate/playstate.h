@@ -8,7 +8,6 @@
 #include "functions.h"
 
 #include "processor/processors/linked_list_update_processor.h"
-#include "processor/processors/octree_render_processor.h"
 #include "processor/processors/quadtree_render_processor.h"
 #include "processor/processors/quadtree_light_source_processor.h"
 
@@ -18,6 +17,7 @@
 #include "game/game_runner.h"
 #include "input/input_system.h"
 #include "scene/scene.h"
+#include "scene/renderable_scene_node.h"
 #include "resources/resource_manager.h"
 #include "rendering/render_system.h"
 
@@ -27,10 +27,7 @@
 #include "sound/sound_effect.h"
 #include "sound/sound_engine.h"
 
-#include "component/scriptable_component.h"
-#include "component/renderable/render_static_model.h"
-#include "component/renderable/render_dynamic_model.h"
-#include "component/lightsources/point_light.h"
+#include "light/point_light.h"
 
 #include "logging/console/console_logger.h"
 

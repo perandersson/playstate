@@ -4,7 +4,7 @@
 #include <playstate/camera/camera.h>
 #include <playstate/scene/scene.h>
 #include <playstate/window/window.h>
-#include <playstate/component/lightsources/point_light.h>
+#include <playstate/light/point_light.h>
 
 DeferredRenderPipeline::DeferredRenderPipeline(IRenderSystem& renderSystem, IWindow& window, IResourceManager& resourceManager, IFileSystem& fileSystem)
 	: mRenderSystem(renderSystem), mWindow(window), mFileSystem(fileSystem),
@@ -171,10 +171,10 @@ void DeferredRenderPipeline::DrawLighting(Scene& scene, const Camera& camera)
 			PointLight* pl = dynamic_cast<PointLight*>(lightSource);
 			if(pl != NULL)   {
 				// TODO Render point lights as six spot-lights with texture "LightTexture" that's specified above.
-				modelMatrix->SetMatrix(CalculateBillboardModelMatrix(pl->GetNode()->GetAbsolutePosition(), camera));
+				modelMatrix->SetMatrix(CalculateBillboardModelMatrix(pl->GetAbsolutePosition(), camera));
 				
 				lightColor->SetColorRGB(pl->GetColor());
-				lightPosition->SetVector3(pl->GetNode()->GetAbsolutePosition());
+				lightPosition->SetVector3(pl->GetAbsolutePosition());
 				constantAttenuation->SetFloat(pl->GetConstantAttenuation());
 				linearAttenuation->SetFloat(pl->GetLinearAttenuation());
 				quadraticAttenuation->SetFloat(pl->GetQuadricAttenuation());

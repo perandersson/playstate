@@ -1,11 +1,8 @@
 #include <playstate/memory/memory.h>
 #include "win32_default_kernel.h"
 #include <playstate/game/game_runner.h>
-#include <playstate/component/scriptable_component.h>
 #include <playstate/model/model.h>
-#include <playstate/component/renderable/render_static_model.h>
-#include <playstate/component/renderable/render_dynamic_model.h>
-#include <playstate/component/lightsources/point_light.h>
+#include <playstate/light/point_light.h>
 #include <playstate/gui/scriptable_canvas_group.h>
 #include <playstate/font/font.h>
 #include <playstate/sound/sound_effect.h>
@@ -16,6 +13,7 @@
 #include <playstate/processor/processors/quadtree_render_processor.h>
 #include <playstate/image/image_resource_loader.h>
 #include <playstate/sound/openal/openal_sound_effect_resource_loader.h>
+#include <playstate/scene/renderable_scene_node.h>
 
 using namespace playstate;
 using namespace playstate::win32;
@@ -92,9 +90,10 @@ void Win32DefaultKernel::RegisterScript()
 	ss.RegisterType("SceneNode", SceneNode_Methods);
 	ss.RegisterType("SceneGroup", SceneGroup_Methods);
 	ss.RegisterType("Component", Component_Methods);
-	ss.RegisterType("RenderStaticModel", RenderStaticModel_Methods);
-	ss.RegisterType("RenderDynamicModel", RenderDynamicModel_Methods);
+	ss.RegisterType("RenderableSceneNode", SceneNode_Methods);
+	ss.RegisterType("RenderableSceneNode", RenderableSceneNode_Methods);
 	ss.RegisterType("ActiveCamera", ActiveCamera_Methods);
+	ss.RegisterType("PointLight", SceneNode_Methods);
 	ss.RegisterType("PointLight", PointLight_Methods);
 	ss.RegisterType("Canvas", Canvas_Methods);
 	ss.RegisterType("CanvasGroup", CanvasGroup_Methods);

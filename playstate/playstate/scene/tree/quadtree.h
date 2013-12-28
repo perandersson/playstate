@@ -74,7 +74,7 @@ namespace playstate
 
 		//
 		// Allow this node to absorb the supplied children and clears the original children list
-		void Absorb(LinkedList<SpatialNode>& children);
+		void Absorb(LinkedList<SceneNode>& children);
 
 		//
 		// Try to move this nodes children down one level
@@ -87,23 +87,23 @@ namespace playstate
 		//
 		// Try to add the node in a reversed fasion. It is assumed that invalidated nodes (i.e. a node that is moved)
 		// is most likely to be placed in the QuadTreeNode it's already added in.
-		void AddToRoot(SpatialNode* node);
+		void AddToRoot(SceneNode* node);
 
 		//
 		// Add the supplied node to this node. 
-		void AddToThisNode(SpatialNode* node);
+		void AddToThisNode(SceneNode* node);
 
 	public:
-		virtual bool Add(SpatialNode* node);
-		virtual void Remove(SpatialNode* node);
-		virtual void Invalidate(SpatialNode* node);
+		virtual bool Add(SceneNode* node);
+		virtual void Remove(SceneNode* node);
+		virtual void Invalidate(SceneNode* node);
 		virtual void Find(const Frustum& frustum, ISpatialTreeVisitor* visitor) const;
 		virtual void Find(const AABB& boundingBox, ISpatialTreeVisitor* visitor) const;
 
 	private:
 		QuadTree* mParent;
 		QuadTree* mCorners[4];
-		LinkedList<SpatialNode> mChildren;
+		LinkedList<SceneNode> mChildren;
 		AABB mBoundingBox;
 		uint32 mDepth;
 		uint32 mMaxDepth;

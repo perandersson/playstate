@@ -49,7 +49,7 @@ public:
 
 // IOctreeVisitor
 public:
-	virtual void Visit(SpatialNode* item)
+	virtual void Visit(SceneNode* item)
 	{
 		mResultSetTarget->AddResult(static_cast<LightSource*>(item));
 		mFoundResults = true;

@@ -11,10 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\demo\demo\component\move_player_component.h" />
     <ClInclude Include="..\..\demo\demo\demo.h" />
     <ClInclude Include="..\..\demo\demo\pipeline\deferred_render_pipeline.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\demo\demo\component\move_player_component.cpp" />
     <ClCompile Include="..\..\demo\demo\demo.cpp" />
     <ClCompile Include="..\..\demo\demo\pipeline\deferred_render_pipeline.cpp" />
     <ClCompile Include="..\..\demo\demo\win32\main.cpp" />

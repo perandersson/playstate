@@ -1,19 +1,20 @@
 #include "../memory/memory.h"
 #include "scene_node.h"
 #include "scene_group.h"
+#include "spatial_tree.h"
 using namespace playstate;
 
 SceneNode::SceneNode()
-	: mSceneGroup(NULL), mTypeMask(BIT_ALL), mParent(NULL), 
+	: mSceneGroup(NULL), mTypeMask(BIT_ALL), mBoundingBox(AABB::Unit), mTree(NULL), mParent(NULL), 
 	mComponents(offsetof(Component, ComponentLink)), mChildren(offsetof(SceneNode, NodeLink)),
-	mScale(Vector3::One), mAbsoluteScale(Vector3::One)
+	mScale(Vector3::One), mAbsoluteScale(Vector3::One), mVisible(false)
 {
 }
 
 SceneNode::SceneNode(type_mask typeMask)
-	: mSceneGroup(NULL), mTypeMask(typeMask), mParent(NULL), 
+	: mSceneGroup(NULL), mTypeMask(typeMask), mBoundingBox(AABB::Unit), mTree(NULL), mParent(NULL), 
 	mComponents(offsetof(Component, ComponentLink)), mChildren(offsetof(SceneNode, NodeLink)),
-	mScale(Vector3::One), mAbsoluteScale(Vector3::One)
+	mScale(Vector3::One), mAbsoluteScale(Vector3::One), mVisible(false)
 {
 }
 
@@ -23,6 +24,28 @@ SceneNode::~SceneNode()
 	mChildren.DeleteAll();
 	mParent = NULL;
 	mSceneGroup = NULL;
+}
+
+void SceneNode::PreRender(const RenderState& state, RenderBlockResultSet* resultSet)
+{
+	//assert_not_null(mRenderable);
+	//mRenderable->PreRender(state, resultSet);
+}
+
+void SceneNode::Show()
+{
+	if(mRenderProcessor != NULL && !mVisible) {
+		mRenderProcessor->AttachRenderable(this);
+		mVisible = true;
+	}
+}
+
+void SceneNode::Hide()
+{
+	if(mRenderProcessor != NULL && mVisible) {
+		mRenderProcessor->DetachRenderable(this);
+		mVisible = false;
+	}
 }
 
 void SceneNode::AddComponent(Component* component)
@@ -237,6 +260,39 @@ void SceneNode::UpdateModelMatrix()
 	while(component != NULL) {
 		component = component->ComponentLink.Tail;
 	}
+}
+
+void SceneNode::SetBoundingBox(const AABB& boundingBox)
+{
+	mBoundingBox = boundingBox;
+	if(mTree != NULL)
+		mTree->Invalidate(this);
+}
+
+void SceneNode::SetBoundingBox(const AABB& boundingBox, const Vector3& position)
+{
+	mBoundingBox = boundingBox;
+	mBoundingBox.SetPositionRotationScale(position, Vector3::Zero, Vector3::One);
+	if(mTree != NULL)
+		mTree->Invalidate(this);
+}
+
+void SceneNode::SetBoundingBox(const AABB& boundingBox, const Vector3& position, const Vector3& scale)
+{
+	mBoundingBox = boundingBox;
+	mBoundingBox.SetPositionRotationScale(position, Vector3::Zero, scale);
+	if(mTree != NULL)
+		mTree->Invalidate(this);
+}
+
+void SceneNode::AttachToTree(ISpatialTree* tree)
+{
+	mTree = tree;
+}
+
+void SceneNode::DetachFromTree()
+{
+	mTree = NULL;
 }
 
 void SceneNode::RemoveFromScene()

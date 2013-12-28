@@ -25,8 +25,8 @@ OGL3RenderSystem::OGL3RenderSystem(IWindow& window, ScriptSystem& scriptSystem)
 	mVAOFactory = new VertexDeclarationArrayObjectFactory();
 	mWindow.AddWindowResizedListener(this);
 
-	mVersion = getVersion(GL_VERSION);
-	mShaderVersion = getVersion(GL_SHADING_LANGUAGE_VERSION);
+	mVersion = GetVersion(GL_VERSION);
+	mShaderVersion = GetVersion(GL_SHADING_LANGUAGE_VERSION);
 
 	if(!mVersion.HigherOrEqual(Version(3, 3)))
 		THROW_EXCEPTION(RenderingException, "You'r graphics card does not support OpenGL 3.3");
@@ -94,7 +94,7 @@ OGL3RenderSystem::~OGL3RenderSystem()
 	mGfxPrograms.DeleteAll();
 }
 
-Version OGL3RenderSystem::getVersion(GLenum name) const
+Version OGL3RenderSystem::GetVersion(GLenum name) const
 {
 	int major = 0;
 	int minor = 0;

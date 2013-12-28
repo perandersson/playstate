@@ -53,16 +53,16 @@ void SceneGroup::DetachTickable(ITickable* tickable)
 	mUpdateProcessor->AttachTickable(tickable);
 }
 
-void SceneGroup::AttachRenderable(Renderable* renderable)
+void SceneGroup::AttachRenderable(SceneNode* node)
 {
-	assert_not_null(renderable);
-	mRenderProcessor->AttachRenderable(renderable);
+	assert_not_null(node);
+	mRenderProcessor->AttachRenderable(node);
 }
 
-void SceneGroup::DetachRenderable(Renderable* renderable)
+void SceneGroup::DetachRenderable(SceneNode* node)
 {
-	assert_not_null(renderable);
-	mRenderProcessor->DetachRenderable(renderable);
+	assert_not_null(node);
+	mRenderProcessor->DetachRenderable(node);
 }
 
 void SceneGroup::AttachLightSource(LightSource* lightSource)

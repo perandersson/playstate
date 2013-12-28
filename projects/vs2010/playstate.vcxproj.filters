@@ -18,9 +18,6 @@
     <Filter Include="Source Files\component">
       <UniqueIdentifier>{62c59112-5239-4a04-9268-9ab1e5b5c1e9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\component\renderable">
-      <UniqueIdentifier>{815cdbbe-3097-4f5d-ae55-f3b8428c5b32}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\game">
       <UniqueIdentifier>{df6b26da-6979-443d-8a2c-c930954f2e92}</UniqueIdentifier>
     </Filter>
@@ -75,9 +72,6 @@
     <Filter Include="Source Files\thread\wrapper">
       <UniqueIdentifier>{89c63275-9b8c-4334-a062-15f3b6455154}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\component\lightsources">
-      <UniqueIdentifier>{dc72c0e5-8f08-4cee-9f21-d78b848ad2f8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\search">
       <UniqueIdentifier>{6d85e2e8-6dac-4fce-af77-2c2ec0408fa6}</UniqueIdentifier>
     </Filter>
@@ -129,6 +123,9 @@
     <Filter Include="Source Files\gui\control">
       <UniqueIdentifier>{e0320507-43a7-4e26-8d34-f48711fcb29d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\light">
+      <UniqueIdentifier>{509c4c7c-9cdd-4e83-a97f-5abfbb2e7b46}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\playstate\playstate\camera\camera.cpp">
@@ -142,12 +139,6 @@
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\component\component.cpp">
       <Filter>Source Files\component</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\component\scriptable_component.cpp">
-      <Filter>Source Files\component</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\component\renderable\render_static_model.cpp">
-      <Filter>Source Files\component\renderable</Filter>
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\game\game.cpp">
       <Filter>Source Files\game</Filter>
@@ -185,12 +176,6 @@
     <ClCompile Include="..\..\playstate\playstate\processor\processors\linked_list_update_processor.cpp">
       <Filter>Source Files\processor\processors</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\processor\processors\octree_render_processor.cpp">
-      <Filter>Source Files\processor\processors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\processor\renderable.cpp">
-      <Filter>Source Files\processor</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\processor\updatable.cpp">
       <Filter>Source Files\processor</Filter>
     </ClCompile>
@@ -220,9 +205,6 @@
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\scene\scene_node.cpp">
       <Filter>Source Files\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\scene\tree\octree.cpp">
-      <Filter>Source Files\scene\tree</Filter>
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\script\luam.cpp">
       <Filter>Source Files\script</Filter>
@@ -280,9 +262,6 @@
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\processor\light_source.cpp">
       <Filter>Source Files\processor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\component\lightsources\point_light.cpp">
-      <Filter>Source Files\component\lightsources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\search\light_source_result_set.cpp">
       <Filter>Source Files\search</Filter>
@@ -353,12 +332,6 @@
     <ClCompile Include="..\..\playstate\playstate\sound\exception\sound_exception.cpp">
       <Filter>Source Files\sound\exception</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\component\renderable\render_dynamic_model.cpp">
-      <Filter>Source Files\component\renderable</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\scene\spatial_node.cpp">
-      <Filter>Source Files\scene</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\processor\processors\quadtree_render_processor.cpp">
       <Filter>Source Files\processor\processors</Filter>
     </ClCompile>
@@ -413,6 +386,12 @@
     <ClCompile Include="..\..\playstate\playstate\processor\collidable.cpp">
       <Filter>Source Files\processor</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\light\point_light.cpp">
+      <Filter>Source Files\light</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\scene\renderable_scene_node.cpp">
+      <Filter>Source Files\scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\playstate\playstate\camera\camera.h">
@@ -429,12 +408,6 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\component\component.h">
       <Filter>Source Files\component</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\component\scriptable_component.h">
-      <Filter>Source Files\component</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\component\renderable\render_static_model.h">
-      <Filter>Source Files\component\renderable</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\filesystem\directory.h">
       <Filter>Source Files\filesystem</Filter>
@@ -488,9 +461,6 @@
       <Filter>Source Files\model</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\processor\processors\linked_list_update_processor.h">
-      <Filter>Source Files\processor\processors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\processor\processors\octree_render_processor.h">
       <Filter>Source Files\processor\processors</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\processor\renderable.h">
@@ -564,9 +534,6 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\scene\scene_node.h">
       <Filter>Source Files\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\scene\tree\octree.h">
-      <Filter>Source Files\scene\tree</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\script\lua_call.h">
       <Filter>Source Files\script</Filter>
@@ -679,9 +646,6 @@
     <ClInclude Include="..\..\playstate\playstate\processor\light_source.h">
       <Filter>Source Files\processor</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\component\lightsources\point_light.h">
-      <Filter>Source Files\component\lightsources</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\search\light_source_result_set.h">
       <Filter>Source Files\search</Filter>
     </ClInclude>
@@ -763,12 +727,6 @@
     <ClInclude Include="..\..\playstate\playstate\sound\exception\sound_exception.h">
       <Filter>Source Files\sound\exception</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\component\renderable\render_dynamic_model.h">
-      <Filter>Source Files\component\renderable</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\scene\spatial_node.h">
-      <Filter>Source Files\scene</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\scene\spatial_tree.h">
       <Filter>Source Files\scene</Filter>
     </ClInclude>
@@ -843,6 +801,12 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\processor\collidable.h">
       <Filter>Source Files\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\light\point_light.h">
+      <Filter>Source Files\light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\scene\renderable_scene_node.h">
+      <Filter>Source Files\scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
