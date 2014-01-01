@@ -15,31 +15,31 @@ LinkedListUpdateProcessor::~LinkedListUpdateProcessor()
 	mTickables.DeleteAll();
 }
 
-void LinkedListUpdateProcessor::AttachUpdatable(IUpdatable* updatable)
+void LinkedListUpdateProcessor::AttachUpdatable(Updatable* updatable)
 {
 	mUpdatables.AddLast(updatable);
 }
 
-void LinkedListUpdateProcessor::DetachUpdatable(IUpdatable* updatable)
+void LinkedListUpdateProcessor::DetachUpdatable(Updatable* updatable)
 {
 	mUpdatables.Remove(updatable);
 }
 
-void LinkedListUpdateProcessor::AttachTickable(ITickable* tickable)
+void LinkedListUpdateProcessor::AttachTickable(Tickable* tickable)
 {
 	mTickables.AddLast(tickable);
 }
 
-void LinkedListUpdateProcessor::DetachTickable(ITickable* tickable)
+void LinkedListUpdateProcessor::DetachTickable(Tickable* tickable)
 {
 	mTickables.Remove(tickable);
 }
 
 void LinkedListUpdateProcessor::Update()
 {
-	IUpdatable* updatable = mUpdatables.First();
+	Updatable* updatable = mUpdatables.First();
 	while(updatable != NULL) {
-		IUpdatable* tmp = updatable->UpdatableLink.Tail;
+		Updatable* tmp = updatable->UpdatableLink.Tail;
 		updatable->Update();
 		updatable = tmp;
 	}
@@ -47,9 +47,9 @@ void LinkedListUpdateProcessor::Update()
 	mTimeSinceLastTick += GameDeltaTime;
 	static const float32 ApproxSecondsPerTick = (1.0f / (float32)TicksPerSecond);
 	if(mTimeSinceLastTick > ApproxSecondsPerTick) {
-		ITickable* tickable = mTickables.First();
+		Tickable* tickable = mTickables.First();
 		while(tickable != NULL) {
-			ITickable* tmp = tickable->TickableLink.Tail;
+			Tickable* tmp = tickable->TickableLink.Tail;
 			tickable->Tick();
 			tickable = tmp;
 		}

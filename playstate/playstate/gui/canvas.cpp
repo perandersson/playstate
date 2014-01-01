@@ -43,22 +43,22 @@ CanvasGroup* Canvas::GetCanvasGroupByName(const playstate::string& name)
 	return group;
 }
 
-void Canvas::AttachUpdatable(IUpdatable* updatable)
+void Canvas::AttachUpdatable(Updatable* updatable)
 {
 	mUpdateProcessor->AttachUpdatable(updatable);
 }
 
-void Canvas::DetachUpdatable(IUpdatable* updatable)
+void Canvas::DetachUpdatable(Updatable* updatable)
 {
 	mUpdateProcessor->DetachUpdatable(updatable);
 }
 
-void Canvas::AttachTickable(ITickable* tickable)
+void Canvas::AttachTickable(Tickable* tickable)
 {
 	mUpdateProcessor->AttachTickable(tickable);
 }
 
-void Canvas::DetachTickable(ITickable* tickable)
+void Canvas::DetachTickable(Tickable* tickable)
 {
 	mUpdateProcessor->DetachTickable(tickable);
 }

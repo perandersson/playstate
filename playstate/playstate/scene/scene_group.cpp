@@ -29,25 +29,25 @@ void SceneGroup::Update()
 	mUpdateProcessor->Update();
 }
 
-void SceneGroup::AttachUpdatable(IUpdatable* updatable)
+void SceneGroup::AttachUpdatable(Updatable* updatable)
 {
 	assert_not_null(updatable);
 	mUpdateProcessor->AttachUpdatable(updatable);
 }
 
-void SceneGroup::DetachUpdatable(IUpdatable* updatable)
+void SceneGroup::DetachUpdatable(Updatable* updatable)
 {
 	assert_not_null(updatable);
 	mUpdateProcessor->DetachUpdatable(updatable);
 }
 
-void SceneGroup::AttachTickable(ITickable* tickable)
+void SceneGroup::AttachTickable(Tickable* tickable)
 {
 	assert_not_null(tickable);
 	mUpdateProcessor->AttachTickable(tickable);
 }
 
-void SceneGroup::DetachTickable(ITickable* tickable)
+void SceneGroup::DetachTickable(Tickable* tickable)
 {
 	assert_not_null(tickable);
 	mUpdateProcessor->AttachTickable(tickable);

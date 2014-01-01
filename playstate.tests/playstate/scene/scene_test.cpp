@@ -30,19 +30,19 @@ TEST_SUITE(Scene)
 	class MockUpdateProcessor : public IUpdateProcessor
 	{
 	public:
-		virtual void AttachUpdatable(IUpdatable* updatable)
+		virtual void AttachUpdatable(Updatable* updatable)
 		{
 		}
 
-		virtual void DetachUpdatable(IUpdatable* updatable)
+		virtual void DetachUpdatable(Updatable* updatable)
 		{
 		}
 
-		virtual void AttachTickable(ITickable* tickable)
+		virtual void AttachTickable(Tickable* tickable)
 		{
 		}
 
-		virtual void DetachTickable(ITickable* tickable)
+		virtual void DetachTickable(Tickable* tickable)
 		{
 		}
 

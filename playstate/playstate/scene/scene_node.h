@@ -122,7 +122,6 @@ namespace playstate
 			return mAbsoluteScale;
 		}
 
-
 		//
 		// @return This nodes model matrix
 		inline const Matrix4x4& GetModelMatrix() const {

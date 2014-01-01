@@ -18,10 +18,10 @@ namespace playstate
 
 	// IUpdateProcessor
 	public:
-		virtual void AttachUpdatable(IUpdatable* updatable);
-		virtual void DetachUpdatable(IUpdatable* updatable);
-		virtual void AttachTickable(ITickable* updatable);
-		virtual void DetachTickable(ITickable* updatable);
+		virtual void AttachUpdatable(Updatable* updatable);
+		virtual void DetachUpdatable(Updatable* updatable);
+		virtual void AttachTickable(Tickable* updatable);
+		virtual void DetachTickable(Tickable* updatable);
 		
 		
 	// IUpdatable
@@ -29,8 +29,8 @@ namespace playstate
 		virtual void Update();
 
 	private:		
-		LinkedList<IUpdatable> mUpdatables;
-		LinkedList<ITickable> mTickables;
+		LinkedList<Updatable> mUpdatables;
+		LinkedList<Tickable> mTickables;
 		float32 mTimeSinceLastTick;
 	};
 }

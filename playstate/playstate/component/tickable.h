@@ -17,9 +17,6 @@ namespace playstate
 	class ITickable
 	{
 	public:
-		LinkedListLink<ITickable> TickableLink;
-
-	public:
 		virtual ~ITickable() {}
 
 	public:
@@ -33,6 +30,9 @@ namespace playstate
 	// Inherit this to give it's target support for tick notification
 	class Tickable : public ITickable
 	{
+	public:
+		LinkedListLink<Tickable> TickableLink;
+
 	public:
 		Tickable();
 		virtual ~Tickable();

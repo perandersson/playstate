@@ -11,9 +11,6 @@ namespace playstate
 	class IUpdatable
 	{
 	public:
-		LinkedListLink<IUpdatable> UpdatableLink;
-
-	public:
 		virtual ~IUpdatable() {}
 
 	public:
@@ -26,6 +23,9 @@ namespace playstate
 	// Base class for any item in the game engine that wants to receive update events.
 	class Updatable : public IUpdatable
 	{
+	public:
+		LinkedListLink<Updatable> UpdatableLink;
+
 	public:
 		Updatable();
 		virtual ~Updatable();
