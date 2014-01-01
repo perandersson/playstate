@@ -256,6 +256,7 @@ void SceneNode::UpdateModelMatrix()
 	if(mAbsoluteScale.IsNotZero())
 		mModelMatrix = Matrix4x4::Scale(mAbsoluteScale) * mModelMatrix;
 
+	SetBoundingBox(mBoundingBox, mAbsolutePosition, mAbsoluteScale);
 	Component* component = mComponents.First();
 	while(component != NULL) {
 		component = component->ComponentLink.Tail;

@@ -155,5 +155,6 @@ AABB& AABB::operator = (const AABB& box)
 {
 	MaxPoint = box.MaxPoint;
 	MinPoint = box.MinPoint;
+	Offset = box.Offset;
 	return *this;
 }
