@@ -176,9 +176,6 @@
     <ClCompile Include="..\..\playstate\playstate\processor\processors\linked_list_update_processor.cpp">
       <Filter>Source Files\processor\processors</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\processor\updatable.cpp">
-      <Filter>Source Files\processor</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\rendering\render_system.cpp">
       <Filter>Source Files\rendering</Filter>
     </ClCompile>
@@ -299,9 +296,6 @@
     <ClCompile Include="..\..\playstate\playstate\resources\resource_manager.cpp">
       <Filter>Source Files\resources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\processor\tickable.cpp">
-      <Filter>Source Files\processor</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\gui\canvas.cpp">
       <Filter>Source Files\gui</Filter>
     </ClCompile>
@@ -383,14 +377,20 @@
     <ClCompile Include="..\..\playstate\playstate\gui\control\frame_control.cpp">
       <Filter>Source Files\gui\control</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\processor\collidable.cpp">
-      <Filter>Source Files\processor</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\light\point_light.cpp">
       <Filter>Source Files\light</Filter>
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\scene\renderable_scene_node.cpp">
       <Filter>Source Files\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\component\collidable.cpp">
+      <Filter>Source Files\component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\component\tickable.cpp">
+      <Filter>Source Files\component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\component\updatable.cpp">
+      <Filter>Source Files\component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -462,12 +462,6 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\processor\processors\linked_list_update_processor.h">
       <Filter>Source Files\processor\processors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\processor\renderable.h">
-      <Filter>Source Files\processor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\processor\updatable.h">
-      <Filter>Source Files\processor</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\rendering\gfx_program.h">
       <Filter>Source Files\rendering</Filter>
@@ -685,9 +679,6 @@
     <ClInclude Include="..\..\playstate\playstate\gui\canvas.h">
       <Filter>Source Files\gui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\processor\tickable.h">
-      <Filter>Source Files\processor</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\gui\canvas_group.h">
       <Filter>Source Files\gui</Filter>
     </ClInclude>
@@ -799,14 +790,23 @@
     <ClInclude Include="..\..\playstate\playstate\gui\control\frame_control.h">
       <Filter>Source Files\gui\control</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\processor\collidable.h">
-      <Filter>Source Files\processor</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\light\point_light.h">
       <Filter>Source Files\light</Filter>
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\scene\renderable_scene_node.h">
       <Filter>Source Files\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\component\collidable.h">
+      <Filter>Source Files\component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\component\renderable.h">
+      <Filter>Source Files\component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\component\tickable.h">
+      <Filter>Source Files\component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\component\updatable.h">
+      <Filter>Source Files\component</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

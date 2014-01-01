@@ -1,6 +1,6 @@
 #include "../memory/memory.h"
 #include "tickable.h"
-#include "update_processor.h"
+#include "../processor/update_processor.h"
 using namespace playstate;
 
 Tickable::Tickable() : mAttachedToProcessor(NULL)

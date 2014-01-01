@@ -1,7 +1,7 @@
 #pragma once
 #include "../singleton.h"
-#include "updatable.h"
-#include "tickable.h"
+#include "../component/updatable.h"
+#include "../component/tickable.h"
 
 namespace playstate
 {

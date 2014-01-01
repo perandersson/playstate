@@ -1,7 +1,6 @@
 #pragma once
 
 #include "canvas_group.h"
-#include "../processor/updatable.h"
 
 namespace playstate
 {

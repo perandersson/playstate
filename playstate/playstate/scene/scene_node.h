@@ -1,6 +1,6 @@
 #pragma once
 #include "../script/scriptable.h"
-#include "../processor/renderable.h"
+#include "../component/renderable.h"
 #include "../linked_list.h"
 #include "../component/component.h"
 #include "../math/matrix4x4.h"

@@ -40,7 +40,7 @@ float32 PointLight::GetQuadricAttenuation() const
 
 void PointLight::OnAttachedToSceneGroup()
 {
-	SetBoundingBox(AABB(GetPosition(), 20.0f, 20.0f, 20.0f));
+	SetBoundingBox(AABB(GetPosition(), 10.0f * mRadius, 10.0f * mRadius, 10.0f * mRadius));
 	LightSource::Attach(GetGroup());
 }
 

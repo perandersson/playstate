@@ -2,9 +2,9 @@
 #include "../linked_list.h"
 #include "../types.h"
 #include "../script/scriptable.h"
-#include "../processor/renderable.h"
-#include "../processor/updatable.h"
-#include "../processor/tickable.h"
+#include "renderable.h"
+#include "updatable.h"
+#include "tickable.h"
 
 namespace playstate
 {
