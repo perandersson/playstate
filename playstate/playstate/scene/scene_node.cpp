@@ -2,19 +2,22 @@
 #include "scene_node.h"
 #include "scene_group.h"
 #include "spatial_tree.h"
+#include "../component/component.h"
 using namespace playstate;
 
 SceneNode::SceneNode()
-	: mSceneGroup(NULL), mTypeMask(BIT_ALL), mBoundingBox(AABB::Unit), mTree(NULL), mParent(NULL), 
+	: Scriptable(),
+	mSceneGroup(NULL), mTypeMask(BIT_ALL), mBoundingBox(AABB::Unit), mTree(NULL), mParent(NULL), 
 	mComponents(offsetof(Component, ComponentLink)), mChildren(offsetof(SceneNode, NodeLink)),
-	mScale(Vector3::One), mAbsoluteScale(Vector3::One), mVisible(false)
+	mScale(Vector3::One), mAbsoluteScale(Vector3::One), mRenderable(NULL)
 {
 }
 
 SceneNode::SceneNode(type_mask typeMask)
-	: mSceneGroup(NULL), mTypeMask(typeMask), mBoundingBox(AABB::Unit), mTree(NULL), mParent(NULL), 
+	: Scriptable(),
+	mSceneGroup(NULL), mTypeMask(typeMask), mBoundingBox(AABB::Unit), mTree(NULL), mParent(NULL), 
 	mComponents(offsetof(Component, ComponentLink)), mChildren(offsetof(SceneNode, NodeLink)),
-	mScale(Vector3::One), mAbsoluteScale(Vector3::One), mVisible(false)
+	mScale(Vector3::One), mAbsoluteScale(Vector3::One), mRenderable(NULL)
 {
 }
 
@@ -24,28 +27,27 @@ SceneNode::~SceneNode()
 	mChildren.DeleteAll();
 	mParent = NULL;
 	mSceneGroup = NULL;
+	mRenderable = NULL;
 }
 
 void SceneNode::PreRender(const RenderState& state, RenderBlockResultSet* resultSet)
 {
-	//assert_not_null(mRenderable);
-	//mRenderable->PreRender(state, resultSet);
+	assert_not_null(mRenderable);
+	mRenderable->PreRender(state, resultSet);
 }
 
-void SceneNode::Show()
+void SceneNode::AttachRenderable(Renderable* renderable)
 {
-	if(mRenderProcessor != NULL && !mVisible) {
-		mRenderProcessor->AttachRenderable(this);
-		mVisible = true;
-	}
+	assert_not_null(renderable);
+	mRenderable = renderable;
+	mSceneGroup->AttachRenderable(this);
 }
 
-void SceneNode::Hide()
+void SceneNode::DetachRenderable(Renderable* renderable)
 {
-	if(mRenderProcessor != NULL && mVisible) {
-		mRenderProcessor->DetachRenderable(this);
-		mVisible = false;
-	}
+	assert_not_null(renderable);
+	mRenderable = renderable;
+	mSceneGroup->DetachRenderable(this);
 }
 
 void SceneNode::AddComponent(Component* component)

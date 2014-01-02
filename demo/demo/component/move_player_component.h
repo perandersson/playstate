@@ -15,7 +15,6 @@ public:
 // Component
 protected:
 	virtual void OnComponentAdded();
-	virtual void OnComponentRemoved();
 
 // Updatable
 public:

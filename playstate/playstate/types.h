@@ -71,7 +71,7 @@ namespace playstate
 #endif
 
 #ifndef BIT_ISSET
-#define BIT_ISSET(a, b) ( a & b ) != 0
+#define BIT_ISSET(a, b) (( a & b ) != 0)
 #endif
 
 #ifndef BIT_UNSET

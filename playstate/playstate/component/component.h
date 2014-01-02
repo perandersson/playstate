@@ -5,16 +5,27 @@
 #include "renderable.h"
 #include "updatable.h"
 #include "tickable.h"
+#include "../scene/scene_node.h"
+#include "../scene/scene_group.h"
 
 namespace playstate
 {
-	class SceneNode;
-	class SceneGroup;
-
 	//
 	// Base class for components in the game engine. 
-	class Component : public Scriptable, public Updatable, public Tickable
+	class Component : public Scriptable, public Updatable, public Tickable, public Renderable
 	{
+	public:
+		class Features
+		{
+		public:
+			enum {
+				UPDATABLE = BIT(0), 
+				TICKABLE = BIT(1),
+				RENDERABLE = BIT(2),
+				COLLIDABLE = BIT(3)
+			};
+		};
+
 	public:
 		LinkedListLink<Component> ComponentLink;
 
@@ -34,7 +45,6 @@ namespace playstate
 		// Destructor
 		virtual ~Component();
 
-	public:
 		//
 		// 
 		void OnAttachedToSceneNode(SceneNode* node);
@@ -50,6 +60,8 @@ namespace playstate
 		//
 		// 
 		void OnDetachingFromSceneGroup(SceneGroup* group);
+
+	public:
 
 		//
 		// @return The owner scene node for this component
@@ -71,6 +83,31 @@ namespace playstate
 		// Notifies this component that a new potential event has been triggered
 		void NotifyOnEvent(uint32 typeID, uint32 messageID);
 
+		//
+		// Set which features to be enabled for this component
+		//
+		// @param features A bit mask with all features to be enabled. This will also disable
+		//	features if those were enabled before but are no longer supplied here. See {@code playstate::Component::Features}
+		void SetFeatures(type_mask features);
+
+		//
+		// Enables one features for this component
+		//
+		// @param feature Containing the features needed by this component. See: {@code playstate::Component::Features}
+		void EnableFeature(type_mask feature);
+
+		//
+		// Disables one features for this component
+		//
+		// @param feature Containing which features to be disabled. See: {@code playstate::Component::Features}
+		void DisableFeature(type_mask feature);
+
+		//
+		// @return What features are enabled on this component
+		inline type_mask GetFeatures() const {
+			return mFeatures;
+		}
+
 	// Updatable
 	public:
 		virtual void Update();
@@ -78,7 +115,7 @@ namespace playstate
 	// Tickable
 	public:
 		virtual void Tick();
-		
+
 	// Scriptable
 	public:
 		virtual void OnRegistered();
@@ -86,8 +123,6 @@ namespace playstate
 	// Renderable
 	public:
 		virtual void PreRender(const RenderState& state, RenderBlockResultSet* resultSet);
-		virtual const AABB& GetBoundingBox() const;
-		virtual ISpatialTree* GetTree();
 
 	protected:		
 		//
@@ -104,10 +139,15 @@ namespace playstate
 		// Method called when this component receives events from the game engine.
 		virtual void OnEvent(uint32 typeID, uint32 messageID);
 
+	private:
+		void EnableFeatures();
+		void DisableFeatures();
+
 	protected:
 		SceneGroup* mGroup;
 		SceneNode* mNode;
 		type_mask mTypeMask;
+		type_mask mFeatures;
 
 	private:
 		ScriptMethod* mOnComponentAdded;

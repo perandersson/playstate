@@ -5,6 +5,7 @@
 #include "../processor/processors/quadtree_render_processor.h"
 #include "../script/script_system.h"
 #include "../search/find_query.h"
+#include "../component/component.h"
 using namespace playstate;
 
 SceneGroup::SceneGroup(std::auto_ptr<IUpdateProcessor> updateProcessor, std::auto_ptr<IRenderProcessor> renderProcessor, 

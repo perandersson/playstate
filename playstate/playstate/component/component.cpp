@@ -5,15 +5,15 @@
 using namespace playstate;
 
 Component::Component()
-	: Scriptable(), Updatable(), Tickable(),
-	mNode(NULL), mTypeMask(BIT_ALL),
+	: Scriptable(), Updatable(), Tickable(), Renderable(),
+	mNode(NULL), mTypeMask(BIT_ALL), mFeatures(BIT_NONE),
 	mOnComponentAdded(NULL), mOnComponentRemoved(NULL), mOnEvent(NULL), mUpdate(NULL), mTick(NULL)
 {
 }
 
 Component::Component(uint32 type)
-	: Scriptable(), Updatable(), Tickable(),
-	mNode(NULL), mTypeMask(type),
+	: Scriptable(), Updatable(), Tickable(), Renderable(),
+	mNode(NULL), mTypeMask(type), mFeatures(BIT_NONE),
 	mOnComponentAdded(NULL), mOnComponentRemoved(NULL), mOnEvent(NULL), mUpdate(NULL), mTick(NULL)
 {
 }
@@ -35,6 +35,15 @@ void Component::OnAttachedToSceneNode(SceneNode* node)
 	mNode = node;
 	mGroup = node->GetGroup();
 	assert_not_null(mGroup);
+
+	mFeatures = BIT_NONE;
+	if(mUpdate != NULL)
+		BIT_SET(mFeatures, Features::UPDATABLE);
+
+	if(mTick != NULL)
+		BIT_SET(mFeatures, Features::TICKABLE);
+	EnableFeatures();
+
 	this->OnComponentAdded();
 }
 
@@ -43,11 +52,21 @@ void Component::OnAttachedToSceneGroup(SceneGroup* group)
 	assert_not_null(group);
 	mNode = NULL;
 	mGroup = group;
+
+	mFeatures = BIT_NONE;
+	if(mUpdate != NULL)
+		BIT_SET(mFeatures, Features::UPDATABLE);
+
+	if(mTick != NULL)
+		BIT_SET(mFeatures, Features::TICKABLE);
+	EnableFeatures();
+
 	this->OnComponentAdded();
 }
 
 void Component::OnDetachingFromSceneNode(SceneNode* node)
 {
+	DisableFeatures();
 	this->OnComponentRemoved();
 	mNode = NULL;
 	mGroup = NULL;
@@ -55,28 +74,54 @@ void Component::OnDetachingFromSceneNode(SceneNode* node)
 
 void Component::OnDetachingFromSceneGroup(SceneGroup* group)
 {
+	DisableFeatures();
 	this->OnComponentRemoved();
 	mNode = NULL;
 	mGroup = NULL;
 }
 
+void Component::EnableFeatures()
+{
+	if(BIT_ISSET(mFeatures, Features::UPDATABLE)) {
+		GetGroup()->AttachUpdatable(this);
+	}
+
+	if(BIT_ISSET(mFeatures, Features::TICKABLE)) {
+		GetGroup()->AttachTickable(this);
+	}
+
+	if(BIT_ISSET(mFeatures, Features::RENDERABLE)) {
+	}
+
+	if(BIT_ISSET(mFeatures, Features::COLLIDABLE)) {
+	}
+}
+
+void Component::DisableFeatures()
+{
+	if(BIT_ISSET(mFeatures, Features::UPDATABLE)) {
+		GetGroup()->DetachUpdatable(this);
+	}
+
+	if(BIT_ISSET(mFeatures, Features::TICKABLE)) {
+		GetGroup()->DetachTickable(this);
+	}
+
+	if(BIT_ISSET(mFeatures, Features::RENDERABLE)) {
+	}
+
+	if(BIT_ISSET(mFeatures, Features::COLLIDABLE)) {
+	}
+}
+
 void Component::OnComponentAdded()
 {
-	if(mUpdate != NULL)
-		Updatable::Attach(GetGroup());
-
-	if(mTick != NULL)
-		Tickable::Attach(GetGroup());
-
 	if(mOnComponentAdded != NULL)
 		mOnComponentAdded->Invoke();
 }
 
 void Component::OnComponentRemoved()
 {
-	Updatable::Detach();
-	Tickable::Detach();
-
 	if(mOnComponentRemoved != NULL)
 		mOnComponentRemoved->Invoke();
 }
@@ -106,6 +151,84 @@ void Component::NotifyOnEvent(uint32 typeID, uint32 messageID)
 	this->OnEvent(typeID, messageID);
 }
 
+void Component::SetFeatures(type_mask features)
+{
+	const type_mask disableFeatures = ~mFeatures ^ ~features;
+	if(BIT_ISSET(disableFeatures, Features::UPDATABLE)) {
+		GetGroup()->DetachUpdatable(this);
+	}
+
+	if(BIT_ISSET(disableFeatures, Features::TICKABLE)) {
+		GetGroup()->DetachTickable(this);
+	}
+
+	if(BIT_ISSET(disableFeatures, Features::RENDERABLE)) {
+	}
+
+	if(BIT_ISSET(disableFeatures, Features::COLLIDABLE)) {
+	}
+
+	const type_mask enableFeatures = mFeatures ^ features;
+	if(BIT_ISSET(enableFeatures, Features::UPDATABLE)) {
+		GetGroup()->AttachUpdatable(this);
+	}
+
+	if(BIT_ISSET(enableFeatures, Features::TICKABLE)) {
+		GetGroup()->AttachTickable(this);
+	}
+
+	if(BIT_ISSET(enableFeatures, Features::RENDERABLE)) {
+	}
+
+	if(BIT_ISSET(enableFeatures, Features::COLLIDABLE)) {
+	}
+
+	mFeatures = features;
+}
+
+void Component::EnableFeature(type_mask feature)
+{
+	if(BIT_ISSET(feature, Features::UPDATABLE)) {
+		GetGroup()->AttachUpdatable(this);
+
+	}
+
+	if(BIT_ISSET(feature, Features::TICKABLE)) {
+		GetGroup()->AttachTickable(this);
+	}
+
+	if(BIT_ISSET(feature, Features::RENDERABLE)) {
+		GetNode()->AttachRenderable(this);
+	}
+
+	if(BIT_ISSET(feature, Features::COLLIDABLE)) {
+
+	}
+
+	BIT_SET(mFeatures, feature);
+}
+
+void Component::DisableFeature(type_mask feature)
+{
+	if(BIT_ISSET(feature, Features::UPDATABLE)) {
+		GetGroup()->DetachUpdatable(this);
+	}
+
+	if(BIT_ISSET(feature, Features::TICKABLE)) {
+		GetGroup()->DetachTickable(this);
+	}
+
+	if(BIT_ISSET(feature, Features::RENDERABLE)) {
+
+	}
+
+	if(BIT_ISSET(feature, Features::COLLIDABLE)) {
+
+	}
+
+	BIT_UNSET(mFeatures, feature);
+}
+
 void Component::OnEvent(uint32 typeID, uint32 messageID)
 {
 	if(mOnEvent != NULL)
@@ -126,16 +249,6 @@ void Component::Tick()
 
 void Component::PreRender(const RenderState& state, RenderBlockResultSet* resultSet)
 {
-}
-
-const AABB& Component::GetBoundingBox() const
-{
-	return GetNode()->GetBoundingBox();
-}
-
-ISpatialTree* Component::GetTree()
-{
-	return GetNode()->GetTree();
 }
 
 void Component::OnRegistered()

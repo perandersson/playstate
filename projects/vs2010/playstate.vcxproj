@@ -16,6 +16,7 @@
     <ClCompile Include="..\..\playstate\playstate\collision\aabb.cpp" />
     <ClCompile Include="..\..\playstate\playstate\component\collidable.cpp" />
     <ClCompile Include="..\..\playstate\playstate\component\component.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\component\renderable.cpp" />
     <ClCompile Include="..\..\playstate\playstate\component\tickable.cpp" />
     <ClCompile Include="..\..\playstate\playstate\component\updatable.cpp" />
     <ClCompile Include="..\..\playstate\playstate\exception.cpp" />
@@ -54,6 +55,7 @@
     <ClCompile Include="..\..\playstate\playstate\model\dynamic_model.cpp" />
     <ClCompile Include="..\..\playstate\playstate\model\md5\md5_mesh_resource_loader.cpp" />
     <ClCompile Include="..\..\playstate\playstate\model\model.cpp" />
+    <ClCompile Include="..\..\playstate\playstate\model\static_model_component.cpp" />
     <ClCompile Include="..\..\playstate\playstate\model\wavefront\wavefront_resource_loader.cpp" />
     <ClCompile Include="..\..\playstate\playstate\processor\light_source.cpp" />
     <ClCompile Include="..\..\playstate\playstate\processor\processors\linked_list_render_processor.cpp" />
@@ -71,7 +73,6 @@
     <ClCompile Include="..\..\playstate\playstate\resources\resource_data.cpp" />
     <ClCompile Include="..\..\playstate\playstate\resources\resource_manager.cpp" />
     <ClCompile Include="..\..\playstate\playstate\resources\threaded\threaded_resource_manager.cpp" />
-    <ClCompile Include="..\..\playstate\playstate\scene\renderable_scene_node.cpp" />
     <ClCompile Include="..\..\playstate\playstate\scene\scene.cpp" />
     <ClCompile Include="..\..\playstate\playstate\scene\scene_group.cpp" />
     <ClCompile Include="..\..\playstate\playstate\scene\scene_node.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="..\..\playstate\playstate\model\md5\md5_mesh_resource_loader.h" />
     <ClInclude Include="..\..\playstate\playstate\model\model.h" />
     <ClInclude Include="..\..\playstate\playstate\model\model_mesh.h" />
+    <ClInclude Include="..\..\playstate\playstate\model\static_model_component.h" />
     <ClInclude Include="..\..\playstate\playstate\model\wavefront\wavefront_resource_loader.h" />
     <ClInclude Include="..\..\playstate\playstate\playstate.h" />
     <ClInclude Include="..\..\playstate\playstate\processor\light_source.h" />
@@ -196,7 +198,6 @@
     <ClInclude Include="..\..\playstate\playstate\resources\resource_manager.h" />
     <ClInclude Include="..\..\playstate\playstate\resources\resource_object.h" />
     <ClInclude Include="..\..\playstate\playstate\resources\threaded\threaded_resource_manager.h" />
-    <ClInclude Include="..\..\playstate\playstate\scene\renderable_scene_node.h" />
     <ClInclude Include="..\..\playstate\playstate\scene\scene.h" />
     <ClInclude Include="..\..\playstate\playstate\scene\scene_group.h" />
     <ClInclude Include="..\..\playstate\playstate\scene\scene_node.h" />

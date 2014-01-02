@@ -13,10 +13,11 @@ local footsteps = {
 	Resource.Load("/demo/sound/effects/footstep0.wav"),
 	Resource.Load("/demo/sound/effects/footstep1.wav")
 }
-local player1 = RenderableSceneNode(playerModel)
+local player1 = SceneNode()
 player1:AddComponent(MovePlayerComponent(10.0))
 player1:AddComponent(FollowCameraBehaviour())
 player1:AddComponent(PlayerMovementSoundEffect(footsteps))
+player1:AddComponent(StaticModelComponent(playerModel))
 player1:SetPosition(0, 0, 10)
 player1:SetScale(2, 2, 2)
 playerGroup:AddChild(player1)

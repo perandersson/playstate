@@ -2,7 +2,6 @@
 #include "../script/scriptable.h"
 #include "../component/renderable.h"
 #include "../linked_list.h"
-#include "../component/component.h"
 #include "../math/matrix4x4.h"
 #include "../collision/aabb.h"
 #include "../script/luam.h"
@@ -12,6 +11,7 @@ namespace playstate
 	class SceneGroup;
 	class ISpatialTree;
 	class IRenderProcessor;
+	class Component;
 
 	//
 	// Base class for nodes inside a scene. 
@@ -204,11 +204,11 @@ namespace playstate
 			return mSceneGroup != NULL;
 		}
 
-	// Renderable
+	// IRenderable
 	public:
 		virtual void PreRender(const RenderState& state, RenderBlockResultSet* resultSet);
-		virtual void Show();
-		virtual void Hide();
+		void AttachRenderable(Renderable* renderable);
+		void DetachRenderable(Renderable* renderable);
 
 	protected:
 		//
@@ -272,8 +272,7 @@ namespace playstate
 		LinkedList<SceneNode> mChildren;
 
 	private:
-		IRenderProcessor* mRenderProcessor;
-		bool mVisible;
+		IRenderable* mRenderable;
 	};
 	
 	//

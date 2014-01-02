@@ -11,8 +11,9 @@ local j = 0
 local chinalampModel = Resource.Load("/demo/models/chinalamp/China_lampEX.obj")
 for i=-10, 9 do
 	for j=-10, 9 do
-		local node = RenderableSceneNode(chinalampModel)
+		local node = SceneNode()
 		node:SetPosition(i * 20, 0, j * 20)
+		node:AddComponent(StaticModelComponent(chinalampModel))
 		level1:AddChild(node)
 	end
 end
@@ -38,8 +39,9 @@ end
 local ground1 = Resource.Load("/demo/models/ground1/ground1.obj")
 for i=-10, 9 do
 	for j=-10, 9 do
-		local node = RenderableSceneNode(ground1)
+		local node = SceneNode()
 		node:SetPosition(i * 20, 0, j * 20)
+		node:AddComponent(StaticModelComponent(ground1))
 		level1:AddChild(node)
 	end
 end

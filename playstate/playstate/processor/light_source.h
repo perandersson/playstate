@@ -16,7 +16,7 @@ namespace playstate
 
 	public:
 		LightSource();
-		~LightSource();
+		virtual ~LightSource();
 
 		//
 		// Attaches this light source so that it can affect renderable items

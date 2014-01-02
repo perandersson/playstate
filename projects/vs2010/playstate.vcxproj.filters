@@ -380,9 +380,6 @@
     <ClCompile Include="..\..\playstate\playstate\light\point_light.cpp">
       <Filter>Source Files\light</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\playstate\playstate\scene\renderable_scene_node.cpp">
-      <Filter>Source Files\scene</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\component\collidable.cpp">
       <Filter>Source Files\component</Filter>
     </ClCompile>
@@ -390,6 +387,12 @@
       <Filter>Source Files\component</Filter>
     </ClCompile>
     <ClCompile Include="..\..\playstate\playstate\component\updatable.cpp">
+      <Filter>Source Files\component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\model\static_model_component.cpp">
+      <Filter>Source Files\model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\playstate\playstate\component\renderable.cpp">
       <Filter>Source Files\component</Filter>
     </ClCompile>
   </ItemGroup>
@@ -793,9 +796,6 @@
     <ClInclude Include="..\..\playstate\playstate\light\point_light.h">
       <Filter>Source Files\light</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\playstate\playstate\scene\renderable_scene_node.h">
-      <Filter>Source Files\scene</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\component\collidable.h">
       <Filter>Source Files\component</Filter>
     </ClInclude>
@@ -807,6 +807,9 @@
     </ClInclude>
     <ClInclude Include="..\..\playstate\playstate\component\updatable.h">
       <Filter>Source Files\component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\model\static_model_component.h">
+      <Filter>Source Files\model</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

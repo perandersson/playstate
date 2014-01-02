@@ -17,11 +17,11 @@
 #include "game/game_runner.h"
 #include "input/input_system.h"
 #include "scene/scene.h"
-#include "scene/renderable_scene_node.h"
 #include "resources/resource_manager.h"
 #include "rendering/render_system.h"
 
 #include "model/model.h"
+#include "model/static_model_component.h"
 
 #include "sound/music.h"
 #include "sound/sound_effect.h"

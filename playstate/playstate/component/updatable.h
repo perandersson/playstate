@@ -29,21 +29,6 @@ namespace playstate
 	public:
 		Updatable();
 		virtual ~Updatable();
-
-	protected:
-		//
-		// Attach this updatable instance to an update processor. 
-		// This must be done if we want the updatable instance to receive update events.
-		// @param processor
-		void Attach(IUpdateProcessor* processor);
-
-		//
-		// Detaches this instance from it's attached update processor. This can be done to prevent
-		// this item from receiving any update events.
-		void Detach();
-
-	private:
-		IUpdateProcessor* mAttachedToProcessor;
 	};
 
 	//

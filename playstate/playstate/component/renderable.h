@@ -23,14 +23,17 @@ namespace playstate
 		// @param state
 		// @param builder
 		virtual void PreRender(const RenderState& state, RenderBlockResultSet* resultSet) = 0;
-		
-		//
-		// Shows this renderable item in the scene.
-		// @remark This method can only be called on an attached renderable object.
-		virtual void Show() = 0;
-		
-		//
-		// Hides this renderable item from the scene.
-		virtual void Hide() = 0;
+	};
+
+	//
+	//
+	class Renderable : public IRenderable
+	{
+	public:
+		LinkedListLink<Renderable> RenderableNodeLink;
+
+	public:
+		Renderable();
+		virtual ~Renderable();
 	};
 }

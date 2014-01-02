@@ -13,7 +13,8 @@
 #include <playstate/processor/processors/quadtree_render_processor.h>
 #include <playstate/image/image_resource_loader.h>
 #include <playstate/sound/openal/openal_sound_effect_resource_loader.h>
-#include <playstate/scene/renderable_scene_node.h>
+#include <playstate/component/component.h>
+#include <playstate/model/static_model_component.h>
 
 using namespace playstate;
 using namespace playstate::win32;
@@ -90,8 +91,8 @@ void Win32DefaultKernel::RegisterScript()
 	ss.RegisterType("SceneNode", SceneNode_Methods);
 	ss.RegisterType("SceneGroup", SceneGroup_Methods);
 	ss.RegisterType("Component", Component_Methods);
-	ss.RegisterType("RenderableSceneNode", SceneNode_Methods);
-	ss.RegisterType("RenderableSceneNode", RenderableSceneNode_Methods);
+	ss.RegisterType("StaticModelComponent", Component_Methods);
+	ss.RegisterType("StaticModelComponent", StaticModelComponent_Methods);
 	ss.RegisterType("ActiveCamera", ActiveCamera_Methods);
 	ss.RegisterType("PointLight", SceneNode_Methods);
 	ss.RegisterType("PointLight", PointLight_Methods);

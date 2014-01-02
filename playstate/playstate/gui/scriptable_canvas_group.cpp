@@ -25,16 +25,16 @@ void ScriptableCanvasGroup::OnProcessCanvas(GuiGeometryBuilder* builder)
 void ScriptableCanvasGroup::OnAddedToCanvas()
 {
 	if(mUpdate != NULL)
-		Updatable::Attach(GetCanvas());
+		GetCanvas()->AttachUpdatable(this);
 
 	if(mTick != NULL)
-		Tickable::Attach(GetCanvas());
+		GetCanvas()->AttachTickable(this);
 }
 
 void ScriptableCanvasGroup::OnRemovingFromCanvas()
 {
-	Updatable::Detach();
-	Tickable::Detach();
+	GetCanvas()->DetachUpdatable(this);
+	GetCanvas()->DetachTickable(this);
 }
 
 void ScriptableCanvasGroup::Update()

@@ -36,21 +36,6 @@ namespace playstate
 	public:
 		Tickable();
 		virtual ~Tickable();
-		
-	protected:
-		//
-		// Attach this tickable instance to an tickable processor. 
-		// This must be done if we want this instance to receive tick events.
-		// @param processor
-		void Attach(IUpdateProcessor* processor);
-
-		//
-		// Detaches this instance from it's attached tickable processor. This can be done to prevent
-		// this item from receiving any tick events.
-		void Detach();
-
-	private:
-		IUpdateProcessor* mAttachedToProcessor;
 	};
 
 	extern float32 SecondsPerTick;

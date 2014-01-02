@@ -17,12 +17,7 @@ MovePlayerComponent::~MovePlayerComponent()
 
 void MovePlayerComponent::OnComponentAdded()
 {
-	Updatable::Attach(GetGroup());
-}
-
-void MovePlayerComponent::OnComponentRemoved()
-{
-	Updatable::Detach();
+	EnableFeature(Component::Features::UPDATABLE);
 }
 
 void MovePlayerComponent::Update()
