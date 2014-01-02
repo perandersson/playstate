@@ -5,14 +5,14 @@
 using namespace playstate;
 
 Component::Component()
-	: Scriptable(), Updatable(), Tickable(), Renderable(),
+	: Scriptable(), Updatable(), Tickable(), Renderable(), Collidable(),
 	mNode(NULL), mTypeMask(BIT_ALL), mFeatures(BIT_NONE),
 	mOnComponentAdded(NULL), mOnComponentRemoved(NULL), mOnEvent(NULL), mUpdate(NULL), mTick(NULL)
 {
 }
 
 Component::Component(uint32 type)
-	: Scriptable(), Updatable(), Tickable(), Renderable(),
+	: Scriptable(), Updatable(), Tickable(), Renderable(), Collidable(),
 	mNode(NULL), mTypeMask(type), mFeatures(BIT_NONE),
 	mOnComponentAdded(NULL), mOnComponentRemoved(NULL), mOnEvent(NULL), mUpdate(NULL), mTick(NULL)
 {
@@ -91,6 +91,7 @@ void Component::EnableFeatures()
 	}
 
 	if(BIT_ISSET(mFeatures, Features::RENDERABLE)) {
+		GetNode()->AttachRenderable(this);
 	}
 
 	if(BIT_ISSET(mFeatures, Features::COLLIDABLE)) {
@@ -108,6 +109,7 @@ void Component::DisableFeatures()
 	}
 
 	if(BIT_ISSET(mFeatures, Features::RENDERABLE)) {
+		GetNode()->DetachRenderable(this);
 	}
 
 	if(BIT_ISSET(mFeatures, Features::COLLIDABLE)) {
@@ -163,6 +165,7 @@ void Component::SetFeatures(type_mask features)
 	}
 
 	if(BIT_ISSET(disableFeatures, Features::RENDERABLE)) {
+		GetNode()->DetachRenderable(this);
 	}
 
 	if(BIT_ISSET(disableFeatures, Features::COLLIDABLE)) {
@@ -178,6 +181,7 @@ void Component::SetFeatures(type_mask features)
 	}
 
 	if(BIT_ISSET(enableFeatures, Features::RENDERABLE)) {
+		GetNode()->AttachRenderable(this);
 	}
 
 	if(BIT_ISSET(enableFeatures, Features::COLLIDABLE)) {
@@ -219,7 +223,7 @@ void Component::DisableFeature(type_mask feature)
 	}
 
 	if(BIT_ISSET(feature, Features::RENDERABLE)) {
-
+		GetNode()->DetachRenderable(this);
 	}
 
 	if(BIT_ISSET(feature, Features::COLLIDABLE)) {
@@ -248,6 +252,10 @@ void Component::Tick()
 }
 
 void Component::PreRender(const RenderState& state, RenderBlockResultSet* resultSet)
+{
+}
+
+void Component::CollidesWith(ICollidable* otherObject, const Vector3& direction)
 {
 }
 

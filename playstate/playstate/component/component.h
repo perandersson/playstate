@@ -5,6 +5,7 @@
 #include "renderable.h"
 #include "updatable.h"
 #include "tickable.h"
+#include "collidable.h"
 #include "../scene/scene_node.h"
 #include "../scene/scene_group.h"
 
@@ -12,7 +13,7 @@ namespace playstate
 {
 	//
 	// Base class for components in the game engine. 
-	class Component : public Scriptable, public Updatable, public Tickable, public Renderable
+	class Component : public Scriptable, public Updatable, public Tickable, public Renderable, public Collidable
 	{
 	public:
 		class Features
@@ -123,6 +124,10 @@ namespace playstate
 	// Renderable
 	public:
 		virtual void PreRender(const RenderState& state, RenderBlockResultSet* resultSet);
+
+	// Collidable
+	public:	
+		virtual void CollidesWith(ICollidable* otherObject, const Vector3& direction);
 
 	protected:		
 		//
