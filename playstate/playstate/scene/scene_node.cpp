@@ -168,6 +168,7 @@ void SceneNode::SetPosition(const Vector3& position)
 	mAbsolutePosition += diff;
 
 	UpdateModelMatrix();
+	mBoundingBox.SetPosition(mAbsolutePosition);
 
 	SceneNode* child = mChildren.First();
 	while(child != NULL) {
@@ -181,6 +182,7 @@ void SceneNode::UpdatePosition(const Vector3& parentPosition)
 	mAbsolutePosition = parentPosition + mPosition;
 
 	UpdateModelMatrix();
+	mBoundingBox.SetPosition(mAbsolutePosition);
 
 	SceneNode* child = mChildren.First();
 	while(child != NULL) {
@@ -224,6 +226,7 @@ void SceneNode::SetScale(const Vector3& scale)
 	mAbsoluteScale += diff;
 
 	UpdateModelMatrix();
+	mBoundingBox.SetScale(mAbsoluteScale);
 
 	SceneNode* child = mChildren.First();
 	while(child != NULL) {
@@ -237,6 +240,7 @@ void SceneNode::UpdateScale(const Vector3& parentScale)
 	mAbsoluteScale = parentScale + mScale;
 
 	UpdateModelMatrix();
+	mBoundingBox.SetScale(mAbsoluteScale);
 
 	SceneNode* child = mChildren.First();
 	while(child != NULL) {
@@ -258,7 +262,6 @@ void SceneNode::UpdateModelMatrix()
 	if(mAbsoluteScale.IsNotZero())
 		mModelMatrix = Matrix4x4::Scale(mAbsoluteScale) * mModelMatrix;
 
-	SetBoundingBox(mBoundingBox, mAbsolutePosition, mAbsoluteScale);
 	Component* component = mComponents.First();
 	while(component != NULL) {
 		component = component->ComponentLink.Tail;

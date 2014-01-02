@@ -27,6 +27,11 @@ namespace playstate
 		// @param position The new position
 		void SetPosition(const Vector3& position);
 		
+		
+		//
+		// @param scale The new scale 
+		void SetScale(const Vector3& scale);
+
 		//
 		// Translates this bounding box in the supplied direction
 		void Translate(const Vector3& direction);

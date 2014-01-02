@@ -40,7 +40,8 @@ float32 PointLight::GetQuadricAttenuation() const
 
 void PointLight::OnAttachedToSceneGroup()
 {
-	SetBoundingBox(AABB(GetPosition(), 10.0f * mRadius, 10.0f * mRadius, 10.0f * mRadius));
+	// TODO: Create a formula for calculating the bounding box based on the radius and light intensity.
+	SetBoundingBox(AABB(Vector3::Zero, 1.3f * mRadius, 1.3f * mRadius, 1.3f * mRadius), GetPosition());
 	LightSource::Attach(GetGroup());
 }
 
