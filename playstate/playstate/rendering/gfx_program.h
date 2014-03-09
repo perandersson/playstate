@@ -37,7 +37,7 @@ namespace playstate
 			CONSTANT_ALPHA,
 			ONE_MINUS_CONSTANT_ALPHA,
 
-			NUM_SRC_FACTORS
+			SIZE
 		};
 
 		static const Enum Default = ONE;
@@ -65,7 +65,7 @@ namespace playstate
 			CONSTANT_ALPHA,
 			ONE_MINUS_CONSTANT_ALPHA,
 
-			NUM_DEST_FACTORS
+			SIZE
 		};
 
 		static const Enum Default = ZERO;
@@ -79,7 +79,7 @@ namespace playstate
 			CW,
 			CCW,
 
-			NUM_CULL_FACES
+			SIZE
 		};
 
 		static const Enum Default = CCW;
@@ -98,7 +98,7 @@ namespace playstate
 			GEQUAL,
 			ALWAYS,
 
-			NUM_DEPTH_FUNCS
+			SIZE
 		};
 
 		static const Enum Default = LEQUAL;

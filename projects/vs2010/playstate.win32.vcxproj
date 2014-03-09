@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -33,6 +33,7 @@
     <ClCompile Include="..\..\playstate.win32\playstate\win32\filesystem\win32_filesystem.cpp" />
     <ClCompile Include="..\..\playstate.win32\playstate\win32\filesystem\win32_file_watcher.cpp" />
     <ClCompile Include="..\..\playstate.win32\playstate\win32\input\win32_input_system.cpp" />
+    <ClCompile Include="..\..\playstate.win32\playstate\win32\main.cpp" />
     <ClCompile Include="..\..\playstate.win32\playstate\win32\rendering\win32_graphics_driver.cpp" />
     <ClCompile Include="..\..\playstate.win32\playstate\win32\rendering\win32_render_context.cpp" />
     <ClCompile Include="..\..\playstate.win32\playstate\win32\thread\win32_lock.cpp" />
@@ -44,6 +45,20 @@
     <ClCompile Include="..\..\playstate.win32\playstate\win32\win32_default_kernel.cpp" />
     <ClCompile Include="..\..\playstate.win32\playstate\win32\window\win32_window.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="demo.vcxproj">
+      <Project>{ba87d3d9-b255-4246-ac1a-bd6be7dc83b4}</Project>
+    </ProjectReference>
+    <ProjectReference Include="playstate.ogl3.vcxproj">
+      <Project>{e888e0b4-3f42-4de8-9d69-35495868b33e}</Project>
+    </ProjectReference>
+    <ProjectReference Include="playstate.openal.vcxproj">
+      <Project>{b68dfa77-8a67-4032-ab88-33d77faa36ac}</Project>
+    </ProjectReference>
+    <ProjectReference Include="playstate.vcxproj">
+      <Project>{49640f0e-b772-4535-9e7b-4c0c7c5c1cff}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{18FCFBC0-D4DA-4193-90D3-D88F2FFC00EE}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -51,13 +66,17 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -85,13 +104,15 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;lua_assert=assert;LUA_USER_H=&lt;cassert&gt;;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)../../playstate.openal;$(SolutionDir)../../playstate.ogl3;$(SolutionDir)../../playstate;$(SolutionDir)../../libraries/lua-5.2.1;$(SolutionDir)../../libraries/glew-1.9.0/include;../../libraries/openal-soft</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../playstate.openal;$(SolutionDir)../../playstate.ogl3;$(SolutionDir)../../playstate;$(SolutionDir)../../demo;$(SolutionDir)../../libraries/lua-5.2.1;$(SolutionDir)../../libraries/glew-1.9.0/include;../../libraries/openal-soft</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>FreeImage.lib;freetype2411MT_D.lib;glew32.lib;libogg_static_d.lib;libvorbis_static_d.lib;libvorbisfile_static_d.lib;luad.lib;OpenAL32_d.lib;OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)libraries\openal-soft;$(SolutionDir)libraries\lua-5.2.1;$(SolutionDir)libraries\libvorbis;$(SolutionDir)libraries\libogg;$(SolutionDir)libraries\glew-1.9.0\lib;$(SolutionDir)libraries\FreeImage;$(SolutionDir)libraries\freetype-2.4.11;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Lib>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
@@ -105,7 +126,7 @@
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)../../playstate.openal;$(SolutionDir)../../playstate.ogl3;$(SolutionDir)../../playstate;$(SolutionDir)../../libraries/lua-5.2.1;$(SolutionDir)../../libraries/glew-1.9.0/include;../../libraries/openal-soft</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../playstate.openal;$(SolutionDir)../../playstate.ogl3;$(SolutionDir)../../playstate;$(SolutionDir)../../demo;$(SolutionDir)../../libraries/lua-5.2.1;$(SolutionDir)../../libraries/glew-1.9.0/include;../../libraries/openal-soft</AdditionalIncludeDirectories>
       <StringPooling>true</StringPooling>
       <FloatingPointModel>Fast</FloatingPointModel>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>

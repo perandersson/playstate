@@ -12,9 +12,6 @@
     <Filter Include="Source Files\pipeline">
       <UniqueIdentifier>{0fb290bb-24eb-4355-8139-193e0c2002e6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\win32">
-      <UniqueIdentifier>{c01a5fee-e4f4-4d17-93ad-35fe48e8f278}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\components">
       <UniqueIdentifier>{c7618353-80e5-4160-b67d-fed1b6d9ee7e}</UniqueIdentifier>
     </Filter>
@@ -36,9 +33,6 @@
     </ClCompile>
     <ClCompile Include="..\..\demo\demo\pipeline\deferred_render_pipeline.cpp">
       <Filter>Source Files\pipeline</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\demo\demo\win32\main.cpp">
-      <Filter>Source Files\win32</Filter>
     </ClCompile>
     <ClCompile Include="..\..\demo\demo\component\move_player_component.cpp">
       <Filter>Source Files\components</Filter>

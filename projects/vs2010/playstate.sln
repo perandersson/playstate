@@ -1,11 +1,13 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 2013 for Windows Desktop
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "playstate", "playstate.vcxproj", "{49640F0E-B772-4535-9E7B-4C0C7C5C1CFF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo", "demo.vcxproj", "{BA87D3D9-B255-4246-AC1A-BD6BE7DC83B4}"
 	ProjectSection(ProjectDependencies) = postProject
-		{18FCFBC0-D4DA-4193-90D3-D88F2FFC00EE} = {18FCFBC0-D4DA-4193-90D3-D88F2FFC00EE}
+		{49640F0E-B772-4535-9E7B-4C0C7C5C1CFF} = {49640F0E-B772-4535-9E7B-4C0C7C5C1CFF}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "playstate.tests", "playstate.tests.vcxproj", "{8BAC8A17-CD0B-4376-A93B-3472139B8A3A}"
@@ -18,6 +20,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "playstate.win32", "playstat
 		{49640F0E-B772-4535-9E7B-4C0C7C5C1CFF} = {49640F0E-B772-4535-9E7B-4C0C7C5C1CFF}
 		{B68DFA77-8A67-4032-AB88-33D77FAA36AC} = {B68DFA77-8A67-4032-AB88-33D77FAA36AC}
 		{E888E0B4-3F42-4DE8-9D69-35495868B33E} = {E888E0B4-3F42-4DE8-9D69-35495868B33E}
+		{BA87D3D9-B255-4246-AC1A-BD6BE7DC83B4} = {BA87D3D9-B255-4246-AC1A-BD6BE7DC83B4}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "playstate.ogl3", "playstate.ogl3.vcxproj", "{E888E0B4-3F42-4DE8-9D69-35495868B33E}"

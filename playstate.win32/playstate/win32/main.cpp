@@ -8,20 +8,18 @@ unsigned int fp_control_state = _controlfp(_EM_INEXACT | _EM_INVALID | _EM_UNDER
 #endif
 
 #include <playstate/playstate.h>
-#include <playstate/win32/win32_default_kernel.h>
+#include "win32_default_kernel.h""
 
-#include "../pipeline/deferred_render_pipeline.h"
-#include "../component/move_player_component.h"
-#include "../demo.h"
+#include <demo/pipeline/deferred_render_pipeline.h>
+#include <demo/component/move_player_component.h>
+#include <demo/demo.h>
 #include <vector>
 #include <set>
 
 using namespace playstate;
 using namespace playstate::win32;
 
-#ifdef WIN32
 #undef GetMessage
-#endif
 
 class LuaSuffixFileListener : public IFileChangedListener
 {
@@ -33,20 +31,23 @@ public:
 	}
 
 
-// IFileChangedListener
+	// IFileChangedListener
 public:
 	virtual void FileChanged(const IFile& file, FileChangeAction::Enum action)
 	{
 		try {
 			std::auto_ptr<Script> script = ScriptSystem::Get().CompileFile(file.GetPath());
-			if(action == FileChangeAction::MODIFIED) {
+			if (action == FileChangeAction::MODIFIED) {
 				ILogger::Get().Debug("Updated script file: '%s'", file.GetPath().c_str());
-			} else if(action == FileChangeAction::ADDED) {
+			}
+			else if (action == FileChangeAction::ADDED) {
 				ILogger::Get().Debug("Added script file: '%s'", file.GetPath().c_str());
-			} else if(action == FileChangeAction::DELETED) {
+			}
+			else if (action == FileChangeAction::DELETED) {
 				ILogger::Get().Debug("Deleted script file: '%s'", file.GetPath().c_str());
 			}
-		} catch(ScriptException e) {
+		}
+		catch (ScriptException e) {
 			ILogger::Get().Error("Could not update script file: '%s'. Reason: '%s'", file.GetPath().c_str(), e.GetMessage().c_str());
 		}
 	}
@@ -83,12 +84,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 		ss.CompileFile("/main.lua")->Execute("main()");
 
 		kernel.Release();
-	} 
-	catch(Exception e)
+	}
+	catch (Exception e)
 	{
 #undef GetMessage
 		MessageBox(NULL, e.GetMessage().c_str(), "Unhandled exception", MB_OK | MB_ICONERROR);
 	}
-	
+
 	return 0;
 }

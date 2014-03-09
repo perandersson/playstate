@@ -5,7 +5,7 @@
 
 namespace playstate
 {
-	static const GLenum OGL3SrcFactor[SrcFactor::NUM_SRC_FACTORS] = {
+	static const GLenum OGL3SrcFactor[SrcFactor::SIZE] = {
 		GL_ZERO,
 		GL_ONE,
 		GL_SRC_COLOR,
@@ -22,7 +22,7 @@ namespace playstate
 		GL_ONE_MINUS_CONSTANT_ALPHA
 	};
 	
-	static const GLenum OGL3DestFactor[DestFactor::NUM_DEST_FACTORS] = {
+	static const GLenum OGL3DestFactor[DestFactor::SIZE] = {
 		GL_ZERO,
 		GL_ONE,
 		GL_SRC_COLOR,
@@ -39,13 +39,13 @@ namespace playstate
 		GL_ONE_MINUS_CONSTANT_ALPHA
 	};
 
-	static const GLenum OGL3CullFaces[CullFaces::NUM_CULL_FACES] = {
+	static const GLenum OGL3CullFaces[CullFaces::SIZE] = {
 		0,
 		GL_CW,
 		GL_CCW
 	};
 
-	static const GLenum OGL3DepthFunc[DepthFunc::NUM_DEPTH_FUNCS] = {
+	static const GLenum OGL3DepthFunc[DepthFunc::SIZE] = {
 		GL_NEVER,
 		GL_LESS,
 		GL_EQUAL,

@@ -29,7 +29,8 @@ for i=-10, 9 do
 		local linearAttenuation = 0.0
 		local quadricAttenuation = 0.5
 		local node = PointLight(color, radius, constantAttenuation, linearAttenuation, quadricAttenuation)
-		node:SetPosition(math.random(-1000, 1000) / 10.0, 0.0, math.random(-1000, 1000) / 10.0)
+		--node:SetPosition(math.random(-1000, 1000) / 10.0, 0.0, math.random(-1000, 1000) / 10.0)
+		node:SetPosition(i * 20, 0, j * 20)
 		node:AddComponent(SinusLightBehaviour(math.random(0, 100) / 100.0 * 5.0))
 		level1:AddChild(node)
 	end

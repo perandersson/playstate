@@ -124,5 +124,8 @@
     <ClCompile Include="..\..\playstate.win32\playstate\win32\timer\win32_timer.cpp">
       <Filter>Source Files\win32\timer</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\playstate.win32\playstate\win32\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

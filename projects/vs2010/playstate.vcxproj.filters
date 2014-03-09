@@ -811,5 +811,8 @@
     <ClInclude Include="..\..\playstate\playstate\model\static_model_component.h">
       <Filter>Source Files\model</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\playstate\playstate\processor\physics_processor.h">
+      <Filter>Source Files\processor</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
